@@ -1,0 +1,51 @@
+### C ###
+# Libraries
+*.a
+
+# Shared objects (inc. Windows DLLs)
+*.so
+*.so.*
+*.dylib
+
+# Debug files
+.gdb_history
+*.dSYM/
+
+### Project ###
+# Subject
+*.pdf
+
+# Program
+21sh
+
+# Callgraph
+callgraph.ps
+
+### Tests ###
+test/
+
+### Build ###
+# Prerequisites
+dep/
+
+# Object files
+obj/
+
+# Command restult buffer
+.tmp.txt
+
+### Editor ###
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Temporary
+*~
+\#*\#
+
+### macOS ###
+# General
+.DS_Store
