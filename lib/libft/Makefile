@@ -3,138 +3,139 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: gchainet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/12/20 14:14:18 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/20 14:14:47 by cvignal          ###   ########.fr        #
+#    Created: 2018/11/05 13:58:37 by gchainet          #+#    #+#              #
+#    Updated: 2018/12/19 18:22:05 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-include include.mk
+SRC		=	sources/ft_putchar.c								\
+			sources/ft_putcharw.c								\
+			sources/ft_strcat.c									\
+			sources/ft_strcmp.c									\
+			sources/ft_strcpy.c									\
+			sources/ft_strlcat.c								\
+			sources/ft_strncat.c								\
+			sources/ft_strncmp.c								\
+			sources/ft_strncpy.c								\
+			sources/ft_strstr.c									\
+			sources/ft_bzero.c									\
+			sources/ft_char_size_utf8.c							\
+			sources/ft_memset.c									\
+			sources/ft_memcpy.c									\
+			sources/ft_memmove.c								\
+			sources/ft_memchr.c									\
+			sources/ft_memcmp.c									\
+			sources/ft_strlen.c									\
+			sources/ft_strlenw.c								\
+			sources/ft_strdup.c									\
+			sources/ft_strchr.c									\
+			sources/ft_strrchr.c								\
+			sources/ft_strnstr.c								\
+			sources/ft_atoi.c									\
+			sources/ft_isalpha.c								\
+			sources/ft_isdigit.c								\
+			sources/ft_isalnum.c								\
+			sources/ft_isascii.c								\
+			sources/ft_isprint.c								\
+			sources/ft_toupper.c								\
+			sources/ft_tolower.c								\
+			sources/ft_memalloc.c								\
+			sources/ft_memdel.c									\
+			sources/ft_nbrlen.c									\
+			sources/ft_snbrlen.c								\
+			sources/ft_strnew.c									\
+			sources/ft_strdel.c									\
+			sources/ft_strclr.c									\
+			sources/ft_striter.c								\
+			sources/ft_striteri.c								\
+			sources/ft_strmap.c									\
+			sources/ft_strmapi.c								\
+			sources/ft_strequ.c									\
+			sources/ft_strnequ.c								\
+			sources/ft_strsub.c									\
+			sources/ft_strjoin.c								\
+			sources/ft_strjoin_free.c								\
+			sources/ft_insert_free.c							\
+			sources/ft_strtrim.c								\
+			sources/ft_strsplit.c								\
+			sources/ft_itoa.c									\
+			sources/ft_putstr.c									\
+			sources/ft_putendl.c								\
+			sources/ft_putnbr.c									\
+			sources/ft_putchar_fd.c								\
+			sources/ft_putstr_fd.c								\
+			sources/ft_putendl_fd.c								\
+			sources/ft_putnbr_fd.c								\
+			sources/ft_memccpy.c								\
+			sources/ft_lstnew.c									\
+			sources/ft_lstdelone.c								\
+			sources/ft_lstdel.c									\
+			sources/ft_lstadd.c									\
+			sources/ft_lstaddend.c								\
+			sources/ft_lstiter.c								\
+			sources/ft_lstmap.c									\
+			sources/ft_realloc.c								\
+			sources/ft_putnbr_base.c							\
+			sources/ft_putunbr.c								\
+			sources/ft_ullpow.c									\
+			sources/ft_ldpow.c									\
+			sources/ft_printf/ft_printf.c						\
+			sources/ft_printf/ft_dprintf.c						\
+			sources/ft_printf/print.c							\
+			sources/ft_printf/ft_putldnbr_base_buffer.c			\
+			sources/ft_printf/ft_putullnbr_base_buffer.c		\
+			sources/ft_printf/ft_putcharw_buffer.c				\
+			sources/ft_printf/printers/string.c					\
+			sources/ft_printf/printers/lstring.c				\
+			sources/ft_printf/printers/pointer.c				\
+			sources/ft_printf/printers/character.c				\
+			sources/ft_printf/printers/generic_decimal.c		\
+			sources/ft_printf/printers/double.c					\
+			sources/ft_printf/printers/double_utils.c			\
+			sources/ft_printf/printers/none.c					\
+			sources/ft_printf/printers/generic_number_utils.c	\
+			sources/ft_printf/printers/generic_number_padding.c	\
+			sources/ft_printf/modifiers/apply_modifiers.c		\
+			sources/ft_printf/modifiers/h.c						\
+			sources/ft_printf/modifiers/l.c						\
+			sources/ft_printf/modifiers/l_cap.c					\
+			sources/ft_printf/modifiers/z.c						\
+			sources/ft_printf/modifiers/j.c						\
+			sources/ft_printf/modifiers/modifiers.c				\
+			sources/ft_printf/flags/flags.c						\
+			sources/ft_printf/flags/minus.c						\
+			sources/ft_printf/flags/plus.c						\
+			sources/ft_printf/flags/zero.c						\
+			sources/ft_printf/flags/space.c						\
+			sources/ft_printf/flags/alternate.c					\
+			sources/ft_printf/conversion.c						\
+			sources/ft_printf/format.c							\
+			sources/ft_printf/buffer.c							\
+			sources/get_next_line.c
+	
+HDR		=	includes
 
-SRC_DIR	= ./src
-INC_DIR	= ./includes
-OBJ_DIR	= ./obj
+OBJ		=	$(SRC:.c=.o)
 
+NAME	=	libft.a
 
-SRC			= ft_memset.c		\
-			  ft_bzero.c		\
-			  ft_memcpy.c		\
-			  ft_memccpy.c		\
-			  ft_memmove.c		\
-			  ft_memchr.c		\
-			  ft_memcmp.c		\
-			  ft_strlen.c		\
-			  ft_strdup.c		\
-			  ft_strcpy.c		\
-			  ft_strncpy.c		\
-			  ft_strcat.c		\
-			  ft_strncat.c		\
-			  ft_strlcat.c		\
-			  ft_strchr.c		\
-			  ft_strrchr.c		\
-			  ft_strstr.c		\
-			  ft_strnstr.c		\
-			  ft_strcmp.c		\
-			  ft_strncmp.c		\
-			  ft_atoi.c			\
-			  ft_isalpha.c		\
-			  ft_isdigit.c		\
-			  ft_isalnum.c		\
-			  ft_isascii.c		\
-			  ft_isprint.c		\
-			  ft_toupper.c		\
-			  ft_tolower.c		\
-			  ft_memalloc.c		\
-			  ft_memdel.c		\
-			  ft_strnew.c		\
-			  ft_strdel.c		\
-			  ft_strclr.c		\
-			  ft_striter.c		\
-			  ft_memalloc.c		\
-			  ft_striteri.c		\
-			  ft_strmap.c		\
-			  ft_strmapi.c		\
-			  ft_strequ.c		\
-			  ft_strnequ.c		\
-			  ft_strsub.c		\
-			  ft_strjoin.c		\
-			  ft_strtrim.c		\
-			  ft_strsplit.c		\
-			  ft_putstr.c		\
-			  ft_putchar.c		\
-			  ft_putendl.c		\
-			  ft_putnbr.c		\
-			  ft_putchar_fd.c	\
-			  ft_putstr_fd.c	\
-			  ft_putendl_fd.c	\
-			  ft_putnbr_fd.c	\
-			  ft_lstnew.c		\
-			  ft_lstdelone.c	\
-			  ft_lstdel.c		\
-			  ft_lstadd.c		\
-			  ft_lstiter.c		\
-			  ft_lstmap.c		\
-			  ft_lstapp.c		\
-			  ft_strsplit_lst.c	\
-			  ft_lstfold.c		\
-			  ft_strrev.c		\
-			  ft_realloc.c		\
-			  ft_list_sort.c	\
-			  ft_deltab.c		\
-			  ft_strjoin_free.c	\
-			  ft_sqrt.c			\
-			  ft_itoa_base.c	\
-			  ft_nb_digits.c	\
-			  ft_power.c		\
-			  ft_max.c			\
-			  ft_ultoa_base.c	\
-			  ft_dtoa.c			\
-			  ft_strfindchar.c	\
-			  ft_printf.c		\
-			  tools_conv.c		\
-			  ft_conv01.c		\
-			  ft_sprintf.c		\
-			  ft_conv02.c		\
-			  ft_form00.c		\
-			  ft_form01.c		\
-			  ft_form02.c		\
-			  ft_form03.c		\
-			  ft_form04.c		\
-			  ft_put_tab.c		\
-			  ft_atoi_base.c	\
-			  get_next_line.c	\
-			  ft_strndup.c		\
-			  ft_insert_free.c	\
-			  ft_del_char.c		\
-			  ft_delelt.c
+$(NAME):	$(OBJ)
+	ar rcs $(NAME) $(OBJ)
+	ranlib $(NAME)
 
-OBJ			= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
+%.o:	%.c
+	cc -g -Wall -Wextra -Werror -I $(HDR) -c $< -o $@
 
-CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g3
-
-all: $(OBJ_DIR) $(LIBFT)
-	@mkdir -p $(OBJ_DIR)
-
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) $(CFLAGS) $(LIBFT_INC) -o $@ -c $<
-
-$(LIBFT): $(OBJ)
-	@ar rc $(LIBFT) $(OBJ)
-	@ranlib $(LIBFT)
+all:	$(NAME)
 
 clean:
-	@rm -rf $(OBJ_DIR)
+	rm -f $(OBJ)
 
-fclean: clean
-	@rm -f $(LIBFT)
+fclean:	clean
+	rm -f $(NAME)
 
-re:
-	@$(MAKE) fclean --no-print-directory
-	@$(MAKE) all --no-print-directory
+re:	fclean $(NAME)
 
-.PHONY: all clean fclean re
+.PHONY: clean fclean re

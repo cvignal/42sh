@@ -3,38 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   unsetenv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/10 09:54:50 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/10 12:50:31 by cvignal          ###   ########.fr       */
+/*   Created: 2018/12/13 08:22:56 by gchainet          #+#    #+#             */
+/*   Updated: 2018/12/17 15:33:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
+#include "libft.h"
 
-char	**ft_unsetenv(char **args, char **env)
+static int	is_target(char *s, char *target)
 {
-	int		i;
-	char	**res;
-	int		len;
-	int		j;
+	int	i;
 
-	if (!ft_getenv(env, args[0]))
-		return (env);
-	if (!(res = (char **)malloc(sizeof(char *) * len_env(env))))
-		return (NULL);
 	i = 0;
-	len = ft_strlen(args[0]);
-	j = 0;
-	while (env[i])
+	while (s[i] && target[i] && s[i] != '=')
 	{
-		if (ft_strnequ(env[i], args[0], len))
-			i++;
-		else if (!(res[j++] = ft_strdup(env[i++])))
-			return (NULL);
+		if (s[i] != target[i])
+			return (0);
+		++i;
 	}
-	res[j] = NULL;
-	ft_deltab(&env);
-	return (res);
+	return (!target[i] && s[i] == '=');
+}
+
+static int	exit_error(const char *msg)
+{
+	ft_putstr_fd("minishell: unsetenv: ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
+	return (1);
+}
+
+static int	replace_env(t_shell *shell, char **new_env, int env_size,
+		char *target)
+{
+	int	step;
+	int	i;
+
+	i = 0;
+	step = 0;
+	while (i < env_size)
+	{
+		if (!is_target(shell->env[i], target))
+			new_env[i - step] = shell->env[i];
+		else
+		{
+			free(shell->env[i]);
+			step = 1;
+		}
+		++i;
+	}
+	new_env[i - step] = NULL;
+	free(shell->env);
+	shell->env = new_env;
+	return (0);
+}
+
+int			builtin_unsetenv(t_shell *shell, char **args)
+{
+	int		env_size;
+	char	**new_env;
+	size_t	arg_count;
+
+	arg_count = 0;
+	while (args[arg_count])
+		++arg_count;
+	if (arg_count > 2)
+		return (exit_error("too many arguments"));
+	else if (arg_count < 2)
+		return (exit_error("usage: unsetenv var"));
+	env_size = 0;
+	while (shell->env[env_size])
+		++env_size;
+	if (!(new_env = malloc(sizeof(*new_env) * (env_size + 1))))
+		return (1);
+	return (replace_env(shell, new_env, env_size, args[1]));
 }

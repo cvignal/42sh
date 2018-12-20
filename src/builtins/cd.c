@@ -3,97 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/10 10:23:37 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/17 21:35:05 by cvignal          ###   ########.fr       */
+/*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
+/*   Updated: 2018/12/16 11:30:48 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "minishell.h"
 #include <unistd.h>
+#include <stdlib.h>
 
-int		ft_special_cases(char **args, char ***env)
+#include "minishell.h"
+#include "libft.h"
+
+static int	exit_error(const char *file, const char *msg)
 {
-	char	*path;
-
-	if (!*args)
+	ft_putstr_fd("minishell: cd: ", 2);
+	if (file)
 	{
-		if (!(path = ft_getenv(*env, "HOME")))
-		{
-			ft_printf("cd: HOME not set\n");
-			return (0);
-		}
+		ft_putstr_fd(file, 2);
+		ft_putstr_fd(": ", 2);
 	}
-	else
-	{
-		if (!(path = ft_getenv(*env, "OLDPWD")))
-		{
-			ft_printf("cd: OLDPWD not set\n");
-			return (0);
-		}
-	}
-	return (ft_cd(&path, env));
-}
-
-int		follow_symlinks(char **args, char ***env)
-{
-	char	*link;
-	int		len;
-
-	if (file_type(*(args + 1)) != 'l')
-		return (ft_cd(args + 1, env));
-	if (!(link = ft_strnew(1023)))
-		return (0);
-	if ((len = readlink(*(args + 1), link, 1023)) != -1)
-	{
-		link[len] = 0;
-		if (link[0] != '/' && ft_strchr(args[1], '/'))
-			link = ft_join_path(args[1], link);
-		ft_cd(&link, env);
-		ft_strdel(&link);
-	}
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
 	return (1);
 }
 
-char	**ft_update_env(char *path, char **env, int old)
+static int	change_dir(t_shell *shell, char *dir)
 {
-	char	*new_pwd;
+	char	*cwd;
 
-	if (!(new_pwd = old ? ft_strdup("OLDPWD=") : ft_strdup("PWD=")))
-		return (0);
-	if (!(new_pwd = ft_strjoin_free(new_pwd, path, 1)))
-		return (0);
-	env = ft_setenv(&new_pwd, env);
-	ft_strdel(&new_pwd);
-	return (env);
+	if (!dir)
+		return (1);
+	cwd = getcwd(NULL, MAX_PATH);
+	if (chdir(dir))
+		return (exit_error(dir, "no such file or directory"));
+	set_env_var(shell, "OLDPWD", cwd);
+	free(cwd);
+	return (0);
 }
 
-int		ft_cd(char **args, char ***env)
+int			builtin_cd(t_shell *shell, char **args)
 {
-	char	pwd[BUFF_SIZE];
+	size_t			arg_len;
+	unsigned int	i;
+	char			*dir;
 
-	if (!*args || ft_strequ(args[0], "-"))
-		return (ft_special_cases(args, env));
-	if (ft_strequ(args[0], "-P"))
-		return (follow_symlinks(args, env));
-	if (access(args[0], F_OK))
+	arg_len = 0;
+	while (args[arg_len])
+		++arg_len;
+	if (arg_len > 3)
+		return (exit_error(NULL, "too many arguments"));
+	i = 1;
+	while (i < arg_len)
 	{
-		ft_printf("cd: no such file or directory: %s\n", args[0]);
-		return (0);
+		if (!ft_strcmp(args[i], "-"))
+		{
+			if (!(dir = get_env_value(shell, "OLDPWD")))
+				return (exit_error(NULL, "OLDPWD not set"));
+			return (change_dir(shell, dir));
+		}
+		else
+			return (change_dir(shell, args[i]));
 	}
-	else if (access(args[0], R_OK))
-	{
-		ft_printf("cd: permission denied: %s\n", args[0]);
-		return (0);
-	}
-	getcwd(pwd, BUFF_SIZE);
-	if (!(*env = ft_update_env(pwd, *env, 1)))
-		return (0);
-	chdir(args[0]);
-	getcwd(pwd, BUFF_SIZE);
-	if (!(*env = ft_update_env(pwd, *env, 0)))
-		return (0);
-	return (1);
+	if (!(dir = get_env_value(shell, "HOME")))
+		return (exit_error(NULL, "HOME not set"));
+	return (change_dir(shell, dir));
 }

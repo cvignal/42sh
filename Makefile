@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/19 19:27:26 by cvignal          ###   ########.fr        #
+#    Updated: 2018/12/20 14:52:42 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,21 +18,49 @@ NAME	:=	21sh
 
 SRC		=					\
 	main.c					\
-	tools/tools_env.c		\
-	builtins/echo.c			\
-	tools/tools_builtin.c	\
-	builtins/setenv.c		\
-	builtins/unsetenv.c		\
-	builtins/cd.c 			\
-	builtins/env.c 			\
-	tools/tools_parsing.c	\
-	signal.c				\
-	segfault.c				\
-	parser.c				\
-	keys.c					\
-	tools/tools_keys.c		\
-	autocompletion.c		\
-	tools/tools_auto.c
+	parser/token.c					\
+	parser/token_type.c				\
+	parser/parser.c					\
+	parser/input_queue.c			\
+	parser/lexer_act.c				\
+	parser/lexer_act_meta.c			\
+	parser/init_lexer.c				\
+	parser/lexer.c					\
+	parser/parser_rules.c			\
+	parser/rules.c					\
+	parser/rules_shift.c			\
+	parser/rules_logic.c			\
+	parser/rules_redir.c			\
+	parser/rules_pipe.c				\
+	parser/ast.c					\
+	parser/ast_token.c				\
+	parser/fill_line.c					\
+	parser/keys.c						\
+	parser/tools_keys.c					\
+	exec/cmd.c						\
+	exec/pipeline.c						\
+	exec/end.c						\
+	exec/or.c						\
+	exec/and.c						\
+	shell.c							\
+	command.c						\
+	exec.c							\
+	path.c							\
+	env.c							\
+	env_utils.c						\
+	replace.c						\
+	signal.c						\
+	redir.c							\
+	redir_internal.c				\
+	pipeline.c						\
+	builtins/builtins.c				\
+	builtins/cd.c					\
+	builtins/echo.c					\
+	builtins/env.c					\
+	builtins/env_options.c			\
+	builtins/setenv.c				\
+	builtins/unsetenv.c				\
+	builtins/exit.c
 
 SRCDIR	:=	src
 OBJDIR	:=	obj
@@ -61,7 +89,7 @@ include $(LIBFT_PATH)/include.mk
 CC		?=	cc
 
 INCFLAG	:= -I $(INCDIR) $(LIB_INC)
-STDFLAG	?=	-std=c11
+STDFLAG	?=	
 WFLAGS	?=	-Wall -Wextra -Werror
 CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG)
 
