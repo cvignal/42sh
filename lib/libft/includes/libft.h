@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/20 14:15:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/20 19:29:37 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ char			*ft_insert_free(char *str, char *to_insert, size_t index, int flag);
 void			ft_del_char(char *str, size_t index);
 void			ft_delelt(void *content, size_t index);
 char			file_type(char *path);
+char			**ft_listtotab(t_list *lst, size_t size);
 
 /*
 ** Printf

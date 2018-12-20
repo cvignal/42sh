@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/19 19:02:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/20 16:26:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ char	*fill_line(void)
 			ft_addchar(res, buf);
 	}
 	ft_printf("\n");
-	reset_terminal_mode();
+	clean_under_line();
 	return (res->str);
 }

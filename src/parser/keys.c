@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/20 15:25:49 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/20 19:00:16 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_backspace(t_cmdline *res)
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
 		tputs(tgetstr("dc", NULL), 0, ft_printchar);
 		res->cursor--;
-		res->str[ft_strlen(res->str) - 1] = '\0';
+		ft_del_char(res->str, res->cursor);
 	}
 }
 

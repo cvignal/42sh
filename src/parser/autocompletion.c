@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 16:09:30 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/20 15:19:35 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/20 16:27:43 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@ void	add_and_display(char *str, char *word, t_cmdline *res)
 {
 	char	*to_add;
 
-	ft_printf("|str : %s|", str);
-	if (file_type(str) == 'd')
-		str = ft_strjoin_free(str, "/", 1);
 	if (ft_strchr(word, '/'))
 		to_add = str + ft_strlen(ft_strrchr(word, '/') + 1);
 	else
@@ -45,6 +42,7 @@ static void	ft_add_files(char *word, t_list **list)
 	struct dirent	*dirent;
 	char			*path;
 	t_list			*new;
+	char			*name;
 
 	path = find_path(word);
 	dir = opendir(path);
@@ -52,7 +50,11 @@ static void	ft_add_files(char *word, t_list **list)
 	{
 		if (ft_comp(word, dirent->d_name))
 		{
-			new = ft_lstnew(ft_strdup(dirent->d_name), ft_strlen(dirent->d_name));
+			if (dirent->d_type == 4)
+				name = ft_strjoin(dirent->d_name, "/");
+			else
+				name = ft_strdup(dirent->d_name);
+			new = ft_lstnew(name, ft_strlen(name));
 			ft_lstadd(list, new);
 		}
 	}
@@ -83,6 +85,7 @@ void	ft_tab(t_cmdline *res)
 	char	*word;
 
 	list = NULL;
+	clean_under_line();
 	if (first_arg(res->str))
 	{
 		word = res->str;
@@ -97,5 +100,5 @@ void	ft_tab(t_cmdline *res)
 		display_list(list);
 	else if (list)
 		add_and_display(list->content, word, res);
-//	ft_lstdel(&list, &ft_delelt);
+	//ft_lstdel(&list, &ft_delelt);
 }

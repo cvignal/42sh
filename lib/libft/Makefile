@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/20 14:14:18 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/20 15:16:05 by cvignal          ###   ########.fr        #
+#    Updated: 2018/12/20 19:06:18 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,7 +108,8 @@ SRC			= ft_memset.c		\
 			  ft_insert_free.c	\
 			  ft_del_char.c		\
 			  ft_delelt.c		\
-			  file_type.c
+			  file_type.c		\
+			  ft_listtotab.c	\
 
 OBJ			= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 

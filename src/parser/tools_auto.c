@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/20 15:22:56 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/20 20:27:45 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	fill_table(int *table, t_list *list)
 	table[1] = (int)max_len;
 	table[0] = width / (max_len + 1);
 	table[2] = nb;
+	table[3] = nb / table[0] + (nb % table[0] != 0);
 }
 
 char	*find_path(char *word)
@@ -76,26 +77,31 @@ int		ft_comp(char *word, char *name)
 
 void	display_list(t_list *list)
 {
-	t_list	*curr;
 	int		i;
-	int		table[3];
-	
-	curr = list;
+	int		table[4];
+	char	**array;
+	int		j;
+
 	tputs(tgetstr("sc", NULL), 0, ft_printchar);
 	fill_table(table, list);
+	array = ft_listtotab(list, table[2]);
 	ft_printf("\n");
-	ft_printf("max len : %d nb elem : %d\n", table[1], table[2]);
 	i = 0;
-	while (curr)
+	j = 0;
+	ft_printf("lines : %d col : %d\n", table[3], table[0]);
+	while (i + j < table[2])
 	{
-		while (i < tab[0] && curr)
-		{
-			ft_printf("%*s ", tab[1] + 1, curr->content);
-			curr = curr->next;
-			i++;
-		}
-		i = 0;
-		ft_printf("\n");
+		while (j < table[0])
+			ft_printf("%-*s", table[1] + 1, array[i + j++]);
+		j = 0;
+		i++;
 	}
+	tputs(tgetstr("rc", NULL), 0, ft_printchar);
+}
+
+void	clean_under_line(void)
+{
+	tputs(tgetstr("sc", NULL), 0, ft_printchar);
+	tputs(tgetstr("cd", NULL), 0, ft_printchar);
 	tputs(tgetstr("rc", NULL), 0, ft_printchar);
 }
