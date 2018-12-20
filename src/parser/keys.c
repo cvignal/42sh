@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/19 17:51:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/20 15:25:49 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@ void	ft_backspace(t_cmdline *res)
 		res->cursor--;
 		res->str[ft_strlen(res->str) - 1] = '\0';
 	}
-}
-
-void	ft_tab(t_cmdline *res)
-{
-	(void)res;
 }
 
 void	ft_addchar(t_cmdline *res, char *buf)

@@ -6,12 +6,13 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 16:09:30 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/20 14:28:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/20 15:19:35 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+#include "fill_line.h"
 #include <dirent.h>
 #include <stdlib.h>
 

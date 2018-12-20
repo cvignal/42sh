@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/20 14:52:42 by gchainet         ###   ########.fr        #
+#    Updated: 2018/12/20 15:22:05 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@
 #### FILE STRUCTURE ####
 NAME	:=	21sh
 
-SRC		=					\
-	main.c					\
+SRC		=							\
+	main.c							\
 	parser/token.c					\
 	parser/token_type.c				\
 	parser/parser.c					\
@@ -34,11 +34,13 @@ SRC		=					\
 	parser/rules_pipe.c				\
 	parser/ast.c					\
 	parser/ast_token.c				\
-	parser/fill_line.c					\
-	parser/keys.c						\
-	parser/tools_keys.c					\
+	parser/fill_line.c				\
+	parser/keys.c					\
+	parser/tools_keys.c				\
+	parser/tools_auto.c				\
+	autocompletion.c				\
 	exec/cmd.c						\
-	exec/pipeline.c						\
+	exec/pipeline.c					\
 	exec/end.c						\
 	exec/or.c						\
 	exec/and.c						\

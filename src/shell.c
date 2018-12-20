@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/19 18:16:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/20 15:17:54 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	increment_shlvl(t_shell *shell)
 		old_value = ft_atoi(shlvl);
 	else
 		old_value = 0;
-	if (!(new_value = ft_itoa(old_value + 1)))
+	if (!(new_value = ft_ltoa_base(old_value + 1, 10)))
 		return (1);
 	set_env_var(shell, "SHLVL", new_value);
 	free(new_value);

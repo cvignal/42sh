@@ -6,13 +6,14 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/19 14:24:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/20 15:25:16 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILL_LINE_H
 # define FILL_LINE_H
 
+# include "libft.h"
 # define LEFT_ARROW "\033[D"
 # define RIGHT_ARROW "\033[C"
 # define UP_ARROW "\033[A"
@@ -50,5 +51,8 @@ void			ft_leftkey(t_cmdline *res);
 void			ft_rightkey(t_cmdline *res);
 void			ft_tab(t_cmdline *res);
 void			ft_backspace(t_cmdline *res);
+int				ft_comp(char *word, char *name);
+char			*find_path(char *word);
+void			display_list(t_list *list);
 
 #endif
