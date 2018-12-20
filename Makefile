@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/20 15:22:05 by cvignal          ###   ########.fr        #
+#    Updated: 2018/12/20 20:28:04 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRC		=							\
 	signal.c						\
 	redir.c							\
 	redir_internal.c				\
+	redir_reset.c					\
 	pipeline.c						\
 	builtins/builtins.c				\
 	builtins/cd.c					\

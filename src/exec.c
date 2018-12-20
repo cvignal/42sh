@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 12:03:08 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/20 20:26:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,14 @@ int			exec(t_shell *shell, t_pipeline *pipeline, t_pipeline *current)
 	pid_t		pid;
 	char		*bin_path;
 	t_builtin	builtin;
+	int			ret;
 
 	if ((builtin = is_builtin(current->command->args[0])))
-		return (builtin(shell, current->command->args));
+	{
+		apply_redirs(current->command, 1);
+		ret = builtin(shell, current->command->args);
+		reset_redir(current->command);
+	}
 	bin_path = find_command(shell, current->command->args[0]);
 	if (bin_path)
 		pid = fork();
@@ -76,7 +81,7 @@ int			exec(t_shell *shell, t_pipeline *pipeline, t_pipeline *current)
 		return (bin_not_found(current->command->args[0]));
 	if (!pid)
 	{
-		apply_redirs(current->command);
+		apply_redirs(current->command, 0);
 		open_close_pipe(pipeline, current);
 		execve(bin_path, current->command->args, shell->env);
 	}
