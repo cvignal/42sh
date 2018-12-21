@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 13:21:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 13:23:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	redir_ll(t_redir *redir)
 	write(fd[1], heredoc->data, heredoc->len);
 	close(fd[0]);
 	close(fd[1]);
+	free(heredoc->data);
+	free(heredoc);
 	return (0);
 }
 
