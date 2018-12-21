@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 11:25:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 13:21:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 
 #include "minishell.h"
+#include "libft.h"
 
 int	apply_redirs(t_command *command)
 {
@@ -44,7 +45,29 @@ int	redir_l(t_redir *redir)
 
 int	redir_ll(t_redir *redir)
 {
-	(void)redir;
+	char		*line;
+	int			ret;
+	t_heredoc	*heredoc;
+	int			fd[2];
+
+	if (!(heredoc = alloc_heredoc()))
+		return (1);
+	while ((ret = get_next_line(0, &line)))
+	{
+		if (!ft_strcmp(redir->target, line))
+		{
+			free(line);
+			break ;
+		}
+		else if (add_to_heredoc(heredoc, line))
+			return (1);
+	}
+	if (pipe(fd))
+		return (1);
+	dup2(fd[0], STDIN_FILENO);
+	write(fd[1], heredoc->data, heredoc->len);
+	close(fd[0]);
+	close(fd[1]);
 	return (0);
 }
 

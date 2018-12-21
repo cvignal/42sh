@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/21 11:28:52 by gchainet         ###   ########.fr        #
+#    Updated: 2018/12/21 13:11:14 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC		=							\
 	env.c							\
 	env_utils.c						\
 	replace.c						\
+	heredoc.c						\
 	signal.c						\
 	redir.c							\
 	redir_internal.c				\

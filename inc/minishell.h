@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:30:06 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 12:20:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 13:07:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "ast.h"
 
 # define ARGS_ALLOC_SIZE 8
+# define HEREDOC_ALLOC_SIZE 256
 
 # define CHAR_TILDE	'~'
 # define CHAR_VAR '$'
@@ -69,6 +70,16 @@ typedef struct		s_builtin_desc
 	char			*desc;
 	t_builtin		builtin;
 }					t_builtin_desc;
+
+typedef struct		s_heredoc
+{
+	char			*data;
+	size_t			alloc_size;
+	size_t			len;
+}					t_heredoc;
+
+t_heredoc			*alloc_heredoc(void);
+int					add_to_heredoc(t_heredoc *heredoc, const char *line);
 
 /*
 ** command.c
