@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:30:06 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 11:32:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 12:20:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,9 +171,9 @@ int					redir_rr(t_redir *redir);
 ** pipeline.c
 */
 int					add_to_pipeline(t_pipeline *first, t_command *last);
-t_pipeline				*create_pipeline(t_command *command);
-void					delete_pipeline(t_pipeline *pipeline);
+t_pipeline			*create_pipeline(t_command *command);
+void				delete_pipeline(t_pipeline *pipeline);
 int					prepare_pipeline(t_pipeline *pipeline);
-void					open_close_pipe(t_pipeline *pipeline, t_pipeline *current);
+void				open_close_pipe(t_pipeline *pipeline, t_pipeline *current);
 
 #endif
