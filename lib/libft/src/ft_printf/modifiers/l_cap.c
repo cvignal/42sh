@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   l_cap.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 09:42:07 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 18:08:17 by cvignal          ###   ########.fr       */
+/*   Created: 2018/11/21 08:47:03 by gchainet          #+#    #+#             */
+/*   Updated: 2018/11/21 08:48:45 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+int	mod_l_cap(t_conv *conv)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-	{
-		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-		++i;
-	}
-	return (dst);
+	if (conv->type_mod == TYPE_MOD_NONE)
+		conv->type_mod = TYPE_MOD_L_CAP;
+	else
+		return (1);
+	return (0);
 }

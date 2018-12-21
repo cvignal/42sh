@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 10:15:37 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 13:59:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int			main(int ac, char **av, char **environ)
 	if (init_shell(&shell, environ))
 		return (1);
 	ft_printf("$> ");
+	shell.history = NULL;
 	while ((shell.line = fill_line(&shell)))
 	{
 		if ((ast = parse(&shell, lex(&shell, shell.line))))

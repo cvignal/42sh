@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_char_size_utf8.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 09:42:07 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 18:08:17 by cvignal          ###   ########.fr       */
+/*   Created: 2018/11/25 10:17:30 by gchainet          #+#    #+#             */
+/*   Updated: 2018/11/25 11:28:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+size_t	ft_char_size_utf8(unsigned int c)
 {
-	size_t	i;
+	size_t		size;
+	size_t		bits;
 
-	i = 0;
-	while (i < n)
+	bits = 0;
+	while (c)
 	{
-		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-		++i;
+		++bits;
+		c >>= 1;
 	}
-	return (dst);
+	if (bits < 8)
+		return (1);
+	size = 2;
+	while ((int)bits - (8 - ((int)size + 1)) - (((int)size - 1) * 6) > 0)
+		++size;
+	return (size);
 }

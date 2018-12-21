@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_strlenw.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 09:42:07 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 18:08:17 by cvignal          ###   ########.fr       */
+/*   Created: 2018/11/11 15:32:26 by gchainet          #+#    #+#             */
+/*   Updated: 2018/11/25 11:29:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+size_t	ft_strlenw(const wchar_t *s)
 {
-	size_t	i;
+	size_t			len;
+	unsigned int	pos;
 
-	i = 0;
-	while (i < n)
+	len = 0;
+	pos = 0;
+	while (s[pos])
 	{
-		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-		++i;
+		len += ft_char_size_utf8(s[pos]);
+		++pos;
 	}
-	return (dst);
+	return (len);
 }

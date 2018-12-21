@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 13:23:06 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 18:15:21 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	ft_hisdown(t_cmdline *res, t_shell *shell)
 		i++;
 	}
 	clear_cmd_line(res);
-	ft_printf("%s", curr->content);
+	if (res->his_pos > -1)
+		ft_printf("%s", curr->content);
 	res->cursor = curr->content_size;
 	ft_strdel(&res->str);
 	res->str = ft_strdup(curr->content);
@@ -54,7 +55,7 @@ void	ft_hisup(t_cmdline *res, t_shell *shell)
 	i = 0;
 	if (res->his_pos < (int)ft_lstlen(shell->history))
 		res->his_pos++;
-	while (i < res->his_pos && curr)
+	while (i < res->his_pos && curr->next)
 	{
 		curr = curr->next;
 		i++;
