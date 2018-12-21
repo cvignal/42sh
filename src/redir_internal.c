@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 13:23:57 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 13:55:49 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ int	redir_ll(t_redir *redir)
 			break ;
 		}
 		else if (add_to_heredoc(heredoc, line))
-			return (1);
+			return (heredoc_exit_error(heredoc));
 	}
 	if (pipe(fd))
-		return (1);
+		return (heredoc_exit_error(heredoc));
 	dup2(fd[0], STDIN_FILENO);
 	write(fd[1], heredoc->data, heredoc->len);
 	close(fd[0]);
