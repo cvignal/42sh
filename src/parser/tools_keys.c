@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/19 18:30:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 11:31:06 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ t_key	special_keys[] =
 	{LEFT_ARROW, &ft_leftkey},
 	{RIGHT_ARROW, &ft_rightkey},
 	{BACKSPACE, &ft_backspace},
-	{TAB_KEY, &ft_tab}
+	{TAB_KEY, &ft_tab},
+	{DOWN_ARROW, &ft_hisdown},
+	{UP_ARROW, &ft_hisup}
 };
 
 int	is_a_special_key(char *buf)
@@ -34,19 +36,19 @@ int		ft_printchar(int c)
 		return (write(1, &c, 1));
 }
 
-void	apply_key(char *buf, t_cmdline *res)
+void	apply_key(char *buf, t_cmdline *res, t_shell *shell)
 {
 	int		i;
 	size_t	len;
 
 	i = 0;
 	if (*buf == 127)
-		ft_backspace(res);
-	while (i < 4)
+		ft_backspace(res, shell);
+	while (i < 6)
 	{
 		len = ft_strlen(special_keys[i].value);
 		if (ft_strnequ(special_keys[i].value, buf, len))
-			special_keys[i].f(res);
+			special_keys[i].f(res, shell);
 		i++;
 	}
 }

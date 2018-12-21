@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/20 15:47:37 by cvignal          ###   ########.fr        #
+#    Updated: 2018/12/21 10:38:41 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC		=							\
 	parser/tools_keys.c				\
 	parser/tools_auto.c				\
 	parser/autocompletion.c			\
+	parser/history.c				\
 	exec/cmd.c						\
 	exec/pipeline.c					\
 	exec/end.c						\

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 16:09:30 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/20 16:27:43 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 10:27:58 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,12 @@ static void	ft_add_exec(char *word, t_list **list)
 	ft_deltab(&paths);
 }
 
-void	ft_tab(t_cmdline *res)
+void	ft_tab(t_cmdline *res, t_shell *shell)
 {
 	t_list	*list;
 	char	*word;
 
+	(void)shell;
 	list = NULL;
 	clean_under_line();
 	if (first_arg(res->str))
@@ -100,5 +101,4 @@ void	ft_tab(t_cmdline *res)
 		display_list(list);
 	else if (list)
 		add_and_display(list->content, word, res);
-	//ft_lstdel(&list, &ft_delelt);
 }

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/20 19:00:16 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 12:15:25 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 #include "libft.h"
 #include "fill_line.h"
 
-void	ft_leftkey(t_cmdline *res)
+void	ft_leftkey(t_cmdline *res, t_shell *shell)
 {
+	(void)shell;
 	if (res->cursor > 0)
 	{
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
@@ -30,8 +31,9 @@ void	ft_leftkey(t_cmdline *res)
 	}
 }
 
-void	ft_rightkey(t_cmdline *res)
+void	ft_rightkey(t_cmdline *res, t_shell *shell)
 {
+	(void)shell;
 	if (res->cursor < ft_strlen(res->str))
 	{
 		tputs(tgetstr("nd", NULL), 0, ft_printchar);
@@ -39,8 +41,9 @@ void	ft_rightkey(t_cmdline *res)
 	}
 }
 
-void	ft_backspace(t_cmdline *res)
+void	ft_backspace(t_cmdline *res, t_shell *shell)
 {
+	(void)shell;
 	if (res->cursor > 0)
 	{
 		tputs(tgetstr("le", NULL), 0, ft_printchar);

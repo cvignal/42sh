@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 09:45:38 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 09:51:26 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,20 @@ int		ft_comp(char *word, char *name)
 
 	if ((rtn = ft_strrchr(word, '/')))
 	{
+		if ((ft_strequ(".", name) || ft_strequ("..", name))
+				&& *(rtn + 1) != '.')
+			return (0);
 		if (!*(rtn + 1) && !ft_strchr(word, '.'))
 			return (1);
 		return (ft_strnequ(rtn + 1, name, ft_strlen(rtn + 1)));
 	}
 	else
+	{
+		if ((ft_strequ(".", name) || ft_strequ("..", name))
+				&& *word != '.')
+			return (0);
 		return (ft_strnequ(word, name, ft_strlen(word)));
+	}
 }
 
 void	display_list(t_list *list)

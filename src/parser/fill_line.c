@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/20 16:26:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 13:21:44 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@
 #include "minishell.h"
 #include "fill_line.h"
 #include "libft.h"
+
+static void	add_to_history(char *str, t_shell *shell)
+{
+	t_list	*new;
+
+	new = ft_lstnew(str, ft_strlen(str));
+	ft_lstadd(&shell->history, new);
+}
 
 static void	check_validity(void)
 {
@@ -73,7 +81,7 @@ void	reset_terminal_mode(void)
 }
 
 
-char	*fill_line(void)
+char	*fill_line(t_shell *shell)
 {
 	char			buf[8];
 	t_cmdline		*res;
@@ -86,15 +94,17 @@ char	*fill_line(void)
 	if (!(res->str = ft_strnew(0)))
 		return (NULL);
 	res->cursor = 0;
+	res->his_pos = -1;
 	while ((ret = read(STDIN_FILENO, buf, 8)) > 0 && !ft_strchr(buf, '\n'))
 	{
 		buf[ret] = 0;
 		if (is_a_special_key(buf))
-			apply_key(buf, res);
+			apply_key(buf, res, shell);
 		else
 			ft_addchar(res, buf);
 	}
 	ft_printf("\n");
 	clean_under_line();
+	add_to_history(res->str, shell);
 	return (res->str);
 }

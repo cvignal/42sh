@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:30:06 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 11:55:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 10:39:28 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "parser.h"
 # include "ast.h"
+# include "libft.h"
 
 # define ARGS_ALLOC_SIZE 8
 
@@ -29,6 +30,7 @@ typedef struct		s_shell
 	t_lexer			lexer;
 	char			**env;
 	char			*line;
+	t_list			*history;
 }					t_shell;
 
 struct s_command;
