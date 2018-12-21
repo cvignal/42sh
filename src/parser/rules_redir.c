@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:32:11 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/19 12:40:59 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 10:52:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	rule_redir_generic(t_ast_token *list, t_ttype type,
 	t_command	*command;
 	t_ast_token	*tmp;
 
-	command = list->data;
+	command = ((t_ast *)list->data)->data;
 	if (add_redir(command, type, list->next->next->data, act))
 		return (1);
 	tmp = list->next->next->next;

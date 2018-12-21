@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/21 10:38:41 by cvignal          ###   ########.fr        #
+#    Updated: 2018/12/21 13:29:49 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,11 +52,13 @@ SRC		=							\
 	env.c							\
 	env_utils.c						\
 	replace.c						\
+	heredoc.c						\
 	signal.c						\
 	redir.c							\
 	redir_internal.c				\
 	pipeline.c						\
 	builtins/builtins.c				\
+	builtins/exec_builtin.c			\
 	builtins/cd.c					\
 	builtins/echo.c					\
 	builtins/env.c					\

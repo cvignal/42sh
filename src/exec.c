@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 12:03:08 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 11:33:27 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int			exec(t_shell *shell, t_pipeline *pipeline, t_pipeline *current)
 	t_builtin	builtin;
 
 	if ((builtin = is_builtin(current->command->args[0])))
-		return (builtin(shell, current->command->args));
+		return (exec_builtin(shell, builtin, current));
 	bin_path = find_command(shell, current->command->args[0]);
 	if (bin_path)
 		pid = fork();

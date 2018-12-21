@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:20:26 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 11:08:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 12:26:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	rule_create_end(t_ast_token *list)
 	free(list->next->next);
 	free(list->next);
 	list->next = tmp;
-	list->type = TT_CMD;
+	list->type = TT_PIPELINE;
 	list->data = node_end;
 	return (0);
 }

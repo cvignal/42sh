@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:30:06 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 10:39:28 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 13:29:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "libft.h"
 
 # define ARGS_ALLOC_SIZE 8
+# define HEREDOC_ALLOC_SIZE 256
 
 # define CHAR_TILDE	'~'
 # define CHAR_VAR '$'
@@ -59,6 +60,7 @@ typedef struct			s_pipeline
 	t_command		*command;
 	int			in_fd[2];
 	int			out_fd[2];
+	int			fd_copy[3];
 	int			running;
 	struct s_pipeline	*next;
 }				t_pipeline;
@@ -70,6 +72,16 @@ typedef struct		s_builtin_desc
 	char			*desc;
 	t_builtin		builtin;
 }					t_builtin_desc;
+
+typedef struct		s_heredoc
+{
+	char			*data;
+	size_t			alloc_size;
+	size_t			len;
+}					t_heredoc;
+
+t_heredoc			*alloc_heredoc(void);
+int					add_to_heredoc(t_heredoc *heredoc, const char *line);
 
 /*
 ** command.c
@@ -122,6 +134,7 @@ int					builtin_setenv(t_shell *shell, char **args);
 int					builtin_unsetenv(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
+int					exec_builtin(t_shell *shell, t_builtin builtin, t_pipeline *current);
 
 /*
 ** replace.c
@@ -171,9 +184,9 @@ int					redir_rr(t_redir *redir);
 ** pipeline.c
 */
 int					add_to_pipeline(t_pipeline *first, t_command *last);
-t_pipeline				*create_pipeline(t_command *command);
-void					delete_pipeline(t_pipeline *pipeline);
+t_pipeline			*create_pipeline(t_command *command);
+void				delete_pipeline(t_pipeline *pipeline);
 int					prepare_pipeline(t_pipeline *pipeline);
-void					open_close_pipe(t_pipeline *pipeline, t_pipeline *current);
+void				open_close_pipe(t_pipeline *pipeline, t_pipeline *current);
 
 #endif
