@@ -6,13 +6,14 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 15:17:11 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/19 16:22:34 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 10:31:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <sys/types.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 char	*ft_conv_octal(va_list ap, t_form flag)
 {

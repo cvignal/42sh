@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 14:37:43 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/19 16:19:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 10:30:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 static void	ft_del(void *content, size_t content_size)
 {
+	(void)content_size;
 	free(content);
-	content_size = 0;
 }
 
 void		*ft_lstfold(t_list *lst, void *(*f)(void *, void *))

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 15:59:47 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/19 16:58:28 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 10:34:48 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_fill_flo(char *str, t_form *flag)
 	if ((flag->space || flag->plus) && flag->width <= flag->prec)
 		flag->length++;
 	if (flag->prec < len_w)
-		flag->space_nbr = flag->width - len_w - (flag->plus * (*str != '-')
+		flag->space_nbr = flag->width - len_w - ((flag->plus && (*str != '-'))
 				|| flag->space) + (flag->prec == 0 && *str == '0');
 	else
 		flag->space_nbr = flag->width - flag->prec - flag->plus - flag->space;

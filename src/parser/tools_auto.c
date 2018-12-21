@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/20 15:22:56 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 10:37:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ void	display_list(t_list *list)
 	i = 0;
 	while (curr)
 	{
-		while (i < tab[0] && curr)
+		while (i < table[0] && curr)
 		{
-			ft_printf("%*s ", tab[1] + 1, curr->content);
+			ft_printf("%*s ", table[1] + 1, curr->content);
 			curr = curr->next;
 			i++;
 		}
