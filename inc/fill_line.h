@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   fill_line.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 13:22:00 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 14:45:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,7 @@ void			display_list(t_list *list);
 void			clean_under_line(void);
 void			ft_hisdown(t_cmdline *res, t_shell *shell);
 void			ft_hisup(t_cmdline *res, t_shell *shell);
+void			reset_terminal_mode(void);
+void			raw_terminal_mode(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/18 12:18:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 14:46:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ int	builtin_exit(t_shell *shell, char **args)
 		return (1);
 	}
 	remove_env(shell);
-	free(shell->line);
+	free_shell(shell);
 	exit(arg_count == 2 ? ft_atoi(args[1]) : 0);
 }

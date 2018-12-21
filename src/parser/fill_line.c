@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 13:21:44 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 14:44:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	reset_terminal_mode(void)
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &term);
 }
 
-
 char	*fill_line(t_shell *shell)
 {
 	char			buf[8];
@@ -88,7 +87,6 @@ char	*fill_line(t_shell *shell)
 	int				ret;
 
 	check_validity();
-	raw_terminal_mode();
 	if (!(res = (t_cmdline*)malloc(sizeof(t_cmdline))))
 		return (NULL);
 	if (!(res->str = ft_strnew(0)))

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:01:47 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 14:30:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 14:40:06 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include "minishell.h"
 #include "libft.h"
+#include "fill_line.h"
 
 static int	realloc_heredoc(t_heredoc *heredoc, size_t len)
 {
@@ -68,12 +69,11 @@ int			add_to_heredoc(t_heredoc *heredoc, const char *line)
 	return (0);
 }
 
-int			read_heredoc(t_heredoc *heredoc, t_redir *redir)
+int			read_heredoc(t_shell *shell, t_heredoc *heredoc, t_redir *redir)
 {
 	char		*line;
-	int			ret;
 
-	while ((ret = get_next_line(0, &line)))
+	while ((line = fill_line(shell)))
 	{
 		if (!ft_strcmp(redir->target, line))
 		{

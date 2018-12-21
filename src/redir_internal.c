@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 14:29:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 14:38:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,25 @@
 #include "minishell.h"
 #include "libft.h"
 
-int	apply_redirs(t_command *command)
+int	apply_redirs(t_shell *shell, t_command *command)
 {
 	t_redir	*redir;
 
 	redir = command->redir_list;
 	while (redir)
 	{
-		if (redir->redir_act(redir))
+		if (redir->redir_act(shell, redir))
 			return (1);
 		redir = redir->next;
 	}
 	return (0);
 }
 
-int	redir_l(t_redir *redir)
+int	redir_l(t_shell *shell, t_redir *redir)
 {
 	int	fd;
 
+	(void)shell;
 	fd = open(redir->target, O_RDONLY);
 	if (fd < 0)
 		return (1);
@@ -43,14 +44,14 @@ int	redir_l(t_redir *redir)
 	return (0);
 }
 
-int	redir_ll(t_redir *redir)
+int	redir_ll(t_shell *shell, t_redir *redir)
 {
 	t_heredoc	*heredoc;
 	int			fd[2];
 
 	if (!(heredoc = alloc_heredoc()))
 		return (1);
-	if (read_heredoc(heredoc, redir))
+	if (read_heredoc(shell, heredoc, redir))
 		return (heredoc_exit_error(heredoc));
 	if (pipe(fd))
 		return (heredoc_exit_error(heredoc));
@@ -63,10 +64,11 @@ int	redir_ll(t_redir *redir)
 	return (0);
 }
 
-int	redir_r(t_redir *redir)
+int	redir_r(t_shell *shell, t_redir *redir)
 {
 	int	fd;
 
+	(void)shell;
 	fd = open(redir->target, O_WRONLY | O_CREAT | O_TRUNC,
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
@@ -76,10 +78,11 @@ int	redir_r(t_redir *redir)
 	return (0);
 }
 
-int	redir_rr(t_redir *redir)
+int	redir_rr(t_shell *shell, t_redir *redir)
 {
 	int	fd;
 
+	(void)shell;
 	fd = open(redir->target, O_CREAT | O_APPEND,
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
