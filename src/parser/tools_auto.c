@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/20 20:27:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/21 09:45:38 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,15 @@ void	display_list(t_list *list)
 	array = ft_listtotab(list, table[2]);
 	ft_printf("\n");
 	i = 0;
-	j = 0;
-	ft_printf("lines : %d col : %d\n", table[3], table[0]);
-	while (i + j < table[2])
+	while (i < table[3])
 	{
-		while (j < table[0])
-			ft_printf("%-*s", table[1] + 1, array[i + j++]);
-		j = 0;
+		j = i;
+		while (j < table[2])
+		{
+			ft_printf("%-*s", table[1] + 1, array[j]);
+			j += table[3];
+		}
+		ft_printf("\n");
 		i++;
 	}
 	tputs(tgetstr("rc", NULL), 0, ft_printchar);
