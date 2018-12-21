@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:36:21 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 20:27:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 11:33:41 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int		add_redir(t_command *command, t_ttype type, char *arg, t_redir_act act)
 	new_redir->type = type;
 	new_redir->next = NULL;
 	new_redir->redir_act = act;
-	new_redir->fd_copy[STDIN_FILENO] = -1;
-	new_redir->fd_copy[STDOUT_FILENO] = -1;
 	add_to_redir_list(command, new_redir);
 	return (0);
 }

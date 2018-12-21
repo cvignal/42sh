@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:30:06 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 20:26:48 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 11:32:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ typedef struct		s_shell
 
 struct s_command;
 struct s_redir;
-typedef int			(*t_redir_act)(struct s_redir *, int);
+typedef int			(*t_redir_act)(struct s_redir *);
 
 typedef struct		s_redir
 {
 	t_ttype			type;
 	char			*target;
 	t_redir_act		redir_act;
-	int				fd_copy[2];
 	struct s_redir	*next;
 }				t_redir;
 
@@ -58,6 +57,7 @@ typedef struct			s_pipeline
 	t_command		*command;
 	int			in_fd[2];
 	int			out_fd[2];
+	int			fd_copy[3];
 	int			running;
 	struct s_pipeline	*next;
 }				t_pipeline;
@@ -121,6 +121,7 @@ int					builtin_setenv(t_shell *shell, char **args);
 int					builtin_unsetenv(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
+int					exec_builtin(t_shell *shell, t_builtin builtin, t_pipeline *current);
 
 /*
 ** replace.c
@@ -160,16 +161,11 @@ int					add_redir(t_command *command, t_ttype type, char *arg,
 /*
 ** redir_internal.c
 */
-int					apply_redirs(t_command *command, int is_builtin);
-int					redir_l(t_redir *redir, int is_builtin);
-int					redir_ll(t_redir *redir, int is_builtin);
-int					redir_r(t_redir *redir, int is_builtin);
-int					redir_rr(t_redir *redir, int is_builtin);
-
-/*
-** redir_reset.c
-*/
-int					reset_redir(t_command *command);
+int					apply_redirs(t_command *command);
+int					redir_l(t_redir *redir);
+int					redir_ll(t_redir *redir);
+int					redir_r(t_redir *redir);
+int					redir_rr(t_redir *redir);
 
 /*
 ** pipeline.c
