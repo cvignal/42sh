@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 13:59:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 14:29:23 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,13 @@ int	redir_l(t_redir *redir)
 
 int	redir_ll(t_redir *redir)
 {
-	char		*line;
-	int			ret;
 	t_heredoc	*heredoc;
 	int			fd[2];
 
 	if (!(heredoc = alloc_heredoc()))
 		return (1);
-	while ((ret = get_next_line(0, &line)))
-	{
-		if (!ft_strcmp(redir->target, line))
-		{
-			free(line);
-			break ;
-		}
-		else if (add_to_heredoc(heredoc, line))
-		{
-			free(line);
-			return (heredoc_exit_error(heredoc));
-		}
-		free(line);
-	}
+	if (read_heredoc(heredoc, redir))
+		return (heredoc_exit_error(heredoc));
 	if (pipe(fd))
 		return (heredoc_exit_error(heredoc));
 	dup2(fd[0], STDIN_FILENO);
