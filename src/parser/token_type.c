@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:54:28 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 17:29:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 17:55:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,17 @@ static int	match_pseudo_regex(const char *token, const char *desc)
 	while (match && token[pos_token] && desc[pos_desc])
 	{
 		match = 0;
-		cmp = get_token_cmp(desc[pos_desc++]);
-		if (desc[pos_desc] != '*')
+		cmp = get_token_cmp(desc[pos_desc]);
+		if (desc[pos_desc + 1] == '*')
 		{
-			while (token[pos_token] && desc[pos_desc] && cmp(token[pos_token], desc[pos_desc]))
+			while (cmp(token[pos_token], desc[pos_desc]))
 			{
 				match = 1;
 				++pos_token;
 			}
+			++pos_desc;
 		}
-		else if (token[pos_token] && desc[pos_desc] && cmp(token[pos_token], desc[pos_desc]))
+		else if (cmp(token[pos_token], desc[pos_desc]))
 		{
 			match = 1;
 			++pos_token;
