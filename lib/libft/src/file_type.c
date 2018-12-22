@@ -6,12 +6,15 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 18:51:24 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/20 14:27:22 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 17:39:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 char	file_type(char *path)
 {
