@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   lexer_act_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 14:46:35 by gchainet         ###   ########.fr       */
+/*   Created: 2018/12/22 09:37:36 by gchainet          #+#    #+#             */
+/*   Updated: 2018/12/22 09:52:12 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
+#include "parser.h"
 #include "minishell.h"
-#include "libft.h"
 
-int	builtin_exit(t_shell *shell, char **args)
+int	lexer_push_var(t_shell *shell, t_token *token, char c)
 {
-	size_t	arg_count;
+	if (lss_push(&shell->lexer, LSTATE_VAR))
+		return (LEXER_RET_ERROR);
+	if (add_to_token(token, c))
+		return (LEXER_RET_ERROR);
+	return (LEXER_RET_CONT);
+}
 
-	(void)shell;
-	arg_count = 0;
-	while (args[arg_count])
-		++arg_count;
-	if (arg_count > 2)
-	{
-		ft_putstr_fd("exit: too many arguments\n", 2);
-		return (1);
-	}
-	remove_env(shell);
-	free_shell(shell);
-	exit(arg_count == 2 ? ft_atoi(args[1]) : 0);
+int	lexer_pop_var(t_shell *shell, t_token *token, char c)
+{
+	(void)token;
+	(void)c;
+	lss_pop(&shell->lexer);
+	replace_vars(shell, token);
+	return (0);
 }

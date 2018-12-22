@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 11:33:27 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 14:39:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			exec(t_shell *shell, t_pipeline *pipeline, t_pipeline *current)
 		return (bin_not_found(current->command->args[0]));
 	if (!pid)
 	{
-		apply_redirs(current->command);
+		apply_redirs(shell, current->command);
 		open_close_pipe(pipeline, current);
 		execve(bin_path, current->command->args, shell->env);
 	}

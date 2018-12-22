@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 13:55:24 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 17:33:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ char		*fill_line(t_shell *shell)
 	int				ret;
 
 	check_validity();
-	raw_terminal_mode();
 	if (!(res = (t_cmdline*)malloc(sizeof(t_cmdline))))
 		return (NULL);
 	if (!(res->str = ft_strnew(0)))

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/18 22:08:52 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 17:09:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 #include "minishell.h"
 #include "libft.h"
 #include "ast.h"
+#include "libft.h"
 
-static int		clean_exit(t_token *list, t_token *current, const char *msg)
+static int		clean_exit(t_lexer *lexer, t_token **list, t_token **current,
+		const char *msg)
 {
 	t_token	*tmp;
 
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
-	while (list)
+	ft_dprintf(2, "minishell: %s\n", msg);
+	while (*list)
 	{
-		tmp = list;
-		list = list->next;
-		if (tmp != current)
+		tmp = *list;
+		*list = (*list)->next;
+		if (tmp != *current)
 		{
 			free(tmp->data);
 			free(tmp);
@@ -35,67 +35,75 @@ static int		clean_exit(t_token *list, t_token *current, const char *msg)
 	}
 	if (current)
 	{
-		free(current->data);
-		free(current);
+		free((*current)->data);
+		free(*current);
+		*current = NULL;
 	}
+	while (lexer->lss->state != LSTATE_NONE)
+		lss_pop(lexer);
 	return (1);
 }
 
-static int		handle_ret(int ret, t_token **current, t_token **output)
+static int		handle_ret(t_lexer *lexer, int ret, t_token **current,
+		t_token **output)
 {
 	if (ret & (1 << LEXER_RET_ERROR))
-		return (clean_exit(*output, *current, "syntax error"));
-	else if (ret & (1 << LEXER_RET_CREATE))
+		return (clean_exit(lexer, output, current, "syntax error"));
+	if (ret & (1 << LEXER_RET_CREATE))
 	{
 		if (!(*current = alloc_token()))
-			return (clean_exit(*output, *current, "unable to allocate memory"));
+			return (clean_exit(lexer, output, current,
+						"unable to allocate memory"));
 	}
-	else if (ret & (1 << LEXER_RET_CUT))
+	if (ret & (1 << LEXER_RET_CUT))
 	{
-		set_token_type(*current);
+		(*current)->type = get_token_type(*current);
 		add_to_token_list(output, *current);
 		*current = NULL;
 	}
+	if (ret & (1 << LEXER_RET_MORE_INPUT))
+		return (1);
 	return (0);
 }
 
-static t_token	*get_return(t_token **output, t_token *current)
+static t_token	*get_return(t_token **output)
 {
 	t_token		*over;
+	t_token		*ret;
 
-	if (current)
-		add_to_token_list(output, current);
 	if (!(over = alloc_token()))
 		return (NULL);
 	over->type = TT_OVER;
 	add_to_token_list(output, over);
-	return (*output);
+	ret = *output;
+	*output = NULL;
+	return (ret);
 }
 
 t_token			*lex(t_shell *shell, const char *line)
 {
-	t_token	*output;
-	t_token	*current;
-	int		pos;
-	int		ret;
+	static t_token	*output = NULL;
+	static t_token	*current = NULL;
+	int				pos;
+	int				ret;
 
-	output = NULL;
-	current = NULL;
 	pos = 0;
-	shell->lexer.state = LSTATE_NONE;
-	while (line[pos])
+	ret = 0;
+	while (!(ret & (1 << LEXER_RET_OVER)))
 	{
-		if (line[pos] > 0)
+		if (line[pos] >= 0)
 		{
-			ret = shell->lexer.lexer_actions[shell->lexer.state]
-				[(int)line[pos]](&shell->lexer, current, line[pos]);
-			if (handle_ret(ret, &current, &output))
+			ret = shell->lexer.lexer_actions[shell->lexer.lss->state]
+				[(int)line[pos]](shell, current, line[pos]);
+			if (handle_ret(&shell->lexer, ret, &current, &output))
 				return (NULL);
 			pos += !!(ret & (1 << LEXER_RET_CONT));
 		}
 		else
-			return (clean_exit(output, current, "syntax error") == 1
-					? NULL : NULL);
+		{
+			clean_exit(&shell->lexer, &output, &current, "syntax error");
+			return (NULL);
+		}
 	}
-	return (get_return(&output, current));
+	return (get_return(&output));
 }

@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   lexer_act_over.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 14:46:35 by gchainet         ###   ########.fr       */
+/*   Created: 2018/12/22 10:08:55 by gchainet          #+#    #+#             */
+/*   Updated: 2018/12/22 11:57:41 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
 #include "minishell.h"
-#include "libft.h"
+#include "parser.h"
 
-int	builtin_exit(t_shell *shell, char **args)
+int	lexer_over(struct s_shell *shell, t_token *token, char c)
 {
-	size_t	arg_count;
-
+	(void)c;
 	(void)shell;
-	arg_count = 0;
-	while (args[arg_count])
-		++arg_count;
-	if (arg_count > 2)
-	{
-		ft_putstr_fd("exit: too many arguments\n", 2);
-		return (1);
-	}
-	remove_env(shell);
-	free_shell(shell);
-	exit(arg_count == 2 ? ft_atoi(args[1]) : 0);
+	(void)token;
+	return (1 << LEXER_RET_OVER);
+}
+
+int	lexer_more_input(t_shell *shell, t_token *token, char c)
+{
+	(void)shell;
+	(void)c;
+	if (add_to_token(token, '\n'))
+		return (1 << LEXER_RET_ERROR);
+	return (1 << LEXER_RET_MORE_INPUT);
 }

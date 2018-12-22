@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 13:56:08 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 17:32:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 #include "minishell.h"
 #include "libft.h"
+#include "fill_line.h"
 
 static int	increment_shlvl(t_shell *shell)
 {
@@ -45,14 +46,17 @@ void		free_shell(t_shell *shell)
 			free(shell->env[i++]);
 		free(shell->env);
 	}
+	if (shell->line)
+		free(shell->line);
+	reset_terminal_mode();
 }
 
 int			init_shell(t_shell *shell, char **environ)
 {
 	struct sigaction	sa;
 
-	init_parser(&shell->parser);
-	init_lexer(&shell->lexer);
+	if (init_lexer(&shell->lexer))
+		return (1);
 	shell->line = NULL;
 	ft_bzero(&sa, sizeof(sa));
 	sa.sa_handler = &signal_sigint;
@@ -68,5 +72,6 @@ int			init_shell(t_shell *shell, char **environ)
 		remove_env(shell);
 		return (1);
 	}
+	raw_terminal_mode();
 	return (0);
 }

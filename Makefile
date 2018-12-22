@@ -6,7 +6,11 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2018/12/22 16:36:39 by cvignal          ###   ########.fr        #
+=======
+#    Updated: 2018/12/22 13:07:08 by gchainet         ###   ########.fr        #
+>>>>>>> redir
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,10 +24,15 @@ SRC		=							\
 	main.c							\
 	parser/token.c					\
 	parser/token_type.c				\
+	parser/token_type_desc.c		\
 	parser/parser.c					\
 	parser/input_queue.c			\
 	parser/lexer_act.c				\
 	parser/lexer_act_meta.c			\
+	parser/lexer_act_quote.c		\
+	parser/lexer_act_var.c			\
+	parser/lexer_act_over.c			\
+	parser/lss.c					\
 	parser/init_lexer.c				\
 	parser/lexer.c					\
 	parser/parser_rules.c			\

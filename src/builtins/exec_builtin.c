@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 11:34:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/21 14:40:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	exec_builtin(t_shell *shell, t_builtin builtin, t_pipeline *current)
 {
 	int	ret;
 
-	apply_redirs(current->command);
+	apply_redirs(shell, current->command);
 	pipe_builtin(current);
 	ret = builtin(shell, current->command->args);
 	reset_builtin_fd(current);
