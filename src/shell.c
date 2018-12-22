@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 14:46:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 09:59:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int			init_shell(t_shell *shell, char **environ)
 	struct sigaction	sa;
 
 	init_parser(&shell->parser);
-	init_lexer(&shell->lexer);
+	if (init_lexer(&shell->lexer))
+		return (1);
 	shell->line = NULL;
         ft_bzero(&sa, sizeof(sa));
 	sa.sa_handler = &signal_sigint;

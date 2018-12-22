@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 09:12:47 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 10:08:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef enum		e_lstate
 	LSTATE_META,
 	LSTATE_SQUOTE,
 	LSTATE_DQUOTE,
+	LSTATE_VAR,
 	NUMBER_LSTATE
 }					t_lstate;
 
@@ -60,7 +61,8 @@ typedef enum		e_lexer_ret
 	LEXER_RET_CUT,
 	LEXER_RET_CREATE,
 	LEXER_RET_CONT,
-	LEXER_RET_ERROR
+	LEXER_RET_ERROR,
+	LEXER_RET_OVER
 }					t_lexer_ret;
 
 typedef struct		s_lss
@@ -69,8 +71,7 @@ typedef struct		s_lss
 	struct s_lss	*next;
 }					t_lss;
 
-struct s_lexer;
-typedef int			(*t_lexer_act)(struct s_lexer *, t_token *, char);
+typedef int			(*t_lexer_act)(struct s_shell *, t_token *, char);
 
 typedef struct		s_lexer
 {
@@ -111,28 +112,39 @@ int					set_token_type(t_token *token);
 /*
 ** parser/lexer_act.c
 */
-int					lexer_add(t_lexer *lexer, t_token *token, char c);
-int					lexer_cut(t_lexer *lexer, t_token *token, char c);
-int					lexer_create(t_lexer *lexer, t_token *token, char c);
-int					lexer_pass(t_lexer *lexer, t_token *token, char c);
-int					lexer_cut_pass(t_lexer *lexer, t_token *token, char c);
+int					lexer_add(struct s_shell *shell, t_token *token, char c);
+int					lexer_cut(struct s_shell *shell, t_token *token, char c);
+int					lexer_create(struct s_shell *shell, t_token *token, char c);
+int					lexer_pass(struct s_shell *shell, t_token *token, char c);
+int					lexer_cut_pass(struct s_shell *shell, t_token *token, char c);
 
 /*
- * parser/lexer/lexer_act_meta.c
+ * parser/lexer_act_meta.c
 */
-int					lexer_create_meta(t_lexer *lexer, t_token *token, char c);
-int					lexer_add_meta(t_lexer *lexer, t_token *token, char c);
+int					lexer_create_meta(struct s_shell *shell, t_token *token, char c);
+int					lexer_add_meta(struct s_shell *shell, t_token *token, char c);
 
 /*
-** parser/lexer/lexer_act_quote.c
+** parser/lexer_act_quote.c
 **/
-int					lexer_create_dquote(t_lexer *lexer, t_token *token, char c);
-int					lexer_create_squote(t_lexer *lexer, t_token *token, char c);
+int					lexer_create_dquote(struct s_shell *shell, t_token *token, char c);
+int					lexer_create_squote(struct s_shell *shell, t_token *token, char c);
+
+/*
+** parser/lexer_act_var.c
+*/
+int					lexer_push_var(struct s_shell *shell, t_token *token, char c);
+int					lexer_pop_var(struct s_shell *shell, t_token *token, char c);
+
+/*
+** parser/lexer_act_over.c
+*/
+int					lexer_over(struct s_shell *shell, t_token *token, char c);
 
 /*
 ** parser/lexer.c
 */
-t_token				*lex(t_lexer *lexer, const char *line);
-void				init_lexer(t_lexer *lexer);
+t_token				*lex(struct s_shell *shell, const char *line);
+int					init_lexer(t_lexer *lexer);
 
 #endif

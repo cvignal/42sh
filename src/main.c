@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 09:13:59 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 09:50:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			main(int ac, char **av, char **environ)
 	ft_printf("$> ");
 	while ((shell.line = fill_line(&shell)))
 	{
-		if ((ast = parse(&shell, lex(&shell.lexer, shell.line))))
+		if ((ast = parse(&shell, lex(&shell, shell.line))))
 		{
 			ast->exec(&shell, ast);
 			ast->del(ast);
