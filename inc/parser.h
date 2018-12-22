@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/19 11:23:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 09:12:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef enum		e_lstate
 	LSTATE_NONE,
 	LSTATE_WORD,
 	LSTATE_META,
+	LSTATE_SQUOTE,
+	LSTATE_DQUOTE,
 	NUMBER_LSTATE
 }					t_lstate;
 
@@ -61,19 +63,31 @@ typedef enum		e_lexer_ret
 	LEXER_RET_ERROR
 }					t_lexer_ret;
 
+typedef struct		s_lss
+{
+	t_lstate		state;
+	struct s_lss	*next;
+}					t_lss;
+
 struct s_lexer;
 typedef int			(*t_lexer_act)(struct s_lexer *, t_token *, char);
 
 typedef struct		s_lexer
 {
 	t_lexer_act		lexer_actions[NUMBER_LSTATE][CHAR_MAX + 1];
-	t_lstate		state;
+	t_lss			*lss;
 }					t_lexer;
 
 typedef struct		s_parser
 {
 	t_pstate		state;
 }					t_parser;
+
+/*
+** parser/lss.c
+*/
+int					lss_push(t_lexer *lexer, t_lstate state);
+t_lstate			lss_pop(t_lexer *lexer);
 
 /*
 ** parser/parser.c
@@ -101,13 +115,24 @@ int					lexer_add(t_lexer *lexer, t_token *token, char c);
 int					lexer_cut(t_lexer *lexer, t_token *token, char c);
 int					lexer_create(t_lexer *lexer, t_token *token, char c);
 int					lexer_pass(t_lexer *lexer, t_token *token, char c);
+int					lexer_cut_pass(t_lexer *lexer, t_token *token, char c);
+
+/*
+ * parser/lexer/lexer_act_meta.c
+*/
 int					lexer_create_meta(t_lexer *lexer, t_token *token, char c);
 int					lexer_add_meta(t_lexer *lexer, t_token *token, char c);
 
 /*
+** parser/lexer/lexer_act_quote.c
+**/
+int					lexer_create_dquote(t_lexer *lexer, t_token *token, char c);
+int					lexer_create_squote(t_lexer *lexer, t_token *token, char c);
+
+/*
 ** parser/lexer.c
 */
-t_token				*lex(struct s_shell *shell, const char *line);
+t_token				*lex(t_lexer *lexer, const char *line);
 void				init_lexer(t_lexer *lexer);
 
 #endif

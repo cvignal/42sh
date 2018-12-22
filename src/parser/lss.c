@@ -1,42 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lss.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 09:13:59 by gchainet         ###   ########.fr       */
+/*   Created: 2018/12/22 08:56:06 by gchainet          #+#    #+#             */
+/*   Updated: 2018/12/22 09:00:48 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-#include "minishell.h"
-#include "ast.h"
-#include "libft.h"
-#include "fill_line.h"
+#include "parser.h"
 
-int			main(int ac, char **av, char **environ)
+int lss_push(t_lexer *lexer, t_lstate state)
 {
-	t_ast		*ast;
-	t_shell		shell;
+	t_lss	*new_state;
 
-	(void)ac;
-	(void)av;
-	if (init_shell(&shell, environ))
+	new_state = malloc(sizeof(*new_state));
+	if (!new_state)
 		return (1);
-	ft_printf("$> ");
-	while ((shell.line = fill_line(&shell)))
-	{
-		if ((ast = parse(&shell, lex(&shell.lexer, shell.line))))
-		{
-			ast->exec(&shell, ast);
-			ast->del(ast);
-		}
-		free(shell.line);
-		ft_printf("$> ");
-	}
-	free_shell(&shell);
+	new_state->state = state;
+	new_state->next = lexer->lss;
+	lexer->lss = new_state;
 	return (0);
+}
+
+t_lstate	lss_pop(t_lexer *lexer)
+{
+	t_lss		*tmp;
+	t_lstate	ret;
+
+	if (!lexer->lss)
+		return (LSTATE_NONE);
+	tmp = lexer->lss->next;
+	ret = lexer->lss->state;
+	free(lexer->lss);
+	lexer->lss = tmp;
+	return (ret);
 }

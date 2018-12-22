@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/21 13:29:49 by gchainet         ###   ########.fr        #
+#    Updated: 2018/12/22 09:01:26 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ SRC		=							\
 	parser/input_queue.c			\
 	parser/lexer_act.c				\
 	parser/lexer_act_meta.c			\
+	parser/lexer_act_quote.c		\
+	parser/lss.c					\
 	parser/init_lexer.c				\
 	parser/lexer.c					\
 	parser/parser_rules.c			\

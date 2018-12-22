@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:46:05 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/15 22:13:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 09:08:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,23 @@ static void	init_lexer_meta(t_lexer *lexer, t_lstate state, t_lexer_act act)
 		lexer->lexer_actions[state][(int)META_CHARS[i]] = act;
 		++i;
 	}
+}
+
+static void	init_lexer_quote(t_lexer *lexer)
+{
+	int	i;
+
+	i = 0;
+	while (i <= CHAR_MAX)
+	{
+		lexer->lexer_actions[LSTATE_SQUOTE][i] = &lexer_add;
+		lexer->lexer_actions[LSTATE_DQUOTE][i] = &lexer_add;
+		++i;
+	}
+	lexer->lexer_actions[LSTATE_NONE]['\''] = &lexer_create_squote;
+	lexer->lexer_actions[LSTATE_SQUOTE]['\''] = &lexer_cut_pass;
+	lexer->lexer_actions[LSTATE_NONE]['"'] = &lexer_create_dquote;
+	lexer->lexer_actions[LSTATE_DQUOTE]['"'] = &lexer_cut_pass;
 }
 
 void		init_lexer(t_lexer *lexer)
@@ -47,4 +64,5 @@ void		init_lexer(t_lexer *lexer)
 	init_lexer_meta(lexer, LSTATE_NONE, &lexer_create_meta);
 	init_lexer_meta(lexer, LSTATE_META, &lexer_add_meta);
 	init_lexer_meta(lexer, LSTATE_WORD, &lexer_cut);
+	init_lexer_quote(lexer);
 }

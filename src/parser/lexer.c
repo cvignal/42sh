@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/18 22:08:52 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 09:18:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,21 @@ static int		handle_ret(int ret, t_token **current, t_token **output)
 	return (0);
 }
 
-static t_token	*get_return(t_token **output, t_token *current)
+static t_token	*get_return(t_lexer *lexer, t_token **output, t_token *current)
 {
 	t_token		*over;
 
 	if (current)
+	{
 		add_to_token_list(output, current);
+		lss_pop(lexer);
+	}
+	if (!lexer->lss || lexer->lss->state != LSTATE_NONE)
+	{
+		clean_exit(*output, current, "syntax error");
+		return (NULL);
+	}
+	lss_pop(lexer);
 	if (!(over = alloc_token()))
 		return (NULL);
 	over->type = TT_OVER;
@@ -72,7 +81,7 @@ static t_token	*get_return(t_token **output, t_token *current)
 	return (*output);
 }
 
-t_token			*lex(t_shell *shell, const char *line)
+t_token			*lex(t_lexer *lexer, const char *line)
 {
 	t_token	*output;
 	t_token	*current;
@@ -82,13 +91,14 @@ t_token			*lex(t_shell *shell, const char *line)
 	output = NULL;
 	current = NULL;
 	pos = 0;
-	shell->lexer.state = LSTATE_NONE;
+	if (lexer->lss || lss_push(lexer, LSTATE_NONE))
+		return (NULL);
 	while (line[pos])
 	{
 		if (line[pos] > 0)
 		{
-			ret = shell->lexer.lexer_actions[shell->lexer.state]
-				[(int)line[pos]](&shell->lexer, current, line[pos]);
+			ret = lexer->lexer_actions[lexer->lss->state]
+				[(int)line[pos]](lexer, current, line[pos]);
 			if (handle_ret(ret, &current, &output))
 				return (NULL);
 			pos += !!(ret & (1 << LEXER_RET_CONT));
@@ -97,5 +107,5 @@ t_token			*lex(t_shell *shell, const char *line)
 			return (clean_exit(output, current, "syntax error") == 1
 					? NULL : NULL);
 	}
-	return (get_return(&output, current));
+	return (get_return(lexer, &output, current));
 }

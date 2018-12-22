@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:46:31 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/15 11:09:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 09:03:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		lexer_cut(t_lexer *lexer, t_token *token, char c)
 {
 	(void)token;
 	(void)c;
-	lexer->state = LSTATE_NONE;
+	lss_pop(lexer);
 	return (1 << LEXER_RET_CUT);
 }
 
@@ -49,6 +49,19 @@ int		lexer_create(t_lexer *lexer, t_token *token, char c)
 {
 	(void)token;
 	(void)c;
-	lexer->state = LSTATE_WORD;
+	if (lss_push(lexer, LSTATE_WORD))
+		return (1 << LEXER_RET_ERROR);
 	return (1 << LEXER_RET_CREATE);
+}
+
+int		lexer_cut_pass(t_lexer *lexer, t_token *token, char c)
+{
+	int	ret;
+
+	(void)token;
+	(void)c;
+	lss_pop(lexer);
+	ret = (1 << LEXER_RET_CUT);
+	ret |= (1 << LEXER_RET_CONT);
+	return (ret);
 }
