@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:30:06 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 14:38:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 12:59:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 
 typedef struct		s_shell
 {
-	t_parser		parser;
 	t_lexer			lexer;
 	char			**env;
 	char			*line;

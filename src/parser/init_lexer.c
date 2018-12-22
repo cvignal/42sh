@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:46:05 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 11:26:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 13:33:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int			init_lexer(t_lexer *lexer)
 	lexer->lexer_actions[LSTATE_DQUOTE]['$'] = &lexer_push_var;
 	init_lexer_meta(lexer, LSTATE_NONE, &lexer_create_meta);
 	init_lexer_meta(lexer, LSTATE_META, &lexer_add_meta);
-	init_lexer_meta(lexer, LSTATE_WORD, &lexer_cut);
+	init_lexer_meta(lexer, LSTATE_WORD, &lexer_try_meta);
 	init_lexer_meta(lexer, LSTATE_VAR, &lexer_pop_var);
 	return (0);
 }

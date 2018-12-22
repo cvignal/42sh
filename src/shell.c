@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 09:59:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 13:09:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int			init_shell(t_shell *shell, char **environ)
 {
 	struct sigaction	sa;
 
-	init_parser(&shell->parser);
 	if (init_lexer(&shell->lexer))
 		return (1);
 	shell->line = NULL;

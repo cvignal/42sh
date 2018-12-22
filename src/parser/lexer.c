@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 12:08:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 17:09:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int		handle_ret(t_lexer *lexer, int ret, t_token **current,
 	}
 	if (ret & (1 << LEXER_RET_CUT))
 	{
-		set_token_type(*current);
+		(*current)->type = get_token_type(*current);
 		add_to_token_list(output, *current);
 		*current = NULL;
 	}

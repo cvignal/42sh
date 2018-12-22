@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/22 10:12:16 by gchainet         ###   ########.fr        #
+#    Updated: 2018/12/22 13:07:08 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC		=							\
 	main.c							\
 	parser/token.c					\
 	parser/token_type.c				\
+	parser/token_type_desc.c		\
 	parser/parser.c					\
 	parser/input_queue.c			\
 	parser/lexer_act.c				\

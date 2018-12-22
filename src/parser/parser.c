@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 10:03:44 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 13:01:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@
 #include "libft.h"
 #include "ast.h"
 #include "libft.h"
-
-void				init_parser(t_parser *parser)
-{
-	ft_bzero(parser, sizeof(*parser));
-}
 
 static int			reduce(t_ast_token *input_queue)
 {
