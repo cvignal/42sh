@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 11:39:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 11:45:41 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,10 @@ int			main(int ac, char **av, char **environ)
 		tokens = lex(&shell, shell.line);
 		if (!tokens)
 			ft_printf(">");
-		else
+		else if ((ast = parse(&shell, tokens)))
 		{
-			if ((ast = parse(&shell, tokens)))
-			{
-				ast->exec(&shell, ast);
-				ast->del(ast);
-			}
+			ast->exec(&shell, ast);
+			ast->del(ast);
 			ft_printf("$> ");
 		}
 		free(shell.line);
