@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 12:15:25 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 15:59:46 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,16 @@ void	ft_backspace(t_cmdline *res, t_shell *shell)
 	}
 }
 
-void	ft_addchar(t_cmdline *res, char *buf)
+void	ft_homekey(t_cmdline *res, t_shell *shell)
 {
-	if (res->cursor == ft_strlen(res->str))
-	{
-		res->str = ft_strjoin_free(res->str, buf, 1);
-		ft_printf("%s", buf);
-	}
-	else
-	{
-		tputs(tgetstr("im", NULL), 1, ft_printchar);
-		ft_printf("%s", buf);
-		res->str = ft_insert_free(res->str, buf, res->cursor, 1);
-		tputs(tgetstr("ei", NULL), 1, ft_printchar);
-	}
-	res->cursor++;
+	(void)shell;
+	while (res->cursor > 0)
+		ft_leftkey(res, shell);
+}
+
+void	ft_endkey(t_cmdline *res, t_shell *shell)
+{
+	(void)shell;
+	while (res->cursor < ft_strlen(res->str))
+		ft_rightkey(res, shell);
 }

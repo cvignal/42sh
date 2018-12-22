@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 14:44:33 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 15:57:23 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void			apply_key(char *buf, t_cmdline *res, t_shell *shell);
 void			ft_addchar(t_cmdline *res, char *buf);
 int				ft_printchar(int c);
 void			ft_leftkey(t_cmdline *res, t_shell *shell);
+void			ft_homekey(t_cmdline *res, t_shell *shell);
+void			ft_endkey(t_cmdline *res, t_shell *shell);
 void			ft_rightkey(t_cmdline *res, t_shell *shell);
 void			ft_tab(t_cmdline *res, t_shell *shell);
 void			ft_backspace(t_cmdline *res, t_shell *shell);

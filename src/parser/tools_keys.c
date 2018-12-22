@@ -6,12 +6,13 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 13:55:38 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 16:00:08 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-
+#include <term.h>
+#include <curses.h>
 #include "libft.h"
 #include "minishell.h"
 #include "fill_line.h"
@@ -23,7 +24,9 @@ t_key	g_special_keys[] =
 	{BACKSPACE, &ft_backspace},
 	{TAB_KEY, &ft_tab},
 	{DOWN_ARROW, &ft_hisdown},
-	{UP_ARROW, &ft_hisup}
+	{UP_ARROW, &ft_hisup},
+	{HOME_KEY, &ft_homekey},
+	{END_KEY, &ft_endkey}
 };
 
 int		is_a_special_key(char *buf)
@@ -36,6 +39,23 @@ int		ft_printchar(int c)
 	return (write(1, &c, 1));
 }
 
+void	ft_addchar(t_cmdline *res, char *buf)
+{
+	if (res->cursor == ft_strlen(res->str))
+	{
+		res->str = ft_strjoin_free(res->str, buf, 1);
+		ft_printf("%s", buf);
+	}
+	else
+	{
+		tputs(tgetstr("im", NULL), 1, ft_printchar);
+		ft_printf("%s", buf);
+		res->str = ft_insert_free(res->str, buf, res->cursor, 1);
+		tputs(tgetstr("ei", NULL), 1, ft_printchar);
+	}
+	res->cursor++;
+}
+
 void	apply_key(char *buf, t_cmdline *res, t_shell *shell)
 {
 	int		i;
@@ -44,7 +64,7 @@ void	apply_key(char *buf, t_cmdline *res, t_shell *shell)
 	i = 0;
 	if (*buf == 127)
 		ft_backspace(res, shell);
-	while (i < 6)
+	while (i < 8)
 	{
 		len = ft_strlen(g_special_keys[i].value);
 		if (ft_strnequ(g_special_keys[i].value, buf, len))
