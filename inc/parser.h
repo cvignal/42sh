@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 10:08:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 11:29:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ typedef enum		e_lexer_ret
 	LEXER_RET_CREATE,
 	LEXER_RET_CONT,
 	LEXER_RET_ERROR,
-	LEXER_RET_OVER
+	LEXER_RET_OVER,
+	LEXER_RET_MORE_INPUT
 }					t_lexer_ret;
 
 typedef struct		s_lss
@@ -140,6 +141,8 @@ int					lexer_pop_var(struct s_shell *shell, t_token *token, char c);
 ** parser/lexer_act_over.c
 */
 int					lexer_over(struct s_shell *shell, t_token *token, char c);
+int					lexer_more_input(struct s_shell *shell, t_token *token,
+		char c);
 
 /*
 ** parser/lexer.c

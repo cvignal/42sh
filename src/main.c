@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 09:50:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 11:39:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int			main(int ac, char **av, char **environ)
 {
 	t_ast		*ast;
 	t_shell		shell;
+	t_token		*tokens;
 
 	(void)ac;
 	(void)av;
@@ -29,13 +30,19 @@ int			main(int ac, char **av, char **environ)
 	ft_printf("$> ");
 	while ((shell.line = fill_line(&shell)))
 	{
-		if ((ast = parse(&shell, lex(&shell, shell.line))))
+		tokens = lex(&shell, shell.line);
+		if (!tokens)
+			ft_printf(">");
+		else
 		{
-			ast->exec(&shell, ast);
-			ast->del(ast);
+			if ((ast = parse(&shell, tokens)))
+			{
+				ast->exec(&shell, ast);
+				ast->del(ast);
+			}
+			ft_printf("$> ");
 		}
 		free(shell.line);
-		ft_printf("$> ");
 	}
 	free_shell(&shell);
 	return (0);

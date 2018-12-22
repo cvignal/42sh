@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:46:05 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 10:26:47 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 11:26:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static void	init_lexer_zero(t_lexer *lexer)
 	lexer->lexer_actions[LSTATE_WORD][0] = &lexer_cut;
 	lexer->lexer_actions[LSTATE_VAR][0] = &lexer_pop_var;
 	lexer->lexer_actions[LSTATE_NONE][0] = &lexer_over;
+	lexer->lexer_actions[LSTATE_DQUOTE][0] = &lexer_more_input;
+	lexer->lexer_actions[LSTATE_SQUOTE][0] = &lexer_more_input;
 }
 
 int			init_lexer(t_lexer *lexer)
@@ -66,10 +68,14 @@ int			init_lexer(t_lexer *lexer)
 		lexer->lexer_actions[LSTATE_VAR][i] = &lexer_add;
 		++i;
 	}
+	init_lexer_quote(lexer);
+	init_lexer_zero(lexer);
 	lexer->lexer_actions[LSTATE_WORD][' '] = &lexer_cut;
 	lexer->lexer_actions[LSTATE_WORD]['\t'] = &lexer_cut;
 	lexer->lexer_actions[LSTATE_VAR][' '] = &lexer_pop_var;
 	lexer->lexer_actions[LSTATE_VAR]['\t'] = &lexer_pop_var;
+	lexer->lexer_actions[LSTATE_VAR]['\''] = &lexer_pop_var;
+	lexer->lexer_actions[LSTATE_VAR]['"'] = &lexer_pop_var;
 	lexer->lexer_actions[LSTATE_NONE][' '] = &lexer_pass;
 	lexer->lexer_actions[LSTATE_NONE]['\t'] = &lexer_pass;
 	lexer->lexer_actions[LSTATE_WORD]['$'] = &lexer_push_var;
@@ -78,7 +84,5 @@ int			init_lexer(t_lexer *lexer)
 	init_lexer_meta(lexer, LSTATE_META, &lexer_add_meta);
 	init_lexer_meta(lexer, LSTATE_WORD, &lexer_cut);
 	init_lexer_meta(lexer, LSTATE_VAR, &lexer_pop_var);
-	init_lexer_quote(lexer);
-	init_lexer_zero(lexer);
 	return (0);
 }
