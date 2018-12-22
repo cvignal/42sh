@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 13:58:33 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 14:26:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,6 @@
 #include <unistd.h>
 #include <term.h>
 #include <curses.h>
-
-static void	fill_table(int *table, t_list *list)
-{
-	int		width;
-	t_list	*curr;
-	size_t	max_len;
-	int		nb;
-
-	width = tgetnum("co");
-	curr = list;
-	max_len = 0;
-	nb = 0;
-	while (curr)
-	{
-		if (ft_strlen(curr->content) > max_len)
-			max_len = ft_strlen(curr->content);
-		curr = curr->next;
-		nb++;
-	}
-	table[1] = (int)max_len;
-	table[0] = width / (max_len + 1);
-	table[2] = nb;
-	table[3] = nb / table[0] + (nb % table[0] != 0);
-}
 
 char		*find_path(char *word)
 {
@@ -83,31 +59,6 @@ int			ft_comp(char *word, char *name)
 	}
 }
 
-void		display_list(t_list *list)
-{
-	int		i;
-	int		table[4];
-	char	**array;
-	int		j;
-
-	tputs(tgetstr("sc", NULL), 0, ft_printchar);
-	fill_table(table, list);
-	array = ft_listtotab(list, table[2]);
-	ft_printf("\n");
-	i = 0;
-	while (i < table[3])
-	{
-		j = i;
-		while (j < table[2])
-		{
-			ft_printf("%-*s", table[1] + 1, array[j]);
-			j += table[3];
-		}
-		ft_printf("\n");
-		i++;
-	}
-	tputs(tgetstr("rc", NULL), 0, ft_printchar);
-}
 
 void		clean_under_line(void)
 {

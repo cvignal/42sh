@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 13:50:54 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 14:06:15 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	clear_cmd_line(t_cmdline *res)
 		ft_backspace(res, NULL);
 }
 
-void	ft_hisdown(t_cmdline *res, t_shell *shell)
+void		ft_hisdown(t_cmdline *res, t_shell *shell)
 {
 	t_list	*curr;
 	int		i;
@@ -46,7 +46,7 @@ void	ft_hisdown(t_cmdline *res, t_shell *shell)
 	}
 }
 
-void	ft_hisup(t_cmdline *res, t_shell *shell)
+void		ft_hisup(t_cmdline *res, t_shell *shell)
 {
 	t_list	*curr;
 	int		i;

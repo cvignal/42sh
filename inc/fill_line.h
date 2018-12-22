@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 13:22:00 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 14:44:33 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define CTRL_R "\x12\0\0\0\0\0"
 # define RETURN "\n"
 # define BACKSPACE "\b"
+# define CURS_POS "\033[6n"
 
 typedef struct	s_cmdline
 {
@@ -43,6 +44,12 @@ typedef struct	s_key
 	char	*value;
 	void	(*f)(t_cmdline *res, t_shell *shell);
 }				t_key;
+
+typedef struct	s_curs
+{
+	int	col;
+	int	line;
+}				t_curs;
 
 char			*fill_line(t_shell *shell);
 int				is_a_special_key(char *buf);
@@ -59,5 +66,6 @@ void			display_list(t_list *list);
 void			clean_under_line(void);
 void			ft_hisdown(t_cmdline *res, t_shell *shell);
 void			ft_hisup(t_cmdline *res, t_shell *shell);
+t_curs			*get_cursor_pos(void);
 
 #endif
