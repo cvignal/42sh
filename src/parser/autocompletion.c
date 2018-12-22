@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 16:09:30 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 13:54:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 16:21:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,5 @@ void		ft_tab(t_cmdline *res, t_shell *shell)
 		display_list(list);
 	else if (list)
 		add_and_display(list->content, word, res);
+	ft_lstdel(&list, &ft_delelt);
 }

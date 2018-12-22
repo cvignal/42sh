@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 15:57:23 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 16:19:59 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define RETURN "\n"
 # define BACKSPACE "\b"
 # define CURS_POS "\033[6n"
+# define F1_KEY "\033OP"
+# define F2_KEY "\033OQ"
 
 typedef struct	s_cmdline
 {
@@ -62,6 +64,8 @@ void			ft_endkey(t_cmdline *res, t_shell *shell);
 void			ft_rightkey(t_cmdline *res, t_shell *shell);
 void			ft_tab(t_cmdline *res, t_shell *shell);
 void			ft_backspace(t_cmdline *res, t_shell *shell);
+void			ft_nextword(t_cmdline *res, t_shell *shell);
+void			ft_prevword(t_cmdline *res, t_shell *shell);
 int				ft_comp(char *word, char *name);
 char			*find_path(char *word);
 void			display_list(t_list *list);

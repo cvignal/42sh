@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 16:00:08 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 16:23:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ t_key	g_special_keys[] =
 	{DOWN_ARROW, &ft_hisdown},
 	{UP_ARROW, &ft_hisup},
 	{HOME_KEY, &ft_homekey},
-	{END_KEY, &ft_endkey}
+	{END_KEY, &ft_endkey},
+	{F1_KEY, &ft_prevword},
+	{F2_KEY, &ft_nextword}
 };
 
 int		is_a_special_key(char *buf)
@@ -64,7 +66,7 @@ void	apply_key(char *buf, t_cmdline *res, t_shell *shell)
 	i = 0;
 	if (*buf == 127)
 		ft_backspace(res, shell);
-	while (i < 8)
+	while (i < 10)
 	{
 		len = ft_strlen(g_special_keys[i].value);
 		if (ft_strnequ(g_special_keys[i].value, buf, len))

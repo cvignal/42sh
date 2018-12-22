@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 15:39:31 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 16:21:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,5 @@ void		display_list(t_list *list)
 		tputs(tgetstr("up", NULL), 0, ft_printchar);
 		nb--;
 	}
+	free(cursor);
 }
