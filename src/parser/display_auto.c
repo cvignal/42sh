@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 16:21:48 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 19:17:33 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,11 @@ void		display_list(t_list *list)
 	cursor = get_cursor_pos();
 	fill_table(table, list);
 	if (table[3] + cursor->line > tgetnum("li"))
-		nb = table[3] + cursor->line - tgetnum("li") + 1;
+		nb = table[3] + cursor->line - tgetnum("li");
 	else
 		nb = 0;
 	array = ft_listtotab(list, table[2]);
+	quicksort(array, 0, table[2] - 1);
 	display_table(array, table);
 	tputs(tgetstr("rc", NULL), 0, ft_printchar);
 	while (nb)

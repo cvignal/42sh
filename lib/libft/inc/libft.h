@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 18:06:07 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 19:14:29 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,6 @@ size_t				ft_strlenw(const wchar_t *s);
 size_t				ft_char_size_utf8(unsigned int c);
 int					ft_printf(const char *format, ...);
 int					ft_dprintf(int fd, const char *format, ...);
+void				quicksort(char **array, int first, int last);
 
 #endif
