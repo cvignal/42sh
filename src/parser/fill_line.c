@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 17:33:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 18:41:16 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	add_to_history(char *str, t_shell *shell)
 {
 	t_list	*new;
 
-	new = ft_lstnew(str, ft_strlen(str));
+	new = ft_lstnew(str, ft_strlen(str) + 1);
 	ft_lstadd(&shell->history, new);
 }
 
@@ -93,9 +93,11 @@ char		*fill_line(t_shell *shell)
 		return (NULL);
 	res->cursor = 0;
 	res->his_pos = -1;
-	while ((ret = read(STDIN_FILENO, buf, 8)) > 0 && !ft_strchr(buf, '\n'))
+	while ((ret = read(STDIN_FILENO, buf, 8)) > 0)
 	{
 		buf[ret] = 0;
+		if (ft_strchr(buf, '\n'))
+			break ;
 		if (is_a_special_key(buf))
 			apply_key(buf, res, shell);
 		else

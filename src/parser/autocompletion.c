@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 16:09:30 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 16:21:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 17:59:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		add_and_display(char *str, char *word, t_cmdline *res)
 	else
 		to_add = str + ft_strlen(word);
 	ft_printf("%s", to_add);
-	res->str = ft_strjoin_free(res->str, to_add, 1);
+	res->str = ft_insert_free(res->str, to_add, res->cursor, 1);
 	res->cursor = ft_strlen(res->str);
 }
 

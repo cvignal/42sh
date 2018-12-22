@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 14:06:15 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 19:03:50 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	clear_cmd_line(t_cmdline *res)
 {
 	while (res->cursor < ft_strlen(res->str))
 		ft_rightkey(res, NULL);
+	ft_rightkey(res, NULL);
 	while (res->cursor > 0)
 		ft_backspace(res, NULL);
 }
@@ -63,8 +64,8 @@ void		ft_hisup(t_cmdline *res, t_shell *shell)
 		i++;
 	}
 	clear_cmd_line(res);
-	ft_printf("%s", curr->content);
-	res->cursor = curr->content_size;
 	ft_strdel(&res->str);
 	res->str = ft_strdup(curr->content);
+	ft_printf("%s", res->str);
+	res->cursor = ft_strlen(res->str);
 }
