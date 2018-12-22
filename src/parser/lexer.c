@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 11:37:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 12:08:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "minishell.h"
 #include "libft.h"
 #include "ast.h"
+#include "libft.h"
 
 static int		clean_exit(t_lexer *lexer, t_token **list, t_token **current,
 		const char *msg)
