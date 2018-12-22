@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 13:29:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 13:58:33 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	fill_table(int *table, t_list *list)
 	table[3] = nb / table[0] + (nb % table[0] != 0);
 }
 
-char	*find_path(char *word)
+char		*find_path(char *word)
 {
 	char	pwd[BUFF_SIZE];
 	char	*ret;
@@ -61,7 +61,7 @@ char	*find_path(char *word)
 	return (ret);
 }
 
-int		ft_comp(char *word, char *name)
+int			ft_comp(char *word, char *name)
 {
 	char	*rtn;
 
@@ -83,7 +83,7 @@ int		ft_comp(char *word, char *name)
 	}
 }
 
-void	display_list(t_list *list)
+void		display_list(t_list *list)
 {
 	int		i;
 	int		table[4];
@@ -109,7 +109,7 @@ void	display_list(t_list *list)
 	tputs(tgetstr("rc", NULL), 0, ft_printchar);
 }
 
-void	clean_under_line(void)
+void		clean_under_line(void)
 {
 	tputs(tgetstr("sc", NULL), 0, ft_printchar);
 	tputs(tgetstr("cd", NULL), 0, ft_printchar);

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 13:56:39 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 13:55:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	check_validity(void)
 	}
 }
 
-void	raw_terminal_mode(void)
+void		raw_terminal_mode(void)
 {
 	struct termios term;
 
@@ -70,7 +70,7 @@ void	raw_terminal_mode(void)
 	tgetent(NULL, getenv("TERM"));
 }
 
-void	reset_terminal_mode(void)
+void		reset_terminal_mode(void)
 {
 	struct termios term;
 
@@ -80,8 +80,7 @@ void	reset_terminal_mode(void)
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &term);
 }
 
-
-char	*fill_line(t_shell *shell)
+char		*fill_line(t_shell *shell)
 {
 	char			buf[8];
 	t_cmdline		*res;

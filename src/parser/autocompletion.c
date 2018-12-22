@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 16:09:30 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/21 10:27:58 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 13:54:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <dirent.h>
 #include <stdlib.h>
 
-void	add_and_display(char *str, char *word, t_cmdline *res)
+void		add_and_display(char *str, char *word, t_cmdline *res)
 {
 	char	*to_add;
 
@@ -79,7 +79,7 @@ static void	ft_add_exec(char *word, t_list **list)
 	ft_deltab(&paths);
 }
 
-void	ft_tab(t_cmdline *res, t_shell *shell)
+void		ft_tab(t_cmdline *res, t_shell *shell)
 {
 	t_list	*list;
 	char	*word;

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:30:06 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 13:29:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 13:57:59 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct		s_redir
 	char			*target;
 	t_redir_act		redir_act;
 	struct s_redir	*next;
-}				t_redir;
+}					t_redir;
 
 typedef struct		s_command
 {
@@ -55,15 +55,15 @@ typedef struct		s_command
 	t_redir			*redir_list;
 }					t_command;
 
-typedef struct			s_pipeline
+typedef struct		s_pipeline
 {
-	t_command		*command;
-	int			in_fd[2];
-	int			out_fd[2];
-	int			fd_copy[3];
-	int			running;
+	t_command			*command;
+	int					in_fd[2];
+	int					out_fd[2];
+	int					fd_copy[3];
+	int					running;
 	struct s_pipeline	*next;
-}				t_pipeline;
+}					t_pipeline;
 
 typedef int			(*t_builtin)(t_shell *, char **);
 
@@ -93,8 +93,10 @@ int					add_to_command(t_command *command, char *word);
 /*
 ** exec.c
 */
-int					exec(t_shell *shell, t_pipeline *pipeline, t_pipeline *current);
-int					exec_from_char(t_shell *shell, char **arg, t_shell *tmp_shell);
+int					exec(t_shell *shell, t_pipeline *pipeline,
+					t_pipeline *current);
+int					exec_from_char(t_shell *shell, char **arg,
+					t_shell *tmp_shell);
 int					wait_loop(t_pipeline *pipeline);
 
 /*
@@ -112,7 +114,7 @@ int					init_shell(t_shell *shell, char **environ);
 ** env.c
 */
 int					set_env_var(t_shell *shell, const char *var,
-		const char *value);
+					const char *value);
 void				remove_env(t_shell *shell);
 
 /*
@@ -134,7 +136,8 @@ int					builtin_setenv(t_shell *shell, char **args);
 int					builtin_unsetenv(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
-int					exec_builtin(t_shell *shell, t_builtin builtin, t_pipeline *current);
+int					exec_builtin(t_shell *shell, t_builtin builtin,
+					t_pipeline *current);
 
 /*
 ** replace.c
@@ -169,7 +172,7 @@ void				free_and(struct s_ast *ast);
 ** redir.c
 */
 int					add_redir(t_command *command, t_ttype type, char *arg,
-		t_redir_act act);
+					t_redir_act act);
 
 /*
 ** redir_internal.c

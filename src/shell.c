@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 15:17:54 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/22 13:56:08 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int			init_shell(t_shell *shell, char **environ)
 	init_parser(&shell->parser);
 	init_lexer(&shell->lexer);
 	shell->line = NULL;
-        ft_bzero(&sa, sizeof(sa));
+	ft_bzero(&sa, sizeof(sa));
 	sa.sa_handler = &signal_sigint;
 	sigaction(SIGINT, &sa, NULL);
 	if (!(shell->env = copy_env(environ)))
