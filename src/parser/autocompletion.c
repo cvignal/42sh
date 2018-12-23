@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 16:09:30 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/23 15:51:49 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 17:30:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void		add_and_display(char *str, char *word, t_cmdline *res)
 
 static int	first_arg(char *line)
 {
-	if (ft_strchr(line, ' '))
-		return (0);
+	
 	return (1);
 }
 
