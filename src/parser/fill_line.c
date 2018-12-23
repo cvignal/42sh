@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 18:41:16 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 14:44:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@ static void	add_to_history(char *str, t_shell *shell)
 {
 	t_list	*new;
 
-	new = ft_lstnew(str, ft_strlen(str) + 1);
-	ft_lstadd(&shell->history, new);
+	if (ft_strlen(str) > 0)
+	{
+		new = ft_lstnew(str, ft_strlen(str) + 1);
+		ft_lstadd(&shell->history, new);
+	}
 }
 
 static void	check_validity(void)

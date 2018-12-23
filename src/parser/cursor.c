@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:11:53 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 15:39:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 16:41:05 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	read_cursor_pos(char *buf)
 t_curs	*get_cursor_pos(void)
 {
 	char	buf[30];
-
 	t_curs	*res;
+
 	if (!(res = (t_curs*)malloc(sizeof(t_curs))))
 		return (NULL);
 	write(1, CURS_POS, 4);

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 16:09:30 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 17:59:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 15:51:49 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void	ft_add_files(char *word, t_list **list)
 	char			*name;
 
 	path = find_path(word);
-	dir = opendir(path);
+	if (!(dir = opendir(path)))
+		return ;
 	while ((dirent = readdir(dir)) != NULL)
 	{
 		if (ft_comp(word, dirent->d_name))
@@ -54,7 +55,7 @@ static void	ft_add_files(char *word, t_list **list)
 				name = ft_strjoin(dirent->d_name, "/");
 			else
 				name = ft_strdup(dirent->d_name);
-			new = ft_lstnew(name, ft_strlen(name));
+			new = ft_lstnew(name, ft_strlen(name) + 1);
 			ft_lstadd(list, new);
 		}
 	}
@@ -66,6 +67,11 @@ static void	ft_add_exec(char *word, t_list **list)
 	int		i;
 	char	*prog;
 
+	if (ft_strchr(word, '/'))
+	{
+		ft_add_files(word, list);
+		return ;
+	}
 	paths = ft_strsplit(getenv("PATH"), ":");
 	i = 0;
 	while (paths[i])
@@ -90,6 +96,8 @@ void		ft_tab(t_cmdline *res, t_shell *shell)
 	if (first_arg(res->str))
 	{
 		word = res->str;
+		if (!*word)
+			return ;
 		ft_add_exec(word, &list);
 	}
 	else

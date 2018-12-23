@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 19:17:33 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 16:58:39 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,28 +62,50 @@ static void	display_table(char **array, int table[4])
 	}
 }
 
+static int	ask_for_many_possibilities(int *table, t_curs *cursor)
+{
+	char	buf[10];
+	int		ret;
+
+	tputs(tgetstr("sc", NULL), 0, ft_printchar);
+	if (table[2] < 75)
+		return (1);
+	else
+	{
+		ft_printf("\nsh: do you wish to see all %d possibilities (%d lines)? ",
+				table[2], table[3]);
+		ret = read(STDIN_FILENO, buf, 10);
+		buf[ret] = 0;
+		tputs(tgetstr("rc", NULL), 0, ft_printchar);
+		if (cursor->line + 1 > tgetnum("li"))
+			tputs(tgetstr("up", NULL), 0, ft_printchar);
+		clean_under_line();
+		return (buf[0] == 'y');
+	}
+}
+
 void		display_list(t_list *list)
 {
 	int		table[4];
 	char	**array;
 	t_curs	*cursor;
 	int		nb;
+	int		ret;
 
 	tputs(tgetstr("sc", NULL), 0, ft_printchar);
 	cursor = get_cursor_pos();
 	fill_table(table, list);
+	if (!(ret = ask_for_many_possibilities(table, cursor)))
+		return ;
 	if (table[3] + cursor->line > tgetnum("li"))
-		nb = table[3] + cursor->line - tgetnum("li");
+		nb = table[3] + cursor->line - tgetnum("li") + 1;
 	else
 		nb = 0;
 	array = ft_listtotab(list, table[2]);
 	quicksort(array, 0, table[2] - 1);
 	display_table(array, table);
 	tputs(tgetstr("rc", NULL), 0, ft_printchar);
-	while (nb)
-	{
+	while (--nb > 0)
 		tputs(tgetstr("up", NULL), 0, ft_printchar);
-		nb--;
-	}
 	free(cursor);
 }

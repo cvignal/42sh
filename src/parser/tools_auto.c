@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 14:26:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 16:41:31 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int			ft_comp(char *word, char *name)
 		return (ft_strnequ(word, name, ft_strlen(word)));
 	}
 }
-
 
 void		clean_under_line(void)
 {
