@@ -59,6 +59,23 @@ int			ft_comp(char *word, char *name)
 	}
 }
 
+char		*word_to_complete(char *line)
+{
+	char	*ret;
+	int		i;
+
+	ret = NULL;
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == ' ' || line[i] == ';' || line[i] == '>' || line[i] == '<'
+			|| line[i] == '&' || line[i] == '|')
+			ret = line + i;
+		i++;
+	}
+	return (ret);
+}
+
 void		clean_under_line(void)
 {
 	tputs(tgetstr("sc", NULL), 0, ft_printchar);

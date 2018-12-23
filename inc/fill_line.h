@@ -75,5 +75,6 @@ void			ft_hisup(t_cmdline *res, t_shell *shell);
 t_curs			*get_cursor_pos(void);
 void			reset_terminal_mode(void);
 void			raw_terminal_mode(void);
+char			*word_to_complete(char *line);
 
 #endif

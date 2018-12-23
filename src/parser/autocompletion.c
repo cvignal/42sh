@@ -31,8 +31,22 @@ void		add_and_display(char *str, char *word, t_cmdline *res)
 
 static int	first_arg(char *line)
 {
-	
-	return (1);
+	int	ret;
+	int	i;
+
+	ret = 1;
+	i = 0;
+	while (line[i])
+	{
+		if ((line[i] == ' ' || line[i] == '>') && i > 0 && line[i - 1] != ';' && line[i - 1] != '|'
+			&& !ft_strnequ(line + i - 1, "&&", 2))
+			ret = 0;
+		if (line[i] == ';' || line[i] == '|' || ft_strnequ(line + i, "&&", 2)
+			|| line[i] == '<')
+			ret = 1;
+		i++;
+	}
+	return (ret);
 }
 
 static void	ft_add_files(char *word, t_list **list)
@@ -94,14 +108,17 @@ void		ft_tab(t_cmdline *res, t_shell *shell)
 	clean_under_line();
 	if (first_arg(res->str))
 	{
-		word = res->str;
+		if (!word_to_complete(res->str))
+			word = res->str;
+		else
+			word = word_to_complete(res->str) + 1;
 		if (!*word)
 			return ;
 		ft_add_exec(word, &list);
 	}
 	else
 	{
-		word = ft_strrchr(res->str, ' ') + 1;
+		word = word_to_complete(res->str) + 1;
 		ft_add_files(word, &list);
 	}
 	if (list && list->next)
