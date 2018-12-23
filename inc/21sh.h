@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 19:01:52 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 19:41:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,11 @@ int					redir_rr(t_shell *shell, t_redir *redir);
 ** redir_r_comp.c
 */
 int					redir_r_comp(t_shell *shell, t_redir *redir);
+
+/*
+** redir_r_close.c
+*/
+int					redir_r_close(t_shell *shell, t_redir *redir);
 
 /*
 ** pipeline.c
