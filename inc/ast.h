@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 23:03:20 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 12:46:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef enum			e_ttype
 {
 	TT_WORD,
+	TT_PARTIAL,
 	TT_CMD,
 	TT_PIPELINE,
 	TT_END,
@@ -86,18 +87,23 @@ int						rule_shift_first(t_ast_token *list);
 int						rule_shift_second(t_ast_token *list);
 
 /*
-** parser/rules/or.c
+** parser/rules_or.c
 */
 int						rule_or(t_ast_token *list);
 int						rule_and(t_ast_token *list);
 
 /*
-** parser/rules/redir.c
+** parser/rules_redir.c
 */
 int						rule_redir_l(t_ast_token *list);
 int						rule_redir_ll(t_ast_token *list);
 int						rule_redir_r(t_ast_token *list);
 int						rule_redir_rr(t_ast_token *list);
+
+/*
+** parser/rule_redir_r_comp.c
+*/
+int						rule_redir_r_comp(t_ast_token *list);
 
 /*
 ** parser/rules/pipeline.c

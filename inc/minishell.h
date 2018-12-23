@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:30:06 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 17:33:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 12:47:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct		s_redir
 {
 	t_ttype			type;
 	char			*target;
+	int				in;
+	int				out;
 	t_redir_act		redir_act;
 	struct s_redir	*next;
 }					t_redir;
@@ -183,6 +185,11 @@ int					redir_l(t_shell *shell, t_redir *redir);
 int					redir_ll(t_shell *shell, t_redir *redir);
 int					redir_r(t_shell *shell, t_redir *redir);
 int					redir_rr(t_shell *shell, t_redir *redir);
+
+/*
+** redir_r_comp.c
+*/
+int					redir_r_comp(t_shell *shell, t_redir *redir);
 
 /*
 ** pipeline.c

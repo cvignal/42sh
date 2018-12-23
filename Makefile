@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/22 17:34:52 by gchainet         ###   ########.fr        #
+#    Updated: 2018/12/23 12:45:49 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC		=							\
 	parser/rules_shift.c			\
 	parser/rules_logic.c			\
 	parser/rules_redir.c			\
+	parser/rules_redir_r_comp.c		\
 	parser/rules_pipe.c				\
 	parser/ast.c					\
 	parser/ast_token.c				\
@@ -63,6 +64,7 @@ SRC		=							\
 	heredoc.c						\
 	signal.c						\
 	redir.c							\
+	redir_r_comp.c					\
 	redir_internal.c				\
 	pipeline.c						\
 	builtins/builtins.c				\

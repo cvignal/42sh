@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:46:05 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 13:33:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 12:34:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			init_lexer(t_lexer *lexer)
 	{
 		lexer->lexer_actions[LSTATE_NONE][i] = &lexer_create;
 		lexer->lexer_actions[LSTATE_WORD][i] = &lexer_add;
-		lexer->lexer_actions[LSTATE_META][i] = &lexer_cut;
+		lexer->lexer_actions[LSTATE_META][i] = &lexer_try_meta;
 		lexer->lexer_actions[LSTATE_VAR][i] = &lexer_add;
 		++i;
 	}
