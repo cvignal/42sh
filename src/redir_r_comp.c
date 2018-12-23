@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   or.c                                               :+:      :+:    :+:   */
+/*   redir_r_comp.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/15 20:38:39 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 12:18:52 by gchainet         ###   ########.fr       */
+/*   Created: 2018/12/23 12:35:46 by gchainet          #+#    #+#             */
+/*   Updated: 2018/12/23 13:06:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
 
 #include "minishell.h"
-#include "ast.h"
 
-int		exec_or(t_shell *shell, t_ast *ast)
+int	redir_r_comp(t_shell *shell, t_redir *redir)
 {
-	if (ast->left->exec(shell, ast->left))
-		return (ast->right->exec(shell, ast->right));
+	(void)shell;
+	dup2(redir->out, redir->in);
 	return (0);
-}
-
-void	free_or(t_ast *ast)
-{
-	ast->left->del(ast->left);
-	ast->right->del(ast->right);
-	free(ast->data);
-	free(ast);
 }

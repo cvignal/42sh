@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 20:36:36 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 08:39:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 11:57:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	rule_or(t_ast_token *list)
 	t_ast		*node;
 	t_ast_token	*tmp;
 
-	if (!(node = alloc_ast(list->next->data, TT_END, exec_or, free_or)))
+	if (!(node = alloc_ast(list->next->data, TT_PIPELINE, exec_or, free_or)))
 		return (1);
 	node->left = list->data;
 	node->right = list->next->next->data;
@@ -38,7 +38,7 @@ int	rule_and(t_ast_token *list)
 	t_ast		*node;
 	t_ast_token	*tmp;
 
-	if (!(node = alloc_ast(list->next->data, TT_END, exec_and, free_and)))
+	if (!(node = alloc_ast(list->next->data, TT_PIPELINE, exec_and, free_and)))
 		return (1);
 	node->left = list->data;
 	node->right = list->next->next->data;

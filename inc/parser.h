@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 13:35:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 11:38:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,14 @@ typedef enum		e_lexer_ret
 	LEXER_RET_OVER,
 	LEXER_RET_MORE_INPUT
 }					t_lexer_ret;
+
+
+enum
+{
+	MATCH_NO,
+	MATCH_PARTIAL,
+	MATCH_COMPLETE
+};
 
 typedef struct		s_lss
 {

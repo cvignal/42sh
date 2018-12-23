@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:14:32 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 11:11:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/22 18:22:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	rule_add_to_pipeline(t_ast_token *list)
 		iter = iter->next;
 	iter->next = new_pipeline;
 	tmp = list->next->next->next;
+	free(list->next->next->data);
 	free(list->next->next);
 	free(list->next->data);
 	free(list->next);

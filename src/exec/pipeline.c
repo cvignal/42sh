@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 07:46:37 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 11:54:49 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 12:19:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ int	exec_pipeline(t_shell *shell, t_ast *ast)
 		pipeline = pipeline->next;
 	}
 	close_all_pipes(ast->data);
-	wait_loop(ast->data);
-	return (0);
+	return (wait_loop(ast->data));
 }
 
 void	free_pipeline(t_ast *ast)

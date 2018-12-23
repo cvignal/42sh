@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:54:28 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 17:55:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 12:31:29 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ static const t_token_desc	g_token_desc[] =
 	{"||", TT_OR},
 	{"&", TT_BG},
 	{"&&", TT_AND},
-	{"<", TT_REDIR_L},
-	{"<<", TT_REDIR_LL},
-	{">", TT_REDIR_R},
-	{"d*>&d*", TT_REDIR_R},
-	{">>", TT_REDIR_RR}
+	{"d*<", TT_REDIR_L},
+	{"d*<<", TT_REDIR_LL},
+	{"d*>", TT_REDIR_R},
+	{"d*>&", TT_PARTIAL},
+	{"d*>&d*", TT_REDIR_R_COMP},
+	{"d*>>", TT_REDIR_RR}
 };
 
 static const t_match_desc	g_match_desc[] =
@@ -49,6 +50,29 @@ static t_char_cmp	get_token_cmp(char c)
 	return (&ccmp);
 }
 
+static int	match_plus(const char *token, char c, t_char_cmp cmp, int *match)
+{
+	int	pos_token;
+
+	pos_token = 0;
+	while (token[pos_token] && cmp(token[pos_token], c))
+		++pos_token;
+	if (pos_token)
+		*match = 1;
+	return (pos_token);
+}
+
+static int	match_star(const char *token, char c, t_char_cmp cmp, int *match)
+{
+	int	pos_token;
+
+	pos_token = 0;
+	*match = 1;
+	while (token[pos_token] && cmp(token[pos_token], c))
+		++pos_token;
+	return (pos_token);
+}
+
 static int	match_pseudo_regex(const char *token, const char *desc)
 {
 	int				pos_token;
@@ -64,14 +88,11 @@ static int	match_pseudo_regex(const char *token, const char *desc)
 		match = 0;
 		cmp = get_token_cmp(desc[pos_desc]);
 		if (desc[pos_desc + 1] == '*')
-		{
-			while (cmp(token[pos_token], desc[pos_desc]))
-			{
-				match = 1;
-				++pos_token;
-			}
-			++pos_desc;
-		}
+			pos_token += match_star(token + pos_token, desc[pos_desc++],
+					cmp, &match);
+		else if (desc[pos_desc + 1] == '+')
+			pos_token += match_plus(token + pos_token, desc[pos_desc++],
+					cmp, &match);
 		else if (cmp(token[pos_token], desc[pos_desc]))
 		{
 			match = 1;

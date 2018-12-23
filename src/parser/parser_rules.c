@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 08:37:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 12:35:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static const t_ast_rule g_rules[] =
 	{{TT_CMD, TT_REDIR_RR, TT_WORD}, 3, &rule_redir_rr},
 	{{TT_CMD, TT_REDIR_L, TT_WORD}, 3, &rule_redir_l},
 	{{TT_CMD, TT_REDIR_LL, TT_WORD}, 3, &rule_redir_ll},
+	{{TT_CMD, TT_REDIR_R_COMP, 0}, 2, &rule_redir_r_comp},
 	{{TT_CMD, 0, 0}, 1, &rule_create_pipeline},
 	{{TT_PIPELINE, TT_OVER, 0}, 2, &rule_shift_second},
 	{{TT_PIPELINE, TT_OR, TT_PIPELINE}, 3, &rule_or},
