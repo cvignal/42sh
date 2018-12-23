@@ -6,12 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 09:37:36 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 09:52:12 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:48:00 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "minishell.h"
+#include "21sh.h"
 
 int	lexer_push_var(t_shell *shell, t_token *token, char c)
 {

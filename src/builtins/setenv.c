@@ -6,18 +6,16 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:14:44 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/17 15:15:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 19:03:28 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 static int	exit_error(const char *msg)
 {
-	ft_putstr_fd("minishell: setenv: ", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
+	ft_dprintf(2, "%s: setenv: %s\n", EXEC_NAME, msg);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 17:32:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 19:01:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <signal.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 #include "fill_line.h"
 
@@ -63,12 +63,12 @@ int			init_shell(t_shell *shell, char **environ)
 	sigaction(SIGINT, &sa, NULL);
 	if (!(shell->env = copy_env(environ)))
 	{
-		ft_putstr_fd("minishell: unable to allocate memory\n", 2);
+		ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
 		return (1);
 	}
 	if (increment_shlvl(shell))
 	{
-		ft_putstr_fd("minishell: unable to allocate memory\n", 2);
+		ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
 		remove_env(shell);
 		return (1);
 	}

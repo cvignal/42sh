@@ -6,13 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 17:09:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:59:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 #include "ast.h"
 #include "libft.h"
@@ -22,7 +22,7 @@ static int		clean_exit(t_lexer *lexer, t_token **list, t_token **current,
 {
 	t_token	*tmp;
 
-	ft_dprintf(2, "minishell: %s\n", msg);
+	ft_dprintf(2, "%s: %s\n", EXEC_NAME, msg);
 	while (*list)
 	{
 		tmp = *list;
@@ -48,12 +48,11 @@ static int		handle_ret(t_lexer *lexer, int ret, t_token **current,
 		t_token **output)
 {
 	if (ret & (1 << LEXER_RET_ERROR))
-		return (clean_exit(lexer, output, current, "syntax error"));
+		return (clean_exit(lexer, output, current, SYNTAX_ERROR_MSG));
 	if (ret & (1 << LEXER_RET_CREATE))
 	{
 		if (!(*current = alloc_token()))
-			return (clean_exit(lexer, output, current,
-						"unable to allocate memory"));
+			return (clean_exit(lexer, output, current, MEMORY_ERROR_MSG));
 	}
 	if (ret & (1 << LEXER_RET_CUT))
 	{
@@ -101,7 +100,7 @@ t_token			*lex(t_shell *shell, const char *line)
 		}
 		else
 		{
-			clean_exit(&shell->lexer, &output, &current, "syntax error");
+			clean_exit(&shell->lexer, &output, &current, SYNTAX_ERROR_MSG);
 			return (NULL);
 		}
 	}

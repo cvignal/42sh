@@ -6,11 +6,11 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 12:16:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/17 15:03:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:43:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 static int	insert_var(t_shell *shell, t_token *token, int pos)

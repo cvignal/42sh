@@ -6,11 +6,11 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 07:44:20 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/16 12:39:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 19:02:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 static void	print_env(t_shell *shell)
@@ -24,9 +24,7 @@ static void	print_env(t_shell *shell)
 
 static int	exit_error(const char *msg)
 {
-	ft_putstr_fd("minishell: env: ", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
+	ft_dprintf(2, "%s: env: %s\n", EXEC_NAME, msg);
 	return (-1);
 }
 
@@ -50,10 +48,10 @@ static int	set_vars(t_shell *tmp_shell, int *i, char **args)
 			free(word_split);
 		}
 		else
-			return (exit_error("Malloc error"));
+			return (exit_error(MEMORY_ERROR_MSG));
 		++(*i);
 	}
-	return (error ? exit_error("Malloc error") : 0);
+	return (error ? exit_error(MEMORY_ERROR_MSG) : 0);
 }
 
 int			builtin_env(t_shell *shell, char **args)

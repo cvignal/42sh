@@ -6,14 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 08:38:43 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 08:01:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:42:23 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 t_command	*alloc_command(void)

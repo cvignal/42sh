@@ -6,14 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:15:24 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/18 19:30:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:43:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 static char	*concat_path(const char *path, const char *bin, size_t size_path)

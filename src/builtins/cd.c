@@ -6,26 +6,22 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/16 11:30:48 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 19:02:27 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 static int	exit_error(const char *file, const char *msg)
 {
-	ft_putstr_fd("minishell: cd: ", 2);
 	if (file)
-	{
-		ft_putstr_fd(file, 2);
-		ft_putstr_fd(": ", 2);
-	}
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
+		ft_dprintf(2, "%s: cd: %s: msg\n", 2, EXEC_NAME, file, msg);
+	else
+		ft_dprintf(2, "%s: cd: msg\n", 2, EXEC_NAME, msg);
 	return (1);
 }
 

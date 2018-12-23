@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:32:11 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 10:52:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:45:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "ast.h"
 #include "parser.h"
-#include "minishell.h"
+#include "21sh.h"
 
 static int	rule_redir_generic(t_ast_token *list, t_ttype type,
 		t_redir_act act)

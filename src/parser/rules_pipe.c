@@ -6,12 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:14:32 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 18:22:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:48:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
-#include "minishell.h"
+#include "21sh.h"
 #include "parser.h"
 
 int	rule_create_pipeline(t_ast_token *list)

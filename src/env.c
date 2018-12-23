@@ -6,13 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 12:13:41 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/16 12:45:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:56:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 static char	*create_env_var(const char *var, const char *value)

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 20:36:36 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 11:57:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:49:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "ast.h"
 #include "libft.h"
-#include "minishell.h"
+#include "21sh.h"
 
 int	rule_or(t_ast_token *list)
 {

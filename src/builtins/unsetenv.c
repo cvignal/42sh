@@ -6,11 +6,11 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:22:56 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/17 15:33:52 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 19:03:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 static int	is_target(char *s, char *target)
@@ -29,9 +29,7 @@ static int	is_target(char *s, char *target)
 
 static int	exit_error(const char *msg)
 {
-	ft_putstr_fd("minishell: unsetenv: ", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
+	ft_dprintf(2, "%s: unsetenv: %s\n", EXEC_NAME, msg);
 	return (1);
 }
 

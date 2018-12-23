@@ -6,13 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 12:18:27 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:46:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 #include "ast.h"
 #include "libft.h"
@@ -61,7 +61,7 @@ static t_ast		*get_return(t_ast_token *input)
 	else if (input->type != TT_PIPELINE || input->next)
 	{
 		free_input_queue(input);
-		ft_putstr_fd("minishell: syntax error\n", 2);
+		ft_dprintf(2, "%s: syntax error\n");
 	}
 	else
 	{

@@ -6,14 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 14:40:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:52:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "minishell.h"
+#include "21sh.h"
 
 static int	pipe_builtin(t_pipeline *current)
 {

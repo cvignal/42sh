@@ -6,16 +6,17 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/23 17:30:39 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 18:45:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "libft.h"
-#include "fill_line.h"
 #include <unistd.h>
 #include <term.h>
 #include <curses.h>
+
+#include "21sh.h"
+#include "libft.h"
+#include "fill_line.h"
 
 char		*find_path(char *word)
 {

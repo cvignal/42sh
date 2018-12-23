@@ -6,15 +6,16 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 16:23:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 18:49:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <term.h>
 #include <curses.h>
+
 #include "libft.h"
-#include "minishell.h"
+#include "21sh.h"
 #include "fill_line.h"
 
 t_key	g_special_keys[] =

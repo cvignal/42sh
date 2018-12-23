@@ -6,12 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:50:50 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 17:13:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:49:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "minishell.h"
+#include "21sh.h"
 #include "ast.h"
 
 int	lexer_add_meta(t_shell *shell, t_token *token, char c)

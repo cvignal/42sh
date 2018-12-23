@@ -6,14 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:20:26 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 12:26:19 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:46:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
 #include "ast.h"
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 int	rule_create_cmd(t_ast_token *list)

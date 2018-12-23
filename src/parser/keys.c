@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 19:03:52 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 18:48:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <curses.h>
 #include <sys/ioctl.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 #include "fill_line.h"
 

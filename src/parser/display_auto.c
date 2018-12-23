@@ -6,16 +6,17 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/23 17:08:37 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 18:48:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "libft.h"
-#include "fill_line.h"
 #include <unistd.h>
 #include <term.h>
 #include <curses.h>
+
+#include "21sh.h"
+#include "libft.h"
+#include "fill_line.h"
 
 static void	fill_table(int *table, t_list *list)
 {

@@ -6,15 +6,16 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 16:09:30 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/23 17:30:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 19:00:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "libft.h"
-#include "fill_line.h"
 #include <dirent.h>
 #include <stdlib.h>
+
+#include "21sh.h"
+#include "libft.h"
+#include "fill_line.h"
 
 void		add_and_display(char *str, char *word, t_cmdline *res)
 {
@@ -31,7 +32,7 @@ void		add_and_display(char *str, char *word, t_cmdline *res)
 
 static int	first_arg(char *line)
 {
-	
+	(void)line;
 	return (1);
 }
 

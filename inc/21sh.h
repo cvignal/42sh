@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   21sh.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/12 07:30:06 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 12:47:22 by gchainet         ###   ########.fr       */
+/*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
+/*   Updated: 2018/12/23 19:01:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 # include "parser.h"
 # include "ast.h"
 # include "libft.h"
+
+# define EXEC_NAME "21sh"
+# define PROMPT "$>"
+# define INCOMPLETE_INPUT_PROMPT ">"
+
+# define SYNTAX_ERROR_MSG "syntax error"
+# define MEMORY_ERROR_MSG "unable to allocate memory"
+# define COMMAND_NOT_FOUND_MSG "command not found"
 
 # define ARGS_ALLOC_SIZE 8
 # define HEREDOC_ALLOC_SIZE 256

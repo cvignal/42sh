@@ -6,12 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 08:17:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 11:28:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:49:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "minishell.h"
+#include "21sh.h"
 
 int	lexer_create_dquote(t_shell *shell, t_token *token, char c)
 {

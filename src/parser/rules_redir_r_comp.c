@@ -6,14 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 12:43:13 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 12:51:00 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:48:08 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
 #include "ast.h"
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 static t_redir	*create_redir_comp(char *data)

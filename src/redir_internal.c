@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 14:38:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:51:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 int	apply_redirs(t_shell *shell, t_command *command)

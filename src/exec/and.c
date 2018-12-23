@@ -6,13 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 21:40:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/15 21:40:49 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:56:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "ast.h"
 
 int		exec_and(t_shell *shell, t_ast *ast)
