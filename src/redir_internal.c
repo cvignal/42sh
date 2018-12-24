@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 07:41:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 12:11:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	redir_rr(t_shell *shell, t_redir *redir)
 	int	fd;
 
 	(void)shell;
-	fd = open(redir->target, O_CREAT | O_APPEND,
+	fd = open(redir->target, O_WRONLY | O_CREAT | O_APPEND,
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
 		return (1);
