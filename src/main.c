@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:50:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 17:21:28 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			main(int ac, char **av, char **environ)
 		return (1);
 	ft_printf("%s ", PROMPT);
 	shell.history = NULL;
-	while ((shell.line = fill_line(&shell)))
+	while (!fill_line(&shell))
 	{
 		tokens = lex(&shell, shell.line);
 		if (!tokens)
@@ -48,8 +48,9 @@ int			main(int ac, char **av, char **environ)
 		{
 			exec_ast(&shell, tokens);
 			ft_printf("%s ", PROMPT);
+			free(shell.line);
+			shell.line = NULL;
 		}
-		free(shell.line);
 	}
 	free_shell(&shell);
 	return (0);
