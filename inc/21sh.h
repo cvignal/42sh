@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 10:54:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 15:46:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,20 @@
 
 # define ARGS_ALLOC_SIZE 8
 # define HEREDOC_ALLOC_SIZE 256
+# define HASH_TABLE_SIZE (1 << 15)
 
 # define CHAR_TILDE	'~'
 # define CHAR_VAR '$'
 
 # define MAX_PATH	1024
+
+typedef struct		s_hbt
+{
+	char			*bin;
+	char			*path;
+	struct s_hbt	*left;
+	struct s_hbt	*right;
+}					t_hbt;
 
 typedef struct		s_shell
 {
@@ -39,6 +48,7 @@ typedef struct		s_shell
 	char			**env;
 	char			*line;
 	t_list			*history;
+	t_hbt			**hash_table;
 }					t_shell;
 
 struct s_command;
@@ -113,7 +123,7 @@ int					wait_loop(t_pipeline *pipeline);
 /*
 ** path.c
 */
-char				*find_command(t_shell *shell, char *command);
+char				*find_command(t_shell *shell, const char *command);
 
 /*
 ** shell.c
@@ -217,5 +227,10 @@ t_pipeline			*create_pipeline(t_command *command);
 void				delete_pipeline(t_pipeline *pipeline);
 int					prepare_pipeline(t_pipeline *pipeline);
 void				open_close_pipe(t_pipeline *pipeline, t_pipeline *current);
+
+/*
+** hash.c
+*/
+char				*hbt_command(t_shell *shell, const char *elem);
 
 #endif

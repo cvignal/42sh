@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:15:24 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:43:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 15:43:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*get_local_exec(const char *path)
 	return (ft_strdup(path));
 }
 
-char		*find_command(t_shell *shell, char *command)
+char		*find_command(t_shell *shell, const char *command)
 {
 	int			i;
 	const char	*path;
