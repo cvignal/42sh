@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/23 18:48:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 17:33:01 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,31 +83,26 @@ void		reset_terminal_mode(void)
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &term);
 }
 
-char		*fill_line(t_shell *shell)
+int			fill_line(t_shell *shell)
 {
 	char			buf[8];
-	t_cmdline		*res;
 	int				ret;
 
 	check_validity();
-	if (!(res = (t_cmdline*)malloc(sizeof(t_cmdline))))
-		return (NULL);
-	if (!(res->str = ft_strnew(0)))
-		return (NULL);
-	res->cursor = 0;
-	res->his_pos = -1;
+	if (!shell->line && !(shell->line = ft_strnew(0)))
+		return (1);
 	while ((ret = read(STDIN_FILENO, buf, 8)) > 0)
 	{
 		buf[ret] = 0;
 		if (ft_strchr(buf, '\n'))
 			break ;
 		if (is_a_special_key(buf))
-			apply_key(buf, res, shell);
+			apply_key(buf, shell);
 		else
-			ft_addchar(res, buf);
+			ft_addchar(shell, buf);
 	}
 	ft_printf("\n");
 	clean_under_line();
-	add_to_history(res->str, shell);
-	return (res->str);
+	add_to_history(shell->line, shell);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/24 16:26:57 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 17:46:13 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "libft.h"
 #include "fill_line.h"
 
-void		add_and_display(char *str, char *word, t_cmdline *res)
+void		add_and_display(char *str, char *word, t_shell *shell)
 {
 	char	*to_add;
 
@@ -26,8 +26,8 @@ void		add_and_display(char *str, char *word, t_cmdline *res)
 	else
 		to_add = str + ft_strlen(word);
 	ft_printf("%s", to_add);
-	res->str = ft_insert_free(res->str, to_add, res->cursor, 1);
-	res->cursor = ft_strlen(res->str);
+	shell->line = ft_insert_free(shell->line, to_add, shell->cursor, 1);
+	shell->cursor = ft_strlen(shell->line);
 }
 
 static int	first_arg(char *line)
@@ -99,7 +99,7 @@ static void	ft_add_exec(char *word, t_list **list)
 	ft_deltab(&paths);
 }
 
-void		ft_tab(t_cmdline *res, t_shell *shell)
+void		ft_tab(t_shell *shell)
 {
 	t_list	*list;
 	char	*word;
@@ -107,24 +107,24 @@ void		ft_tab(t_cmdline *res, t_shell *shell)
 	(void)shell;
 	list = NULL;
 	clean_under_line();
-	if (first_arg(res->str))
+	if (first_arg(shell->line))
 	{
-		if (!word_to_complete(res->str))
-			word = res->str;
+		if (!word_to_complete(shell->line))
+			word = shell->line;
 		else
-			word = word_to_complete(res->str) + 1;
+			word = word_to_complete(shell->line) + 1;
 		if (!*word)
 			return ;
 		ft_add_exec(word, &list);
 	}
 	else
 	{
-		word = word_to_complete(res->str) + 1;
+		word = word_to_complete(shell->line) + 1;
 		ft_add_files(word, &list);
 	}
 	if (list && list->next)
 		display_list(list);
 	else if (list)
-		add_and_display(list->content, word, res);
+		add_and_display(list->content, word, shell);
 	ft_lstdel(&list, &ft_delelt);
 }

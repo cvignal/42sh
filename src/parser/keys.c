@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/23 18:48:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 17:45:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,51 +21,46 @@
 #include "libft.h"
 #include "fill_line.h"
 
-void	ft_leftkey(t_cmdline *res, t_shell *shell)
+void	ft_leftkey(t_shell *shell)
 {
-	(void)shell;
-	if (res->cursor > 0)
+	if (shell->cursor > 0)
 	{
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
-		res->cursor--;
+		shell->cursor--;
 	}
 }
 
-void	ft_rightkey(t_cmdline *res, t_shell *shell)
+void	ft_rightkey(t_shell *shell)
 {
-	(void)shell;
-	if (res->cursor < ft_strlen(res->str))
+	if (shell->cursor < ft_strlen(shell->line))
 	{
 		tputs(tgetstr("nd", NULL), 0, ft_printchar);
-		res->cursor++;
+		shell->cursor++;
 	}
 }
 
-void	ft_backspace(t_cmdline *res, t_shell *shell)
+void	ft_backspace(t_shell *shell)
 {
-	(void)shell;
-	if (res->cursor > 0)
+	if (shell->cursor > 0)
 	{
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
 		tputs(tgetstr("dc", NULL), 0, ft_printchar);
-		if (res->cursor < ft_strlen(res->str))
-			ft_del_char(res->str, res->cursor - 1);
+		if (shell->cursor < ft_strlen(shell->line))
+			ft_del_char(shell->line, shell->cursor - 1);
 		else
-			res->str[res->cursor - 1] = 0;
-		res->cursor--;
+			shell->line[shell->cursor - 1] = 0;
+		shell->cursor--;
 	}
 }
 
-void	ft_homekey(t_cmdline *res, t_shell *shell)
+void	ft_homekey(t_shell *shell)
 {
-	(void)shell;
-	while (res->cursor > 0)
-		ft_leftkey(res, shell);
+	while (shell->cursor > 0)
+		ft_leftkey(shell);
 }
 
-void	ft_endkey(t_cmdline *res, t_shell *shell)
+void	ft_endkey(t_shell *shell)
 {
-	(void)shell;
-	while (res->cursor < ft_strlen(res->str))
-		ft_rightkey(res, shell);
+	while (shell->cursor < ft_strlen(shell->line))
+		ft_rightkey(shell);
 }

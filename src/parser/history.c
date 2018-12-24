@@ -6,23 +6,23 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/23 14:23:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/24 17:48:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fill_line.h"
 #include "libft.h"
 
-static void	clear_cmd_line(t_cmdline *res)
+static void	clear_cmd_line(t_shell *shell)
 {
-	while (res->cursor < ft_strlen(res->str))
-		ft_rightkey(res, NULL);
-	ft_rightkey(res, NULL);
-	while (res->cursor > 0)
-		ft_backspace(res, NULL);
+	while (shell->cursor < ft_strlen(shell->line))
+		ft_rightkey(shell);
+	ft_rightkey(shell);
+	while (shell->cursor > 0)
+		ft_backspace(shell);
 }
 
-void		ft_hisdown(t_cmdline *res, t_shell *shell)
+void		ft_hisdown(t_shell *shell)
 {
 	t_list	*curr;
 	int		i;
@@ -30,42 +30,42 @@ void		ft_hisdown(t_cmdline *res, t_shell *shell)
 	if (!(curr = shell->history))
 		return ;
 	i = 0;
-	if (res->his_pos > -1)
-		res->his_pos--;
-	while (i < res->his_pos && curr)
+	if (shell->his_pos > -1)
+		shell->his_pos--;
+	while (i < shell->his_pos && curr)
 	{
 		curr = curr->next;
 		i++;
 	}
-	clear_cmd_line(res);
-	if (res->his_pos > -1)
+	clear_cmd_line(shell);
+	if (shell->his_pos > -1)
 	{
 		ft_printf("%s", curr->content);
-		res->cursor = curr->content_size - 1;
-		ft_strdel(&res->str);
-		res->str = ft_strdup(curr->content);
+		shell->cursor = curr->content_size - 1;
+		ft_strdel(&shell->line);
+		shell->line = ft_strdup(curr->content);
 	}
 }
 
-void		ft_hisup(t_cmdline *res, t_shell *shell)
+void		ft_hisup(t_shell *shell)
 {
 	t_list	*curr;
 	int		i;
 
-	clear_cmd_line(res);
+	clear_cmd_line(shell);
 	if (!(curr = shell->history))
 		return ;
 	i = 0;
-	if (res->his_pos < (int)ft_lstlen(shell->history) - 1)
-		res->his_pos++;
-	while (i < res->his_pos && curr->next)
+	if (shell->his_pos < (int)ft_lstlen(shell->history) - 1)
+		shell->his_pos++;
+	while (i < shell->his_pos && curr->next)
 	{
 		curr = curr->next;
 		i++;
 	}
-	clear_cmd_line(res);
-	ft_strdel(&res->str);
-	res->str = ft_strdup(curr->content);
-	ft_printf("%s", res->str);
-	res->cursor = ft_strlen(res->str);
+	clear_cmd_line(shell);
+	ft_strdel(&shell->line);
+	shell->line = ft_strdup(curr->content);
+	ft_printf("%s", shell->line);
+	shell->cursor = ft_strlen(shell->line);
 }
