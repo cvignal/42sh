@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 15:46:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 16:20:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 # define ARGS_ALLOC_SIZE 8
 # define HEREDOC_ALLOC_SIZE 256
-# define HASH_TABLE_SIZE (1 << 15)
+# define HASH_TABLE_SIZE (1 << 16)
 
 # define CHAR_TILDE	'~'
 # define CHAR_VAR '$'
