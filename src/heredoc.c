@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:01:47 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:56:44 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 17:52:27 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,21 +71,19 @@ int			add_to_heredoc(t_heredoc *heredoc, const char *line)
 
 int			read_heredoc(t_shell *shell, t_heredoc *heredoc, t_redir *redir)
 {
-	char		*line;
-
-	while ((line = fill_line(shell)))
+	while (!fill_line(shell))
 	{
-		if (!ft_strcmp(redir->target, line))
+		if (!ft_strcmp(redir->target, shell->line))
 		{
-			free(line);
+			ft_strdel(&shell->line);
 			break ;
 		}
-		else if (add_to_heredoc(heredoc, line))
+		else if (add_to_heredoc(heredoc, shell->line))
 		{
-			free(line);
+			ft_strdel(&shell->line);
 			return (1);
 		}
-		free(line);
+		ft_strdel(&shell->line);
 	}
 	return (0);
 }

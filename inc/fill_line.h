@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/23 18:58:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 17:44:59 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,10 @@
 # define F1_KEY "\033OP"
 # define F2_KEY "\033OQ"
 
-typedef struct	s_cmdline
-{
-	char	*str;
-	size_t	cursor;
-	int		his_pos;
-}				t_cmdline;
-
 typedef struct	s_key
 {
 	char	*value;
-	void	(*f)(t_cmdline *res, t_shell *shell);
+	void	(*f)(t_shell *shell);
 }				t_key;
 
 typedef struct	s_curs
@@ -54,25 +47,25 @@ typedef struct	s_curs
 	int	line;
 }				t_curs;
 
-char			*fill_line(t_shell *shell);
+int				fill_line(t_shell *shell);
 int				is_a_special_key(char *buf);
-void			apply_key(char *buf, t_cmdline *res, t_shell *shell);
-void			ft_addchar(t_cmdline *res, char *buf);
+void			apply_key(char *buf, t_shell *shell);
+void			ft_addchar(t_shell *shell, char *buf);
 int				ft_printchar(int c);
-void			ft_leftkey(t_cmdline *res, t_shell *shell);
-void			ft_homekey(t_cmdline *res, t_shell *shell);
-void			ft_endkey(t_cmdline *res, t_shell *shell);
-void			ft_rightkey(t_cmdline *res, t_shell *shell);
-void			ft_tab(t_cmdline *res, t_shell *shell);
-void			ft_backspace(t_cmdline *res, t_shell *shell);
-void			ft_nextword(t_cmdline *res, t_shell *shell);
-void			ft_prevword(t_cmdline *res, t_shell *shell);
+void			ft_leftkey(t_shell *shell);
+void			ft_homekey(t_shell *shell);
+void			ft_endkey(t_shell *shell);
+void			ft_rightkey(t_shell *shell);
+void			ft_tab(t_shell *shell);
+void			ft_backspace(t_shell *shell);
+void			ft_nextword(t_shell *shell);
+void			ft_prevword(t_shell *shell);
 int				ft_comp(char *word, char *name);
 char			*find_path(char *word);
 void			display_list(t_list *list);
 void			clean_under_line(void);
-void			ft_hisdown(t_cmdline *res, t_shell *shell);
-void			ft_hisup(t_cmdline *res, t_shell *shell);
+void			ft_hisdown(t_shell *shell);
+void			ft_hisup(t_shell *shell);
 t_curs			*get_cursor_pos(void);
 void			reset_terminal_mode(void);
 void			raw_terminal_mode(void);

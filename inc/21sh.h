@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 16:20:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 17:45:52 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ typedef struct		s_shell
 	t_lexer			lexer;
 	char			**env;
 	char			*line;
+	size_t			cursor;
 	t_list			*history;
+	int				his_pos;
 	t_hbt			**hash_table;
 }					t_shell;
 
