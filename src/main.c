@@ -6,13 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 17:33:27 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:50:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "ast.h"
 #include "libft.h"
 #include "fill_line.h"
@@ -37,17 +37,17 @@ int			main(int ac, char **av, char **environ)
 	(void)av;
 	if (init_shell(&shell, environ))
 		return (1);
-	ft_printf("$> ");
+	ft_printf("%s ", PROMPT);
 	shell.history = NULL;
 	while ((shell.line = fill_line(&shell)))
 	{
 		tokens = lex(&shell, shell.line);
 		if (!tokens)
-			ft_printf(">");
+			ft_printf("%s ", INCOMPLETE_INPUT_PROMPT);
 		else
 		{
 			exec_ast(&shell, tokens);
-			ft_printf("$> ");
+			ft_printf("%s ", PROMPT);
 		}
 		free(shell.line);
 	}

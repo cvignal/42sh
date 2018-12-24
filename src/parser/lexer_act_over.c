@@ -6,11 +6,11 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 10:08:55 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 11:57:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:48:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "21sh.h"
 #include "parser.h"
 
 int	lexer_over(struct s_shell *shell, t_token *token, char c)

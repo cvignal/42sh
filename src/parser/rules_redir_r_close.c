@@ -1,50 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rules_redir_r_comp.c                               :+:      :+:    :+:   */
+/*   rules_redir_r_close.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/23 12:43:13 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:48:08 by gchainet         ###   ########.fr       */
+/*   Created: 2018/12/23 19:38:21 by gchainet          #+#    #+#             */
+/*   Updated: 2018/12/23 19:43:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
 #include "ast.h"
 #include "21sh.h"
-#include "libft.h"
 
-static t_redir	*create_redir_comp(char *data)
+static t_redir	*create_redir_close(char *data)
 {
 	t_redir		*new_redir;
 
 	new_redir = malloc(sizeof(*new_redir));
 	if (!new_redir)
 		return (NULL);
-	new_redir->type = TT_REDIR_R_COMP;
+	new_redir->type = TT_REDIR_R_CLOSE;
 	new_redir->next = NULL;
-	new_redir->redir_act = &redir_r_comp;
+	new_redir->redir_act = &redir_r_close;
 	new_redir->target = NULL;
 	if (ft_isdigit(*data))
-	{
 		new_redir->in = ft_atoi(data);
-		while (ft_isdigit(*data))
-			++data;
-	}
-	new_redir->out = ft_atoi(data + 2);
+	else
+		new_redir->in = 1;
 	return (new_redir);
 }
 
-int	rule_redir_r_comp(t_ast_token *list)
+int	rule_redir_r_close(t_ast_token *list)
 {
 	t_command	*command;
 	t_ast_token	*tmp;
 	t_redir		*redir;
 	t_redir		*iter;
 
-	redir = create_redir_comp(list->next->data);
+	redir = create_redir_close(list->next->data);
 	command = ((t_ast *)list->data)->data;
 	iter = command->redir_list;
 	if (!iter)

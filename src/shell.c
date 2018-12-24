@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 17:32:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 15:52:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <signal.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 #include "fill_line.h"
 
@@ -48,6 +48,18 @@ void		free_shell(t_shell *shell)
 	}
 	if (shell->line)
 		free(shell->line);
+	i = 0;
+	while (i < HASH_TABLE_SIZE)
+	{
+		if (shell->hash_table[i])
+		{
+			free(shell->hash_table[i]->path);
+			free(shell->hash_table[i]->bin);
+			free(shell->hash_table[i]);
+		}
+		++i;
+	}
+	free(shell->hash_table);
 	reset_terminal_mode();
 }
 
@@ -57,18 +69,22 @@ int			init_shell(t_shell *shell, char **environ)
 
 	if (init_lexer(&shell->lexer))
 		return (1);
+	shell->hash_table = malloc(sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
+	if (!shell->hash_table)
+		return (1);
+	ft_bzero(shell->hash_table, sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
 	shell->line = NULL;
 	ft_bzero(&sa, sizeof(sa));
 	sa.sa_handler = &signal_sigint;
 	sigaction(SIGINT, &sa, NULL);
 	if (!(shell->env = copy_env(environ)))
 	{
-		ft_putstr_fd("minishell: unable to allocate memory\n", 2);
+		ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
 		return (1);
 	}
 	if (increment_shlvl(shell))
 	{
-		ft_putstr_fd("minishell: unable to allocate memory\n", 2);
+		ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
 		remove_env(shell);
 		return (1);
 	}

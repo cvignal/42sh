@@ -6,24 +6,21 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 13:10:27 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 15:41:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
-
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 static int	bin_not_found(const char *bin)
 {
-	ft_putstr_fd("minishell: command not found: ", 2);
-	ft_putstr_fd(bin, 2);
-	ft_putstr_fd("\n", 2);
+	ft_dprintf(2, "%s: %s: %s\n", EXEC_NAME, COMMAND_NOT_FOUND_MSG, bin);
 	return (1);
 }
 
@@ -69,7 +66,7 @@ int			exec(t_shell *shell, t_pipeline *pipeline, t_pipeline *current)
 
 	if ((builtin = is_builtin(current->command->args[0])))
 		return (exec_builtin(shell, builtin, current));
-	bin_path = find_command(shell, current->command->args[0]);
+	bin_path = hbt_command(shell, current->command->args[0]);
 	if (bin_path)
 		pid = fork();
 	else
@@ -81,10 +78,7 @@ int			exec(t_shell *shell, t_pipeline *pipeline, t_pipeline *current)
 		execve(bin_path, current->command->args, shell->env);
 	}
 	else
-	{
-		free(bin_path);
 		current->command->pid = pid;
-	}
 	return (0);
 }
 

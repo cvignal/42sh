@@ -6,13 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 14:57:22 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/20 15:29:44 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 18:56:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 void	signal_sigint(int sig)

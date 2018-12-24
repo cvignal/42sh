@@ -6,12 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 18:10:50 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/16 18:15:08 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:46:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 int	rule_shift_first(t_ast_token *list)

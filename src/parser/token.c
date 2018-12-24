@@ -6,13 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:02 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/19 15:15:42 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:49:28 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 static int		realloc_token(t_token *token)

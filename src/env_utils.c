@@ -6,11 +6,11 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 10:09:55 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/16 11:39:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:50:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 char	**copy_env(char **env)

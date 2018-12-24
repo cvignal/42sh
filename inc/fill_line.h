@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 17:34:20 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:58:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define FILL_LINE_H
 
 # include "libft.h"
-# include "minishell.h"
+# include "21sh.h"
+
 # define LEFT_ARROW "\033[D"
 # define RIGHT_ARROW "\033[C"
 # define UP_ARROW "\033[A"

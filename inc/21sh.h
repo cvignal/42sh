@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   21sh.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/12 07:30:06 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 12:47:22 by gchainet         ###   ########.fr       */
+/*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
+/*   Updated: 2018/12/24 16:20:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,30 @@
 # include "ast.h"
 # include "libft.h"
 
+# define EXEC_NAME "21sh"
+# define PROMPT "$>"
+# define INCOMPLETE_INPUT_PROMPT ">"
+
+# define SYNTAX_ERROR_MSG "syntax error"
+# define MEMORY_ERROR_MSG "unable to allocate memory"
+# define COMMAND_NOT_FOUND_MSG "command not found"
+
 # define ARGS_ALLOC_SIZE 8
 # define HEREDOC_ALLOC_SIZE 256
+# define HASH_TABLE_SIZE (1 << 16)
 
 # define CHAR_TILDE	'~'
 # define CHAR_VAR '$'
 
 # define MAX_PATH	1024
+
+typedef struct		s_hbt
+{
+	char			*bin;
+	char			*path;
+	struct s_hbt	*left;
+	struct s_hbt	*right;
+}					t_hbt;
 
 typedef struct		s_shell
 {
@@ -31,6 +48,7 @@ typedef struct		s_shell
 	char			**env;
 	char			*line;
 	t_list			*history;
+	t_hbt			**hash_table;
 }					t_shell;
 
 struct s_command;
@@ -105,7 +123,7 @@ int					wait_loop(t_pipeline *pipeline);
 /*
 ** path.c
 */
-char				*find_command(t_shell *shell, char *command);
+char				*find_command(t_shell *shell, const char *command);
 
 /*
 ** shell.c
@@ -174,8 +192,8 @@ void				free_and(struct s_ast *ast);
 /*
 ** redir.c
 */
-int					add_redir(t_command *command, t_ttype type, char *arg,
-					t_redir_act act);
+t_redir				*create_redir(t_ttype type, char *arg, t_redir_act act);
+void				add_to_redir_list(t_command *command, t_redir *redir);
 
 /*
 ** redir_internal.c
@@ -192,6 +210,16 @@ int					redir_rr(t_shell *shell, t_redir *redir);
 int					redir_r_comp(t_shell *shell, t_redir *redir);
 
 /*
+** redir_r_close.c
+*/
+int					redir_r_close(t_shell *shell, t_redir *redir);
+
+/*
+** redir_r_both.c
+*/
+int					redir_r_both(t_shell *shell, t_redir *redir);
+
+/*
 ** pipeline.c
 */
 int					add_to_pipeline(t_pipeline *first, t_command *last);
@@ -199,5 +227,10 @@ t_pipeline			*create_pipeline(t_command *command);
 void				delete_pipeline(t_pipeline *pipeline);
 int					prepare_pipeline(t_pipeline *pipeline);
 void				open_close_pipe(t_pipeline *pipeline, t_pipeline *current);
+
+/*
+** hash.c
+*/
+char				*hbt_command(t_shell *shell, const char *elem);
 
 #endif

@@ -6,15 +6,16 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 16:24:09 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 17:13:54 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/23 18:49:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fill_line.h"
-#include "minishell.h"
-#include "libft.h"
 #include <term.h>
 #include <curses.h>
+
+#include "fill_line.h"
+#include "21sh.h"
+#include "libft.h"
 
 void	ft_nextword(t_cmdline *res, t_shell *shell)
 {

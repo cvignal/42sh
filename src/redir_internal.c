@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 14:38:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 12:11:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 int	apply_redirs(t_shell *shell, t_command *command)
@@ -39,7 +39,7 @@ int	redir_l(t_shell *shell, t_redir *redir)
 	fd = open(redir->target, O_RDONLY);
 	if (fd < 0)
 		return (1);
-	dup2(fd, STDIN_FILENO);
+	dup2(fd, redir->in);
 	close(fd);
 	return (0);
 }
@@ -55,7 +55,7 @@ int	redir_ll(t_shell *shell, t_redir *redir)
 		return (heredoc_exit_error(heredoc));
 	if (pipe(fd))
 		return (heredoc_exit_error(heredoc));
-	dup2(fd[0], STDIN_FILENO);
+	dup2(fd[0], redir->in);
 	write(fd[1], heredoc->data, heredoc->len);
 	close(fd[0]);
 	close(fd[1]);
@@ -73,7 +73,7 @@ int	redir_r(t_shell *shell, t_redir *redir)
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
 		return (1);
-	dup2(fd, STDOUT_FILENO);
+	dup2(fd, redir->in);
 	close(fd);
 	return (0);
 }
@@ -83,11 +83,11 @@ int	redir_rr(t_shell *shell, t_redir *redir)
 	int	fd;
 
 	(void)shell;
-	fd = open(redir->target, O_CREAT | O_APPEND,
+	fd = open(redir->target, O_WRONLY | O_CREAT | O_APPEND,
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
 		return (1);
-	dup2(fd, STDOUT_FILENO);
+	dup2(fd, redir->in);
 	close(fd);
 	return (0);
 }

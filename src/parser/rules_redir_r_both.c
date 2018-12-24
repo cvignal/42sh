@@ -1,51 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rules_logic.c                                      :+:      :+:    :+:   */
+/*   rules_redir_r_both.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/15 20:36:36 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:49:05 by gchainet         ###   ########.fr       */
+/*   Created: 2018/12/24 10:48:50 by gchainet          #+#    #+#             */
+/*   Updated: 2018/12/24 10:51:28 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "ast.h"
-#include "libft.h"
 #include "21sh.h"
+#include "parser.h"
 
-int	rule_or(t_ast_token *list)
+int	rule_redir_r_both(t_ast_token *list)
 {
-	t_ast		*node;
+	t_command	*command;
+	t_redir		*redir;
 	t_ast_token	*tmp;
 
-	if (!(node = alloc_ast(list->next->data, TT_PIPELINE, exec_or, free_or)))
+	command = ((t_ast *)list->data)->data;
+	redir = create_redir(TT_REDIR_R_BOTH, list->next->next->data,
+			&redir_r_both);
+	if (!redir)
 		return (1);
-	node->left = list->data;
-	node->right = list->next->next->data;
+	add_to_redir_list(command, redir);
 	tmp = list->next->next->next;
+	free(list->next->next->data);
 	free(list->next->next);
+	free(list->next->data);
 	free(list->next);
 	list->next = tmp;
-	list->data = node;
-	return (0);
-}
-
-int	rule_and(t_ast_token *list)
-{
-	t_ast		*node;
-	t_ast_token	*tmp;
-
-	if (!(node = alloc_ast(list->next->data, TT_PIPELINE, exec_and, free_and)))
-		return (1);
-	node->left = list->data;
-	node->right = list->next->next->data;
-	tmp = list->next->next->next;
-	free(list->next->next);
-	free(list->next);
-	list->next = tmp;
-	list->data = node;
 	return (0);
 }

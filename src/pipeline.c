@@ -6,14 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:19:01 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 11:14:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/23 18:43:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "minishell.h"
+#include "21sh.h"
 
 int	add_to_pipeline(t_pipeline *first, t_command *last)
 {

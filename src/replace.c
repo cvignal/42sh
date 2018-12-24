@@ -6,11 +6,11 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 12:16:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/17 15:03:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 12:26:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "21sh.h"
 #include "libft.h"
 
 static int	insert_var(t_shell *shell, t_token *token, int pos)
@@ -24,8 +24,7 @@ static int	insert_var(t_shell *shell, t_token *token, int pos)
 		while (*var)
 			if (add_to_token(token, *var++))
 				return (-1);
-		if (add_to_token(token, 0))
-			return (-1);
+		token->data[token->len] = 0;
 	}
 	else
 		token->data[pos] = 0;
