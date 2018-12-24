@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 19:41:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 07:39:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,8 +182,8 @@ void				free_and(struct s_ast *ast);
 /*
 ** redir.c
 */
-int					add_redir(t_command *command, t_ttype type, char *arg,
-					t_redir_act act);
+t_redir				*create_redir(t_ttype type, char *arg, t_redir_act act);
+void				add_to_redir_list(t_command *command, t_redir *redir);
 
 /*
 ** redir_internal.c
