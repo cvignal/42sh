@@ -6,9 +6,11 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 18:51:24 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/23 19:05:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/24 10:55:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#define _DEFAULT_SOURCE
 
 #include <stdlib.h>
 #include <sys/types.h>
