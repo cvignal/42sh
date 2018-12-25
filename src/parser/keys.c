@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/25 10:30:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/25 18:17:39 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,13 @@ void	ft_backspace(t_shell *shell)
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
 		tputs(tgetstr("dc", NULL), 0, ft_printchar);
 		if (shell->line.cursor < shell->line.len)
-			ft_del_char(shell->line.data, shell->line.cursor);
+			ft_del_char(shell->line.data, shell->line.cursor - 1);
 		else
-			--shell->line.len;
-		--shell->line.cursor;
+		{
+			shell->line.data[shell->line.cursor - 1] = 0;
+			shell->line.len--;
+		}
+		shell->line.cursor--;
 	}
 }
 
