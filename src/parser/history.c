@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/25 19:22:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/25 20:51:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static void	clear_cmd_line(t_shell *shell)
 {
-	while (shell->line.cursor < shell->line.len)
+	while (shell->line.cursor < ft_strlen(shell->line.data))
 		ft_rightkey(shell);
 	ft_rightkey(shell);
 	while (shell->line.cursor > 0)
@@ -41,11 +41,11 @@ void		ft_hisdown(t_shell *shell)
 	if (shell->his_pos > -1)
 	{
 		ft_printf("%s", curr->content);
-		shell->line.cursor = curr->content_size - 1;
 		free_line(&shell->line);
 		shell->line.data = ft_strdup(curr->content);
-		shell->line.len = ft_strlen(shell->line.data);
+		shell->line.len = curr->content_size - 1;
 		shell->line.alloc_size = curr->content_size;
+		shell->line.cursor = curr->content_size - 1;
 	}
 }
 
@@ -68,7 +68,7 @@ void		ft_hisup(t_shell *shell)
 	clear_cmd_line(shell);
 	free_line(&shell->line);
 	shell->line.data = ft_strdup(curr->content);
-	shell->line.len = ft_strlen(shell->line.data);
+	shell->line.len = curr->content_size - 1;
 	shell->line.alloc_size = curr->content_size;
 	ft_printf("%s", shell->line.data);
 	shell->line.cursor = curr->content_size - 1;
