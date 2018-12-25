@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/25 10:04:30 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/25 17:37:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/25 20:38:58 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ int		add_to_line(t_line *line, char *s)
 		if (realloc_line(line))
 			return (1);
 	}
-	ft_memcpy(line->data + line->cursor + add_len, line->data + line->cursor,
+	ft_strncpy(line->data + line->cursor + add_len, line->data + line->cursor,
 			line->len - line->cursor);
-	ft_strcpy(line->data + line->cursor, s);
+	ft_strncpy(line->data + line->cursor, s, add_len);
 	line->len += add_len;
 	line->cursor += add_len;
 	return (0);
