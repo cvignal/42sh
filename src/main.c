@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 17:21:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/25 11:13:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@ static void	exec_ast(t_shell *shell, t_token *tokens)
 	}
 }
 
+static void	add_to_history(char *str, t_shell *shell)
+{
+	t_list	*new;
+
+	if (ft_strlen(str) > 0)
+	{
+		new = ft_lstnew(str, ft_strlen(str) + 1);
+		ft_lstadd(&shell->history, new);
+	}
+}
+
 int			main(int ac, char **av, char **environ)
 {
 	t_shell		shell;
@@ -41,16 +52,16 @@ int			main(int ac, char **av, char **environ)
 	shell.history = NULL;
 	while (!fill_line(&shell))
 	{
-		tokens = lex(&shell, shell.line);
+		tokens = lex(&shell);
 		if (!tokens)
 			ft_printf("%s ", INCOMPLETE_INPUT_PROMPT);
 		else
 		{
 			exec_ast(&shell, tokens);
 			ft_printf("%s ", PROMPT);
-			free(shell.line);
-			shell.line = NULL;
+			add_to_history(shell.line.data, &shell);
 		}
+		free_line(&shell.line);
 	}
 	free_shell(&shell);
 	return (0);

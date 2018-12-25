@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 16:24:09 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/24 17:49:27 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/25 10:45:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	ft_nextword(t_shell *shell)
 {
 	size_t	i;
 
-	i = shell->cursor;
+	i = shell->line.cursor;
 	(void)shell;
-	if (shell->cursor < ft_strlen(shell->line))
+	if (shell->line.cursor < shell->line.len)
 	{
-		while (shell->line[i] != ' ' && i < ft_strlen(shell->line))
+		while (shell->line.data[i] != ' ' && i < shell->line.len)
 		{
 			ft_rightkey(shell);
 			i++;
@@ -38,23 +38,23 @@ void	ft_prevword(t_shell *shell)
 {
 	size_t	i;
 
-	i = shell->cursor;
+	i = shell->line.cursor;
 	(void)shell;
-	if (shell->cursor > 0)
+	if (shell->line.cursor > 0)
 	{
-		while (shell->line[i] != ' ' && i > 0)
+		while (shell->line.data[i] != ' ' && i > 0)
 		{
 			ft_leftkey(shell);
 			i--;
 		}
 		ft_leftkey(shell);
 		i--;
-		while (shell->line[i] != ' ' && i > 0)
+		while (shell->line.data[i] != ' ' && i > 0)
 		{
 			ft_leftkey(shell);
 			i--;
 		}
-		if (shell->cursor > 0)
+		if (shell->line.cursor > 0)
 			ft_rightkey(shell);
 	}
 }

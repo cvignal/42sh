@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/24 15:42:55 by gchainet         ###   ########.fr        #
+#    Updated: 2018/12/25 10:46:52 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC		=							\
 	parser/rules_redir_r_close.c	\
 	parser/rules_redir_r_both.c		\
 	parser/rules_pipe.c				\
+	parser/line.c					\
 	parser/ast.c					\
 	parser/ast_token.c				\
 	parser/fill_line.c				\

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/24 17:46:13 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/25 10:38:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void		add_and_display(char *str, char *word, t_shell *shell)
 	else
 		to_add = str + ft_strlen(word);
 	ft_printf("%s", to_add);
-	shell->line = ft_insert_free(shell->line, to_add, shell->cursor, 1);
-	shell->cursor = ft_strlen(shell->line);
+	add_to_line(&shell->line, to_add);
 }
 
 static int	first_arg(char *line)
@@ -107,19 +106,19 @@ void		ft_tab(t_shell *shell)
 	(void)shell;
 	list = NULL;
 	clean_under_line();
-	if (first_arg(shell->line))
+	if (first_arg(shell->line.data))
 	{
-		if (!word_to_complete(shell->line))
-			word = shell->line;
+		if (!word_to_complete(shell->line.data))
+			word = shell->line.data;
 		else
-			word = word_to_complete(shell->line) + 1;
+			word = word_to_complete(shell->line.data) + 1;
 		if (!*word)
 			return ;
 		ft_add_exec(word, &list);
 	}
 	else
 	{
-		word = word_to_complete(shell->line) + 1;
+		word = word_to_complete(shell->line.data) + 1;
 		ft_add_files(word, &list);
 	}
 	if (list && list->next)

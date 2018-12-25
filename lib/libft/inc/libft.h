@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/22 19:14:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/25 10:25:20 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,6 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
-
-typedef struct		s_line
-{
-	struct s_line	*next;
-	int				fd;
-	char			*file;
-}					t_line;
 
 int					ft_atoi(const char *str);
 int					ft_atoi_base(char *str, int base);

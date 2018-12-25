@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 17:45:52 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/25 10:35:54 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 # define ARGS_ALLOC_SIZE 8
 # define HEREDOC_ALLOC_SIZE 256
+# define LINE_ALLOC_SIZE 128
 # define HASH_TABLE_SIZE (1 << 16)
 
 # define CHAR_TILDE	'~'
@@ -42,12 +43,19 @@ typedef struct		s_hbt
 	struct s_hbt	*right;
 }					t_hbt;
 
+typedef struct		s_line
+{
+	char			*data;
+	size_t			alloc_size;
+	size_t			len;
+	unsigned int	cursor;
+}					t_line;
+
 typedef struct		s_shell
 {
 	t_lexer			lexer;
 	char			**env;
-	char			*line;
-	size_t			cursor;
+	t_line			line;
 	t_list			*history;
 	int				his_pos;
 	t_hbt			**hash_table;
@@ -132,6 +140,12 @@ char				*find_command(t_shell *shell, const char *command);
 */
 void				free_shell(t_shell *shell);
 int					init_shell(t_shell *shell, char **environ);
+
+/*
+** line.c
+*/
+int					add_to_line(t_line *line, char *s);
+void				free_line(t_line *line);
 
 /*
 ** env.c

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/24 17:33:01 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/25 11:12:59 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,6 @@
 #include "21sh.h"
 #include "fill_line.h"
 #include "libft.h"
-
-static void	add_to_history(char *str, t_shell *shell)
-{
-	t_list	*new;
-
-	if (ft_strlen(str) > 0)
-	{
-		new = ft_lstnew(str, ft_strlen(str) + 1);
-		ft_lstadd(&shell->history, new);
-	}
-}
 
 static void	check_validity(void)
 {
@@ -89,8 +78,6 @@ int			fill_line(t_shell *shell)
 	int				ret;
 
 	check_validity();
-	if (!shell->line && !(shell->line = ft_strnew(0)))
-		return (1);
 	while ((ret = read(STDIN_FILENO, buf, 8)) > 0)
 	{
 		buf[ret] = 0;
@@ -101,8 +88,9 @@ int			fill_line(t_shell *shell)
 		else
 			ft_addchar(shell, buf);
 	}
+	if (!shell->line.data)
+		ft_addchar(shell, "");
 	ft_printf("\n");
 	clean_under_line();
-	add_to_history(shell->line, shell);
 	return (0);
 }

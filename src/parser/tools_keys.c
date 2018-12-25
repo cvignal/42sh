@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/24 17:40:37 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/25 10:36:12 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,12 @@ int		ft_printchar(int c)
 
 void	ft_addchar(t_shell *shell, char *buf)
 {
-	if (shell->cursor == ft_strlen(shell->line))
-	{
-		shell->line = ft_strjoin_free(shell->line, buf, 1);
-		ft_printf("%s", buf);
-	}
+	tputs(tgetstr("im", NULL), 1, ft_printchar);
+	if (add_to_line(&shell->line, buf))
+		ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
 	else
-	{
-		tputs(tgetstr("im", NULL), 1, ft_printchar);
 		ft_printf("%s", buf);
-		shell->line = ft_insert_free(shell->line, buf, shell->cursor, 1);
-		tputs(tgetstr("ei", NULL), 1, ft_printchar);
-	}
-	shell->cursor++;
+	tputs(tgetstr("ei", NULL), 1, ft_printchar);
 }
 
 void	apply_key(char *buf, t_shell *shell)

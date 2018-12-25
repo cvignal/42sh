@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 15:52:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/25 10:45:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void		free_shell(t_shell *shell)
 			free(shell->env[i++]);
 		free(shell->env);
 	}
-	if (shell->line)
-		free(shell->line);
+	free_line(&shell->line);
 	i = 0;
 	while (i < HASH_TABLE_SIZE)
 	{
@@ -65,18 +64,13 @@ void		free_shell(t_shell *shell)
 
 int			init_shell(t_shell *shell, char **environ)
 {
-	struct sigaction	sa;
-
 	if (init_lexer(&shell->lexer))
 		return (1);
 	shell->hash_table = malloc(sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
 	if (!shell->hash_table)
 		return (1);
 	ft_bzero(shell->hash_table, sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
-	shell->line = NULL;
-	ft_bzero(&sa, sizeof(sa));
-	sa.sa_handler = &signal_sigint;
-	sigaction(SIGINT, &sa, NULL);
+	ft_bzero(&shell->line, sizeof(shell->line));
 	if (!(shell->env = copy_env(environ)))
 	{
 		ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
