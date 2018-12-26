@@ -6,12 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/26 16:47:36 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/26 17:37:23 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef 21SH_H
-# define 21SH_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include "parser.h"
 # include "ast.h"

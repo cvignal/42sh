@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/26 16:45:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/26 19:01:36 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@
 # define CURS_POS "\033[6n"
 # define F1_KEY "\033OP"
 # define F2_KEY "\033OQ"
-# define F3_KEY "\033OR"
-# define F4_KEY "\033OS"
-
+# define MAJ_DOWN "\033[1;2B"
+# define MAJ_UP "\033[1;2A"
 typedef struct	s_key
 {
 	char	*value;
@@ -62,6 +61,8 @@ void			ft_tab(t_shell *shell);
 void			ft_backspace(t_shell *shell);
 void			ft_nextword(t_shell *shell);
 void			ft_prevword(t_shell *shell);
+void			ft_lineup(t_shell *shell);
+void			ft_linedown(t_shell *shell);
 int				ft_comp(char *word, char *name);
 char			*find_path(char *word);
 void			display_list(t_list *list);
