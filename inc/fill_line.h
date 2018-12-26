@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/24 17:44:59 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/26 16:45:46 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define CURS_POS "\033[6n"
 # define F1_KEY "\033OP"
 # define F2_KEY "\033OQ"
+# define F3_KEY "\033OR"
+# define F4_KEY "\033OS"
 
 typedef struct	s_key
 {

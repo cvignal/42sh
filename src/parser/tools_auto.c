@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/23 18:45:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/26 16:42:00 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char		*word_to_complete(char *line)
 void		clean_under_line(void)
 {
 	tputs(tgetstr("sc", NULL), 0, ft_printchar);
+	ft_printf("\n");
 	tputs(tgetstr("cd", NULL), 0, ft_printchar);
 	tputs(tgetstr("rc", NULL), 0, ft_printchar);
 }

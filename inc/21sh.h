@@ -6,12 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/25 10:35:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/26 16:47:36 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef 21SH_H
+# define 21SH_H
 
 # include "parser.h"
 # include "ast.h"
@@ -91,7 +91,7 @@ typedef struct		s_pipeline
 	int					out_fd[2];
 	int					fd_copy[3];
 	struct s_pipeline	*next;
-}						t_pipeline;
+}					t_pipeline;
 
 typedef int			(*t_builtin)(t_shell *, char **);
 
