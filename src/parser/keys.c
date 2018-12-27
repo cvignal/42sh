@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/25 20:51:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/27 16:21:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,35 @@ void	ft_leftkey(t_shell *shell)
 
 void	ft_rightkey(t_shell *shell)
 {
+	struct winsize	win;
+	t_curs			*cursor;
+
+	ioctl(0, TIOCGWINSZ, &win);
+	cursor = get_cursor_pos();
 	if (shell->line.cursor < shell->line.len)
 	{
-		tputs(tgetstr("nd", NULL), 0, ft_printchar);
+		if (win.ws_col == cursor->col)
+			tputs(tgetstr("do", NULL), 0, ft_printchar);
+		else
+			tputs(tgetstr("nd", NULL), 0, ft_printchar);
 		shell->line.cursor++;
 	}
 }
 
 void	ft_backspace(t_shell *shell)
 {
+	struct winsize	win;
+	t_curs			*cursor;
+
+	ioctl(0, TIOCGWINSZ, &win);
+	cursor = get_cursor_pos();
 	if (shell->line.cursor > 0)
 	{
+		
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
 		tputs(tgetstr("dc", NULL), 0, ft_printchar);
+		if (cursor->col == win.ws_col)
+			tputs(tgetstr("dc", NULL), 0, ft_printchar);
 		if (shell->line.cursor < shell->line.len)
 			ft_del_char(shell->line.data, shell->line.cursor - 1);
 		else

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 19:02:11 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/27 15:07:23 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/27 16:03:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,26 @@
 #include "libft.h"
 #include "fill_line.h"
 
-static void	down_one_line(void)
+static void	down_one_line(t_line line, int width, int flag)
 {
-	t_curs *cursor;
+	t_curs	*cursor;
+	int		i;
+	int		len_last_line;
 
 	cursor = get_cursor_pos();
 	tputs(tgoto(tgetstr("cm", NULL), cursor->col - 1, cursor->line), 0,\
 			ft_printchar);
+	len_last_line = line.len % width;
+	if (flag)
+		i = cursor->col - len_last_line - 4;
+	else 
+		i = 0;
+	while (i > 0)
+	{
+		tputs(tgetstr("le", NULL), 0, ft_printchar);
+		i--;
+	}
+	free(cursor);
 }
 
 static void	back_to_startline(void)
@@ -77,7 +90,10 @@ void		ft_lineup(t_shell *shell)
 		tputs(tgetstr("up", NULL), 0, ft_printchar);
 		if (cursor_nb == 1)
 			back_to_startline();
-		shell->line.cursor -= width;
+		if (shell->line.cursor < (size_t)width)
+			shell->line.cursor = 0;
+		else
+			shell->line.cursor -= width;
 	}
 }
 
@@ -94,7 +110,9 @@ void		ft_linedown(t_shell *shell)
 	cursor_nb = nb_multi_lines(shell->line.cursor);
 	if (cursor_nb < line_nb)
 	{
-		down_one_line();
+		down_one_line(shell->line, width, (cursor_nb == line_nb - 1));
 		shell->line.cursor += width;
+		if (shell->line.cursor > shell->line.len)
+			shell->line.cursor = shell->line.len;
 	}
 }

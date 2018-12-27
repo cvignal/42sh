@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/25 20:51:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/27 16:14:25 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static void	clear_cmd_line(t_shell *shell)
 {
-	while (shell->line.cursor < ft_strlen(shell->line.data))
+	while (shell->line.cursor < shell->line.len)
 		ft_rightkey(shell);
 	ft_rightkey(shell);
 	while (shell->line.cursor > 0)
