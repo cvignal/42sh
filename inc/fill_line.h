@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/27 10:50:22 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/27 16:40:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@
 # define F2_KEY "\033OQ"
 # define MAJ_DOWN "\033[1;2B"
 # define MAJ_UP "\033[1;2A"
+# define MAJ_RIGHT "\033[1;2C"
+# define MAJ_LEFT "\033[1;2D"
+# define F3_KEY "\033OR"
+# define F4_KEY "\033OS"
+# define F5_KEY "\033[15~"
+
 typedef struct	s_key
 {
 	char	*value;
