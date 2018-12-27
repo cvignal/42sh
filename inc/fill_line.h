@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/26 19:01:36 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/27 10:50:22 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ t_curs			*get_cursor_pos(void);
 void			reset_terminal_mode(void);
 void			raw_terminal_mode(void);
 char			*word_to_complete(char *line);
+int				nb_multi_lines(size_t len);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 19:02:11 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/26 20:17:13 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/27 15:07:23 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,82 @@
 #include "libft.h"
 #include "fill_line.h"
 
-void	ft_lineup(t_shell *shell)
+static void	down_one_line(void)
 {
-	struct	winsize win;
-	size_t	width;
+	t_curs *cursor;
+
+	cursor = get_cursor_pos();
+	tputs(tgoto(tgetstr("cm", NULL), cursor->col - 1, cursor->line), 0,\
+			ft_printchar);
+}
+
+static void	back_to_startline(void)
+{
+	t_curs	*cursor;
+	int			i;
+
+	cursor = get_cursor_pos();
+	i = cursor->col - 4;
+	while (i < 0)
+	{
+		tputs(tgetstr("nd", NULL), 0, ft_printchar);
+		i++;
+	}
+	free(cursor);
+}
+
+int			nb_multi_lines(size_t len)
+{
+	int				length;
+	int				width;
+	struct winsize	win;
+	int				nb;
+
+	length = (int)len;
+	ioctl(0, TIOCGWINSZ, &win);
+	width = win.ws_col;
+	if (length + 3 >= width)
+		length -= width - 3;
+	else
+		return (0);
+	nb = 1;
+	while ((length -= width) > 0)
+		nb++;
+	return (nb);
+}
+
+void		ft_lineup(t_shell *shell)
+{
+	int				cursor_nb;
+	int				width;
+	struct winsize	win;
 
 	ioctl(0, TIOCGWINSZ, &win);
 	width = win.ws_col;
-	if (shell->line.cursor + 3 > width)
+	cursor_nb = nb_multi_lines(shell->line.cursor);
+	if (cursor_nb > 0)
 	{
 		tputs(tgetstr("up", NULL), 0, ft_printchar);
+		if (cursor_nb == 1)
+			back_to_startline();
 		shell->line.cursor -= width;
 	}
 }
 
-void	ft_linedown(t_shell *shell)
+void		ft_linedown(t_shell *shell)
 {
-	struct	winsize win;
-	size_t	width;
+	int				line_nb;
+	int				cursor_nb;
+	int				width;
+	struct winsize	win;
 
 	ioctl(0, TIOCGWINSZ, &win);
 	width = win.ws_col;
-	if (shell->line.len + 3 > width && shell->line.cursor + 3 < width)
+	line_nb = nb_multi_lines(shell->line.len);
+	cursor_nb = nb_multi_lines(shell->line.cursor);
+	if (cursor_nb < line_nb)
 	{
-		tputs(tgetstr("do", NULL), 0, ft_printchar);
+		down_one_line();
 		shell->line.cursor += width;
 	}
 }
