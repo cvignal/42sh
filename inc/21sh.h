@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/25 10:35:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/27 12:39:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "parser.h"
 # include "ast.h"
+# include "expr.h"
 # include "libft.h"
 
 # define EXEC_NAME "21sh"
@@ -204,6 +205,8 @@ int					exec_or(t_shell *shell, struct s_ast *ast);
 void				free_or(struct s_ast *ast);
 int					exec_and(t_shell *shell, struct s_ast *ast);
 void				free_and(struct s_ast *ast);
+int					exec_expr(t_shell *shell, struct s_ast *ast);
+void				free_expr(struct s_ast *ast);
 
 /*
 ** redir.c

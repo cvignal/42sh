@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:46:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/26 13:24:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static t_ast		*get_return(t_ast_token *input)
 		free(input->data);
 		free(input);
 	}
-	else if (input->type != TT_PIPELINE || input->next)
+	else if (input->type != TT_STATEMENT || input->next)
 	{
 		free_input_queue(input);
 		ft_dprintf(2, "%s: syntax error\n");
