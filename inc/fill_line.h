@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/27 16:40:56 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/28 15:56:26 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define F3_KEY "\033OR"
 # define F4_KEY "\033OS"
 # define F5_KEY "\033[15~"
+# define MAJ_TAB "\033[Z"
 
 typedef struct	s_key
 {
