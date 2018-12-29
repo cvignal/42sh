@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/27 12:39:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/29 13:08:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,10 @@ int					exec_and(t_shell *shell, struct s_ast *ast);
 void				free_and(struct s_ast *ast);
 int					exec_expr(t_shell *shell, struct s_ast *ast);
 void				free_expr(struct s_ast *ast);
+int					exec_if(t_shell *shell, struct s_ast *ast);
+void				free_if(struct s_ast *ast);
+int					exec_else(t_shell *shell, struct s_ast *ast);
+void				free_else(struct s_ast *ast);
 
 /*
 ** redir.c

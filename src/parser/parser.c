@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/26 13:24:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/29 17:17:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static t_ast		*get_return(t_ast_token *input)
 	else if (input->type != TT_STATEMENT || input->next)
 	{
 		free_input_queue(input);
-		ft_dprintf(2, "%s: syntax error\n");
+		ft_dprintf(2, "%s: syntax error\n", EXEC_NAME);
 	}
 	else
 	{

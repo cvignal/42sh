@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/26 13:24:12 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/29 17:10:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ typedef enum			e_ttype
 	TT_EXPR_INCOMPLETE,
 	TT_EXPR,
 	TT_PIPE,
+	TT_IF,
+	TT_THEN,
+	TT_IFCD,
+	TT_ELIF,
+	TT_ELSE,
+	TT_FI,
 	TT_STATEMENT,
 	TT_OVER
 }						t_ttype;
@@ -74,7 +80,7 @@ typedef int				(*t_ast_act)(t_ast_token *);
 
 typedef struct			s_ast_rule
 {
-	t_ttype				types[3];
+	t_ttype				types[4];
 	size_t				len;
 	t_ast_act			act;
 }						t_ast_rule;
@@ -139,6 +145,15 @@ int						rule_close_expr(t_ast_token *list);
 ** parser/rules_statement.c
 */
 int						rule_create_statement(t_ast_token *list);
+
+/*
+** parser/rules_if.c
+*/
+int						rule_create_if(t_ast_token *list);
+int						rule_add_to_if(t_ast_token *list);
+int						rule_create_elif(t_ast_token *list);
+int						rule_create_else(t_ast_token *list);
+int						rule_close_if(t_ast_token *list);
 
 /*
 ** parser/ast.c

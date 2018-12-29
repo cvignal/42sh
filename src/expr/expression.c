@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 12:31:51 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/27 12:52:19 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/29 17:55:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ t_expr	*alloc_expr(void)
 
 void	free_expr_internal(t_expr *expr)
 {
-	int	i;
+	unsigned int	i;
 
 	if (expr->args)
 	{
 		i = 0;
-		while (expr->args[i])
+		while (i < expr->len)
 			free(expr->args[i++]);
 		free(expr->args);
 	}
@@ -45,10 +45,7 @@ int		add_to_expr(t_expr *expr, char *arg)
 	expr->args = ft_realloc(expr->args, expr->len * sizeof(*expr->args),
 			(expr->len + 1) * sizeof(*expr->args));
 	if (expr->args)
-	{
 		expr->args[expr->len++] = arg;
-		expr->args[expr->len] = NULL;
-	}
 	else
 	{
 		expr->len = 0;

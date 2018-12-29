@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/28 16:30:34 by gchainet         ###   ########.fr        #
+#    Updated: 2018/12/29 13:05:15 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRC		=							\
 	parser/rules_redir_r_both.c		\
 	parser/rules_pipe.c				\
 	parser/rules_statement.c		\
+	parser/rules_if.c				\
 	parser/line.c					\
 	parser/ast.c					\
 	parser/ast_token.c				\
@@ -61,6 +62,8 @@ SRC		=							\
 	exec/or.c						\
 	exec/and.c						\
 	exec/expr.c						\
+	exec/if.c						\
+	exec/else.c						\
 	shell.c							\
 	command.c						\
 	exec.c							\

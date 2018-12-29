@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/26 13:22:07 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/29 17:24:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,33 @@
 
 static const t_ast_rule g_rules[] =
 {
-	{{TT_WORD, 0, 0}, 1, &rule_create_cmd},
-	{{TT_CMD, TT_WORD, 0}, 2, &rule_add_to_cmd},
-	{{TT_CMD, TT_REDIR_R, TT_WORD}, 3, &rule_redir_r},
-	{{TT_CMD, TT_REDIR_R_BOTH, TT_WORD}, 3, &rule_redir_r_both},
-	{{TT_CMD, TT_REDIR_RR, TT_WORD}, 3, &rule_redir_rr},
-	{{TT_CMD, TT_REDIR_L, TT_WORD}, 3, &rule_redir_l},
-	{{TT_CMD, TT_REDIR_LL, TT_WORD}, 3, &rule_redir_ll},
-	{{TT_CMD, TT_REDIR_R_COMP, 0}, 2, &rule_redir_r_comp},
-	{{TT_CMD, TT_REDIR_R_CLOSE, 0}, 2, &rule_redir_r_close},
-	{{TT_CMD, 0, 0}, 1, &rule_create_pipeline},
-	{{TT_EXPR_OPEN, 0, 0}, 2, &rule_create_expr},
-	{{TT_EXPR_INCOMPLETE, TT_WORD, 0}, 2, &rule_add_to_expr},
-	{{TT_EXPR_INCOMPLETE, TT_EXPR_CLOSE, 0}, 2, &rule_close_expr},
-	{{TT_PIPELINE, TT_PIPE, TT_PIPELINE}, 3, &rule_add_to_pipeline},
-	{{TT_EXPR, 0, 0}, 1, &rule_create_statement},
-	{{TT_PIPELINE, 0, 0}, 1, &rule_create_statement},
-	{{TT_STATEMENT, TT_OVER, 0}, 2, &rule_shift_second},
-	{{TT_STATEMENT, TT_OR, TT_STATEMENT}, 3, &rule_or},
-	{{TT_STATEMENT, TT_AND, TT_STATEMENT}, 3, &rule_and},
-	{{TT_STATEMENT, TT_END, TT_STATEMENT}, 3, &rule_create_end},
-	{{TT_END, TT_OVER, 0}, 2, &rule_shift_first},
-	{{TT_END, TT_END, 0}, 2, &rule_shift_second}
+	{{TT_WORD, 0, 0, 0}, 1, &rule_create_cmd},
+	{{TT_CMD, TT_WORD, 0, 0}, 2, &rule_add_to_cmd},
+	{{TT_CMD, TT_REDIR_R, TT_WORD, 0}, 3, &rule_redir_r},
+	{{TT_CMD, TT_REDIR_R_BOTH, TT_WORD, 0}, 3, &rule_redir_r_both},
+	{{TT_CMD, TT_REDIR_RR, TT_WORD, 0}, 3, &rule_redir_rr},
+	{{TT_CMD, TT_REDIR_L, TT_WORD, 0}, 3, &rule_redir_l},
+	{{TT_CMD, TT_REDIR_LL, TT_WORD, 0}, 3, &rule_redir_ll},
+	{{TT_CMD, TT_REDIR_R_COMP, 0, 0}, 2, &rule_redir_r_comp},
+	{{TT_CMD, TT_REDIR_R_CLOSE, 0, 0}, 2, &rule_redir_r_close},
+	{{TT_CMD, 0, 0, 0}, 1, &rule_create_pipeline},
+	{{TT_EXPR_OPEN, 0, 0, 0}, 2, &rule_create_expr},
+	{{TT_EXPR_INCOMPLETE, TT_WORD, 0, 0}, 2, &rule_add_to_expr},
+	{{TT_EXPR_INCOMPLETE, TT_EXPR_CLOSE, 0, 0}, 2, &rule_close_expr},
+	{{TT_PIPELINE, TT_PIPE, TT_PIPELINE, 0}, 3, &rule_add_to_pipeline},
+	{{TT_IF, TT_STATEMENT, TT_END, TT_THEN}, 4, &rule_create_if},
+	{{TT_IFCD, TT_STATEMENT, TT_END, 0}, 3, &rule_add_to_if},
+	{{TT_IFCD, TT_ELIF, TT_STATEMENT, 0}, 3, &rule_create_elif},
+	{{TT_IFCD, TT_ELSE, 0, 0}, 2, &rule_create_else},
+	{{TT_IFCD, TT_FI, 0, 0}, 2, &rule_close_if},
+	{{TT_EXPR, 0, 0, 0}, 1, &rule_create_statement},
+	{{TT_PIPELINE, 0, 0, 0}, 1, &rule_create_statement},
+	{{TT_STATEMENT, TT_OVER, 0, 0}, 2, &rule_shift_second},
+	{{TT_STATEMENT, TT_OR, TT_STATEMENT, 0}, 3, &rule_or},
+	{{TT_STATEMENT, TT_AND, TT_STATEMENT, 0}, 3, &rule_and},
+	{{TT_STATEMENT, TT_END, TT_STATEMENT, 0}, 3, &rule_create_end},
+	{{TT_END, TT_OVER, 0, 0}, 2, &rule_shift_first},
+	{{TT_END, TT_END, 0, 0}, 2, &rule_shift_second}
 };
 
 static size_t	count_tokens(t_ast_token *tokens)
