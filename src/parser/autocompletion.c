@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/25 10:38:33 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 12:34:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,11 @@ static void	ft_add_files(char *word, t_list **list)
 				name = ft_strdup(dirent->d_name);
 			new = ft_lstnew(name, ft_strlen(name) + 1);
 			ft_lstadd(list, new);
+			ft_strdel(&name);
 		}
 	}
+	closedir(dir);
+	ft_strdel(&path);
 }
 
 static void	ft_add_exec(char *word, t_list **list)
@@ -105,6 +108,8 @@ void		ft_tab(t_shell *shell)
 
 	(void)shell;
 	list = NULL;
+	if (shell->line.mode != 0)
+		return ;
 	clean_under_line();
 	if (first_arg(shell->line.data))
 	{

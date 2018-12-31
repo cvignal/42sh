@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 19:07:30 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/20 19:31:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/31 11:38:52 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**ft_listtotab(t_list *lst, size_t len)
 	int		i;
 	t_list	*curr;
 
-	if (!(res = (char**)malloc(sizeof(char*) * len)))
+	if (!(res = (char**)malloc(sizeof(char*) * (len + 1))))
 		return (NULL);
 	i = 0;
 	curr = lst;
@@ -30,5 +30,6 @@ char	**ft_listtotab(t_list *lst, size_t len)
 		i++;
 		curr = curr->next;
 	}
+	res[i] = NULL;
 	return (res);
 }

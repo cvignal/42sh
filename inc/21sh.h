@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/27 16:46:50 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/31 15:46:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct		s_line
 	size_t			alloc_size;
 	size_t			len;
 	unsigned int	cursor;
+	unsigned int	select_curs;
+	int				mode;
 }					t_line;
 
 typedef struct		s_shell
@@ -59,6 +61,7 @@ typedef struct		s_shell
 	t_list			*history;
 	int				his_pos;
 	t_hbt			**hash_table;
+	char			*pbpaste;
 }					t_shell;
 
 struct s_command;

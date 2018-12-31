@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/27 16:13:40 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/31 15:23:43 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int			fill_line(t_shell *shell)
 			break ;
 		if (is_a_special_key(buf))
 			apply_key(buf, shell);
-		else
+		else if (shell->line.mode == 0)
 			ft_addchar(shell, buf);
 	}
 	if (!shell->line.data)

@@ -6,13 +6,14 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/26 19:13:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/31 11:37:42 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <term.h>
 #include <curses.h>
+#include <sys/ioctl.h>
 
 #include "21sh.h"
 #include "libft.h"
@@ -20,12 +21,12 @@
 
 static void	fill_table(int *table, t_list *list)
 {
-	int		width;
-	t_list	*curr;
-	size_t	max_len;
-	int		nb;
+	struct winsize	window;
+	t_list			*curr;
+	size_t			max_len;
+	int				nb;
 
-	width = tgetnum("co");
+	ioctl(0, TIOCGWINSZ, &window);
 	curr = list;
 	max_len = 0;
 	nb = 0;
@@ -37,9 +38,12 @@ static void	fill_table(int *table, t_list *list)
 		nb++;
 	}
 	table[1] = (int)max_len;
-	table[0] = width / (max_len + 1);
+	table[0] = window.ws_col / (max_len + 1);
 	table[2] = nb;
-	table[3] = nb / table[0] + (nb % table[0] != 0);
+	if (table[0] == 0)
+		table[3] = nb;
+	else
+		table[3] = nb / table[0] + (nb % table[0] != 0);
 }
 
 static void	display_table(char **array, int table[4])
@@ -49,6 +53,8 @@ static void	display_table(char **array, int table[4])
 
 	ft_printf("\n");
 	i = 0;
+	if (table[0] == 0)
+		table[1] = 0;
 	while (i < table[3])
 	{
 		j = i;
@@ -61,6 +67,7 @@ static void	display_table(char **array, int table[4])
 			ft_printf("\n");
 		i++;
 	}
+	ft_deltab(&array);
 }
 
 static int	ask_for_many_possibilities(int *table, t_curs *cursor)

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/27 16:14:25 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/31 12:34:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		ft_hisdown(t_shell *shell)
 	t_list	*curr;
 	int		i;
 
-	if (!(curr = shell->history))
+	if (!(curr = shell->history) || shell->line.mode != 0)
 		return ;
 	i = 0;
 	if (shell->his_pos > -1)
@@ -54,9 +54,9 @@ void		ft_hisup(t_shell *shell)
 	t_list	*curr;
 	int		i;
 
-	clear_cmd_line(shell);
-	if (!(curr = shell->history))
+	if (!(curr = shell->history) || shell->line.mode != 0)
 		return ;
+	clear_cmd_line(shell);
 	i = 0;
 	if (shell->his_pos < (int)ft_lstlen(shell->history) - 1)
 		shell->his_pos++;

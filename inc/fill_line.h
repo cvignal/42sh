@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/28 15:56:26 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/31 15:15:13 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define F4_KEY "\033OS"
 # define F5_KEY "\033[15~"
 # define MAJ_TAB "\033[Z"
+# define ESCAPE "\033"
 
 typedef struct	s_key
 {
@@ -70,6 +71,10 @@ void			ft_nextword(t_shell *shell);
 void			ft_prevword(t_shell *shell);
 void			ft_lineup(t_shell *shell);
 void			ft_linedown(t_shell *shell);
+void			ft_switch_mode(t_shell *shell);
+void			ft_copy(t_shell *shell);
+void			ft_paste(t_shell *shell);
+void			ft_cut(t_shell *shell);
 int				ft_comp(char *word, char *name);
 char			*find_path(char *word);
 void			display_list(t_list *list);

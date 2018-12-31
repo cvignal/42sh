@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/28 15:56:01 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/31 15:19:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "21sh.h"
 #include "fill_line.h"
 
-t_key	g_special_keys[] =
+t_key	g_special_keys[] =\
 {
 	{LEFT_ARROW, &ft_leftkey},
 	{RIGHT_ARROW, &ft_rightkey},
@@ -28,10 +28,14 @@ t_key	g_special_keys[] =
 	{UP_ARROW, &ft_hisup},
 	{HOME_KEY, &ft_homekey},
 	{END_KEY, &ft_endkey},
-	{F1_KEY, &ft_prevword},
-	{F2_KEY, &ft_nextword},
+	{MAJ_LEFT, &ft_prevword},
+	{MAJ_RIGHT, &ft_nextword},
 	{MAJ_UP, &ft_lineup},
-	{MAJ_DOWN, &ft_linedown}
+	{MAJ_DOWN, &ft_linedown},
+	{F1_KEY, &ft_switch_mode},
+	{F2_KEY, &ft_copy},
+	{F3_KEY, &ft_paste},
+	{F4_KEY, &ft_cut}
 };
 
 int		is_a_special_key(char *buf)
@@ -62,7 +66,7 @@ void	apply_key(char *buf, t_shell *shell)
 	i = 0;
 	if (*buf == 127)
 		ft_backspace(shell);
-	while (i < 12)
+	while (i < 16)
 	{
 		len = ft_strlen(g_special_keys[i].value);
 		if (ft_strnequ(g_special_keys[i].value, buf, len))

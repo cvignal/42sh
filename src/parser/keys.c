@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/27 16:21:07 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/31 12:32:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_backspace(t_shell *shell)
 
 	ioctl(0, TIOCGWINSZ, &win);
 	cursor = get_cursor_pos();
-	if (shell->line.cursor > 0)
+	if (shell->line.cursor > 0 && shell->line.mode == 0)
 	{
 		
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
@@ -70,6 +70,7 @@ void	ft_backspace(t_shell *shell)
 		}
 		shell->line.cursor--;
 	}
+	free(cursor);
 }
 
 void	ft_homekey(t_shell *shell)
