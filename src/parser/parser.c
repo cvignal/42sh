@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/29 17:17:33 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/30 09:31:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 #include "ast.h"
 #include "libft.h"
 
-static int			reduce(t_ast_token *input_queue)
+static int			reduce(t_parser *parser, t_ast_token *input_queue)
 {
 	t_ast_act		act;
 
 	if ((act = get_rule(input_queue)))
 	{
-		if (act(input_queue))
+		if (act(parser, input_queue))
 			return (2);
 		return (1);
 	}
@@ -48,51 +48,53 @@ static t_ast_token	*lookup(t_token **tokens)
 	return (input_queue);
 }
 
-static t_ast		*get_return(t_ast_token *input)
+static t_ast		*get_return(t_parser *parser)
 {
-	t_ast			*ret;
-
-	ret = NULL;
-	if (input->type == TT_OVER)
+	if (parser->state)
+		return (PARSER_MORE INPUT);
+	else if (parser->input_queue->type == TT_STATEMENT
+			&& parser->input_queue->next == NULL)
 	{
-		free(input->data);
-		free(input);
-	}
-	else if (input->type != TT_STATEMENT || input->next)
-	{
-		free_input_queue(input);
-		ft_dprintf(2, "%s: syntax error\n", EXEC_NAME);
+		parser->ret = parser->input_queue->data;
+		free(parser->input_queue);
+		return (PARSER_COMPLETE);
 	}
 	else
 	{
-		ret = input->data;
-		free(input);
+		free_input_queue(parser->input_queue);
+		parser->input_queue = NULL;
+		while (parser->pss)
+			pss_pop(parser);
 	}
-	return (ret);
+	return (PARSER_COMPLETE);
+}
+
+int					init_parser(t_parser *parser)
+{
+	ft_bzero(parser, sizeof(*parser));
+	return (0);
 }
 
 t_ast				*parse(t_shell *shell, t_token *tokens)
 {
-	t_ast_token	*input_queue;
 	t_ast_token	*lookup_queue;
 	int			did_reduce;
 
-	(void)shell;
 	if (!tokens)
 		return (NULL);
-	input_queue = lookup(&tokens);
+	add_to_ast_token_list(&parser->input_queue, lookup(&tokens));
 	did_reduce = 1;
 	while (did_reduce)
 	{
 		did_reduce = 0;
-		lookup_queue = input_queue;
+		lookup_queue = parser->input_queue;
 		while (lookup_queue)
 		{
-			if (reduce(lookup_queue) == 1)
+			if (reduce(&shell->parser, lookup_queue) == 1)
 				did_reduce = 1;
 			else
 				lookup_queue = lookup_queue->next;
 		}
 	}
-	return (get_return(input_queue));
+	return (get_return(parser));
 }

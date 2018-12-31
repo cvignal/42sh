@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:14:32 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:48:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/29 18:38:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 #include "21sh.h"
 #include "parser.h"
 
-int	rule_create_pipeline(t_ast_token *list)
+int	rule_create_pipeline(t_parser *parser, t_ast_token *list)
 {
 	t_pipeline	*pipeline;
 
+	(void)parser;
 	if (!(pipeline = create_pipeline(((t_ast *)list->data)->data)))
 		return (1);
 	list->type = TT_PIPELINE;
@@ -27,12 +28,13 @@ int	rule_create_pipeline(t_ast_token *list)
 	return (0);
 }
 
-int	rule_add_to_pipeline(t_ast_token *list)
+int	rule_add_to_pipeline(t_parser *parser, t_ast_token *list)
 {
 	t_pipeline	*iter;
 	t_pipeline	*new_pipeline;
 	t_ast_token	*tmp;
 
+	(void)parser;
 	new_pipeline = ((t_ast *)list->next->next->data)->data;
 	iter = ((t_ast *)list->data)->data;
 	while (iter->next)

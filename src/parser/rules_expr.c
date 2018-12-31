@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 12:44:48 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/26 18:35:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/29 18:41:48 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 #include "parser.h"
 #include "21sh.h"
 
-int	rule_create_expr(t_ast_token *list)
+int	rule_create_expr(t_parser *parser, t_ast_token *list)
 {
 	t_ast		*node;
 	t_expr		*expr;
 
+	(void)parser;
 	expr = alloc_expr();
 	if (!expr)
 		return (1);
@@ -36,10 +37,11 @@ int	rule_create_expr(t_ast_token *list)
 	return (0);
 }
 
-int	rule_add_to_expr(t_ast_token *list)
+int	rule_add_to_expr(t_parser *parser, t_ast_token *list)
 {
 	t_ast_token	*tmp;
 
+	(void)parser;
 	if (add_to_expr(((t_ast *)list->data)->data, list->next->data))
 		return (1);
 	tmp = list->next->next;
@@ -48,10 +50,11 @@ int	rule_add_to_expr(t_ast_token *list)
 	return (0);
 }
 
-int	rule_close_expr(t_ast_token *list)
+int	rule_close_expr(t_parser *parser, t_ast_token *list)
 {
 	t_ast_token	*tmp;
 
+	(void)parser;
 	tmp = list->next->next;
 	free(list->next->data);
 	free(list->next);

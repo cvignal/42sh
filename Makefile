@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/29 13:05:15 by gchainet         ###   ########.fr        #
+#    Updated: 2018/12/29 18:09:11 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC		=							\
 	parser/lexer_act_var.c			\
 	parser/lexer_act_over.c			\
 	parser/lss.c					\
+	parser/pss.c					\
 	parser/init_lexer.c				\
 	parser/lexer.c					\
 	parser/parser_rules.c			\

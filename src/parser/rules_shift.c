@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 18:10:50 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:46:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/29 18:40:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 #include "21sh.h"
 #include "libft.h"
 
-int	rule_shift_first(t_ast_token *list)
+int	rule_shift_first(t_parser *parser, t_ast_token *list)
 {
 	t_ast_token	*tmp;
 
+	(void)parser;
 	free(list->data);
 	list->data = list->next->data;
 	list->type = list->next->type;
@@ -27,10 +28,11 @@ int	rule_shift_first(t_ast_token *list)
 	return (0);
 }
 
-int	rule_shift_second(t_ast_token *list)
+int	rule_shift_second(t_parser *parser, t_ast_token *list)
 {
 	t_ast_token	*tmp;
 
+	(void)parser;
 	tmp = list->next->next;
 	free(list->next->data);
 	free(list->next);

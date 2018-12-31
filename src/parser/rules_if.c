@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 11:49:38 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/29 17:31:08 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/29 18:44:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 #include "21sh.h"
 #include "ast.h"
 
-int	rule_create_if(t_ast_token *list)
+int	rule_create_if(t_parser *parser, t_ast_token *list)
 {
 	t_ast		*node;
 	t_ast_token	*tmp;
 
+	if (pss_push(parser, PSTATE_IF))
+		return (1);
 	node = alloc_ast(list->next->data, TT_IF, &exec_if, &free_if);
 	if (!node)
 		return (1);
@@ -35,11 +37,12 @@ int	rule_create_if(t_ast_token *list)
 	return (0);
 }
 
-int	rule_add_to_if(t_ast_token *list)
+int	rule_add_to_if(t_parser *parser, t_ast_token *list)
 {
 	t_ast		*node;
 	t_ast_token	*tmp;
 
+	(void)parser;
 	node = alloc_ast(NULL, TT_END, &exec_end, &free_end);
 	if (!node)
 		return (1);
@@ -54,12 +57,13 @@ int	rule_add_to_if(t_ast_token *list)
 	return (0);
 }
 
-int	rule_create_elif(t_ast_token *list)
+int	rule_create_elif(t_parser *parser, t_ast_token *list)
 {
 	t_ast		*node;
 	t_ast		*iter;
 	t_ast_token	*tmp;
 
+	(void)parser;
 	node = alloc_ast(list->next->next->data, TT_ELIF, &exec_if, &free_if);
 	if (!node)
 		return (1);
@@ -79,12 +83,13 @@ int	rule_create_elif(t_ast_token *list)
 	return (0);
 }
 
-int	rule_create_else(t_ast_token *list)
+int	rule_create_else(t_parser *parser, t_ast_token *list)
 {
 	t_ast		*iter;
 	t_ast_token	*tmp;
 	t_ast		*node;
 
+	(void)parser;
 	node = alloc_ast(NULL, TT_ELSE, &exec_else, &free_else);
 	if (!node)
 		return (1);
@@ -101,10 +106,11 @@ int	rule_create_else(t_ast_token *list)
 	return (0);
 }
 
-int	rule_close_if(t_ast_token *list)
+int	rule_close_if(t_parser *parser, t_ast_token *list)
 {
 	t_ast_token	*tmp;
 
+	pss_pop(parser);
 	tmp = list->next->next;
 	free(list->next->data);
 	free(list->next);
