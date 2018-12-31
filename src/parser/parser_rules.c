@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 14:08:42 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 16:32:20 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static const t_ast_rule g_rules[] =\
 	{PS_IFCD,
 		{TT_IFCD, TT_STATEMENT, TT_END, 0}, 3, &rule_add_to_if},
 	{PS_IFCD,
-		{TT_IFCD, TT_ELIF, TT_STATEMENT, 0}, 3, &rule_create_elif},
+		{TT_IFCD, TT_ELIF, 0, 0}, 2, &rule_create_elif_nocd},
 	{PS_IFCD,
 		{TT_IFCD, TT_ELSE, 0, 0}, 2, &rule_create_else},
 	{PS_IFCD | PS_ELSE,

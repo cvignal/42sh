@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 13:58:35 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 14:42:17 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:03:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,23 @@ int	rule_add_to_else(t_parser *parser, t_ast_token *list)
 {
 	t_ast_token	*tmp;
 	t_ast		*node;
+	t_ast		*iter;
 
 	(void)parser;
-	if (((t_ast *)list->data)->right->left)
+	iter = list->data;
+	while (iter->right)
+		iter = iter->right;
+	if (iter->left)
 	{
 		node = alloc_ast(NULL, TT_END, &exec_end, &free_end);
 		if (!node)
 			return (1);
-		node->left = ((t_ast *)((t_ast *)list->data)->right)->left;
+		node->left = iter->left;
 		node->right = list->next->data;
-		((t_ast *)list->data)->right->left = node;
+		iter->left = node;
 	}
 	else
-		((t_ast *)list->data)->right->left = list->next->data;
+		iter->left = list->next->data;
 	tmp = list->next->next->next;
 	free(list->next->next->data);
 	free(list->next->next);
@@ -47,19 +51,19 @@ int	rule_create_else(t_parser *parser, t_ast_token *list)
 	t_ast_token	*tmp;
 	t_ast		*node;
 
-	parser->pss->state = PS_ELSE;
+	(void)parser;
 	node = alloc_ast(NULL, TT_ELSE, &exec_else, &free_else);
 	if (!node)
 		return (1);
 	iter = list->data;
-	while (iter && (iter->type == TT_IF || iter->type == TT_ELIF))
-	{
-		iter->right = node;
-		iter = iter->left;
-	}
+	while (iter->right)
+		iter = iter->right;
+	iter->right = node;
 	tmp = list->next->next;
 	free(list->next->data);
 	free(list->next);
 	list->next = tmp;
+	list->state = PS_ELSE;
+	list->pop = 1;
 	return (0);
 }

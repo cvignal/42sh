@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 14:02:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 16:32:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct			s_ast_token
 {
 	t_ttype				type;
 	void				*data;
+	int					state;
+	int					pop;
 	struct s_ast_token	*next;
 }						t_ast_token;
 
@@ -167,7 +169,9 @@ int						rule_add_to_else(t_parser *parser, t_ast_token *list);
 int						rule_create_if_nocd(t_parser *parser, 
 		t_ast_token *list);
 int						rule_if_add_cd(t_parser *parser, t_ast_token *list);
-int						rule_if_cd(t_parser *parser, t_ast_token *list);
+int						rule_create_elif_nocd(t_parser *parser, 
+		t_ast_token *list);
+
 /*
 ** parser/ast.c
 */
