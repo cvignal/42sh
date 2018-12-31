@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/29 17:24:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 14:08:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,72 @@
 #include "parser.h"
 #include "libft.h"
 
-static const t_ast_rule g_rules[] =
+static const t_ast_rule g_rules[] =\
 {
-	{{TT_WORD, 0, 0, 0}, 1, &rule_create_cmd},
-	{{TT_CMD, TT_WORD, 0, 0}, 2, &rule_add_to_cmd},
-	{{TT_CMD, TT_REDIR_R, TT_WORD, 0}, 3, &rule_redir_r},
-	{{TT_CMD, TT_REDIR_R_BOTH, TT_WORD, 0}, 3, &rule_redir_r_both},
-	{{TT_CMD, TT_REDIR_RR, TT_WORD, 0}, 3, &rule_redir_rr},
-	{{TT_CMD, TT_REDIR_L, TT_WORD, 0}, 3, &rule_redir_l},
-	{{TT_CMD, TT_REDIR_LL, TT_WORD, 0}, 3, &rule_redir_ll},
-	{{TT_CMD, TT_REDIR_R_COMP, 0, 0}, 2, &rule_redir_r_comp},
-	{{TT_CMD, TT_REDIR_R_CLOSE, 0, 0}, 2, &rule_redir_r_close},
-	{{TT_CMD, 0, 0, 0}, 1, &rule_create_pipeline},
-	{{TT_EXPR_OPEN, 0, 0, 0}, 2, &rule_create_expr},
-	{{TT_EXPR_INCOMPLETE, TT_WORD, 0, 0}, 2, &rule_add_to_expr},
-	{{TT_EXPR_INCOMPLETE, TT_EXPR_CLOSE, 0, 0}, 2, &rule_close_expr},
-	{{TT_PIPELINE, TT_PIPE, TT_PIPELINE, 0}, 3, &rule_add_to_pipeline},
-	{{TT_IF, TT_STATEMENT, TT_END, TT_THEN}, 4, &rule_create_if},
-	{{TT_IFCD, TT_STATEMENT, TT_END, 0}, 3, &rule_add_to_if},
-	{{TT_IFCD, TT_ELIF, TT_STATEMENT, 0}, 3, &rule_create_elif},
-	{{TT_IFCD, TT_ELSE, 0, 0}, 2, &rule_create_else},
-	{{TT_IFCD, TT_FI, 0, 0}, 2, &rule_close_if},
-	{{TT_EXPR, 0, 0, 0}, 1, &rule_create_statement},
-	{{TT_PIPELINE, 0, 0, 0}, 1, &rule_create_statement},
-	{{TT_STATEMENT, TT_OVER, 0, 0}, 2, &rule_shift_second},
-	{{TT_STATEMENT, TT_OR, TT_STATEMENT, 0}, 3, &rule_or},
-	{{TT_STATEMENT, TT_AND, TT_STATEMENT, 0}, 3, &rule_and},
-	{{TT_STATEMENT, TT_END, TT_STATEMENT, 0}, 3, &rule_create_end},
-	{{TT_END, TT_OVER, 0, 0}, 2, &rule_shift_first},
-	{{TT_END, TT_END, 0, 0}, 2, &rule_shift_second}
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_WORD, 0, 0, 0}, 1, &rule_create_cmd},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_CMD, TT_WORD, 0, 0}, 2, &rule_add_to_cmd},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_CMD, TT_REDIR_R, TT_WORD, 0}, 3, &rule_redir_r},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_CMD, TT_REDIR_R_BOTH, TT_WORD, 0}, 3, &rule_redir_r_both},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_CMD, TT_REDIR_RR, TT_WORD, 0}, 3, &rule_redir_rr},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_CMD, TT_REDIR_L, TT_WORD, 0}, 3, &rule_redir_l},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_CMD, TT_REDIR_LL, TT_WORD, 0}, 3, &rule_redir_ll},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_CMD, TT_REDIR_R_COMP, 0, 0}, 2, &rule_redir_r_comp},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_CMD, TT_REDIR_R_CLOSE, 0, 0}, 2, &rule_redir_r_close},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_CMD, 0, 0, 0}, 1, &rule_create_pipeline},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_EXPR_OPEN, 0, 0, 0}, 2, &rule_create_expr},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_EXPR_INCOMPLETE, TT_WORD, 0, 0}, 2, &rule_add_to_expr},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_EXPR_INCOMPLETE, TT_EXPR_CLOSE, 0, 0}, 2, &rule_close_expr},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_PIPELINE, TT_PIPE, TT_PIPELINE, 0}, 3, &rule_add_to_pipeline},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_IF, 0, 0, 0}, 1, &rule_create_if_nocd},
+	{PS_IFNOCD,
+		{TT_IFNOCD, TT_OVER, 0, 0}, 2, &rule_shift_second},
+	{PS_IFCD | PS_ELSE,
+		{TT_IFCD, TT_OVER, 0, 0}, 2, &rule_shift_second},
+	{PS_IFNOCD,
+		{TT_IFNOCD, TT_STATEMENT, TT_END, TT_THEN}, 4, &rule_if_add_cd},
+	{PS_IFCD,
+		{TT_IFCD, TT_STATEMENT, TT_OVER, 0}, 3, &rule_add_to_if},
+	{PS_IFCD,
+		{TT_IFCD, TT_STATEMENT, TT_END, 0}, 3, &rule_add_to_if},
+	{PS_IFCD,
+		{TT_IFCD, TT_ELIF, TT_STATEMENT, 0}, 3, &rule_create_elif},
+	{PS_IFCD,
+		{TT_IFCD, TT_ELSE, 0, 0}, 2, &rule_create_else},
+	{PS_IFCD | PS_ELSE,
+		{TT_IFCD, TT_FI, 0, 0}, 2, &rule_close_if},
+	{PS_ELSE,
+		{TT_IFCD, TT_STATEMENT, TT_END, 0}, 3, &rule_add_to_else},
+	{PS_ELSE,
+		{TT_IFCD, TT_STATEMENT, TT_OVER, 0}, 3, &rule_add_to_else},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_EXPR, 0, 0, 0}, 1, &rule_create_statement},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_PIPELINE, 0, 0, 0}, 1, &rule_create_statement},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_STATEMENT, TT_OVER, 0, 0}, 2, &rule_shift_second},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_STATEMENT, TT_OR, TT_STATEMENT, 0}, 3, &rule_or},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_STATEMENT, TT_AND, TT_STATEMENT, 0}, 3, &rule_and},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_STATEMENT, TT_END, TT_STATEMENT, 0}, 3, &rule_create_end},
+	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+		{TT_END, TT_END, 0, 0}, 2, &rule_shift_second}
 };
 
 static size_t	count_tokens(t_ast_token *tokens)
@@ -59,7 +96,7 @@ static size_t	count_tokens(t_ast_token *tokens)
 }
 
 static int		is_target_rule(t_ast_token *token, unsigned int rule_id,
-		size_t len_tokens)
+		size_t len_tokens, int state)
 {
 	unsigned int	i;
 
@@ -73,12 +110,12 @@ static int		is_target_rule(t_ast_token *token, unsigned int rule_id,
 			token = token->next;
 			++i;
 		}
-		return (1);
+		return (state & g_rules[rule_id].state_mask);
 	}
 	return (0);
 }
 
-t_ast_act		get_rule(t_ast_token *tokens)
+t_ast_act		get_rule(t_ast_token *tokens, int state)
 {
 	size_t			len_tokens;
 	unsigned int	rule;
@@ -88,7 +125,7 @@ t_ast_act		get_rule(t_ast_token *tokens)
 	rule = 0;
 	while (rule < sizeof(g_rules) / sizeof(*g_rules))
 	{
-		if (is_target_rule(tokens, rule, len_tokens))
+		if (is_target_rule(tokens, rule, len_tokens, state))
 			return (g_rules[rule].act);
 		++rule;
 	}

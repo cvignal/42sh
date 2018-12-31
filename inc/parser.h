@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/30 09:23:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 13:56:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # define META_CHARS ";|&<>"
 
 # define TOKEN_ALLOC_SIZE	128
+
+# define PS_NONE (1 << 0)
+# define PS_IFNOCD (1 << 1)	
+# define PS_IFCD (1 << 2)	
+# define PS_ELSE (1 << 3)
 
 struct s_shell;
 struct s_ast;
@@ -75,21 +80,22 @@ enum
 	MATCH_COMPLETE
 };
 
+enum
+{
+	PARSER_MORE_INPUT,
+	PARSER_EMPTY,
+	PARSER_COMPLETE
+};
+
 typedef struct			s_lss
 {
 	t_lstate			state;
 	struct s_lss		*next;
 }						t_lss;
 
-typedef enum			e_pstate
-{
-	PSTATE_NONE,
-	PSTATE_IF
-}						t_pstate;
-
 typedef struct			s_pss
 {
-	t_pstate			state;
+	int					state;
 	struct s_pss		*next;
 }						t_pss;
 
@@ -117,13 +123,13 @@ t_lstate				lss_pop(t_lexer *lexer);
 /*
 ** parser/pss.c
 */
-int						pss_push(t_parser *parser, t_lstate state);
-t_pstate				pss_pop(t_parser *parser);
+int						pss_push(t_parser *parser, int state);
+int						pss_pop(t_parser *parser);
 
 /*
 ** parser/parser.c
 */
-struct s_ast			*parse(struct s_shell *shell, t_token *tokens);
+int						parse(struct s_shell *shell, t_token *tokens);
 int						init_parser(t_parser *parser);
 
 /*

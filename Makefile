@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/29 18:09:11 by gchainet         ###   ########.fr        #
+#    Updated: 2018/12/31 14:03:00 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,8 @@ SRC		=							\
 	parser/rules_pipe.c				\
 	parser/rules_statement.c		\
 	parser/rules_if.c				\
+	parser/rules_else.c				\
+	parser/rules_if_nocd.c			\
 	parser/line.c					\
 	parser/ast.c					\
 	parser/ast_token.c				\

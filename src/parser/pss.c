@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 18:06:29 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/29 18:11:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 11:46:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "parser.h"
 
-int			pss_push(t_parser *parser, t_lstate state)
+int			pss_push(t_parser *parser, int state)
 {
 	t_pss	*new_state;
 
@@ -27,9 +27,9 @@ int			pss_push(t_parser *parser, t_lstate state)
 	return (0);
 }
 
-t_pstate	pss_pop(t_parser *parser)
+int			pss_pop(t_parser *parser)
 {
-	t_pstate	state;
+	int	state;
 	t_pss		*tmp;
 
 	state = parser->pss->state;

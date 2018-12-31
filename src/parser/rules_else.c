@@ -1,36 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rules_if.c                                         :+:      :+:    :+:   */
+/*   rules_else.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/29 11:49:38 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 14:02:46 by gchainet         ###   ########.fr       */
+/*   Created: 2018/12/31 13:58:35 by gchainet          #+#    #+#             */
+/*   Updated: 2018/12/31 14:42:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-#include "21sh.h"
+#include "parser.h"
 #include "ast.h"
+#include "21sh.h"
 
-int	rule_add_to_if(t_parser *parser, t_ast_token *list)
+int	rule_add_to_else(t_parser *parser, t_ast_token *list)
 {
-	t_ast		*node;
 	t_ast_token	*tmp;
+	t_ast		*node;
 
 	(void)parser;
-	if (((t_ast *)list->data)->left)
+	if (((t_ast *)list->data)->right->left)
 	{
-		if (!(node = alloc_ast(NULL, TT_END, &exec_end, &free_end)))
+		node = alloc_ast(NULL, TT_END, &exec_end, &free_end);
+		if (!node)
 			return (1);
-		node->left = ((t_ast *)list->data)->left;
+		node->left = ((t_ast *)((t_ast *)list->data)->right)->left;
 		node->right = list->next->data;
-		((t_ast *)list->data)->left = node;
+		((t_ast *)list->data)->right->left = node;
 	}
 	else
-		((t_ast *)list->data)->left = list->next->data;
+		((t_ast *)list->data)->right->left = list->next->data;
 	tmp = list->next->next->next;
 	free(list->next->next->data);
 	free(list->next->next);
@@ -39,41 +41,25 @@ int	rule_add_to_if(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_create_elif(t_parser *parser, t_ast_token *list)
+int	rule_create_else(t_parser *parser, t_ast_token *list)
 {
-	t_ast		*node;
 	t_ast		*iter;
 	t_ast_token	*tmp;
+	t_ast		*node;
 
-	(void)parser;
-	node = alloc_ast(list->next->next->data, TT_ELIF, &exec_if, &free_if);
+	parser->pss->state = PS_ELSE;
+	node = alloc_ast(NULL, TT_ELSE, &exec_else, &free_else);
 	if (!node)
 		return (1);
 	iter = list->data;
-	while (iter->left && iter->left->type == TT_ELIF)
+	while (iter && (iter->type == TT_IF || iter->type == TT_ELIF))
 	{
-		if (iter->right)
-			return (1);
+		iter->right = node;
 		iter = iter->left;
 	}
-	iter->left = node;
-	tmp = list->next->next->next;
-	free(list->next->next);
-	free(list->next->data);
-	free(list->next);
-	list->next = tmp;
-	return (0);
-}
-
-int	rule_close_if(t_parser *parser, t_ast_token *list)
-{
-	t_ast_token	*tmp;
-
-	pss_pop(parser);
 	tmp = list->next->next;
 	free(list->next->data);
 	free(list->next);
 	list->next = tmp;
-	list->type = TT_STATEMENT;
 	return (0);
 }
