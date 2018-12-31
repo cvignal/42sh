@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/29 18:12:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 18:04:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,6 +212,8 @@ int					exec_if(t_shell *shell, struct s_ast *ast);
 void				free_if(struct s_ast *ast);
 int					exec_else(t_shell *shell, struct s_ast *ast);
 void				free_else(struct s_ast *ast);
+int					exec_while(t_shell *shell, struct s_ast *ast);
+void				free_while(struct s_ast *ast);
 
 /*
 ** redir.c

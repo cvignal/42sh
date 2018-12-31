@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 17:16:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 18:20:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # define PS_IFNOCD (1 << 1)
 # define PS_IFCD (1 << 2)
 # define PS_ELSE (1 << 3)
+# define PS_WHILENOCD (1 << 4)
+# define PS_WHILECD (1 << 5)
+# define PS_ALL (~0)
 
 struct s_shell;
 struct s_ast;
