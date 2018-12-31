@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 10:48:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 18:23:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,24 @@ typedef enum			e_ttype
 	TT_REDIR_R,
 	TT_REDIR_R_BOTH,
 	TT_REDIR_RR,
+	TT_EXPR_OPEN,
+	TT_EXPR_CLOSE,
+	TT_EXPR_INCOMPLETE,
+	TT_EXPR,
 	TT_PIPE,
+	TT_IF,
+	TT_THEN,
+	TT_IFCD,
+	TT_IFNOCD,
+	TT_ELIF,
+	TT_ELSE,
+	TT_FI,
+	TT_WHILE,
+	TT_WHILECD,
+	TT_WHILENOCD,
+	TT_DO,
+	TT_DONE,
+	TT_STATEMENT,
 	TT_OVER
 }						t_ttype;
 
@@ -40,6 +57,8 @@ typedef struct			s_ast_token
 {
 	t_ttype				type;
 	void				*data;
+	int					state;
+	int					pop;
 	struct s_ast_token	*next;
 }						t_ast_token;
 
@@ -65,11 +84,12 @@ typedef struct			s_ast
 	struct s_ast		*right;
 }						t_ast;
 
-typedef int				(*t_ast_act)(t_ast_token *);
+typedef int				(*t_ast_act)(t_parser *, t_ast_token *);
 
 typedef struct			s_ast_rule
 {
-	t_ttype				types[3];
+	int					state_mask;
+	t_ttype				types[4];
 	size_t				len;
 	t_ast_act			act;
 }						t_ast_rule;
@@ -77,51 +97,96 @@ typedef struct			s_ast_rule
 /*
 ** parser/rules.c
 */
-int						rule_create_cmd(t_ast_token *list);
-int						rule_add_to_cmd(t_ast_token *list);
-int						rule_create_end(t_ast_token *list);
-int						rule_cmd_list(t_ast_token *list);
+int						rule_create_cmd(t_parser *parser, t_ast_token *list);
+int						rule_add_to_cmd(t_parser *parser, t_ast_token *list);
+int						rule_create_end(t_parser *parser, t_ast_token *list);
+int						rule_cmd_list(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_shift.c
 */
-int						rule_shift_first(t_ast_token *list);
-int						rule_shift_second(t_ast_token *list);
+int						rule_shift_first(t_parser *parser, t_ast_token *list);
+int						rule_shift_second(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_or.c
 */
-int						rule_or(t_ast_token *list);
-int						rule_and(t_ast_token *list);
+int						rule_or(t_parser *parser, t_ast_token *list);
+int						rule_and(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_redir.c
 */
-int						rule_redir_l(t_ast_token *list);
-int						rule_redir_ll(t_ast_token *list);
-int						rule_redir_r(t_ast_token *list);
-int						rule_redir_rr(t_ast_token *list);
+int						rule_redir_l(t_parser *parser, t_ast_token *list);
+int						rule_redir_ll(t_parser *parser, t_ast_token *list);
+int						rule_redir_r(t_parser *parser, t_ast_token *list);
+int						rule_redir_rr(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rule_redir_r_comp.c
 */
-int						rule_redir_r_comp(t_ast_token *list);
+int						rule_redir_r_comp(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rule_redir_r_close.c
 */
-int						rule_redir_r_close(t_ast_token *list);
+int						rule_redir_r_close(t_parser *parser, t_ast_token *list);
 
 /*
 ** parse/rules_redir_r_both.c
 */
-int						rule_redir_r_both(t_ast_token *list);
+int						rule_redir_r_both(t_parser *parser, t_ast_token *list);
 
 /*
-** parser/rules/pipeline.c
+** parser/rules_pipeline.c
 */
-int						rule_create_pipeline(t_ast_token *list);
-int						rule_add_to_pipeline(t_ast_token *list);
+int						rule_create_pipeline(t_parser *parser,
+		t_ast_token *list);
+int						rule_add_to_pipeline(t_parser *parser,
+		t_ast_token *list);
+
+/*
+** parser/rules_expr.c
+*/
+int						rule_create_expr(t_parser *parser, t_ast_token *list);
+int						rule_add_to_expr(t_parser *parser, t_ast_token *list);
+int						rule_close_expr(t_parser *parser, t_ast_token *list);
+
+/*
+** parser/rules_statement.c
+*/
+int						rule_create_statement(t_parser *parser,
+		t_ast_token *list);
+
+/*
+** parser/rules_if.c
+*/
+int						rule_add_to_if(t_parser *parser, t_ast_token *list);
+int						rule_create_elif(t_parser *parser, t_ast_token *list);
+int						rule_close_if(t_parser *parser, t_ast_token *list);
+
+/*
+** parser/rules_else.c
+*/
+int						rule_create_else(t_parser *parser, t_ast_token *list);
+int						rule_add_to_else(t_parser *parser, t_ast_token *list);
+
+/*
+** parser/rules_if_nocd.c
+*/
+int						rule_create_if_nocd(t_parser *parser,
+		t_ast_token *list);
+int						rule_if_add_cd(t_parser *parser, t_ast_token *list);
+int						rule_create_elif_nocd(t_parser *parser,
+		t_ast_token *list);
+
+/*
+** parser/rules_while.c
+*/
+int						rule_create_while(t_parser *parser, t_ast_token *list);
+int						rule_while_add_cd(t_parser *parser, t_ast_token *list);
+int						rule_while_add(t_parser *parser, t_ast_token *list);
+int						rule_while_close(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/ast.c
@@ -134,7 +199,7 @@ void					unshift_ast_token(t_ast_token **tokens);
 /*
 ** pasrser/parser_rules.c
 */
-t_ast_act				get_rule(t_ast_token *tokens);
+t_ast_act				get_rule(t_ast_token *tokens, int state);
 
 /*
 ** parser/input_queue.c

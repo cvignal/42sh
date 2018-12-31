@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 15:46:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2018/12/31 18:44:01 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "parser.h"
 # include "ast.h"
+# include "expr.h"
 # include "libft.h"
 
 # define EXEC_NAME "21sh"
@@ -56,6 +57,7 @@ typedef struct		s_line
 typedef struct		s_shell
 {
 	t_lexer			lexer;
+	t_parser		parser;
 	char			**env;
 	t_line			line;
 	t_list			*history;
@@ -207,6 +209,14 @@ int					exec_or(t_shell *shell, struct s_ast *ast);
 void				free_or(struct s_ast *ast);
 int					exec_and(t_shell *shell, struct s_ast *ast);
 void				free_and(struct s_ast *ast);
+int					exec_expr(t_shell *shell, struct s_ast *ast);
+void				free_expr(struct s_ast *ast);
+int					exec_if(t_shell *shell, struct s_ast *ast);
+void				free_if(struct s_ast *ast);
+int					exec_else(t_shell *shell, struct s_ast *ast);
+void				free_else(struct s_ast *ast);
+int					exec_while(t_shell *shell, struct s_ast *ast);
+void				free_while(struct s_ast *ast);
 
 /*
 ** redir.c

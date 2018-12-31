@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 12:43:13 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:48:08 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:14:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ static t_redir	*create_redir_comp(char *data)
 	return (new_redir);
 }
 
-int	rule_redir_r_comp(t_ast_token *list)
+int				rule_redir_r_comp(t_parser *parser, t_ast_token *list)
 {
 	t_command	*command;
 	t_ast_token	*tmp;
 	t_redir		*redir;
 	t_redir		*iter;
 
+	(void)parser;
 	redir = create_redir_comp(list->next->data);
 	command = ((t_ast *)list->data)->data;
 	iter = command->redir_list;

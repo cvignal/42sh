@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:19:01 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:43:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:10:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "21sh.h"
 
-int	add_to_pipeline(t_pipeline *first, t_command *last)
+int			add_to_pipeline(t_pipeline *first, t_command *last)
 {
 	t_pipeline	*iter;
 	t_pipeline	*new_pipeline;
@@ -59,10 +59,10 @@ void		delete_pipeline(t_pipeline *pipeline)
 	}
 }
 
-int		prepare_pipeline(t_pipeline *pipeline)
+int			prepare_pipeline(t_pipeline *pipeline)
 {
 	t_pipeline	*last;
-	int		fd[2];
+	int			fd[2];
 
 	last = NULL;
 	while (pipeline)

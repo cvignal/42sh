@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/31 13:39:16 by cvignal          ###   ########.fr        #
+#    Updated: 2018/12/31 18:44:13 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,10 +29,14 @@ SRC		=							\
 	parser/lexer_act_var.c			\
 	parser/lexer_act_over.c			\
 	parser/lss.c					\
+	parser/pss.c					\
 	parser/init_lexer.c				\
+	parser/init_parser.c			\
 	parser/lexer.c					\
 	parser/parser_rules.c			\
+	parser/keyword.c				\
 	parser/rules.c					\
+	parser/rules_expr.c				\
 	parser/rules_shift.c			\
 	parser/rules_logic.c			\
 	parser/rules_redir.c			\
@@ -40,6 +44,11 @@ SRC		=							\
 	parser/rules_redir_r_close.c	\
 	parser/rules_redir_r_both.c		\
 	parser/rules_pipe.c				\
+	parser/rules_statement.c		\
+	parser/rules_if.c				\
+	parser/rules_else.c				\
+	parser/rules_if_nocd.c			\
+	parser/rules_while.c			\
 	parser/line.c					\
 	parser/ast.c					\
 	parser/ast_token.c				\
@@ -59,6 +68,10 @@ SRC		=							\
 	exec/end.c						\
 	exec/or.c						\
 	exec/and.c						\
+	exec/expr.c						\
+	exec/if.c						\
+	exec/else.c						\
+	exec/while.c					\
 	shell.c							\
 	command.c						\
 	exec.c							\
@@ -83,7 +96,45 @@ SRC		=							\
 	builtins/env_options.c			\
 	builtins/setenv.c				\
 	builtins/unsetenv.c				\
-	builtins/exit.c
+	builtins/exit.c					\
+	expr/expression.c				\
+	expr/desc.c						\
+	expr/a.c						\
+	expr/b.c						\
+	expr/c.c						\
+	expr/d.c						\
+	expr/e.c						\
+	expr/f.c						\
+	expr/g.c						\
+	expr/h.c						\
+	expr/k.c						\
+	expr/p.c						\
+	expr/r.c						\
+	expr/s.c						\
+	expr/t.c						\
+	expr/u.c						\
+	expr/w.c						\
+	expr/x.c						\
+	expr/g_cap.c					\
+	expr/l_cap.c					\
+	expr/n_cap.c					\
+	expr/o_cap.c					\
+	expr/s_cap.c					\
+	expr/ef.c						\
+	expr/nt.c						\
+	expr/ot.c						\
+	expr/v.c						\
+	expr/n.c						\
+	expr/equal.c					\
+	expr/not_equal.c				\
+	expr/lower.c					\
+	expr/sup.c						\
+	expr/eq.c						\
+	expr/ne.c						\
+	expr/lt.c						\
+	expr/le.c						\
+	expr/gt.c						\
+	expr/ge.c
 
 SRCDIR	:=	src
 OBJDIR	:=	obj

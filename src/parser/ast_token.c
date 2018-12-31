@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:14:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/15 20:42:17 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 15:41:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_ast_token	*alloc_ast_token(char *data, t_ttype type)
 	new_token->data = data;
 	new_token->type = type;
 	new_token->next = NULL;
+	new_token->state = PS_NONE;
+	new_token->pop = 0;
 	return (new_token);
 }
 

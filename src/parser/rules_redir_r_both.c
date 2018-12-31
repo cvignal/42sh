@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 10:48:50 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 10:51:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/29 18:39:20 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 #include "21sh.h"
 #include "parser.h"
 
-int	rule_redir_r_both(t_ast_token *list)
+int	rule_redir_r_both(t_parser *parser, t_ast_token *list)
 {
 	t_command	*command;
 	t_redir		*redir;
 	t_ast_token	*tmp;
 
+	(void)parser;
 	command = ((t_ast *)list->data)->data;
 	redir = create_redir(TT_REDIR_R_BOTH, list->next->next->data,
 			&redir_r_both);

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 12:08:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:11:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static int	reset_builtin_fd(t_pipeline *current)
 	return (0);
 }
 
-int	exec_builtin(t_shell *shell, t_builtin builtin, t_pipeline *current)
+int			exec_builtin(t_shell *shell, t_builtin builtin,
+		t_pipeline *current)
 {
 	int	ret;
 
