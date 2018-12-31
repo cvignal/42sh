@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:54:28 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 10:47:12 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:13:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static t_char_cmp	get_token_cmp(char c)
 	return (&ccmp);
 }
 
-static int	match_plus(const char *token, char c, t_char_cmp cmp, int *match)
+static int			match_plus(const char *token, char c, t_char_cmp cmp,
+		int *match)
 {
 	int	pos_token;
 
@@ -65,7 +66,8 @@ static int	match_plus(const char *token, char c, t_char_cmp cmp, int *match)
 	return (pos_token);
 }
 
-static int	match_star(const char *token, char c, t_char_cmp cmp, int *match)
+static int			match_star(const char *token, char c, t_char_cmp cmp,
+		int *match)
 {
 	int	pos_token;
 
@@ -76,37 +78,35 @@ static int	match_star(const char *token, char c, t_char_cmp cmp, int *match)
 	return (pos_token);
 }
 
-static int	match_pseudo_regex(const char *token, const char *desc)
+static int			match_pseudo_regex(const char *token, const char *desc)
 {
-	int				pos_token;
-	int				pos_desc;
+	int				pos_t;
+	int				pos_d;
 	t_char_cmp		cmp;
 	int				match;
 
-	pos_token = 0;
-	pos_desc = 0;
+	pos_t = 0;
+	pos_d = 0;
 	match = 1;
-	while (match && token[pos_token] && desc[pos_desc])
+	while (match && token[pos_t] && desc[pos_d])
 	{
 		match = 0;
-		cmp = get_token_cmp(desc[pos_desc]);
-		if (desc[pos_desc + 1] == '*')
-			pos_token += match_star(token + pos_token, desc[pos_desc++],
-					cmp, &match);
-		else if (desc[pos_desc + 1] == '+')
-			pos_token += match_plus(token + pos_token, desc[pos_desc++],
-					cmp, &match);
-		else if (cmp(token[pos_token], desc[pos_desc]))
+		cmp = get_token_cmp(desc[pos_d]);
+		if (desc[pos_d + 1] == '*')
+			pos_t += match_star(token + pos_t, desc[pos_d++], cmp, &match);
+		else if (desc[pos_d + 1] == '+')
+			pos_t += match_plus(token + pos_t, desc[pos_d++], cmp, &match);
+		else if (cmp(token[pos_t], desc[pos_d]))
 		{
 			match = 1;
-			++pos_token;
+			++pos_t;
 		}
-		++pos_desc;
+		++pos_d;
 	}
-	return (token[pos_token] || desc[pos_desc]);
+	return (token[pos_t] || desc[pos_d]);
 }
 
-int	get_token_type(t_token *token)
+int					get_token_type(t_token *token)
 {
 	unsigned int	i;
 

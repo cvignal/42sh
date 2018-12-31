@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 16:32:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:16:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,10 @@ int						rule_redir_r_both(t_parser *parser, t_ast_token *list);
 /*
 ** parser/rules_pipeline.c
 */
-int						rule_create_pipeline(t_parser *parser, t_ast_token *list);
-int						rule_add_to_pipeline(t_parser *parser, t_ast_token *list);
+int						rule_create_pipeline(t_parser *parser,
+		t_ast_token *list);
+int						rule_add_to_pipeline(t_parser *parser,
+		t_ast_token *list);
 
 /*
 ** parser/rules_expr.c
@@ -148,7 +150,8 @@ int						rule_close_expr(t_parser *parser, t_ast_token *list);
 /*
 ** parser/rules_statement.c
 */
-int						rule_create_statement(t_parser *parser, t_ast_token *list);
+int						rule_create_statement(t_parser *parser,
+		t_ast_token *list);
 
 /*
 ** parser/rules_if.c
@@ -166,10 +169,10 @@ int						rule_add_to_else(t_parser *parser, t_ast_token *list);
 /*
 ** parser/rules_if_nocd.c
 */
-int						rule_create_if_nocd(t_parser *parser, 
+int						rule_create_if_nocd(t_parser *parser,
 		t_ast_token *list);
 int						rule_if_add_cd(t_parser *parser, t_ast_token *list);
-int						rule_create_elif_nocd(t_parser *parser, 
+int						rule_create_elif_nocd(t_parser *parser,
 		t_ast_token *list);
 
 /*

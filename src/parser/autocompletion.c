@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/25 10:38:33 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:16:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ static int	first_arg(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if ((line[i] == ' ' || line[i] == '>') && i > 0 && line[i - 1] != ';' && line[i - 1] != '|'
-			&& !ft_strnequ(line + i - 1, "&&", 2))
+		if ((line[i] == ' ' || line[i] == '>') && i > 0 && line[i - 1] != ';' 
+				&& line[i - 1] != '|' && !ft_strnequ(line + i - 1, "&&", 2))
 			ret = 0;
 		if (line[i] == ';' || line[i] == '|' || ft_strnequ(line + i, "&&", 2)
 			|| line[i] == '<')

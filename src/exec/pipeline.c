@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 07:46:37 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:56:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:10:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	close_all_pipes(t_pipeline *pipeline)
 	}
 }
 
-int	exec_pipeline(t_shell *shell, t_ast *ast)
+int			exec_pipeline(t_shell *shell, t_ast *ast)
 {
 	t_pipeline	*pipeline;
 
@@ -46,7 +46,7 @@ int	exec_pipeline(t_shell *shell, t_ast *ast)
 	return (wait_loop(ast->data));
 }
 
-void	free_pipeline(t_ast *ast)
+void		free_pipeline(t_ast *ast)
 {
 	delete_pipeline(ast->data);
 	free(ast);

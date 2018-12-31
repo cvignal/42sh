@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:46:05 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 12:34:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:09:13 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,20 @@ static void	init_lexer_zero(t_lexer *lexer)
 	lexer->lexer_actions[LSTATE_SQUOTE][0] = &lexer_more_input;
 }
 
+static void	init_lexer_basics(t_lexer *lexer)
+{
+	lexer->lexer_actions[LSTATE_WORD][' '] = &lexer_cut;
+	lexer->lexer_actions[LSTATE_WORD]['\t'] = &lexer_cut;
+	lexer->lexer_actions[LSTATE_VAR][' '] = &lexer_pop_var;
+	lexer->lexer_actions[LSTATE_VAR]['\t'] = &lexer_pop_var;
+	lexer->lexer_actions[LSTATE_VAR]['\''] = &lexer_pop_var;
+	lexer->lexer_actions[LSTATE_VAR]['"'] = &lexer_pop_var;
+	lexer->lexer_actions[LSTATE_NONE][' '] = &lexer_pass;
+	lexer->lexer_actions[LSTATE_NONE]['\t'] = &lexer_pass;
+	lexer->lexer_actions[LSTATE_WORD]['$'] = &lexer_push_var;
+	lexer->lexer_actions[LSTATE_DQUOTE]['$'] = &lexer_push_var;
+}
+
 int			init_lexer(t_lexer *lexer)
 {
 	int	i;
@@ -70,16 +84,7 @@ int			init_lexer(t_lexer *lexer)
 	}
 	init_lexer_quote(lexer);
 	init_lexer_zero(lexer);
-	lexer->lexer_actions[LSTATE_WORD][' '] = &lexer_cut;
-	lexer->lexer_actions[LSTATE_WORD]['\t'] = &lexer_cut;
-	lexer->lexer_actions[LSTATE_VAR][' '] = &lexer_pop_var;
-	lexer->lexer_actions[LSTATE_VAR]['\t'] = &lexer_pop_var;
-	lexer->lexer_actions[LSTATE_VAR]['\''] = &lexer_pop_var;
-	lexer->lexer_actions[LSTATE_VAR]['"'] = &lexer_pop_var;
-	lexer->lexer_actions[LSTATE_NONE][' '] = &lexer_pass;
-	lexer->lexer_actions[LSTATE_NONE]['\t'] = &lexer_pass;
-	lexer->lexer_actions[LSTATE_WORD]['$'] = &lexer_push_var;
-	lexer->lexer_actions[LSTATE_DQUOTE]['$'] = &lexer_push_var;
+	init_lexer_basics(lexer);
 	init_lexer_meta(lexer, LSTATE_NONE, &lexer_create_meta);
 	init_lexer_meta(lexer, LSTATE_META, &lexer_add_meta);
 	init_lexer_meta(lexer, LSTATE_WORD, &lexer_try_meta);

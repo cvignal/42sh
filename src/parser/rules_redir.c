@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:32:11 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/29 18:39:08 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:14:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,25 @@ static int	rule_redir_generic(t_ast_token *list, t_ttype type, int def_in,
 	return (0);
 }
 
-int	rule_redir_l(t_parser *parser, t_ast_token *list)
+int			rule_redir_l(t_parser *parser, t_ast_token *list)
 {
 	(void)parser;
 	return (rule_redir_generic(list, TT_REDIR_L, STDIN_FILENO, &redir_l));
 }
 
-int	rule_redir_ll(t_parser *parser, t_ast_token *list)
+int			rule_redir_ll(t_parser *parser, t_ast_token *list)
 {
 	(void)parser;
 	return (rule_redir_generic(list, TT_REDIR_LL, STDIN_FILENO, &redir_ll));
 }
 
-int	rule_redir_r(t_parser *parser, t_ast_token *list)
+int			rule_redir_r(t_parser *parser, t_ast_token *list)
 {
 	(void)parser;
 	return (rule_redir_generic(list, TT_REDIR_R, STDOUT_FILENO, &redir_r));
 }
 
-int	rule_redir_rr(t_parser *parser, t_ast_token *list)
+int			rule_redir_rr(t_parser *parser, t_ast_token *list)
 {
 	(void)parser;
 	return (rule_redir_generic(list, TT_REDIR_RR, STDOUT_FILENO, &redir_rr));

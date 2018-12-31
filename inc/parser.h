@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 15:30:44 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:16:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # define TOKEN_ALLOC_SIZE	128
 
 # define PS_NONE (1 << 0)
-# define PS_IFNOCD (1 << 1)	
-# define PS_IFCD (1 << 2)	
+# define PS_IFNOCD (1 << 1)
+# define PS_IFCD (1 << 2)
 # define PS_ELSE (1 << 3)
 
 struct s_shell;
@@ -160,18 +160,18 @@ int						lexer_cut_pass(struct s_shell *shell,
 		t_token *token, char c);
 
 /*
- * parser/lexer_act_meta.c
+** parser/lexer_act_meta.c
 */
 int						lexer_create_meta(struct s_shell *shell,
 		t_token *token, char c);
 int						lexer_add_meta(struct s_shell *shell,
 		t_token *token, char c);
-int						lexer_try_meta(struct s_shell *shell, 
+int						lexer_try_meta(struct s_shell *shell,
 		t_token *token, char c);
 
 /*
 ** parser/lexer_act_quote.c
-**/
+*/
 int						lexer_create_dquote(struct s_shell *shell,
 		t_token *token, char c);
 int						lexer_create_squote(struct s_shell *shell,
@@ -188,7 +188,8 @@ int						lexer_pop_var(struct s_shell *shell, t_token *token,
 /*
 ** parser/lexer_act_over.c
 */
-int						lexer_over(struct s_shell *shell, t_token *token, char c);
+int						lexer_over(struct s_shell *shell, t_token *token,
+		char c);
 int						lexer_more_input(struct s_shell *shell, t_token *token,
 		char c);
 

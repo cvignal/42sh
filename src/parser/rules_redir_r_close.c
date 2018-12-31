@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 19:38:21 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/29 18:43:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:13:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_redir	*create_redir_close(char *data)
 	return (new_redir);
 }
 
-int	rule_redir_r_close(t_parser *parser, t_ast_token *list)
+int				rule_redir_r_close(t_parser *parser, t_ast_token *list)
 {
 	t_command	*command;
 	t_ast_token	*tmp;

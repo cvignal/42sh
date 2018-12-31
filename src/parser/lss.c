@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 08:56:06 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/22 10:27:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:08:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "parser.h"
 
-int lss_push(t_lexer *lexer, t_lstate state)
+int			lss_push(t_lexer *lexer, t_lstate state)
 {
 	t_lss	*new_state;
 

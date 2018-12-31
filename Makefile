@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2018/12/31 14:03:00 by gchainet         ###   ########.fr        #
+#    Updated: 2018/12/31 17:07:39 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC		=							\
 	parser/lss.c					\
 	parser/pss.c					\
 	parser/init_lexer.c				\
+	parser/init_parser.c			\
 	parser/lexer.c					\
 	parser/parser_rules.c			\
 	parser/keyword.c				\
