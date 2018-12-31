@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 17:13:26 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:26:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,16 @@ static int			get_parser_state(t_parser *parser, t_ast_token *token)
 	return (0);
 }
 
+static void			debug(t_ast_token *token)
+{
+	while (token)
+	{
+		ft_printf("{%d %d %d} ", token->type, token->state, token->pop);
+		token = token->next;
+	}
+	ft_printf("\n");
+}
+
 int					parse(t_shell *shell, t_token *tokens)
 {
 	t_ast_token	*lookup_queue;
@@ -87,6 +97,8 @@ int					parse(t_shell *shell, t_token *tokens)
 
 	add_to_ast_token_list(&shell->parser.input_queue, lookup(&tokens));
 	did_reduce = 1;
+	ft_printf("\n");
+	debug(shell->parser.input_queue);
 	while (did_reduce)
 	{
 		did_reduce = 0;
@@ -97,7 +109,10 @@ int					parse(t_shell *shell, t_token *tokens)
 		{
 			get_parser_state(&shell->parser, lookup_queue);
 			if (reduce(&shell->parser, lookup_queue) == 1)
+			{
+				debug(shell->parser.input_queue);
 				did_reduce = 1;
+			}
 			else
 				lookup_queue = lookup_queue->next;
 		}

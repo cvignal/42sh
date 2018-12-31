@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 16:32:20 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:38:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,16 @@ static const t_ast_rule g_rules[] =\
 		{TT_IF, 0, 0, 0}, 1, &rule_create_if_nocd},
 	{PS_IFNOCD,
 		{TT_IFNOCD, TT_OVER, 0, 0}, 2, &rule_shift_second},
-	{PS_IFCD | PS_ELSE,
-		{TT_IFCD, TT_OVER, 0, 0}, 2, &rule_shift_second},
 	{PS_IFNOCD,
 		{TT_IFNOCD, TT_STATEMENT, TT_END, TT_THEN}, 4, &rule_if_add_cd},
+	{PS_IFNOCD,
+		{TT_IFNOCD, TT_STATEMENT, TT_OVER, TT_THEN}, 4, &rule_if_add_cd},
+	{PS_IFCD | PS_ELSE,
+		{TT_IFCD, TT_OVER, 0, 0}, 2, &rule_shift_second},
+	{PS_IFCD | PS_ELSE,
+		{TT_IFCD, TT_END, 0, 0}, 2, &rule_shift_second},
 	{PS_IFCD,
-		{TT_IFCD, TT_STATEMENT, TT_OVER, 0}, 3, &rule_add_to_if},
-	{PS_IFCD,
-		{TT_IFCD, TT_STATEMENT, TT_END, 0}, 3, &rule_add_to_if},
+		{TT_IFCD, TT_STATEMENT, 0, 0}, 2, &rule_add_to_if},
 	{PS_IFCD,
 		{TT_IFCD, TT_ELIF, 0, 0}, 2, &rule_create_elif_nocd},
 	{PS_IFCD,
@@ -70,7 +72,7 @@ static const t_ast_rule g_rules[] =\
 		{TT_EXPR, 0, 0, 0}, 1, &rule_create_statement},
 	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
 		{TT_PIPELINE, 0, 0, 0}, 1, &rule_create_statement},
-	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
+	{PS_NONE,
 		{TT_STATEMENT, TT_OVER, 0, 0}, 2, &rule_shift_second},
 	{PS_NONE | PS_IFCD | PS_IFNOCD | PS_ELSE,
 		{TT_STATEMENT, TT_OR, TT_STATEMENT, 0}, 3, &rule_or},

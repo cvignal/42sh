@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 11:49:38 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 16:32:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 17:29:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ int	rule_add_to_if(t_parser *parser, t_ast_token *list)
 	}
 	else
 		iter->left = list->next->data;
-	tmp = list->next->next->next;
-	free(list->next->next->data);
-	free(list->next->next);
+	tmp = list->next->next;
 	free(list->next);
 	list->next = tmp;
 	return (0);
