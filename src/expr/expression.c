@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 12:31:51 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/29 17:55:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2018/12/31 18:33:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	free_expr_internal(t_expr *expr)
 			free(expr->args[i++]);
 		free(expr->args);
 	}
+	free(expr);
 }
 
 int		add_to_expr(t_expr *expr, char *arg)
