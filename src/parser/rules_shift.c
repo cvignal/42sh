@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 18:10:50 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/29 18:40:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/02 10:50:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	rule_shift_first(t_parser *parser, t_ast_token *list)
 	free(list->data);
 	list->data = list->next->data;
 	list->type = list->next->type;
+	list->pop = list->next->pop;
+	list->state = list->next->state;
 	tmp = list->next;
 	list->next = list->next->next;
 	free(tmp);
