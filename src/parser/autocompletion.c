@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/31 18:43:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/02 15:11:15 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,19 @@
 #include "libft.h"
 #include "fill_line.h"
 
-void		add_and_display(char *str, char *word, t_shell *shell)
+static void	add_and_display(t_list *list, char *word, t_shell *shell)
 {
 	char	*to_add;
+	char	*str;
 
+	if (list && list->next)
+	{
+		display_list(list);
+		return ;
+	}
+	if (!list)
+		return ;
+	str = list->content;
 	if (ft_strchr(word, '/'))
 		to_add = str + ft_strlen(ft_strrchr(word, '/') + 1);
 	else
@@ -38,7 +47,7 @@ static int	first_arg(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if ((line[i] == ' ' || line[i] == '>') && i > 0 && line[i - 1] != ';' 
+		if ((line[i] == ' ' || line[i] == '>') && i > 0 && line[i - 1] != ';'
 				&& line[i - 1] != '|' && !ft_strnequ(line + i - 1, "&&", 2))
 			ret = 0;
 		if (line[i] == ';' || line[i] == '|' || ft_strnequ(line + i, "&&", 2)
@@ -98,6 +107,7 @@ static void	ft_add_exec(char *word, t_list **list)
 		ft_strdel(&prog);
 		i++;
 	}
+	ft_add_builtins(word, list);
 	ft_deltab(&paths);
 }
 
@@ -106,10 +116,9 @@ void		ft_tab(t_shell *shell)
 	t_list	*list;
 	char	*word;
 
-	(void)shell;
 	list = NULL;
 	if (shell->line.mode != 0)
-		return ;
+		return ;		
 	clean_under_line();
 	if (first_arg(shell->line.data))
 	{
@@ -126,9 +135,6 @@ void		ft_tab(t_shell *shell)
 		word = word_to_complete(shell->line.data) + 1;
 		ft_add_files(word, &list);
 	}
-	if (list && list->next)
-		display_list(list);
-	else if (list)
-		add_and_display(list->content, word, shell);
+	add_and_display(list, word, shell);
 	ft_lstdel(&list, &ft_delelt);
 }

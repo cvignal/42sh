@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/31 15:15:13 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/02 15:11:18 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define F5_KEY "\033[15~"
 # define MAJ_TAB "\033[Z"
 # define ESCAPE "\033"
+# define EOC "\e[0m"
 
 typedef struct	s_key
 {
@@ -86,5 +87,7 @@ void			reset_terminal_mode(void);
 void			raw_terminal_mode(void);
 char			*word_to_complete(char *line);
 int				nb_multi_lines(size_t len);
+void			clear_cmd_line(t_shell *shell);
+void			ft_add_builtins(char *word, t_lisT **list);
 
 #endif

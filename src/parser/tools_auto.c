@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/31 11:50:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/02 14:46:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,32 @@
 #include "21sh.h"
 #include "libft.h"
 #include "fill_line.h"
+
+char	*g_builtins[] =\
+{
+	"unsetenv",
+	"setenv",
+	"exit",
+	"echo",
+	"env"
+};
+
+void		ft_add_builtins(char *word, t_list **list)
+{
+	int		i;
+	t_list	*new;
+
+	i = 0;
+	while (i < 5)
+	{
+		if (ft_strnequ(word, g_builtins[i], ft_strlen(word)))
+		{
+			new = ft_lstnew(g_builtins[i], ft_strlen(g_builtins[i]) + 1);
+			ft_lstadd(list, new);
+		}
+		i++;
+	}
+}
 
 char		*find_path(char *word)
 {

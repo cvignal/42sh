@@ -6,14 +6,14 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/31 12:34:07 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/02 12:14:22 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fill_line.h"
 #include "libft.h"
 
-static void	clear_cmd_line(t_shell *shell)
+void	clear_cmd_line(t_shell *shell)
 {
 	while (shell->line.cursor < shell->line.len)
 		ft_rightkey(shell);
@@ -22,7 +22,7 @@ static void	clear_cmd_line(t_shell *shell)
 		ft_backspace(shell);
 }
 
-void		ft_hisdown(t_shell *shell)
+void	ft_hisdown(t_shell *shell)
 {
 	t_list	*curr;
 	int		i;
@@ -49,7 +49,7 @@ void		ft_hisdown(t_shell *shell)
 	}
 }
 
-void		ft_hisup(t_shell *shell)
+void	ft_hisup(t_shell *shell)
 {
 	t_list	*curr;
 	int		i;

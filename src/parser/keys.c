@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/31 12:32:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/02 12:06:54 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,23 @@
 
 void	ft_leftkey(t_shell *shell)
 {
+	unsigned int	curs;
+
+	curs = shell->line.cursor;
 	if (shell->line.cursor > 0)
 	{
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
 		shell->line.cursor--;
+		if (shell->line.mode)
+		{
+			if (shell->line.cursor <= shell->line.select_curs)
+			{
+				ft_printf("%s%c%s", "\e[7;m", shell->line.data[curs - 1], EOC);
+				tputs(tgetstr("le", NULL), 0, ft_printchar);
+			}
+			else
+				ft_printf("%c", shell->line.data[curs - 1]);
+		}
 	}
 }
 
@@ -34,16 +47,28 @@ void	ft_rightkey(t_shell *shell)
 {
 	struct winsize	win;
 	t_curs			*cursor;
+	unsigned int	curs;
 
+	curs = shell->line.cursor;
 	ioctl(0, TIOCGWINSZ, &win);
 	cursor = get_cursor_pos();
 	if (shell->line.cursor < shell->line.len)
 	{
-		if (win.ws_col == cursor->col)
-			tputs(tgetstr("do", NULL), 0, ft_printchar);
-		else
-			tputs(tgetstr("nd", NULL), 0, ft_printchar);
 		shell->line.cursor++;
+		if (shell->line.mode)
+		{
+			if (shell->line.cursor >= shell->line.select_curs)
+				ft_printf("%s%c%s", "\e[7;m", shell->line.data[curs], EOC);
+			else
+				ft_printf("%c", shell->line.data[curs]);
+		}
+		else
+		{
+			if (win.ws_col == cursor->col)
+				tputs(tgetstr("do", NULL), 0, ft_printchar);
+			else
+				tputs(tgetstr("nd", NULL), 0, ft_printchar);
+		}
 	}
 }
 
@@ -64,10 +89,8 @@ void	ft_backspace(t_shell *shell)
 		if (shell->line.cursor < shell->line.len)
 			ft_del_char(shell->line.data, shell->line.cursor - 1);
 		else
-		{
 			shell->line.data[shell->line.cursor - 1] = 0;
-			shell->line.len--;
-		}
+		shell->line.len--;
 		shell->line.cursor--;
 	}
 	free(cursor);
