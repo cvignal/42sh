@@ -6,12 +6,15 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 18:23:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/03 12:04:23 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
+
+# define PIPE_PARENT 0
+# define PIPE_NODE 1
 
 # include "parser.h"
 
@@ -79,7 +82,10 @@ typedef struct			s_ast
 	t_ttype				type;
 	t_exec				exec;
 	t_free				del;
+	int					pipes_in[2][2];
+	int					pipes_out[2][2];
 	void				*data;
+	pid_t				pid;
 	struct s_ast		*left;
 	struct s_ast		*right;
 }						t_ast;
@@ -140,10 +146,7 @@ int						rule_redir_r_both(t_parser *parser, t_ast_token *list);
 /*
 ** parser/rules_pipeline.c
 */
-int						rule_create_pipeline(t_parser *parser,
-		t_ast_token *list);
-int						rule_add_to_pipeline(t_parser *parser,
-		t_ast_token *list);
+int						rule_pipe(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_expr.c
@@ -194,7 +197,6 @@ int						rule_while_close(t_parser *parser, t_ast_token *list);
 t_ast					*alloc_ast(void *data, t_ttype type,
 		t_exec exec, t_free del);
 void					free_ast(t_ast *ast);
-void					unshift_ast_token(t_ast_token **tokens);
 
 /*
 ** pasrser/parser_rules.c

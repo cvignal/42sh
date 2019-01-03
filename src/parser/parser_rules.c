@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/02 10:52:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/03 11:37:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ static const t_ast_rule g_rules[] =\
 	{PS_ALL, {TT_CMD, TT_REDIR_LL, TT_WORD, 0}, 3, &rule_redir_ll},
 	{PS_ALL, {TT_CMD, TT_REDIR_R_COMP, 0, 0}, 2, &rule_redir_r_comp},
 	{PS_ALL, {TT_CMD, TT_REDIR_R_CLOSE, 0, 0}, 2, &rule_redir_r_close},
-	{PS_ALL, {TT_CMD, 0, 0, 0}, 1, &rule_create_pipeline},
 	{PS_ALL, {TT_EXPR_OPEN, 0, 0, 0}, 2, &rule_create_expr},
 	{PS_ALL, {TT_EXPR_INCOMPLETE, TT_WORD, 0, 0}, 2, &rule_add_to_expr},
 	{PS_ALL, {TT_EXPR_INCOMPLETE, TT_EXPR_CLOSE, 0, 0}, 2, &rule_close_expr},
-	{PS_ALL, {TT_PIPELINE, TT_PIPE, TT_PIPELINE, 0}, 3, &rule_add_to_pipeline},
 	{PS_ALL, {TT_IF, 0, 0, 0}, 1, &rule_create_if_nocd},
 	{PS_ALL, {TT_WHILE, 0, 0, 0}, 1, &rule_create_while},
 	{PS_IFNOCD, {TT_IFNOCD, TT_OVER, 0, 0}, 2, &rule_shift_second},
@@ -54,7 +52,8 @@ static const t_ast_rule g_rules[] =\
 	{PS_WHILECD, {TT_WHILECD, TT_END, 0, 0}, 2, &rule_shift_second},
 	{PS_WHILECD, {TT_WHILECD, TT_OVER, 0, 0}, 2, &rule_shift_second},
 	{PS_ALL, {TT_EXPR, 0, 0, 0}, 1, &rule_create_statement},
-	{PS_ALL, {TT_PIPELINE, 0, 0, 0}, 1, &rule_create_statement},
+	{PS_ALL, {TT_CMD, 0, 0, 0}, 1, &rule_create_statement},
+	{PS_ALL, {TT_STATEMENT, TT_PIPE, TT_STATEMENT, 0}, 3, &rule_pipe},
 	{PS_ALL, {TT_STATEMENT, TT_OR, TT_STATEMENT, 0}, 3, &rule_or},
 	{PS_ALL, {TT_STATEMENT, TT_AND, TT_STATEMENT, 0}, 3, &rule_and},
 	{PS_ALL, {TT_STATEMENT, TT_END, TT_STATEMENT, 0}, 3, &rule_create_end},

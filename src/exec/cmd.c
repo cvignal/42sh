@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:56:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/03 11:41:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 
 int		exec_cmd(t_shell *shell, t_ast *ast)
 {
-	(void)shell;
-	(void)ast;
+	ast->pid = exec(shell, ast);
 	return (0);
 }
 

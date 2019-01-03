@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:14:32 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/29 18:38:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/03 11:47:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,22 @@
 #include "21sh.h"
 #include "parser.h"
 
-int	rule_create_pipeline(t_parser *parser, t_ast_token *list)
+int	rule_pipe(t_parser *parser, t_ast_token *list)
 {
-	t_pipeline	*pipeline;
-
-	(void)parser;
-	if (!(pipeline = create_pipeline(((t_ast *)list->data)->data)))
-		return (1);
-	list->type = TT_PIPELINE;
-	((t_ast *)list->data)->data = pipeline;
-	((t_ast *)list->data)->del = &free_pipeline;
-	((t_ast *)list->data)->exec = &exec_pipeline;
-	return (0);
-}
-
-int	rule_add_to_pipeline(t_parser *parser, t_ast_token *list)
-{
-	t_pipeline	*iter;
-	t_pipeline	*new_pipeline;
+	t_ast		*pipe_node;
 	t_ast_token	*tmp;
 
 	(void)parser;
-	new_pipeline = ((t_ast *)list->next->next->data)->data;
-	iter = ((t_ast *)list->data)->data;
-	while (iter->next)
-		iter = iter->next;
-	iter->next = new_pipeline;
+	pipe_node = alloc_ast(NULL, TT_PIPE, &exec_pipeline, &free_pipeline);
+	if (!pipe_node)
+		return (1);
+	pipe_node->left = list->data;
+	pipe_node->right = list->next->next->data;
 	tmp = list->next->next->next;
-	free(list->next->next->data);
 	free(list->next->next);
 	free(list->next->data);
 	free(list->next);
 	list->next = tmp;
+	list->data = pipe_node;
 	return (0);
 }

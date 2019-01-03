@@ -6,11 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:26:16 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/15 09:55:35 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/03 12:15:08 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "ast.h"
 
@@ -25,6 +26,15 @@ t_ast	*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 	new_node->type = type;
 	new_node->exec = exec;
 	new_node->del = del;
+	new_node->pipes_in[PIPE_PARENT][STDIN_FILENO] = -1;
+	new_node->pipes_in[PIPE_PARENT][STDOUT_FILENO] = -1;
+	new_node->pipes_out[PIPE_PARENT][STDIN_FILENO] = -1;
+	new_node->pipes_out[PIPE_PARENT][STDOUT_FILENO] = -1;
+	new_node->pipes_in[PIPE_NODE][STDIN_FILENO] = -1;
+	new_node->pipes_in[PIPE_NODE][STDOUT_FILENO] = -1;
+	new_node->pipes_out[PIPE_NODE][STDIN_FILENO] = -1;
+	new_node->pipes_out[PIPE_NODE][STDOUT_FILENO] = -1;
+	new_node->pid = -1;
 	new_node->right = NULL;
 	new_node->left = NULL;
 	return (new_node);

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 18:44:01 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/03 11:29:45 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct		s_shell
 	char			*pbpaste;
 }					t_shell;
 
-struct s_command;
 struct s_redir;
 typedef int			(*t_redir_act)(t_shell *, struct s_redir *);
 
@@ -88,15 +87,6 @@ typedef struct		s_command
 	pid_t			pid;
 	t_redir			*redir_list;
 }					t_command;
-
-typedef struct		s_pipeline
-{
-	t_command			*command;
-	int					in_fd[2];
-	int					out_fd[2];
-	int					fd_copy[3];
-	struct s_pipeline	*next;
-}					t_pipeline;
 
 typedef int			(*t_builtin)(t_shell *, char **);
 
@@ -129,11 +119,10 @@ int					add_to_command(t_command *command, char *word);
 /*
 ** exec.c
 */
-int					exec(t_shell *shell, t_pipeline *pipeline,
-					t_pipeline *current);
+pid_t				exec(t_shell *shell, t_ast *instr);
 int					exec_from_char(t_shell *shell, char **arg,
 					t_shell *tmp_shell);
-int					wait_loop(t_pipeline *pipeline);
+int					wait_loop(t_ast *ast);
 
 /*
 ** path.c
@@ -178,8 +167,8 @@ int					builtin_setenv(t_shell *shell, char **args);
 int					builtin_unsetenv(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
-int					exec_builtin(t_shell *shell, t_builtin builtin,
-					t_pipeline *current);
+int					exec_builtin(t_shell *shell, t_builtin builtin, 
+		t_ast *instr);
 
 /*
 ** replace.c
@@ -251,12 +240,7 @@ int					redir_r_both(t_shell *shell, t_redir *redir);
 /*
 ** pipeline.c
 */
-int					add_to_pipeline(t_pipeline *first, t_command *last);
-t_pipeline			*create_pipeline(t_command *command);
-void				delete_pipeline(t_pipeline *pipeline);
-int					prepare_pipeline(t_pipeline *pipeline);
-void				open_close_pipe(t_pipeline *pipeline, t_pipeline *current);
-
+int					set_pipeline(t_ast *instr);
 /*
 ** hash.c
 */
