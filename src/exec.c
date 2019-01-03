@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/03 11:45:12 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/03 18:06:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,6 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 		execve(bin_path, ((t_command *)instr->data)->args, shell->env);
 	}
 	else
-		return (pid);
-	return (-1);
+		instr->pid = pid;
+	return (0);
 }
