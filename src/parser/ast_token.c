@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:14:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 15:41:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/05 12:31:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,18 @@ void		add_to_ast_token_list(t_ast_token **list, t_ast_token *node)
 	}
 }
 
-void		unshift_ast_token(t_ast_token **tokens)
+void		push_ast_token(t_ast_token **list, t_ast_token *node)
 {
-	t_ast_token	*tmp;
-	t_ast_token	*iter;
+	node->next = *list;
+	*list = node;
+}
 
-	tmp = NULL;
-	if (!*tokens)
-		return ;
-	iter = *tokens;
-	while (iter->next)
-	{
-		tmp = iter;
-		iter = iter->next;
-	}
-	if (iter == *tokens)
-		*tokens = NULL;
-	free(iter);
-	if (tmp)
-		tmp->next = NULL;
+t_ast_token	*pop_ast_token(t_ast_token **list)
+{
+	t_ast_token	*ret;
+	
+	ret = *list;
+	if (ret)
+		*list = (*list)->next;
+	return (ret);
 }

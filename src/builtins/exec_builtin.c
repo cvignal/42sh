@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/03 18:18:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/05 13:33:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,10 @@ static int	prepare_pipeline(t_ast *instr)
 
 int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 {
-	int	ret;
-
 	set_old_fd(instr);
 	apply_redirs(shell, instr->data);
 	prepare_pipeline(instr);
-	ret = builtin(shell, ((t_command *)instr->data)->args);
+	instr->ret = builtin(shell, ((t_command *)instr->data)->args);
 	reset_builtin_fd(instr);
-	return (ret);
+	return (instr->ret);
 }

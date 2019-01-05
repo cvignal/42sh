@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/03 11:07:58 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/05 13:36:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ static int			get_return(t_parser *parser)
 	else if (parser->input_queue->type == TT_STATEMENT
 			&& parser->input_queue->next == NULL)
 	{
-		parser->ret = parser->input_queue->data;
-		free(parser->input_queue);
+		build_ast(parser);
 		parser->input_queue = NULL;
 		return (PARSER_COMPLETE);
 	}

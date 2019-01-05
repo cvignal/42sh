@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/03 18:10:12 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/05 13:29:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ typedef struct			s_ast_token
 t_ast_token				*alloc_ast_token(char *data, t_ttype type);
 void					add_to_ast_token_list(t_ast_token **list,
 		t_ast_token *node);
+void					push_ast_token(t_ast_token **list, t_ast_token *node);
+t_ast_token				*pop_ast_token(t_ast_token **list);
+
 
 struct s_ast;
 struct s_shell;
@@ -87,6 +90,7 @@ typedef struct			s_ast
 	int					old_fds[3];
 	void				*data;
 	pid_t				pid;
+	int					ret;
 	struct s_ast		*left;
 	struct s_ast		*right;
 }						t_ast;
@@ -198,6 +202,11 @@ int						rule_while_close(t_parser *parser, t_ast_token *list);
 t_ast					*alloc_ast(void *data, t_ttype type,
 		t_exec exec, t_free del);
 void					free_ast(t_ast *ast);
+
+/*
+** parser/shunting_yard.c
+*/
+int						build_ast(t_parser *parser);
 
 /*
 ** pasrser/parser_rules.c

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/05 12:28:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/05 13:30:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int			wait_loop(t_ast *ast)
 			while (!WIFEXITED(status) && !WIFSIGNALED(status))
 				waitpid(ast->pid, &status, 0);
 			ast->pid = -1;
+			ast->ret = WEXITSTATUS(status);
 		}
 		wait_loop(ast->right);
 	}

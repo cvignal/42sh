@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 18:20:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/05 12:56:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ typedef struct			s_match_desc
 	char				desc;
 	t_char_cmp			func;
 }						t_match_desc;
+
+typedef struct			s_precedence
+{
+	int					type;
+	int					prec;
+}						t_precedence;
 
 typedef enum			e_lstate
 {
