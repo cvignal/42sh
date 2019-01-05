@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/03 18:06:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/05 12:28:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	ft_wait(int *status)
 	while (1)
 	{
 		wait(status);
-		if (WIFEXITED(*status))
+		if (WIFEXITED(*status) || WIFSIGNALED(*status))
 			return (0);
 	}
 }
@@ -43,14 +43,14 @@ int			wait_loop(t_ast *ast)
 		wait_loop(ast->left);
 		if (ast->pid != -1)
 		{
-			waitpid(ast->pid, &status, WNOHANG);
-			while (!WIFEXITED(status))
-				waitpid(ast->pid, &status, WNOHANG);
+			waitpid(ast->pid, &status, 0);
+			while (!WIFEXITED(status) && !WIFSIGNALED(status))
+				waitpid(ast->pid, &status, 0);
 			ast->pid = -1;
 		}
 		wait_loop(ast->right);
 	}
-	return (WEXITSTATUS(status));
+	return (0);
 }
 
 int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
