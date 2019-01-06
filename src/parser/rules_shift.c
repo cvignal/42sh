@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 18:10:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 10:18:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 10:32:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@
 
 int	rule_shift_first(t_parser *parser, t_ast_token *list)
 {
-	(void)parser;
-	shift_ast_token(list, 1);
+	t_ast_token	*tmp;
+
+	(void)list;
+	tmp = parser->input_queue->next;
+	free(parser->input_queue);
+	parser->input_queue = tmp;
 	return (0);
 }
 

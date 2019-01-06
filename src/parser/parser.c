@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 10:20:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 10:35:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ static int			reduce(t_parser *parser)
 	t_ast_token		*lookup;
 
 	lookup = parser->input_queue;
-	while ((act = get_rule(lookup, parser->pss ? parser->pss->state : PS_NONE)))
+	while (parser->input_queue
+			&& (act = get_rule(lookup, parser->pss 
+					? parser->pss->state : PS_NONE)))
 	{
 		if (act(parser, lookup))
 			return (1);
@@ -70,6 +72,8 @@ static int			get_return(t_parser *parser)
 	else
 	{
 		ret = queue_to_ast(parser);
+		if (!ret)
+			return (PARSER_EMPTY);
 		if (parser->input_queue)
 			return (clean_exit(parser));
 	}
@@ -85,10 +89,12 @@ int					parse(t_shell *shell, t_token *tokens)
 	{
 		if (reduce(&shell->parser) == 1)
 			return (clean_exit(&shell->parser));
-		if (shell->parser.input_queue->type == TT_STATEMENT)
+		if (shell->parser.input_queue
+				&& shell->parser.input_queue->type == TT_STATEMENT)
 			add_to_ast_token_list(&shell->parser.output_queue,
 					pop_ast_token(&shell->parser.input_queue));
-		else if (shell->parser.input_queue->type == TT_OP)
+		else if (shell->parser.input_queue
+				&& shell->parser.input_queue->type == TT_OP)
 			shunting_yard(&shell->parser);
 		else
 			return (get_return(&shell->parser));
