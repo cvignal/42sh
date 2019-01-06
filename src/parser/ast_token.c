@@ -6,13 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:14:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 05:01:52 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 05:30:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
 #include "ast.h"
+#include "libft.h"
 
 t_ast_token	*alloc_ast_token(char *data, t_ttype type)
 {

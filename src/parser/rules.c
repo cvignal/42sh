@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:20:26 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 03:48:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 05:32:08 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	rule_create_end(t_parser *parser, t_ast_token *list)
 	t_ast		*node_end;
 
 	(void)parser;
-	if (!(node_end = alloc_ast(list->next->data, TT_END, exec_end, free_end)))
+	if (!(node_end = alloc_ast(NULL, TT_END, exec_end, free_end)))
 		return (1);
 	free(list->data);
 	list->data = node_end;

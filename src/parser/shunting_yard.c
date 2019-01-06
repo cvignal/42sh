@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 04:54:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 05:55:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 
 static const t_precedence	g_precedence[] =\
 {
-	{TT_PIPE, 0},
+	{TT_PIPE, 2},
 	{TT_END, 1},
-	{TT_OR, 2},
-	{TT_AND, 2}
+	{TT_OR, 0},
+	{TT_AND, 0}
 };
 
 static int	precedence(t_ttype type)
@@ -32,6 +32,7 @@ static int	precedence(t_ttype type)
 	{
 		if ((t_ttype)g_precedence[i].type == type)
 			return (g_precedence[i].prec);
+		++i;
 	}
 	return (-1);
 }
@@ -63,8 +64,8 @@ static int	set_leaves(t_ast *node, t_ast_token **stack)
 void		shunting_yard(t_parser *parser)
 {
 	while (parser->op_stack
-		&& precedence(parser->input_queue->type)
-		<= precedence(parser->op_stack->type))
+		&& precedence(((t_ast *)parser->input_queue->data)->type)
+		<= precedence(((t_ast *)parser->op_stack->data)->type))
 		add_to_ast_token_list(&parser->output_queue,
 				pop_ast_token(&parser->op_stack));
 	push_ast_token(&parser->op_stack, pop_ast_token(&parser->input_queue));
