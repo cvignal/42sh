@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 18:35:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 18:45:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	add_to_history(char *str, t_shell *shell)
 
 static void	print_prompt(const char *def, t_parser *parser)
 {
-	if (parser->input_queue || parser->output_queue)
+	if (parser->pss)
 		ft_printf("%s ", INCOMPLETE_INPUT_PROMPT);
 	else
 		ft_printf("%s ", def);

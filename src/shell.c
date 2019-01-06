@@ -6,13 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 18:16:17 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 19:08:12 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
-#include <signal.h>
 
 #include "21sh.h"
 #include "libft.h"
@@ -33,17 +32,6 @@ static int	increment_shlvl(t_shell *shell)
 	set_env_var(shell, "SHLVL", new_value);
 	free(new_value);
 	return (0);
-}
-
-static int	set_signal_handler(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = &signal_sigint;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_sigaction = NULL;
-	return (sigaction(SIGINT, &sa, NULL));
 }
 
 void		free_shell(t_shell *shell)
@@ -75,7 +63,6 @@ void		free_shell(t_shell *shell)
 
 int			init_shell(t_shell *shell, char **environ)
 {
-	set_signal_handler();
 	if (init_lexer(&shell->lexer) || init_parser(&shell->parser))
 		return (1);
 	shell->hash_table = malloc(sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
