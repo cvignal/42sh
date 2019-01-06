@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 10:39:08 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 16:41:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 static const t_ast_rule g_rules[] =\
 {
+	{PS_ALL, {TT_OVER, 0, 0, 0}, 1, &rule_shift_first},
 	{PS_ALL, {TT_WORD, 0, 0, 0}, 1, &rule_create_cmd},
 	{PS_ALL, {TT_CMD, TT_WORD, 0, 0}, 2, &rule_add_to_cmd},
 	{PS_ALL, {TT_STATEMENT, TT_REDIR_R, TT_WORD, 0}, 3, &rule_redir_r},
@@ -49,7 +50,7 @@ static const t_ast_rule g_rules[] =\
 	{PS_ALL, {TT_AND, 0, 0, 0}, 1, &rule_and},
 	{PS_ALL, {TT_END, TT_WORD, 0, 0}, 2, &rule_create_end},
 	{PS_ALL, {TT_END, 0, 0, 0}, 1, &rule_shift_first},
-	{PS_ALL, {TT_STATEMENT, TT_OVER, 0, 0}, 2, &rule_shift_second}
+	{PS_ALL, {TT_OVER, TT_OVER, 0, 0}, 2, &rule_shift_second}
 };
 
 static size_t	count_tokens(t_ast_token *tokens)

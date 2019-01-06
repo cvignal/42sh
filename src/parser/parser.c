@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 10:42:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 16:50:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,16 @@
 #include "ast.h"
 #include "libft.h"
 
-static void			debug(t_ast_token *token)
-{
-	while (token)
-	{
-		ft_printf("%d ", token->type);
-		token = token->next;
-	}
-	ft_printf("\n");
-}
-
 static int			reduce(t_parser *parser)
 {
 	t_ast_act		act;
 
-	debug(parser->input_queue);
 	while (parser->input_queue
 			&& (act = get_rule(parser->input_queue, parser->pss 
 					? parser->pss->state : PS_NONE)))
 	{
 		if (act(parser, parser->input_queue))
 			return (1);
-		debug(parser->input_queue);
 	}
 	return (0);
 }
@@ -99,7 +87,10 @@ int					parse(t_shell *shell, t_token *tokens)
 	{
 		if (reduce(&shell->parser) == 1)
 			return (clean_exit(&shell->parser));
-		if (shell->parser.input_queue->type == TT_STATEMENT)
+		if (!shell->parser.input_queue)
+			break ;
+		if (shell->parser.input_queue->type == TT_STATEMENT
+				&& shell->parser.pss == NULL)
 			add_to_ast_token_list(&shell->parser.output_queue,
 					pop_ast_token(&shell->parser.input_queue));
 		else if (shell->parser.input_queue->type == TT_OP)
