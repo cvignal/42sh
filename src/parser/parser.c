@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 16:50:52 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 18:33:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,28 @@
 #include "ast.h"
 #include "libft.h"
 
+static void			debug(t_ast_token *token)
+{
+	while (token)
+	{
+		ft_printf("%d ", token->type);
+		token = token->next;
+	}
+	ft_printf("\n");
+}
+
 static int			reduce(t_parser *parser)
 {
 	t_ast_act		act;
 
+	debug(parser->input_queue);
 	while (parser->input_queue
 			&& (act = get_rule(parser->input_queue, parser->pss 
 					? parser->pss->state : PS_NONE)))
 	{
 		if (act(parser, parser->input_queue))
 			return (1);
+	debug(parser->input_queue);
 	}
 	return (0);
 }

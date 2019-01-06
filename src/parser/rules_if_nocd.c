@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 11:53:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 10:20:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 17:58:45 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	rule_create_elif_nocd(t_parser *parser, t_ast_token *list)
 	parser->pss->state = PS_IFNOCD;
 	if (!(node = alloc_ast(NULL, TT_IF, &exec_if, &free_if)))
 		return (1);
-	iter = parser->pss->current->data;
+	iter = parser->pss->current;
 	while (iter->right)
 		iter = iter->right;
 	iter->right = node;
