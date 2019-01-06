@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:14:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 05:30:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 09:40:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ast.h"
 #include "libft.h"
 
-t_ast_token	*alloc_ast_token(char *data, t_ttype type)
+t_ast_token	*alloc_ast_token(void *data, t_ttype type)
 {
 	t_ast_token	*new_token;
 
@@ -24,8 +24,6 @@ t_ast_token	*alloc_ast_token(char *data, t_ttype type)
 	new_token->data = data;
 	new_token->type = type;
 	new_token->next = NULL;
-	new_token->state = PS_NONE;
-	new_token->pop = 0;
 	return (new_token);
 }
 
@@ -56,7 +54,9 @@ t_ast_token	*pop_ast_token(t_ast_token **list)
 	
 	ret = *list;
 	if (ret)
+	{
 		*list = (*list)->next;
-	ret->next = NULL;
+		ret->next = NULL;
+	}
 	return (ret);
 }

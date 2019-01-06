@@ -6,25 +6,27 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 05:28:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 10:20:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <unistd.h>
 
 #include "21sh.h"
 #include "libft.h"
 #include "ast.h"
 #include "libft.h"
 
-static int			reduce(t_parser *parser, t_ast_token *input_queue)
+static int			reduce(t_parser *parser)
 {
 	t_ast_act		act;
+	t_ast_token		*lookup;
 
-	if ((act = get_rule(input_queue, parser->pss
-					? parser->pss->state : PS_NONE)))
+	lookup = parser->input_queue;
+	while ((act = get_rule(lookup, parser->pss ? parser->pss->state : PS_NONE)))
 	{
-		if (act(parser, input_queue))
-			return (2);
-		return (1);
+		if (act(parser, lookup))
+			return (1);
 	}
 	return (0);
 }
@@ -47,6 +49,18 @@ static t_ast_token	*lookup(t_token **tokens)
 	return (input_queue);
 }
 
+static int			clean_exit(t_parser *parser)
+{
+	ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, SYNTAX_ERROR_MSG);
+	free_input_queue(parser->input_queue);
+	free_input_queue(parser->output_queue);
+	free_input_queue(parser->op_stack);
+	while (parser->pss)
+		pss_pop(parser);
+	ft_bzero(parser, sizeof(*parser));
+	return (PARSER_EMPTY);
+}
+
 static int			get_return(t_parser *parser)
 {
 	t_ast	*ret;
@@ -57,13 +71,7 @@ static int			get_return(t_parser *parser)
 	{
 		ret = queue_to_ast(parser);
 		if (parser->input_queue)
-		{
-			free_input_queue(parser->input_queue);
-			free_input_queue(parser->output_queue);
-			free_input_queue(parser->op_stack);
-			ft_bzero(parser, sizeof(*parser));
-			return (PARSER_EMPTY);
-		}
+			return (clean_exit(parser));
 	}
 	ft_bzero(parser, sizeof(*parser));
 	parser->ret = ret;
@@ -75,8 +83,8 @@ int					parse(t_shell *shell, t_token *tokens)
 	add_to_ast_token_list(&shell->parser.input_queue, lookup(&tokens));
 	while (shell->parser.input_queue)
 	{
-		while (reduce(&shell->parser, shell->parser.input_queue) == 1)
-			;
+		if (reduce(&shell->parser) == 1)
+			return (clean_exit(&shell->parser));
 		if (shell->parser.input_queue->type == TT_STATEMENT)
 			add_to_ast_token_list(&shell->parser.output_queue,
 					pop_ast_token(&shell->parser.input_queue));

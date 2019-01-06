@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 13:58:35 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 17:03:19 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 08:09:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	rule_create_else(t_parser *parser, t_ast_token *list)
 	t_ast_token	*tmp;
 	t_ast		*node;
 
-	(void)parser;
+	parser->pss->state = PS_ELSE;
 	node = alloc_ast(NULL, TT_ELSE, &exec_else, &free_else);
 	if (!node)
 		return (1);
@@ -63,7 +63,5 @@ int	rule_create_else(t_parser *parser, t_ast_token *list)
 	free(list->next->data);
 	free(list->next);
 	list->next = tmp;
-	list->state = PS_ELSE;
-	list->pop = 1;
 	return (0);
 }

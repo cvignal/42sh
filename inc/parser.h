@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 03:30:33 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 09:18:59 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct			s_lss
 typedef struct			s_pss
 {
 	int					state;
+	struct s_ast		*current;
 	struct s_pss		*next;
 }						t_pss;
 
@@ -134,8 +135,9 @@ t_lstate				lss_pop(t_lexer *lexer);
 /*
 ** parser/pss.c
 */
-int						pss_push(t_parser *parser, int state);
-int						pss_pop(t_parser *parser);
+int						pss_push(t_parser *parser, int state,
+		struct s_ast *token);
+struct s_ast			*pss_pop(t_parser *parser);
 
 /*
 ** parser/parser.c

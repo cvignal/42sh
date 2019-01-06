@@ -6,15 +6,16 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 18:06:29 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 17:13:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 09:19:00 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
 #include "parser.h"
+#include "ast.h"
 
-int			pss_push(t_parser *parser, int state)
+int			pss_push(t_parser *parser, int state, t_ast *ast)
 {
 	t_pss	*new_state;
 
@@ -23,18 +24,19 @@ int			pss_push(t_parser *parser, int state)
 		return (1);
 	new_state->state = state;
 	new_state->next = parser->pss;
+	new_state->current = ast;
 	parser->pss = new_state;
 	return (0);
 }
 
-int			pss_pop(t_parser *parser)
+t_ast		*pss_pop(t_parser *parser)
 {
-	int			state;
+	t_ast		*token;
 	t_pss		*tmp;
 
-	state = parser->pss->state;
+	token = parser->pss->current;
 	tmp = parser->pss;
 	parser->pss = parser->pss->next;
 	free(tmp);
-	return (state);
+	return (token);
 }

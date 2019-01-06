@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 07:15:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 09:19:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,22 @@ typedef struct			s_ast_token
 {
 	t_ttype				type;
 	void				*data;
-	int					state;
-	int					pop;
 	struct s_ast_token	*next;
 }						t_ast_token;
 
 /*
 ** parser/ast_token.c
 */
-t_ast_token				*alloc_ast_token(char *data, t_ttype type);
+t_ast_token				*alloc_ast_token(void *data, t_ttype type);
 void					add_to_ast_token_list(t_ast_token **list,
 		t_ast_token *node);
 void					push_ast_token(t_ast_token **list, t_ast_token *node);
 t_ast_token				*pop_ast_token(t_ast_token **list);
 
+/*
+** parser/utils.c
+*/
+void					shift_ast_token(t_ast_token *list, int del);
 
 struct s_ast;
 struct s_shell;

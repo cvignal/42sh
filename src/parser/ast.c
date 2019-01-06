@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:26:16 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 07:57:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 08:02:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,14 @@ void	free_ast(t_ast *ast)
 	t_redir	*node;
 	t_redir	*tmp;
 
-	if (ast)
+	node = ast->redir_list;
+	while (node)
 	{
-		ast->del(ast->data);
-		node = ast->redir_list;
-		while (node)
-		{
-			tmp = node;
-			node = node->next;
-			if (tmp->target)
-				free(tmp->target);
-			free(tmp);
-		}
-		free_ast(ast->right);
-		free_ast(ast->left);
+		tmp = node;
+		node = node->next;
+		if (tmp->target)
+			free(tmp->target);
+		free(tmp);
 	}
+	free(ast);
 }

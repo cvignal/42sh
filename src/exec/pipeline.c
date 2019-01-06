@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 07:46:37 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 05:47:15 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 08:05:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,5 @@ void		free_pipeline(t_ast *ast)
 {
 	ast->left->del(ast->left);
 	ast->right->del(ast->right);
-	free(ast->data);
-	free(ast);
+	free_ast(ast);
 }

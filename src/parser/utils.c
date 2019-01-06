@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   if.c                                               :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/29 13:01:03 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 08:04:23 by gchainet         ###   ########.fr       */
+/*   Created: 2019/01/06 08:49:50 by gchainet          #+#    #+#             */
+/*   Updated: 2019/01/06 09:20:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include <stdlib.h>
+
 #include "ast.h"
 
-int		exec_if(t_shell *shell, t_ast *ast)
+void	shift_ast_token(t_ast_token *list, int del)
 {
-	if (((t_ast *)ast->data)->exec(shell, ast->data) == 0)
-		return (ast->left->exec(shell, ast->left));
-	else if (ast->right)
-		return (ast->right->exec(shell, ast->right));
-	return (0);
-}
+	t_ast_token	*tmp;
 
-void	free_if(t_ast *ast)
-{
-	if (ast->right)
-		ast->right->del(ast->right);
-	if (ast->left)
-		ast->left->del(ast->left);
-	((t_ast *)ast->data)->del(ast->data);
-	free_ast(ast);
+	if (del == 1)
+		free(list->data);
+	else if (del == 2)
+		((t_ast *)list->data)->del(list->data);
+	if (list->next)
+	{
+		list->data = list->next->data;
+		list->type = list->next->type;
+		tmp = list->next->next;
+		free(list->next);
+		list->next = tmp;
+	}
+	else
+	{
+		list->data = NULL;
+		list->type = TT_OVER;
+		list->next = NULL;
+	}
 }
