@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 07:21:35 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 20:39:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct		s_shell
 }					t_shell;
 
 struct s_redir;
-typedef int			(*t_redir_act)(t_shell *, struct s_redir *);
+typedef int			(*t_redir_act)(t_shell *, t_ast *, struct s_redir *);
 
 typedef struct		s_redir
 {
@@ -215,26 +215,31 @@ void				add_to_redir_list(t_ast *instr, t_redir *redir);
 /*
 ** redir_internal.c
 */
-int					apply_redirs(t_shell *shell, t_ast *instr);
-int					redir_l(t_shell *shell, t_redir *redir);
-int					redir_ll(t_shell *shell, t_redir *redir);
-int					redir_r(t_shell *shell, t_redir *redir);
-int					redir_rr(t_shell *shell, t_redir *redir);
+int					prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root);
+int					redir_l(t_shell *shell, t_ast *, t_redir *redir);
+int					redir_ll(t_shell *shell, t_ast *, t_redir *redir);
+int					redir_r(t_shell *shell, t_ast *, t_redir *redir);
+int					redir_rr(t_shell *shell, t_ast *, t_redir *redir);
 
+/*
+** apply_redirs.c
+*/
+int					apply_redirs(t_shell *shell, t_ast *instr);
+int					reset_redirs(t_ast *instr);
 /*
 ** redir_r_comp.c
 */
-int					redir_r_comp(t_shell *shell, t_redir *redir);
+int					redir_r_comp(t_shell *shell, t_ast *ast, t_redir *redir);
 
 /*
 ** redir_r_close.c
 */
-int					redir_r_close(t_shell *shell, t_redir *redir);
+int					redir_r_close(t_shell *shell, t_ast *ast, t_redir *redir);
 
 /*
 ** redir_r_both.c
 */
-int					redir_r_both(t_shell *shell, t_redir *redir);
+int					redir_r_both(t_shell *shell, t_ast *ast, t_redir *redir);
 
 /*
 ** pipeline.c

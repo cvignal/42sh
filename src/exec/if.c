@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 13:01:03 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 08:04:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 19:54:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int		exec_if(t_shell *shell, t_ast *ast)
 {
+	prepare_redirs(shell, ast, ast);
 	if (((t_ast *)ast->data)->exec(shell, ast->data) == 0)
 		return (ast->left->exec(shell, ast->left));
 	else if (ast->right)

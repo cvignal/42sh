@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 09:19:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 19:40:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct			s_ast
 	int					pipes_in[2][2];
 	int					pipes_out[2][2];
 	int					old_fds[3];
+	int					fds[3];
 	void				*data;
 	pid_t				pid;
 	int					ret;

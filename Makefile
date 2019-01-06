@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/01/06 08:53:58 by gchainet         ###   ########.fr        #
+#    Updated: 2019/01/06 20:04:12 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,6 +85,7 @@ SRC		=							\
 	heredoc.c						\
 	signal.c						\
 	redir.c							\
+	apply_redirs.c					\
 	redir_r_comp.c					\
 	redir_r_close.c					\
 	redir_r_both.c					\

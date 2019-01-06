@@ -6,12 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 19:08:12 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 19:11:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
 
 #include "21sh.h"
 #include "libft.h"

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:26:16 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 08:02:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 19:57:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ t_ast	*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 	new_node->pipes_in[PIPE_NODE][STDOUT_FILENO] = -1;
 	new_node->pipes_out[PIPE_NODE][STDIN_FILENO] = -1;
 	new_node->pipes_out[PIPE_NODE][STDOUT_FILENO] = -1;
+	new_node->fds[STDIN_FILENO] = STDIN_FILENO;
+	new_node->fds[STDOUT_FILENO] = STDOUT_FILENO;
+	new_node->fds[STDERR_FILENO] = STDERR_FILENO;
 	new_node->pid = -1;
 	new_node->ret = 0;
 	new_node->redir_list = NULL;

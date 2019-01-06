@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 07:55:57 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 20:58:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ static int	reset_builtin_fd(t_ast *instr)
 	dup2(instr->old_fds[STDIN_FILENO], STDIN_FILENO);
 	dup2(instr->old_fds[STDOUT_FILENO], STDOUT_FILENO);
 	dup2(instr->old_fds[STDERR_FILENO], STDERR_FILENO);
+	close(instr->old_fds[STDIN_FILENO]);
+	close(instr->old_fds[STDOUT_FILENO]);
+	close(instr->old_fds[STDERR_FILENO]);
 	return (0);
 }
 
@@ -33,18 +36,24 @@ static int	set_old_fd(t_ast *instr)
 
 static int	prepare_pipeline(t_ast *instr)
 {
-	dup2(instr->pipes_in[PIPE_PARENT][STDIN_FILENO], STDIN_FILENO);
-	close(instr->pipes_in[PIPE_PARENT][STDIN_FILENO]);
-	dup2(instr->pipes_out[PIPE_PARENT][STDOUT_FILENO], STDOUT_FILENO);
-	close(instr->pipes_out[PIPE_PARENT][STDOUT_FILENO]);
+	if (instr->pipes_in[PIPE_PARENT][STDIN_FILENO] != -1)
+	{
+		dup2(instr->pipes_in[PIPE_PARENT][STDIN_FILENO], STDIN_FILENO);
+		close(instr->pipes_in[PIPE_PARENT][STDIN_FILENO]);
+	}
+	if (instr->pipes_out[PIPE_PARENT][STDOUT_FILENO] != -1)
+	{
+		dup2(instr->pipes_out[PIPE_PARENT][STDOUT_FILENO], STDOUT_FILENO);
+		close(instr->pipes_out[PIPE_PARENT][STDOUT_FILENO]);
+	}
 	return (0);
 }
 
 int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 {
 	set_old_fd(instr);
-	apply_redirs(shell, instr);
 	prepare_pipeline(instr);
+	apply_redirs(shell, instr);
 	instr->ret = builtin(shell, ((t_command *)instr->data)->args);
 	reset_builtin_fd(instr);
 	return (instr->ret);
