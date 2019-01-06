@@ -1,11 +1,12 @@
 /* ************************************************************************** */
-/*                                                                            */ /*                                                        :::      ::::::::   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:26:16 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/05 13:32:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 07:28:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -13,6 +14,7 @@
 #include <unistd.h>
 
 #include "ast.h"
+#include "21sh.h"
 
 t_ast	*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 {
@@ -42,9 +44,21 @@ t_ast	*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 
 void	free_ast(t_ast *ast)
 {
+	t_redir	*node;
+	t_redir	*tmp;
+
 	if (ast)
 	{
 		ast->del(ast->data);
+		node = ast->redir_list;
+		while (node)
+		{
+			tmp = node;
+			node = node->next;
+			if (tmp->target)
+				free(tmp->target);
+			free(tmp);
+		}
 		free_ast(ast->right);
 		free_ast(ast->left);
 	}

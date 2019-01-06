@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 12:11:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 07:21:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 #include "21sh.h"
 #include "libft.h"
 
-int	apply_redirs(t_shell *shell, t_command *command)
+int	apply_redirs(t_shell *shell, t_ast *instr)
 {
 	t_redir	*redir;
 
-	redir = command->redir_list;
+	redir = instr->redir_list;
 	while (redir)
 	{
 		if (redir->redir_act(shell, redir))

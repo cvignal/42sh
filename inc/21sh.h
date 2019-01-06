@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/03 11:29:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 07:21:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ typedef struct		s_command
 	size_t			alloc_size;
 	size_t			args_len;
 	pid_t			pid;
-	t_redir			*redir_list;
 }					t_command;
 
 typedef int			(*t_builtin)(t_shell *, char **);
@@ -211,12 +210,12 @@ void				free_while(struct s_ast *ast);
 ** redir.c
 */
 t_redir				*create_redir(t_ttype type, char *arg, t_redir_act act);
-void				add_to_redir_list(t_command *command, t_redir *redir);
+void				add_to_redir_list(t_ast *instr, t_redir *redir);
 
 /*
 ** redir_internal.c
 */
-int					apply_redirs(t_shell *shell, t_command *command);
+int					apply_redirs(t_shell *shell, t_ast *instr);
 int					redir_l(t_shell *shell, t_redir *redir);
 int					redir_ll(t_shell *shell, t_redir *redir);
 int					redir_r(t_shell *shell, t_redir *redir);

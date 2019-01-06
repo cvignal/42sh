@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 08:38:43 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:42:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 07:24:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_command	*alloc_command(void)
 	new_command->alloc_size = ARGS_ALLOC_SIZE;
 	new_command->args_len = 0;
 	new_command->pid = -1;
-	new_command->redir_list = NULL;
 	return (new_command);
 }
 
@@ -64,21 +63,11 @@ static int	realloc_command(t_command *command)
 void		free_command(t_command *command)
 {
 	int		i;
-	t_redir	*redir;
-	t_redir	*tmp;
 
 	i = 0;
 	while (command->args[i])
 		free(command->args[i++]);
 	free(command->args);
-	redir = command->redir_list;
-	while (redir)
-	{
-		tmp = redir;
-		redir = redir->next;
-		free(tmp->target);
-		free(tmp);
-	}
 	free(command);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 04:34:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 07:45:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@ static const t_ast_rule g_rules[] =\
 {
 	{PS_ALL, {TT_WORD, 0, 0, 0}, 1, &rule_create_cmd},
 	{PS_ALL, {TT_CMD, TT_WORD, 0, 0}, 2, &rule_add_to_cmd},
-	{PS_ALL, {TT_CMD, TT_REDIR_R, TT_WORD, 0}, 3, &rule_redir_r},
-	{PS_ALL, {TT_CMD, TT_REDIR_R_BOTH, TT_WORD, 0}, 3, &rule_redir_r_both},
-	{PS_ALL, {TT_CMD, TT_REDIR_RR, TT_WORD, 0}, 3, &rule_redir_rr},
-	{PS_ALL, {TT_CMD, TT_REDIR_L, TT_WORD, 0}, 3, &rule_redir_l},
-	{PS_ALL, {TT_CMD, TT_REDIR_LL, TT_WORD, 0}, 3, &rule_redir_ll},
-	{PS_ALL, {TT_CMD, TT_REDIR_R_COMP, 0, 0}, 2, &rule_redir_r_comp},
-	{PS_ALL, {TT_CMD, TT_REDIR_R_CLOSE, 0, 0}, 2, &rule_redir_r_close},
+	{PS_ALL, {TT_STATEMENT, TT_REDIR_R, TT_WORD, 0}, 3, &rule_redir_r},
+	{PS_ALL,
+		{TT_STATEMENT, TT_REDIR_R_BOTH, TT_WORD, 0}, 3, &rule_redir_r_both},
+	{PS_ALL, {TT_STATEMENT, TT_REDIR_RR, TT_WORD, 0}, 3, &rule_redir_rr},
+	{PS_ALL, {TT_STATEMENT, TT_REDIR_L, TT_WORD, 0}, 3, &rule_redir_l},
+	{PS_ALL, {TT_STATEMENT, TT_REDIR_LL, TT_WORD, 0}, 3, &rule_redir_ll},
+	{PS_ALL, {TT_STATEMENT, TT_REDIR_R_COMP, 0, 0}, 2, &rule_redir_r_comp},
+	{PS_ALL, {TT_STATEMENT, TT_REDIR_R_CLOSE, 0, 0}, 2, &rule_redir_r_close},
 	{PS_ALL, {TT_EXPR_OPEN, 0, 0, 0}, 2, &rule_create_expr},
 	{PS_ALL, {TT_EXPR_INCOMPLETE, TT_WORD, 0, 0}, 2, &rule_add_to_expr},
 	{PS_ALL, {TT_EXPR_INCOMPLETE, TT_EXPR_CLOSE, 0, 0}, 2, &rule_close_expr},

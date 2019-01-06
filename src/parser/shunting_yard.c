@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 05:55:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 07:46:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,12 @@ t_ast		*queue_to_ast(t_parser *parser)
 		}
 		push_ast_token(&stack, pop_ast_token(&parser->output_queue));
 	}
-	ret = stack->data;
-	free(stack);
+	if (stack)
+	{
+		ret = stack->data;
+		free(stack);
+	}
+	else
+		return (NULL);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 04:08:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 07:15:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_ast_token				*pop_ast_token(t_ast_token **list);
 
 struct s_ast;
 struct s_shell;
+struct s_redir;
 typedef int				(*t_exec)(struct s_shell *, struct s_ast *);
 typedef void			(*t_free)(struct s_ast *);
 
@@ -92,6 +93,7 @@ typedef struct			s_ast
 	void				*data;
 	pid_t				pid;
 	int					ret;
+	struct s_redir		*redir_list;
 	struct s_ast		*left;
 	struct s_ast		*right;
 }						t_ast;
