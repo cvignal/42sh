@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/05 13:35:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 03:17:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,31 @@ static int	precedence(t_ttype type)
 	i = 0;
 	while (i < sizeof(g_precedence) / sizeof(*g_precedence))
 	{
-		if (g_precedence[i].type == type)
+		if ((t_ttype)g_precedence[i].type == type)
 			return (g_precedence[i].prec);
 	}
 	return (-1);
+}
+
+static int	set_leaves(t_ast *node, t_ast_token **stack)
+{
+	t_ast_token	*right;
+	t_ast_token	*left;
+
+	if (!(right = pop_ast_token(stack)) || !(left = pop_ast_token(stack)))
+	{
+		if (right)
+		{
+			((t_ast *)right->data)->del(right->data);
+			free(right);
+		}
+		free_ast(node);
+	}
+	node->right = right->data;
+	node->left = left->data;
+	free(right);
+	free(left);
+	return (0);
 }
 
 static void	shunting_yard(t_parser *parser, t_ast_token **op,
@@ -48,7 +69,6 @@ static t_ast	*queue_to_ast(t_ast_token *queue)
 {
 	t_ast_token	*stack;
 	t_ast_token	*tmp;
-	t_ast_token	*pop;
 	t_ast		*ret;
 
 	stack = NULL;
@@ -57,12 +77,8 @@ static t_ast	*queue_to_ast(t_ast_token *queue)
 		tmp = queue->next;
 		if (queue->type != TT_STATEMENT)
 		{
-			pop = pop_ast_token(&stack);
-			((t_ast *)queue->data)->left = pop->data;
-			free(pop);
-			pop = pop_ast_token(&stack);
-			((t_ast *)queue->data)->right = pop->data;
-			free(pop);
+			if (!queue || set_leaves(queue->data, &stack))
+				return (NULL);
 		}
 		push_ast_token(&stack, queue);
 		queue = tmp;
@@ -92,5 +108,5 @@ int			build_ast(t_parser *parser)
 	while (op_stack)
 		add_to_ast_token_list(&output, op_stack);
 	parser->ret = queue_to_ast(output);
-	return (0);
+	return (parser->ret != NULL);
 }
