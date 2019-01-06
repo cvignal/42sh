@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 03:17:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 04:54:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static int	set_leaves(t_ast *node, t_ast_token **stack)
 	t_ast_token	*right;
 	t_ast_token	*left;
 
+	if (!node)
+		return (1);
 	if (!(right = pop_ast_token(stack)) || !(left = pop_ast_token(stack)))
 	{
 		if (right)
@@ -49,6 +51,7 @@ static int	set_leaves(t_ast *node, t_ast_token **stack)
 			free(right);
 		}
 		free_ast(node);
+		return (1);
 	}
 	node->right = right->data;
 	node->left = left->data;
@@ -57,56 +60,32 @@ static int	set_leaves(t_ast *node, t_ast_token **stack)
 	return (0);
 }
 
-static void	shunting_yard(t_parser *parser, t_ast_token **op,
-		t_ast_token **output)
+void		shunting_yard(t_parser *parser)
 {
-	while (*op
-		|| precedence(parser->input_queue->type) <= precedence((*op)->type))
-		add_to_ast_token_list(output, pop_ast_token(op));
+	while (parser->op_stack
+		&& precedence(parser->input_queue->type)
+		<= precedence(parser->op_stack->type))
+		add_to_ast_token_list(&parser->output_queue,
+				pop_ast_token(&parser->op_stack));
+	push_ast_token(&parser->op_stack, pop_ast_token(&parser->input_queue));
 }
 
-static t_ast	*queue_to_ast(t_ast_token *queue)
+t_ast		*queue_to_ast(t_parser *parser)
 {
-	t_ast_token	*stack;
-	t_ast_token	*tmp;
 	t_ast		*ret;
+	t_ast_token	*stack;
 
 	stack = NULL;
-	while (queue)
+	while (parser->output_queue)
 	{
-		tmp = queue->next;
-		if (queue->type != TT_STATEMENT)
+		if (parser->output_queue->type == TT_OP)
 		{
-			if (!queue || set_leaves(queue->data, &stack))
+			if (set_leaves(parser->output_queue->data, &stack))
 				return (NULL);
 		}
-		push_ast_token(&stack, queue);
-		queue = tmp;
+		push_ast_token(&stack, pop_ast_token(&parser->output_queue));
 	}
 	ret = stack->data;
 	free(stack);
 	return (ret);
-}
-
-int			build_ast(t_parser *parser)
-{
-	t_ast_token	*op_stack;
-	t_ast_token	*output;
-	t_ast_token	*tmp;
-
-	op_stack = NULL;
-	output = NULL;
-	while (parser->input_queue)
-	{
-		tmp = parser->input_queue->next;
-		if (parser->input_queue->type == TT_STATEMENT)
-			add_to_ast_token_list(&output, parser->input_queue);
-		else
-			shunting_yard(parser, &op_stack, &output);
-		parser->input_queue = tmp;
-	}
-	while (op_stack)
-		add_to_ast_token_list(&output, op_stack);
-	parser->ret = queue_to_ast(output);
-	return (parser->ret != NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/05 13:29:52 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 04:08:41 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef enum			e_ttype
 	TT_DO,
 	TT_DONE,
 	TT_STATEMENT,
+	TT_OP,
 	TT_OVER
 }						t_ttype;
 
@@ -206,8 +207,8 @@ void					free_ast(t_ast *ast);
 /*
 ** parser/shunting_yard.c
 */
-int						build_ast(t_parser *parser);
-
+void					shunting_yard(t_parser *parser);
+t_ast					*queue_to_ast(t_parser *parser);
 /*
 ** pasrser/parser_rules.c
 */

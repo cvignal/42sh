@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/05 12:56:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 03:30:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ typedef struct			s_parser
 {
 	t_pss				*pss;
 	struct s_ast_token	*input_queue;
+	struct s_ast_token	*output_queue;
+	struct s_ast_token	*op_stack;
 	struct s_ast		*ret;
 }						t_parser;
 

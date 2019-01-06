@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:20:26 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/29 18:36:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 03:48:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,12 @@ int	rule_add_to_cmd(t_parser *parser, t_ast_token *list)
 int	rule_create_end(t_parser *parser, t_ast_token *list)
 {
 	t_ast		*node_end;
-	t_ast_token	*tmp;
 
 	(void)parser;
 	if (!(node_end = alloc_ast(list->next->data, TT_END, exec_end, free_end)))
 		return (1);
-	node_end->left = list->data;
-	node_end->right = list->next->next->data;
-	tmp = list->next->next->next;
-	free(list->next->next);
-	free(list->next);
-	list->next = tmp;
+	free(list->data);
 	list->data = node_end;
+	list->type = TT_OP;
 	return (0);
 }

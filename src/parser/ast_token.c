@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:14:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/05 12:31:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 05:01:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ t_ast_token	*pop_ast_token(t_ast_token **list)
 	ret = *list;
 	if (ret)
 		*list = (*list)->next;
+	ret->next = NULL;
 	return (ret);
 }

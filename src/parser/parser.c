@@ -6,11 +6,9 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/05 13:36:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 05:00:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <limits.h>
 
 #include "21sh.h"
 #include "libft.h"
@@ -51,55 +49,44 @@ static t_ast_token	*lookup(t_token **tokens)
 
 static int			get_return(t_parser *parser)
 {
+	t_ast	*ret;
+
 	if (parser->pss)
 		return (PARSER_MORE_INPUT);
-	else if (parser->input_queue->type == TT_STATEMENT
-			&& parser->input_queue->next == NULL)
-	{
-		build_ast(parser);
-		parser->input_queue = NULL;
-		return (PARSER_COMPLETE);
-	}
 	else
 	{
-		free_input_queue(parser->input_queue);
-		parser->input_queue = NULL;
-		while (parser->pss)
-			pss_pop(parser);
+		ret = queue_to_ast(parser);
+		if (parser->input_queue)
+		{
+			free_input_queue(parser->input_queue);
+			free_input_queue(parser->output_queue);
+			free_input_queue(parser->op_stack);
+			ft_bzero(parser, sizeof(*parser));
+			return (PARSER_EMPTY);
+		}
 	}
-	return (PARSER_EMPTY);
-}
-
-static int			get_parser_state(t_parser *parser, t_ast_token *token)
-{
-	if (parser->pss && token->pop)
-		pss_pop(parser);
-	if (token->state != PS_NONE)
-		return (pss_push(parser, token->state));
-	return (0);
+	ft_bzero(parser, sizeof(*parser));
+	parser->ret = ret;
+	return (PARSER_COMPLETE);
 }
 
 int					parse(t_shell *shell, t_token *tokens)
 {
-	t_ast_token	*lookup_queue;
-	int			did_reduce;
-
 	add_to_ast_token_list(&shell->parser.input_queue, lookup(&tokens));
-	did_reduce = 1;
-	while (did_reduce)
+	while (shell->parser.input_queue)
 	{
-		did_reduce = 0;
-		lookup_queue = shell->parser.input_queue;
-		while (shell->parser.pss)
-			pss_pop(&shell->parser);
-		while (lookup_queue)
-		{
-			get_parser_state(&shell->parser, lookup_queue);
-			if (reduce(&shell->parser, lookup_queue) == 1)
-				did_reduce = 1;
-			else
-				lookup_queue = lookup_queue->next;
-		}
+		while (reduce(&shell->parser, shell->parser.input_queue) == 1)
+			;
+		if (shell->parser.input_queue->type == TT_STATEMENT)
+			add_to_ast_token_list(&shell->parser.output_queue,
+					pop_ast_token(&shell->parser.input_queue));
+		else if (shell->parser.input_queue->type == TT_OP)
+			shunting_yard(&shell->parser);
+		else
+			return (get_return(&shell->parser));
 	}
+	while (shell->parser.op_stack)
+		add_to_ast_token_list(&shell->parser.output_queue,
+				pop_ast_token(&shell->parser.op_stack));
 	return (get_return(&shell->parser));
 }

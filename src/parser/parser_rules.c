@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/03 11:37:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 04:34:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ static const t_ast_rule g_rules[] =\
 	{PS_WHILECD, {TT_WHILECD, TT_OVER, 0, 0}, 2, &rule_shift_second},
 	{PS_ALL, {TT_EXPR, 0, 0, 0}, 1, &rule_create_statement},
 	{PS_ALL, {TT_CMD, 0, 0, 0}, 1, &rule_create_statement},
-	{PS_ALL, {TT_STATEMENT, TT_PIPE, TT_STATEMENT, 0}, 3, &rule_pipe},
-	{PS_ALL, {TT_STATEMENT, TT_OR, TT_STATEMENT, 0}, 3, &rule_or},
-	{PS_ALL, {TT_STATEMENT, TT_AND, TT_STATEMENT, 0}, 3, &rule_and},
-	{PS_ALL, {TT_STATEMENT, TT_END, TT_STATEMENT, 0}, 3, &rule_create_end},
+	{PS_ALL, {TT_PIPE, 0, 0, 0}, 1, &rule_pipe},
+	{PS_ALL, {TT_OR, 0, 0, 0}, 1, &rule_or},
+	{PS_ALL, {TT_AND, 0, 0, 0}, 1, &rule_and},
+	{PS_ALL, {TT_END, 0, 0, 0}, 1, &rule_create_end},
 	{PS_ALL, {TT_STATEMENT, TT_OVER, 0, 0}, 2, &rule_shift_second},
 	{PS_ALL, {TT_END, TT_END, 0, 0}, 2, &rule_shift_second},
 	{PS_ALL, {TT_END, TT_OVER, 0, 0}, 2, &rule_shift_first}
