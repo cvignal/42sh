@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ot.c                                               :+:      :+:    :+:   */
+/*   redir_save.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/27 19:24:07 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/07 20:58:58 by gchainet         ###   ########.fr       */
+/*   Created: 2019/01/07 20:15:02 by gchainet          #+#    #+#             */
+/*   Updated: 2019/01/07 21:11:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <unistd.h>
 
 #include "21sh.h"
 
-int	expr_ot(t_shell *shell, char **args)
+int	redir_save(t_redir *redir, t_ast *instr)
 {
-	struct stat	f1;
-	struct stat	f2;
+	t_redir	*iter;
 
-	(void)shell;
-	if (lstat(args[0], &f1))
-		return (1);
-	if (lstat(args[2], &f2))
-		return (0);
-	if (f1.st_mtim.tv_sec < f2.st_mtim.tv_sec)
-		return (0);
-	return (1);
+	iter = instr->redir_list;
+	while (iter)
+	{
+		iter->save(redir, instr);
+		iter = iter->next;
+	}
+	return (0);
+}
+
+int	redir_l_save(t_redir *redir, t_ast *instr)
+{
+	(void)redir;
+	instr->old_fds[STDIN_FILENO] = dup(instr->old_fds[STDIN_FILENO]);
+	return (0);
 }

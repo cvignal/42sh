@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/07 10:09:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 21:19:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		exec_cmd(t_shell *shell, t_ast *ast)
 	int	ret;
 
 	prepare_redirs(shell, ast, ast);
-	save_redirs(ast);
+	redir_save(ast->redir_list, ast);
 	ret = exec(shell, ast);
 	if (ast->redir_list)
 		reset_redirs(ast);

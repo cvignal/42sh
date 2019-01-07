@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/07 10:33:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 21:18:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,13 @@ typedef struct		s_shell
 struct s_redir;
 typedef int			(*t_redir_act)(t_shell *, t_ast *, struct s_redir *);
 typedef int			(*t_redir_reset)(struct s_redir *, t_ast *);
+typedef int			(*t_redir_save)(struct s_redir *, t_ast *);
+
+int					redir_save(struct s_redir *redir, t_ast *instr);
+int					redir_l_save(struct s_redir *, t_ast *);
+
+int					reset_redirs(t_ast *instr);
+int					redir_l_reset(struct s_redir *redir, t_ast *instr);
 
 typedef struct		s_redir
 {
@@ -78,8 +85,17 @@ typedef struct		s_redir
 	int				out;
 	t_redir_act		redir_act;
 	t_redir_reset	reset;
+	t_redir_save 	save;
 	struct s_redir	*next;
 }					t_redir;
+
+typedef struct		s_redir_desc
+{
+	int				type;
+	t_redir_act		act;
+	t_redir_save	save;
+	t_redir_reset	reset;
+}					t_redir_desc;
 
 typedef struct		s_command
 {
