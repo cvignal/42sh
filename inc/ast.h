@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 19:40:47 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 07:32:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,6 @@ int						rule_create_statement(t_parser *parser,
 /*
 ** parser/rules_if.c
 */
-int						rule_add_to_if(t_parser *parser, t_ast_token *list);
 int						rule_create_elif(t_parser *parser, t_ast_token *list);
 int						rule_close_if(t_parser *parser, t_ast_token *list);
 
@@ -193,6 +192,7 @@ int						rule_create_if_nocd(t_parser *parser,
 int						rule_if_add_cd(t_parser *parser, t_ast_token *list);
 int						rule_create_elif_nocd(t_parser *parser,
 		t_ast_token *list);
+int						rule_if_close_cd(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_while.c
@@ -201,6 +201,12 @@ int						rule_create_while(t_parser *parser, t_ast_token *list);
 int						rule_while_add_cd(t_parser *parser, t_ast_token *list);
 int						rule_while_add(t_parser *parser, t_ast_token *list);
 int						rule_while_close(t_parser *parser, t_ast_token *list);
+
+/*
+** parser/rules_shunting_yard.c
+*/
+int						rule_send_to_shunting_yard(t_parser *parser,
+		t_ast_token *list);
 
 /*
 ** parser/ast.c
@@ -213,7 +219,7 @@ void					free_ast(t_ast *ast);
 ** parser/shunting_yard.c
 */
 void					shunting_yard(t_parser *parser);
-t_ast					*queue_to_ast(t_parser *parser);
+t_ast					*queue_to_ast(t_pss *pss);
 /*
 ** pasrser/parser_rules.c
 */

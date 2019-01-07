@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 11:53:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 17:58:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 07:35:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,8 @@
 
 int	rule_create_elif_nocd(t_parser *parser, t_ast_token *list)
 {
-	t_ast		*node;
-	t_ast		*iter;
-
-	parser->pss->state = PS_IFNOCD;
-	if (!(node = alloc_ast(NULL, TT_IF, &exec_if, &free_if)))
-		return (1);
-	iter = parser->pss->current;
-	while (iter->right)
-		iter = iter->right;
-	iter->right = node;
-	shift_ast_token(list, 1);
+	(void)parser;
+	(void)list;
 	return (0);
 }
 
@@ -35,24 +26,29 @@ int	rule_create_if_nocd(t_parser *parser, t_ast_token *list)
 {
 	t_ast	*node;
 
-	if (!(node = alloc_ast(NULL, TT_IF, &exec_if, &free_if)))
+	node = alloc_ast(NULL, TT_IF, &exec_if, &free_if);
+	if (!node)
 		return (1);
-	pss_push(parser, PS_IFNOCD, node);
+	pss_push(parser, PS_IFNOCD);
+	parser->pss->ret = node;
 	shift_ast_token(list, 1);
 	return (0);
 }
 
 int	rule_if_add_cd(t_parser *parser, t_ast_token *list)
 {
-	t_ast		*iter;
-
-	parser->pss->state = PS_IFCD;
-	iter = parser->pss->current;
-	while (iter->right)
-		iter = iter->right;
-	iter->data = list->data;
+	if (parser->pss->ret->data)
+		return (1);
+	parser->pss->ret->data = list->data;
 	shift_ast_token(list, 0);
-	shift_ast_token(list, 1);
+	return (0);
+}
+
+int	rule_if_close_cd(t_parser *parser, t_ast_token *list)
+{
+	if (!parser->pss->ret->data)
+		return (1);
+	parser->pss->state = PS_IFCD;
 	shift_ast_token(list, 1);
 	return (0);
 }

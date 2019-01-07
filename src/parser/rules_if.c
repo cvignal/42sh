@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 11:49:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 10:39:27 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 08:56:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,48 +15,38 @@
 #include "21sh.h"
 #include "ast.h"
 
-int	rule_add_to_if(t_parser *parser, t_ast_token *list)
+static void	clean_last_end_token(t_parser *parser)
 {
-	t_ast		*node;
-	t_ast		*iter;
+	t_ast_token	*token;
 
-	iter = parser->pss->current;
-	while (iter->right)
-		iter = iter->right;
-	if (iter->left)
-	{
-		if (!(node = alloc_ast(NULL, TT_END, &exec_end, &free_end)))
-			return (1);
-		node->left = iter->left;
-		node->right = list->data;
-		iter->left = node;
-	}
-	else
-		iter->left = list->data;
-	shift_ast_token(list, 0);
+	token = parser->pss->output_queue;
+	while (token->next->next)
+		token = token->next;
+	free(token->next->data);
+	free(token->next);
+	token->next = NULL;
+}
+
+int			rule_create_elif(t_parser *parser, t_ast_token *list)
+{
+	(void)parser;
+	(void)list;
 	return (0);
 }
 
-int	rule_create_elif(t_parser *parser, t_ast_token *list)
+int			rule_close_if(t_parser *parser, t_ast_token *list)
 {
-	t_ast		*node;
-	t_ast		*iter;
+	t_ast	*data;
 
-	parser->pss->state = PS_IFNOCD;
-	node = alloc_ast(list->next->data, TT_ELIF, &exec_if, &free_if);
-	if (!node)
+	while (parser->pss->op_stack)
+		add_to_ast_token_list(&parser->pss->output_queue,
+				pop_ast_token(&parser->pss->op_stack));
+	clean_last_end_token(parser);
+	data = queue_to_ast(parser->pss);
+	if (!data)
 		return (1);
-	iter = parser->pss->current;
-	while (iter->right)
-		iter = iter->right;
-	iter->right = node;
-	shift_ast_token(list, 1);
-	return (0);
-}
-
-int	rule_close_if(t_parser *parser, t_ast_token *list)
-{
 	free(list->data);
+	parser->pss->ret->left = data;
 	list->data = pss_pop(parser);
 	list->type = TT_STATEMENT;
 	return (0);

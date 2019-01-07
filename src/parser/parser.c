@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 18:39:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 08:56:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,20 @@ static t_ast_token	*lookup(t_token **tokens)
 
 static int			clean_exit(t_parser *parser)
 {
+	t_pss			*pss;
+
 	ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, SYNTAX_ERROR_MSG);
 	free_input_queue(parser->input_queue);
-	free_input_queue(parser->output_queue);
-	free_input_queue(parser->op_stack);
-	while (parser->pss)
-		pss_pop(parser);
-	ft_bzero(parser, sizeof(*parser));
+	parser->input_queue = NULL;
+	while (parser->pss->state != PS_NONE)
+	{
+		pss = parser->pss;
+		parser->pss = parser->pss->next;
+		free_input_queue(parser->pss->op_stack);
+		free(pss);
+	}
+	parser->pss->output_queue = NULL;
+	parser->pss->op_stack = NULL;
 	return (PARSER_EMPTY);
 }
 
@@ -65,17 +72,16 @@ static int			get_return(t_parser *parser)
 {
 	t_ast	*ret;
 
-	if (parser->pss)
+	if (parser->pss->state != PS_NONE)
 		return (PARSER_MORE_INPUT);
 	else
 	{
-		ret = queue_to_ast(parser);
+		ret = queue_to_ast(parser->pss);
 		if (!ret)
 			return (PARSER_EMPTY);
 		if (parser->input_queue)
 			return (clean_exit(parser));
 	}
-	ft_bzero(parser, sizeof(*parser));
 	parser->ret = ret;
 	return (PARSER_COMPLETE);
 }
@@ -89,17 +95,11 @@ int					parse(t_shell *shell, t_token *tokens)
 			return (clean_exit(&shell->parser));
 		if (!shell->parser.input_queue)
 			break ;
-		if (shell->parser.input_queue->type == TT_STATEMENT
-				&& shell->parser.pss == NULL)
-			add_to_ast_token_list(&shell->parser.output_queue,
-					pop_ast_token(&shell->parser.input_queue));
-		else if (shell->parser.input_queue->type == TT_OP)
-			shunting_yard(&shell->parser);
 		else
 			return (get_return(&shell->parser));
 	}
-	while (shell->parser.op_stack)
-		add_to_ast_token_list(&shell->parser.output_queue,
-				pop_ast_token(&shell->parser.op_stack));
+	while (shell->parser.pss->op_stack)
+		add_to_ast_token_list(&shell->parser.pss->output_queue,
+				pop_ast_token(&shell->parser.pss->op_stack));
 	return (get_return(&shell->parser));
 }

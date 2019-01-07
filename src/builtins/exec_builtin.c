@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 20:58:37 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 09:51:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,6 @@
 #include <unistd.h>
 
 #include "21sh.h"
-
-static int	reset_builtin_fd(t_ast *instr)
-{
-	dup2(instr->old_fds[STDIN_FILENO], STDIN_FILENO);
-	dup2(instr->old_fds[STDOUT_FILENO], STDOUT_FILENO);
-	dup2(instr->old_fds[STDERR_FILENO], STDERR_FILENO);
-	close(instr->old_fds[STDIN_FILENO]);
-	close(instr->old_fds[STDOUT_FILENO]);
-	close(instr->old_fds[STDERR_FILENO]);
-	return (0);
-}
-
-static int	set_old_fd(t_ast *instr)
-{
-	instr->old_fds[STDIN_FILENO] = dup(STDIN_FILENO);
-	instr->old_fds[STDOUT_FILENO] = dup(STDOUT_FILENO);
-	instr->old_fds[STDERR_FILENO] = dup(STDERR_FILENO);
-	return (0);
-}
 
 static int	prepare_pipeline(t_ast *instr)
 {
@@ -51,10 +32,8 @@ static int	prepare_pipeline(t_ast *instr)
 
 int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 {
-	set_old_fd(instr);
 	prepare_pipeline(instr);
 	apply_redirs(shell, instr);
 	instr->ret = builtin(shell, ((t_command *)instr->data)->args);
-	reset_builtin_fd(instr);
 	return (instr->ret);
 }

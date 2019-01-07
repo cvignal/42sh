@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 20:24:47 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 10:32:45 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ int	prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root)
 				return (1);
 			redir = redir->next;
 		}
-		if (instr->left)
-			prepare_redirs(shell, instr->left, root);
-		if (instr->right)
-			prepare_redirs(shell, instr->right, root);
 	}
 	else
 	{
@@ -41,6 +37,10 @@ int	prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root)
 		instr->fds[STDOUT_FILENO] = root->fds[STDOUT_FILENO];
 		instr->fds[STDERR_FILENO] = root->fds[STDERR_FILENO];
 	}
+	if (instr->left)
+		prepare_redirs(shell, instr->left, root);
+	if (instr->right)
+		prepare_redirs(shell, instr->right, root);
 	return (0);
 }
 

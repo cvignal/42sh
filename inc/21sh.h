@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 20:39:35 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 10:33:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct		s_shell
 
 struct s_redir;
 typedef int			(*t_redir_act)(t_shell *, t_ast *, struct s_redir *);
+typedef int			(*t_redir_reset)(struct s_redir *, t_ast *);
 
 typedef struct		s_redir
 {
@@ -76,6 +77,7 @@ typedef struct		s_redir
 	int				in;
 	int				out;
 	t_redir_act		redir_act;
+	t_redir_reset	reset;
 	struct s_redir	*next;
 }					t_redir;
 
@@ -226,6 +228,8 @@ int					redir_rr(t_shell *shell, t_ast *, t_redir *redir);
 */
 int					apply_redirs(t_shell *shell, t_ast *instr);
 int					reset_redirs(t_ast *instr);
+int					save_redirs(t_ast *instr);
+
 /*
 ** redir_r_comp.c
 */
