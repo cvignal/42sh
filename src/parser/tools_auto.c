@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/02 14:46:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/07 09:57:35 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,22 @@ int			ft_comp(char *word, char *name)
 	}
 }
 
-char		*word_to_complete(char *line)
+char		*word_to_complete(t_line *line)
 {
 	char	*ret;
 	int		i;
+	char	*buf;
 
 	ret = NULL;
 	i = 0;
-	while (line[i])
+	if (!(buf = ft_strdup(line->data)))
+		return (NULL);
+	buf[line->cursor] = 0;
+	while (buf[i])
 	{
-		if (line[i] == ' ' || line[i] == ';' || line[i] == '>' || line[i] == '<'
-			|| line[i] == '&' || line[i] == '|')
-			ret = line + i;
+		if (buf[i] == ' ' || buf[i] == ';' || buf[i] == '>' || buf[i] == '<'
+			|| buf[i] == '&' || buf[i] == '|')
+			ret = buf + i;
 		i++;
 	}
 	return (ret);

@@ -6,12 +6,14 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/02 15:11:15 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/07 10:34:18 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <dirent.h>
 #include <stdlib.h>
+#include <term.h>
+#include <curses.h>
 
 #include "21sh.h"
 #include "libft.h"
@@ -34,24 +36,26 @@ static void	add_and_display(t_list *list, char *word, t_shell *shell)
 		to_add = str + ft_strlen(ft_strrchr(word, '/') + 1);
 	else
 		to_add = str + ft_strlen(word);
+	tputs(tgetstr("im", NULL), 0, ft_printchar);
 	ft_printf("%s", to_add);
+	tputs(tgetstr("ei", NULL), 0, ft_printchar);
 	add_to_line(&shell->line, to_add);
 }
 
-static int	first_arg(char *line)
+static int	first_arg(t_line *line)
 {
-	int	ret;
-	int	i;
+	int		ret;
+	size_t	i;
 
 	ret = 1;
 	i = 0;
-	while (line[i])
+	while (line->data[i] && i < line->cursor)
 	{
-		if ((line[i] == ' ' || line[i] == '>') && i > 0 && line[i - 1] != ';'
-				&& line[i - 1] != '|' && !ft_strnequ(line + i - 1, "&&", 2))
+		if ((line->data[i] == ' ' || line->data[i] == '>') && i > 0 && line->data[i - 1] != ';'
+				&& line->data[i - 1] != '|' && !ft_strnequ(line->data + i - 1, "&&", 2))
 			ret = 0;
-		if (line[i] == ';' || line[i] == '|' || ft_strnequ(line + i, "&&", 2)
-			|| line[i] == '<')
+		if (line->data[i] == ';' || line->data[i] == '|' || ft_strnequ(line->data + i, "&&", 2)
+			|| line->data[i] == '<')
 			ret = 1;
 		i++;
 	}
@@ -120,19 +124,19 @@ void		ft_tab(t_shell *shell)
 	if (shell->line.mode != 0)
 		return ;		
 	clean_under_line();
-	if (first_arg(shell->line.data))
+	if (first_arg(&shell->line))
 	{
-		if (!word_to_complete(shell->line.data))
+		if (!word_to_complete(&shell->line))
 			word = shell->line.data;
 		else
-			word = word_to_complete(shell->line.data) + 1;
+			word = word_to_complete(&shell->line) + 1;
 		if (!*word)
 			return ;
 		ft_add_exec(word, &list);
 	}
 	else
 	{
-		word = word_to_complete(shell->line.data) + 1;
+		word = word_to_complete(&shell->line) + 1;
 		ft_add_files(word, &list);
 	}
 	add_and_display(list, word, shell);

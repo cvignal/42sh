@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/02 15:37:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/07 09:48:09 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void			ft_hisup(t_shell *shell);
 t_curs			*get_cursor_pos(void);
 void			reset_terminal_mode(void);
 void			raw_terminal_mode(void);
-char			*word_to_complete(char *line);
+char			*word_to_complete(t_line *line);
 int				nb_multi_lines(size_t len);
 void			clear_cmd_line(t_shell *shell);
 void			ft_add_builtins(char *word, t_list **list);
