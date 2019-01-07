@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 13:01:03 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 19:54:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 22:40:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 
 int		exec_if(t_shell *shell, t_ast *ast)
 {
+	int	ret;
+
+	redir_save(ast->redir_list, ast);
 	prepare_redirs(shell, ast, ast);
 	if (((t_ast *)ast->data)->exec(shell, ast->data) == 0)
-		return (ast->left->exec(shell, ast->left));
+		ret = ast->left->exec(shell, ast->left);
 	else if (ast->right)
-		return (ast->right->exec(shell, ast->right));
-	return (0);
+		ret = ast->right->exec(shell, ast->right);
+	reset_redirs(ast);
+	return (ret);
 }
 
 void	free_if(t_ast *ast)

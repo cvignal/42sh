@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/07 10:32:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 22:22:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ int	prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root)
 	}
 	else
 	{
+		instr->old_fds[STDIN_FILENO] = root->old_fds[STDIN_FILENO];
+		instr->old_fds[STDOUT_FILENO] = root->old_fds[STDOUT_FILENO];
+		instr->old_fds[STDERR_FILENO] = root->old_fds[STDERR_FILENO];
 		instr->fds[STDIN_FILENO] = root->fds[STDIN_FILENO];
 		instr->fds[STDOUT_FILENO] = root->fds[STDOUT_FILENO];
 		instr->fds[STDERR_FILENO] = root->fds[STDERR_FILENO];
@@ -61,7 +64,6 @@ int	redir_ll(t_shell *shell, t_ast *instr, t_redir *redir)
 	t_heredoc	*heredoc;
 	int			fd[2];
 
-	(void)instr;
 	if (!(heredoc = alloc_heredoc()))
 		return (1);
 	if (read_heredoc(shell, heredoc, redir))
@@ -80,7 +82,6 @@ int	redir_r(t_shell *shell, t_ast *instr, t_redir *redir)
 {
 	int	fd;
 
-	(void)instr;
 	(void)shell;
 	fd = open(redir->target, O_WRONLY | O_CREAT | O_TRUNC,
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
@@ -94,7 +95,6 @@ int	redir_rr(t_shell *shell, t_ast *instr, t_redir *redir)
 {
 	int	fd;
 
-	(void)instr;
 	(void)shell;
 	fd = open(redir->target, O_WRONLY | O_CREAT | O_APPEND,
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);

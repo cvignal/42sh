@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:36:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/07 20:56:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 22:04:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
 
 static const t_redir_desc g_redir_desc[] =\
 {
-	{TT_REDIR_L, &redir_l, &redir_l_save, &redir_l_reset}
+	{TT_REDIR_L, &redir_l, &redir_l_save, &redir_l_reset},
+	{TT_REDIR_LL, &redir_ll, &redir_ll_save, &redir_ll_reset},
+	{TT_REDIR_R, &redir_r, &redir_r_save, &redir_r_reset},
+	{TT_REDIR_RR, &redir_rr, &redir_rr_save, &redir_rr_reset}
 };
 
 static const t_redir_desc	*get_redir_desc(int type)
