@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 11:49:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/08 01:18:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/08 12:25:28 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,15 @@ static void	clean_last_end_token(t_parser *parser)
 	}
 }
 
-int			rule_create_elif(t_parser *parser, t_ast_token *list)
+int			rule_elif(t_parser *parser, t_ast_token *list)
 {
-	(void)parser;
-	(void)list;
+	t_ast	*node;
+
+	node = alloc_ast(NULL, TT_IF, &exec_if, &free_if);
+	if (!node || pss_push(parser, PS_IFNOCD))
+		return (1);
+	parser->pss->ret = node;
+	shift_ast_token(parser, list, 1);
 	return (0);
 }
 
@@ -52,6 +57,26 @@ int			rule_close_if(t_parser *parser, t_ast_token *list)
 	free(list->data);
 	parser->pss->ret->left = data;
 	list->data = pss_pop(parser);
+	while (parser->pss->state == PS_IFCD)
+	{
+		parser->pss->ret->left = queue_to_ast(parser->pss);
+		if (!parser->pss->ret->left)
+			return (1);
+		parser->pss->ret->right = list->data;
+		list->data = pss_pop(parser);
+	}
 	list->type = TT_STATEMENT;
+	return (0);
+}
+
+int			rule_else(t_parser *parser, t_ast_token *list)
+{
+	t_ast	*node;
+
+	node = alloc_ast(NULL, TT_ELSE, &exec_else, &free_else);
+	if (!node || pss_push(parser, PS_IFCD))
+		return (1);
+	parser->pss->ret = node;
+	shift_ast_token(parser, list, 1);
 	return (0);
 }

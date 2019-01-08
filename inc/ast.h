@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/08 10:29:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/08 12:39:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ typedef int				(*t_ast_act)(t_parser *, t_ast_token *);
 typedef struct			s_ast_rule
 {
 	int					state_mask;
-	t_ttype				types[4];
+	t_ttype				types[3];
 	size_t				len;
 	t_ast_act			act;
 }						t_ast_rule;
@@ -178,14 +178,9 @@ int						rule_create_statement(t_parser *parser,
 /*
 ** parser/rules_if.c
 */
-int						rule_create_elif(t_parser *parser, t_ast_token *list);
+int						rule_elif(t_parser *parser, t_ast_token *list);
+int						rule_else(t_parser *parser, t_ast_token *list);
 int						rule_close_if(t_parser *parser, t_ast_token *list);
-
-/*
-** parser/rules_else.c
-*/
-int						rule_create_else(t_parser *parser, t_ast_token *list);
-int						rule_add_to_else(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_if_nocd.c
@@ -193,8 +188,6 @@ int						rule_add_to_else(t_parser *parser, t_ast_token *list);
 int						rule_create_if_nocd(t_parser *parser,
 		t_ast_token *list);
 int						rule_if_add_cd(t_parser *parser, t_ast_token *list);
-int						rule_create_elif_nocd(t_parser *parser,
-		t_ast_token *list);
 int						rule_if_close_cd(t_parser *parser, t_ast_token *list);
 
 /*

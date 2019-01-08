@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/01/07 21:57:36 by gchainet         ###   ########.fr        #
+#    Updated: 2019/01/08 10:53:27 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,6 @@ SRC		=							\
 	parser/rules_pipe.c				\
 	parser/rules_statement.c		\
 	parser/rules_if.c				\
-	parser/rules_else.c				\
 	parser/rules_if_nocd.c			\
 	parser/rules_while.c			\
 	parser/rules_shunting_yard.c	\
