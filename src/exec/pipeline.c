@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 07:46:37 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 08:05:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/08 07:21:58 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int		set_node_pipes(t_ast *ast)
 	if (pipe(pipe_fd))
 		return (1);
 	ast->pipes_in[PIPE_NODE][STDIN_FILENO] = pipe_fd[0];
-	ast->pipes_out[PIPE_NODE][STDOUT_FILENO] = pipe_fd[1];
 	ast->pipes_in[PIPE_NODE][STDOUT_FILENO] = pipe_fd[1];
 	ast->pipes_out[PIPE_NODE][STDIN_FILENO] = pipe_fd[0];
+	ast->pipes_out[PIPE_NODE][STDOUT_FILENO] = pipe_fd[1];
 	ast->left->pipes_in[PIPE_PARENT][STDIN_FILENO]
 		= ast->pipes_in[PIPE_PARENT][STDIN_FILENO];
 	ast->left->pipes_in[PIPE_PARENT][STDOUT_FILENO]
@@ -52,6 +52,10 @@ static void	close_all_pipes(t_ast *ast)
 		close_all_pipes(ast->right);
 		if (ast->pipes_in[PIPE_NODE][STDIN_FILENO] != -1)
 			close(ast->pipes_in[PIPE_NODE][STDIN_FILENO]);
+		if (ast->pipes_in[PIPE_NODE][STDOUT_FILENO] != -1)
+			close(ast->pipes_in[PIPE_NODE][STDOUT_FILENO]);
+		if (ast->pipes_out[PIPE_NODE][STDIN_FILENO] != -1)
+			close(ast->pipes_out[PIPE_NODE][STDIN_FILENO]);
 		if (ast->pipes_out[PIPE_NODE][STDOUT_FILENO] != -1)
 			close(ast->pipes_out[PIPE_NODE][STDOUT_FILENO]);
 	}
@@ -65,6 +69,7 @@ int			exec_pipeline(t_shell *shell, t_ast *ast)
 	ast->left->exec(shell, ast->left);
 	ast->right->exec(shell, ast->right);
 	close_all_pipes(ast);
+	wait_loop(ast);
 	return (ast->right->ret);
 }
 

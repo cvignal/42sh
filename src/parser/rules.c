@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:20:26 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 05:32:08 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/08 00:25:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,19 @@ int	rule_create_end(t_parser *parser, t_ast_token *list)
 	free(list->data);
 	list->data = node_end;
 	list->type = TT_OP;
+	return (0);
+}
+
+int	rule_create_end_second(t_parser *parser, t_ast_token *list)
+{
+	t_ast	*node_end;
+
+	(void)parser;
+	node_end = alloc_ast(NULL, TT_END, exec_end, free_end);
+	if (!node_end)
+		return (1);
+	free(list->next->data);
+	list->next->data = node_end;
+	list->next->type = TT_OP;
 	return (0);
 }
