@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/07 09:57:35 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/07 10:53:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,9 @@ char		*word_to_complete(t_line *line)
 			ret = buf + i;
 		i++;
 	}
+	if (ret)
+		ret = ft_strdup(ret + 1);
+	ft_strdel(&buf);
 	return (ret);
 }
 
