@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/08 06:59:52 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/08 09:42:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,18 @@
 static int			reduce(t_parser *parser)
 {
 	t_ast_act		act;
+	int				did_reduce;
 
+	did_reduce = 0;
 	while (parser->input_queue
 			&& (act = get_rule(parser->input_queue, parser->pss 
 					? parser->pss->state : PS_NONE)))
 	{
 		if (act(parser, parser->input_queue))
 			return (1);
-		return (2);
+		did_reduce = 1;
 	}
-	return (0);
+	return (did_reduce ? 2 : 0);
 }
 
 static t_ast_token	*lookup(t_token **tokens)
@@ -97,8 +99,10 @@ int					parse(t_shell *shell, t_token *tokens)
 		if ((ret = reduce(&shell->parser)) == 1)
 			return (clean_exit(&shell->parser));
 		else if (!ret)
-			break ;
+			return (get_return(&shell->parser));
 	}
+	if (shell->parser.pss->state != PS_NONE)
+		return (get_return(&shell->parser));
 	while (shell->parser.pss->op_stack)
 		add_to_ast_token_list(&shell->parser.pss->output_queue,
 				pop_ast_token(&shell->parser.pss->op_stack));

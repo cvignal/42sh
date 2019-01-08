@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 10:26:43 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/08 06:47:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/08 10:15:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	redir_l_reset(t_redir *redir, t_ast *instr)
 	{
 		dup2(instr->old_fds[STDIN_FILENO], STDIN_FILENO);
 		close(instr->old_fds[STDIN_FILENO]);
+		close(instr->fds[STDIN_FILENO]);
 	}
 	return (0);
 }
@@ -49,6 +50,7 @@ int	redir_ll_reset(t_redir *redir, t_ast *instr)
 	{
 		dup2(instr->old_fds[STDIN_FILENO], STDIN_FILENO);
 		close(instr->old_fds[STDIN_FILENO]);
+		close(instr->fds[STDIN_FILENO]);
 	}
 	return (0);
 }
@@ -60,6 +62,7 @@ int	redir_r_reset(t_redir *redir, t_ast *instr)
 	{
 		dup2(instr->old_fds[STDOUT_FILENO], STDOUT_FILENO);
 		close(instr->old_fds[STDOUT_FILENO]);
+		close(instr->fds[STDOUT_FILENO]);
 	}
 	return (0);
 }
@@ -71,6 +74,7 @@ int	redir_rr_reset(t_redir *redir, t_ast *instr)
 	{
 		dup2(instr->old_fds[STDOUT_FILENO], STDOUT_FILENO);
 		close(instr->old_fds[STDOUT_FILENO]);
+		close(instr->fds[STDOUT_FILENO]);
 	}
 	return (0);
 }
