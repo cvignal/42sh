@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/08 00:25:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/08 10:29:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ t_ast_token				*pop_ast_token(t_ast_token **list);
 /*
 ** parser/utils.c
 */
-void					shift_ast_token(t_ast_token *list, int del);
+void					shift_ast_token(t_parser *parser, t_ast_token *list,
+		int del);
 
 struct s_ast;
 struct s_shell;
