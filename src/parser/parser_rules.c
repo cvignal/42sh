@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/08 12:40:59 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 10:11:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static const t_ast_rule g_rules[] =\
 	{PS_IFNOCD, {TT_STATEMENT, 0, 0}, 1, &rule_if_add_cd},
 	{PS_IFNOCD, {TT_THEN, 0, 0}, 1, &rule_if_close_cd},
 	{PS_IFNOCD, {TT_OVER, 0, 0}, 1, &rule_shift_first},
+	{PS_IFNOCD, {TT_END, 0, 0}, 1, &rule_shift_first},
 	{PS_IFCD, {TT_FI, 0, 0}, 1, &rule_close_if},
 	{PS_IFCD, {TT_STATEMENT, TT_OVER, 0}, 2, &rule_create_end_second},
 	{PS_IFCD, {TT_ELIF, 0, 0}, 1, &rule_elif},
