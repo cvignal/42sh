@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/02 11:22:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 10:30:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ static int		handle_ret(t_lexer *lexer, int ret, t_token **current,
 	if (ret & (1 << LEXER_RET_CUT))
 	{
 		(*current)->type = get_token_type(*current);
-		if ((*current)->type == TT_WORD)
-			(*current)->type = keyword_type(*current);
 		add_to_token_list(output, *current);
 		*current = NULL;
 	}

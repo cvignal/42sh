@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 11:49:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/08 12:25:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 13:40:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int			rule_elif(t_parser *parser, t_ast_token *list)
 	t_ast	*node;
 
 	node = alloc_ast(NULL, TT_IF, &exec_if, &free_if);
-	if (!node || pss_push(parser, PS_IFNOCD))
+	if (!node || pss_push(parser, PS_IFNOCD | PS_NONE))
 		return (1);
 	parser->pss->ret = node;
 	shift_ast_token(parser, list, 1);
@@ -57,7 +57,7 @@ int			rule_close_if(t_parser *parser, t_ast_token *list)
 	free(list->data);
 	parser->pss->ret->left = data;
 	list->data = pss_pop(parser);
-	while (parser->pss->state == PS_IFCD)
+	while (parser->pss->state & PS_IFCD)
 	{
 		parser->pss->ret->left = queue_to_ast(parser->pss);
 		if (!parser->pss->ret->left)
@@ -74,7 +74,7 @@ int			rule_else(t_parser *parser, t_ast_token *list)
 	t_ast	*node;
 
 	node = alloc_ast(NULL, TT_ELSE, &exec_else, &free_else);
-	if (!node || pss_push(parser, PS_IFCD))
+	if (!node || pss_push(parser, PS_IFCD | PS_NONE))
 		return (1);
 	parser->pss->ret = node;
 	shift_ast_token(parser, list, 1);

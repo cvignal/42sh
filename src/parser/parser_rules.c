@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 10:11:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 13:41:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,32 @@ static const t_ast_rule g_rules[] =\
 	{PS_IFCD, {TT_STATEMENT, TT_OVER, 0}, 2, &rule_create_end_second},
 	{PS_IFCD, {TT_ELIF, 0, 0}, 1, &rule_elif},
 	{PS_IFCD, {TT_ELSE, 0, 0}, 1, &rule_else},
-	{PS_ALL, {TT_OVER, 0, 0}, 1, &rule_shift_first},
-	{PS_ALL, {TT_WORD, 0, 0}, 1, &rule_create_cmd},
-	{PS_ALL, {TT_CMD, TT_WORD, 0}, 2, &rule_add_to_cmd},
-	{PS_ALL, {TT_STATEMENT, TT_REDIR_R, TT_WORD}, 3, &rule_redir_r},
-	{PS_ALL, {TT_STATEMENT, TT_REDIR_R_BOTH, TT_WORD}, 3, &rule_redir_r_both},
-	{PS_ALL, {TT_STATEMENT, TT_REDIR_RR, TT_WORD}, 3, &rule_redir_rr},
-	{PS_ALL, {TT_STATEMENT, TT_REDIR_L, TT_WORD}, 3, &rule_redir_l},
-	{PS_ALL, {TT_STATEMENT, TT_REDIR_LL, TT_WORD}, 3, &rule_redir_ll},
-	{PS_ALL, {TT_STATEMENT, TT_REDIR_R_COMP, 0}, 2, &rule_redir_r_comp},
-	{PS_ALL, {TT_STATEMENT, TT_REDIR_R_CLOSE, 0}, 2, &rule_redir_r_close},
-	{PS_ALL, {TT_STATEMENT, 0, 0}, 1, &rule_send_to_shunting_yard},
-	{PS_ALL, {TT_OP, 0, 0}, 1, &rule_send_to_shunting_yard},
-	{PS_ALL, {TT_EXPR_OPEN, 0, 0}, 1, &rule_create_expr},
-	{PS_ALL, {TT_EXPR_INCOMPLETE, TT_WORD, 0}, 2, &rule_add_to_expr},
-	{PS_ALL, {TT_EXPR_INCOMPLETE, TT_EXPR_CLOSE, 0}, 2, &rule_close_expr},
-	{PS_ALL, {TT_EXPR, 0, 0}, 1, &rule_create_statement},
-	{PS_ALL, {TT_CMD, 0, 0}, 1, &rule_create_statement},
-	{PS_ALL, {TT_PIPE, 0, 0}, 1, &rule_pipe},
-	{PS_ALL, {TT_OR, 0, 0}, 1, &rule_or},
-	{PS_ALL, {TT_AND, 0, 0}, 1, &rule_and},
-	{PS_ALL, {TT_END, TT_OVER, 0}, 2, &rule_shift_first},
-	{PS_ALL, {TT_END, TT_END, 0}, 2, &rule_shift_first},
-	{PS_ALL, {TT_END, 0, 0}, 1, &rule_create_end},
-	{PS_ALL, {TT_OVER, TT_OVER, 0}, 2, &rule_shift_second},
-	{PS_ALL, {TT_IF, 0, 0}, 1, &rule_create_if_nocd}
+	{PS_EXPR, {TT_WORD, 0, 0}, 1, &rule_make_expr},
+	{PS_EXPR, {TT_EXPR, TT_WORD, 0}, 2, &rule_add_to_expr},
+	{PS_EXPR, {TT_EXPR_CLOSE, 0, 0}, 1, &rule_close_expr},
+	{PS_NONE, {TT_OVER, 0, 0}, 1, &rule_shift_first},
+	{PS_NONE, {TT_WORD, 0, 0}, 1, &rule_create_cmd},
+	{PS_NONE, {TT_CMD, TT_WORD, 0}, 2, &rule_add_to_cmd},
+	{PS_NONE, {TT_STATEMENT, TT_REDIR_R, TT_WORD}, 3, &rule_redir_r},
+	{PS_NONE, {TT_STATEMENT, TT_REDIR_R_BOTH, TT_WORD}, 3, &rule_redir_r_both},
+	{PS_NONE, {TT_STATEMENT, TT_REDIR_RR, TT_WORD}, 3, &rule_redir_rr},
+	{PS_NONE, {TT_STATEMENT, TT_REDIR_L, TT_WORD}, 3, &rule_redir_l},
+	{PS_NONE, {TT_STATEMENT, TT_REDIR_LL, TT_WORD}, 3, &rule_redir_ll},
+	{PS_NONE, {TT_STATEMENT, TT_REDIR_R_COMP, 0}, 2, &rule_redir_r_comp},
+	{PS_NONE, {TT_STATEMENT, TT_REDIR_R_CLOSE, 0}, 2, &rule_redir_r_close},
+	{PS_NONE | PS_EXPR, {TT_STATEMENT, 0, 0}, 1, &rule_send_to_shunting_yard},
+	{PS_NONE | PS_EXPR, {TT_OP, 0, 0}, 1, &rule_send_to_shunting_yard},
+	{PS_NONE, {TT_EXPR_OPEN, 0, 0}, 1, &rule_create_expr},
+	{PS_NONE | PS_EXPR, {TT_EXPR, 0, 0}, 1, &rule_create_statement},
+	{PS_NONE, {TT_CMD, 0, 0}, 1, &rule_create_statement},
+	{PS_NONE, {TT_PIPE, 0, 0}, 1, &rule_pipe},
+	{PS_NONE | PS_EXPR, {TT_OR, 0, 0}, 1, &rule_or},
+	{PS_NONE | PS_EXPR, {TT_AND, 0, 0}, 1, &rule_and},
+	{PS_NONE, {TT_END, TT_OVER, 0}, 2, &rule_shift_first},
+	{PS_NONE, {TT_END, TT_END, 0}, 2, &rule_shift_first},
+	{PS_NONE, {TT_END, 0, 0}, 1, &rule_create_end},
+	{PS_NONE, {TT_OVER, TT_OVER, 0}, 2, &rule_shift_second},
+	{PS_NONE, {TT_IF, 0, 0}, 1, &rule_create_if_nocd}
 };
 
 static size_t	count_tokens(t_ast_token *tokens)

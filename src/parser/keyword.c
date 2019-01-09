@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 12:24:56 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 18:18:19 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 10:29:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ static const t_token_desc	g_keywords[] =\
 	{"done", TT_DONE}
 };
 
-int	keyword_type(t_token *token)
+int	keyword_type(const char *s)
 {
 	unsigned int	i;
 
 	i = 0;
 	while (i < sizeof(g_keywords) / sizeof(*g_keywords))
 	{
-		if (!ft_strcmp(g_keywords[i].str, token->data))
+		if (!ft_strcmp(g_keywords[i].str, s))
 			return (g_keywords[i].type);
 		++i;
 	}

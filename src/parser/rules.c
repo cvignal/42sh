@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:20:26 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/08 00:25:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 10:41:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,25 @@ int	rule_create_cmd(t_parser *parser, t_ast_token *list)
 {
 	t_command	*new_command;
 	t_ast		*new_node;
+	int			type;
 
 	(void)parser;
-	if (!(new_command = alloc_command()))
-		return (1);
-	add_to_command(new_command, list->data);
-	if (!(new_node = alloc_ast(new_command, TT_CMD, exec_cmd, free_cmd)))
+	type = keyword_type(list->data);
+	if (type == TT_WORD)
 	{
-		free(new_command);
-		return (1);
+		if (!(new_command = alloc_command()))
+			return (1);
+		add_to_command(new_command, list->data);
+		if (!(new_node = alloc_ast(new_command, TT_CMD, exec_cmd, free_cmd)))
+		{
+			free(new_command);
+			return (1);
+		}
+		list->type = TT_CMD;
+		list->data = new_node;
 	}
-	list->type = TT_CMD;
-	list->data = new_node;
+	else
+		list->type = type;
 	return (0);
 }
 

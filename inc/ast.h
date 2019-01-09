@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/08 12:39:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 11:09:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ int						rule_pipe(t_parser *parser, t_ast_token *list);
 int						rule_create_expr(t_parser *parser, t_ast_token *list);
 int						rule_add_to_expr(t_parser *parser, t_ast_token *list);
 int						rule_close_expr(t_parser *parser, t_ast_token *list);
+int						rule_make_expr(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_statement.c

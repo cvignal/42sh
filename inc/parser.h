@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/07 06:50:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 10:45:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define PS_ELSE (1 << 3)
 # define PS_WHILENOCD (1 << 4)
 # define PS_WHILECD (1 << 5)
+# define PS_EXPR (1 << 6)
 # define PS_ALL (~0)
 
 struct s_shell;
@@ -220,6 +221,6 @@ int						ccmp(char a, char b);
 /*
 ** parser/keywords.c
 */
-int						keyword_type(t_token *token);
+int						keyword_type(const char *s);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 10:26:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 13:46:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int					parse(t_shell *shell, t_token *tokens)
 		if ((ret = reduce(&shell->parser)) == 1)
 			return (clean_exit(&shell->parser));
 		else if (!ret)
-			return (get_return(&shell->parser));
+			return (clean_exit(&shell->parser));
 	}
 	if (shell->parser.pss->state != PS_NONE)
 		return (get_return(&shell->parser));
