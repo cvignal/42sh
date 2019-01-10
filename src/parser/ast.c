@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:26:16 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/07 20:40:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 08:40:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	set_pipes(t_ast *new_node)
 	new_node->pipes_out[PIPE_NODE][STDOUT_FILENO] = -1;
 }
 
-t_ast	*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
+t_ast		*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 {
 	t_ast	*new_node;
 
@@ -54,7 +54,7 @@ t_ast	*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 	return (new_node);
 }
 
-void	free_ast(t_ast *ast)
+void		free_ast(t_ast *ast)
 {
 	t_redir	*node;
 	t_redir	*tmp;

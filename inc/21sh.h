@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/07 21:59:59 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 08:47:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ int					builtin_setenv(t_shell *shell, char **args);
 int					builtin_unsetenv(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
-int					exec_builtin(t_shell *shell, t_builtin builtin, 
+int					exec_builtin(t_shell *shell, t_builtin builtin,
 		t_ast *instr);
 
 /*
@@ -240,10 +240,10 @@ void				add_to_redir_list(t_ast *instr, t_redir *redir);
 ** redir_internal.c
 */
 int					prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root);
-int					redir_l(t_shell *shell, t_ast *, t_redir *redir);
-int					redir_ll(t_shell *shell, t_ast *, t_redir *redir);
-int					redir_r(t_shell *shell, t_ast *, t_redir *redir);
-int					redir_rr(t_shell *shell, t_ast *, t_redir *redir);
+int					redir_l(t_shell *shell, t_ast *ast, t_redir *redir);
+int					redir_ll(t_shell *shell, t_ast *ast, t_redir *redir);
+int					redir_r(t_shell *shell, t_ast *ast, t_redir *redir);
+int					redir_rr(t_shell *shell, t_ast *ast, t_redir *redir);
 
 /*
 ** apply_redirs.c

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 06:04:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 08:46:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int						rule_create_cmd(t_parser *parser, t_ast_token *list);
 int						rule_add_to_cmd(t_parser *parser, t_ast_token *list);
 int						rule_cmd_list(t_parser *parser, t_ast_token *list);
 int						rule_create_end(t_parser *parser, t_ast_token *list);
-int						rule_create_end_second(t_parser *parser, 
+int						rule_create_end_second(t_parser *parser,
 		t_ast_token *list);
 
 /*
@@ -197,7 +197,7 @@ int						rule_if_close_cd(t_parser *parser, t_ast_token *list);
 */
 int						rule_create_while(t_parser *parser, t_ast_token *list);
 int						rule_while_add_cd(t_parser *parser, t_ast_token *list);
-int						rule_while_close_cd(t_parser *parser, 
+int						rule_while_close_cd(t_parser *parser,
 		t_ast_token *list);
 int						rule_while_close(t_parser *parser, t_ast_token *list);
 

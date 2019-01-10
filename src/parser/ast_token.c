@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:14:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 09:40:57 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 08:39:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		push_ast_token(t_ast_token **list, t_ast_token *node)
 t_ast_token	*pop_ast_token(t_ast_token **list)
 {
 	t_ast_token	*ret;
-	
+
 	ret = *list;
 	if (ret)
 	{

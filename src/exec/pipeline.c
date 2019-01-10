@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 07:46:37 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/08 07:21:58 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 08:43:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "21sh.h"
 #include "ast.h"
 
-int		set_node_pipes(t_ast *ast)
+int			set_node_pipes(t_ast *ast)
 {
 	int		pipe_fd[2];
 
@@ -26,24 +26,25 @@ int		set_node_pipes(t_ast *ast)
 	ast->pipes_in[PIPE_NODE][STDOUT_FILENO] = pipe_fd[1];
 	ast->pipes_out[PIPE_NODE][STDIN_FILENO] = pipe_fd[0];
 	ast->pipes_out[PIPE_NODE][STDOUT_FILENO] = pipe_fd[1];
-	ast->left->pipes_in[PIPE_PARENT][STDIN_FILENO]
-		= ast->pipes_in[PIPE_PARENT][STDIN_FILENO];
-	ast->left->pipes_in[PIPE_PARENT][STDOUT_FILENO]
-		= ast->pipes_in[PIPE_PARENT][STDOUT_FILENO];
-	ast->left->pipes_out[PIPE_PARENT][STDIN_FILENO]
-		= ast->pipes_in[PIPE_NODE][STDIN_FILENO];
-	ast->left->pipes_out[PIPE_PARENT][STDOUT_FILENO]
-		= ast->pipes_in[PIPE_NODE][STDOUT_FILENO];
-	ast->right->pipes_in[PIPE_PARENT][STDIN_FILENO]
-		= ast->pipes_out[PIPE_NODE][STDIN_FILENO];
-	ast->right->pipes_in[PIPE_PARENT][STDOUT_FILENO]
-		= ast->pipes_out[PIPE_NODE][STDOUT_FILENO];
-	ast->right->pipes_out[PIPE_PARENT][STDIN_FILENO]
-		= ast->pipes_out[PIPE_PARENT][STDIN_FILENO];
-	ast->right->pipes_out[PIPE_PARENT][STDOUT_FILENO]
-		= ast->pipes_out[PIPE_PARENT][STDOUT_FILENO];
+	ast->left->pipes_in[PIPE_PARENT][STDIN_FILENO] =\
+		ast->pipes_in[PIPE_PARENT][STDIN_FILENO];
+	ast->left->pipes_in[PIPE_PARENT][STDOUT_FILENO] =\
+		ast->pipes_in[PIPE_PARENT][STDOUT_FILENO];
+	ast->left->pipes_out[PIPE_PARENT][STDIN_FILENO] =\
+		ast->pipes_in[PIPE_NODE][STDIN_FILENO];
+	ast->left->pipes_out[PIPE_PARENT][STDOUT_FILENO] =\
+		ast->pipes_in[PIPE_NODE][STDOUT_FILENO];
+	ast->right->pipes_in[PIPE_PARENT][STDIN_FILENO] =\
+		ast->pipes_out[PIPE_NODE][STDIN_FILENO];
+	ast->right->pipes_in[PIPE_PARENT][STDOUT_FILENO] =\
+		ast->pipes_out[PIPE_NODE][STDOUT_FILENO];
+	ast->right->pipes_out[PIPE_PARENT][STDIN_FILENO] =\
+		ast->pipes_out[PIPE_PARENT][STDIN_FILENO];
+	ast->right->pipes_out[PIPE_PARENT][STDOUT_FILENO] =\
+		ast->pipes_out[PIPE_PARENT][STDOUT_FILENO];
 	return (0);
 }
+
 static void	close_all_pipes(t_ast *ast)
 {
 	if (ast)

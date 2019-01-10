@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/06 08:49:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 18:32:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 08:47:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,3 @@ void	clean_last_end_token(t_parser *parser)
 			parser->pss->op_stack = tmp;
 	}
 }
-

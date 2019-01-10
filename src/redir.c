@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:36:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/07 22:04:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 08:44:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static const t_redir_desc	*get_redir_desc(int type)
 	return (NULL);
 }
 
-void		add_to_redir_list(t_ast *instr, t_redir *redir)
+void						add_to_redir_list(t_ast *instr, t_redir *redir)
 {
 	t_redir	*iter;
 
@@ -53,7 +53,8 @@ void		add_to_redir_list(t_ast *instr, t_redir *redir)
 	}
 }
 
-t_redir		*create_redir(t_ttype type, char *arg, t_redir_act act)
+t_redir						*create_redir(t_ttype type, char *arg,
+		t_redir_act act)
 {
 	t_redir				*new_redir;
 	const t_redir_desc	*rd;
