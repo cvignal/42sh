@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 13:46:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 06:54:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,21 @@ static int			clean_exit(t_parser *parser)
 	t_pss			*pss;
 
 	ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, SYNTAX_ERROR_MSG);
-	free_input_queue(parser->input_queue);
-	parser->input_queue = NULL;
 	while (parser->pss->state != PS_NONE)
 	{
 		pss = parser->pss;
 		parser->pss = parser->pss->next;
-		free_input_queue(parser->pss->op_stack);
+		free_input_queue(pss->output_queue);
+		free_input_queue(pss->op_stack);
+		if (pss->ret)
+			((t_ast *)pss->ret)->del(pss->ret);
 		free(pss);
 	}
+	free_input_queue(parser->input_queue);
+	parser->input_queue = NULL;
+	free_input_queue(parser->pss->output_queue);
 	parser->pss->output_queue = NULL;
+	free_input_queue(parser->pss->op_stack);
 	parser->pss->op_stack = NULL;
 	return (PARSER_EMPTY);
 }

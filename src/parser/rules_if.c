@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 11:49:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 18:36:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 07:09:08 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,27 @@
 #include "21sh.h"
 #include "ast.h"
 
+static int	pop_if(t_parser *parser)
+{
+	clean_last_end_token(parser);
+	while (parser->pss->op_stack)
+		add_to_ast_token_list(&parser->pss->output_queue,
+				pop_ast_token(&parser->pss->op_stack));
+	parser->pss->ret->left = queue_to_ast(parser->pss);
+	if (!parser->pss->ret->left)
+		return (1);
+	if (parser->input_queue->type == TT_STATEMENT)
+		parser->pss->ret->right = parser->input_queue->data;
+	parser->input_queue->data = pss_pop(parser);
+	parser->input_queue->type = TT_STATEMENT;
+	return (0);
+}
+
 int			rule_elif(t_parser *parser, t_ast_token *list)
 {
 	t_ast	*node;
 
-	node = alloc_ast(NULL, TT_IF, &exec_if, &free_if);
+	node = alloc_ast(NULL, TT_ELIF, &exec_if, &free_if);
 	if (!node || pss_push(parser, PS_IFNOCD | PS_NONE))
 		return (1);
 	parser->pss->ret = node;
@@ -29,27 +45,14 @@ int			rule_elif(t_parser *parser, t_ast_token *list)
 
 int			rule_close_if(t_parser *parser, t_ast_token *list)
 {
-	t_ast	*data;
-
-	clean_last_end_token(parser);
-	while (parser->pss->op_stack)
-		add_to_ast_token_list(&parser->pss->output_queue,
-				pop_ast_token(&parser->pss->op_stack));
-	data = queue_to_ast(parser->pss);
-	if (!data)
-		return (1);
 	free(list->data);
-	parser->pss->ret->left = data;
-	list->data = pss_pop(parser);
-	while (parser->pss->state & PS_IFCD)
-	{
-		parser->pss->ret->left = queue_to_ast(parser->pss);
-		if (!parser->pss->ret->left)
+	if (parser->pss->ret->type == TT_ELSE && pop_if(parser))
+		return (1);
+	while (parser->pss->ret->type == TT_ELIF)
+		if (pop_if(parser))
 			return (1);
-		parser->pss->ret->right = list->data;
-		list->data = pss_pop(parser);
-	}
-	list->type = TT_STATEMENT;
+	if (pop_if(parser))
+		return (1);
 	return (0);
 }
 
