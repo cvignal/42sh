@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 12:11:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 08:45:48 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,33 @@
 #include "21sh.h"
 #include "libft.h"
 
-int	apply_redirs(t_shell *shell, t_command *command)
+int	prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root)
 {
 	t_redir	*redir;
 
-	redir = command->redir_list;
-	while (redir)
+	if (root == instr)
 	{
-		if (redir->redir_act(shell, redir))
-			return (1);
-		redir = redir->next;
+		redir = root->redir_list;
+		while (redir)
+		{
+			if (redir->redir_act(shell, instr, redir))
+				return (1);
+			redir = redir->next;
+		}
 	}
+	else
+	{
+		ft_memcpy(instr->old_fds, root->old_fds, sizeof(instr->old_fds));
+		ft_memcpy(instr->fds, root->fds, sizeof(instr->fds));
+	}
+	if (instr->left)
+		prepare_redirs(shell, instr->left, root);
+	if (instr->right)
+		prepare_redirs(shell, instr->right, root);
 	return (0);
 }
 
-int	redir_l(t_shell *shell, t_redir *redir)
+int	redir_l(t_shell *shell, t_ast *instr, t_redir *redir)
 {
 	int	fd;
 
@@ -39,12 +51,11 @@ int	redir_l(t_shell *shell, t_redir *redir)
 	fd = open(redir->target, O_RDONLY);
 	if (fd < 0)
 		return (1);
-	dup2(fd, redir->in);
-	close(fd);
+	instr->fds[redir->in] = fd;
 	return (0);
 }
 
-int	redir_ll(t_shell *shell, t_redir *redir)
+int	redir_ll(t_shell *shell, t_ast *instr, t_redir *redir)
 {
 	t_heredoc	*heredoc;
 	int			fd[2];
@@ -55,16 +66,15 @@ int	redir_ll(t_shell *shell, t_redir *redir)
 		return (heredoc_exit_error(heredoc));
 	if (pipe(fd))
 		return (heredoc_exit_error(heredoc));
-	dup2(fd[0], redir->in);
 	write(fd[1], heredoc->data, heredoc->len);
-	close(fd[0]);
 	close(fd[1]);
+	instr->fds[redir->in] = fd[0];
 	free(heredoc->data);
 	free(heredoc);
 	return (0);
 }
 
-int	redir_r(t_shell *shell, t_redir *redir)
+int	redir_r(t_shell *shell, t_ast *instr, t_redir *redir)
 {
 	int	fd;
 
@@ -73,12 +83,11 @@ int	redir_r(t_shell *shell, t_redir *redir)
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
 		return (1);
-	dup2(fd, redir->in);
-	close(fd);
+	instr->fds[redir->in] = fd;
 	return (0);
 }
 
-int	redir_rr(t_shell *shell, t_redir *redir)
+int	redir_rr(t_shell *shell, t_ast *instr, t_redir *redir)
 {
 	int	fd;
 
@@ -87,7 +96,6 @@ int	redir_rr(t_shell *shell, t_redir *redir)
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
 		return (1);
-	dup2(fd, redir->in);
-	close(fd);
+	instr->fds[redir->in] = fd;
 	return (0);
 }

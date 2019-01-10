@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 17:11:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 09:27:26 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,49 +15,28 @@
 
 #include "21sh.h"
 
-static int	pipe_builtin(t_pipeline *current)
+static int	prepare_pipeline(t_ast *instr, int *old)
 {
-	if (current->in_fd[STDIN_FILENO] != -1)
-	{
-		dup2(current->in_fd[STDIN_FILENO], STDIN_FILENO);
-		close(current->in_fd[STDIN_FILENO]);
-	}
-	if (current->out_fd[STDOUT_FILENO] != -1)
-	{
-		dup2(current->out_fd[STDOUT_FILENO], STDOUT_FILENO);
-		close(current->out_fd[STDOUT_FILENO]);
-	}
+	old[STDIN_FILENO] = dup(STDIN_FILENO);
+	old[STDOUT_FILENO] = dup(STDOUT_FILENO);
+	if (instr->pipes_in[PIPE_PARENT][STDIN_FILENO] != -1)
+		dup2(instr->pipes_in[PIPE_PARENT][STDIN_FILENO], STDIN_FILENO);
+	if (instr->pipes_out[PIPE_PARENT][STDOUT_FILENO] != -1)
+		dup2(instr->pipes_out[PIPE_PARENT][STDOUT_FILENO], STDOUT_FILENO);
 	return (0);
 }
 
-static int	save_fd(t_pipeline *current)
+int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 {
-	current->fd_copy[STDIN_FILENO] = dup(STDIN_FILENO);
-	current->fd_copy[STDOUT_FILENO] = dup(STDOUT_FILENO);
-	current->fd_copy[STDERR_FILENO] = dup(STDERR_FILENO);
-	return (0);
-}
+	int		fd[2];
 
-static int	reset_builtin_fd(t_pipeline *current)
-{
-	dup2(current->fd_copy[STDIN_FILENO], STDIN_FILENO);
-	close(current->fd_copy[STDIN_FILENO]);
-	dup2(current->fd_copy[STDOUT_FILENO], STDOUT_FILENO);
-	close(current->fd_copy[STDOUT_FILENO]);
-	dup2(current->fd_copy[STDERR_FILENO], STDERR_FILENO);
-	close(current->fd_copy[STDERR_FILENO]);
-	return (0);
-}
-
-int			exec_builtin(t_shell *shell, t_builtin builtin,
-		t_pipeline *current)
-{
-	int	ret;
-
-	save_fd(current);
-	apply_redirs(shell, current->command);
-	pipe_builtin(current);
-	ret = builtin(shell, current->command->args);
-	reset_builtin_fd(current);
-	return (ret);
+	prepare_pipeline(instr, fd);
+	apply_redirs(shell, instr);
+	instr->ret = builtin(shell, ((t_command *)instr->data)->args);
+	dup2(fd[STDIN_FILENO], STDIN_FILENO);
+	dup2(fd[STDOUT_FILENO], STDOUT_FILENO);
+	close(fd[STDIN_FILENO]);
+	close(fd[STDOUT_FILENO]);
+	reset_redirs(instr);
+	return (instr->ret);
 }

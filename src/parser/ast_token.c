@@ -6,15 +6,16 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:14:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 15:41:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 08:39:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
 #include "ast.h"
+#include "libft.h"
 
-t_ast_token	*alloc_ast_token(char *data, t_ttype type)
+t_ast_token	*alloc_ast_token(void *data, t_ttype type)
 {
 	t_ast_token	*new_token;
 
@@ -23,8 +24,6 @@ t_ast_token	*alloc_ast_token(char *data, t_ttype type)
 	new_token->data = data;
 	new_token->type = type;
 	new_token->next = NULL;
-	new_token->state = PS_NONE;
-	new_token->pop = 0;
 	return (new_token);
 }
 
@@ -43,23 +42,21 @@ void		add_to_ast_token_list(t_ast_token **list, t_ast_token *node)
 	}
 }
 
-void		unshift_ast_token(t_ast_token **tokens)
+void		push_ast_token(t_ast_token **list, t_ast_token *node)
 {
-	t_ast_token	*tmp;
-	t_ast_token	*iter;
+	node->next = *list;
+	*list = node;
+}
 
-	tmp = NULL;
-	if (!*tokens)
-		return ;
-	iter = *tokens;
-	while (iter->next)
+t_ast_token	*pop_ast_token(t_ast_token **list)
+{
+	t_ast_token	*ret;
+
+	ret = *list;
+	if (ret)
 	{
-		tmp = iter;
-		iter = iter->next;
+		*list = (*list)->next;
+		ret->next = NULL;
 	}
-	if (iter == *tokens)
-		*tokens = NULL;
-	free(iter);
-	if (tmp)
-		tmp->next = NULL;
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 13:25:42 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/27 12:42:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 11:48:44 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 int		exec_expr(t_shell *shell, struct s_ast *ast)
 {
 	(void)shell;
-	return (exec_expr_internal(shell, ast->data));
+	ast->ret = exec_expr_internal(shell, ast->data);
+	return (ast->ret);
 }
 
 void	free_expr(struct s_ast *ast)
 {
 	free_expr_internal(ast->data);
-	free(ast);
+	free_ast(ast);
 }

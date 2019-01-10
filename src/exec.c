@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 15:41:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 20:53:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,29 @@ static int	ft_wait(int *status)
 	while (1)
 	{
 		wait(status);
-		if (WIFEXITED(*status))
+		if (WIFEXITED(*status) || WIFSIGNALED(*status))
 			return (0);
 	}
+}
+
+int			wait_loop(t_ast *ast)
+{
+	int		status;
+
+	if (ast)
+	{
+		wait_loop(ast->left);
+		if (ast->pid != -1)
+		{
+			waitpid(ast->pid, &status, 0);
+			while (!WIFEXITED(status) && !WIFSIGNALED(status))
+				waitpid(ast->pid, &status, 0);
+			ast->pid = -1;
+			ast->ret = WEXITSTATUS(status);
+		}
+		wait_loop(ast->right);
+	}
+	return (0);
 }
 
 int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
@@ -58,40 +78,29 @@ int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
 	return (WEXITSTATUS(status));
 }
 
-int			exec(t_shell *shell, t_pipeline *pipeline, t_pipeline *current)
+pid_t		exec(t_shell *shell, t_ast *instr)
 {
 	pid_t		pid;
 	char		*bin_path;
 	t_builtin	builtin;
 
-	if ((builtin = is_builtin(current->command->args[0])))
-		return (exec_builtin(shell, builtin, current));
-	bin_path = hbt_command(shell, current->command->args[0]);
+	if ((builtin = is_builtin(((t_command *)instr->data)->args[0])))
+		return (exec_builtin(shell, builtin, instr));
+	bin_path = hbt_command(shell, ((t_command *)instr->data)->args[0]);
 	if (bin_path)
 		pid = fork();
 	else
-		return (bin_not_found(current->command->args[0]));
+	{
+		bin_not_found(((t_command *)instr->data)->args[0]);
+		return (-1);
+	}
 	if (!pid)
 	{
-		apply_redirs(shell, current->command);
-		open_close_pipe(pipeline, current);
-		execve(bin_path, current->command->args, shell->env);
+		set_pipeline(instr);
+		apply_redirs(shell, instr);
+		execve(bin_path, ((t_command *)instr->data)->args, shell->env);
 	}
 	else
-		current->command->pid = pid;
+		instr->pid = pid;
 	return (0);
-}
-
-int			wait_loop(t_pipeline *pipeline)
-{
-	int	status;
-
-	status = 0;
-	while (pipeline)
-	{
-		waitpid(pipeline->command->pid, &status, 0);
-		if (WIFEXITED(status))
-			pipeline = pipeline->next;
-	}
-	return (WEXITSTATUS(status));
 }

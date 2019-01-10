@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 19:38:21 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 17:13:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/06 07:23:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ static t_redir	*create_redir_close(char *data)
 
 int				rule_redir_r_close(t_parser *parser, t_ast_token *list)
 {
-	t_command	*command;
+	t_ast		*instr;
 	t_ast_token	*tmp;
 	t_redir		*redir;
 	t_redir		*iter;
 
 	(void)parser;
 	redir = create_redir_close(list->next->data);
-	command = ((t_ast *)list->data)->data;
-	iter = command->redir_list;
+	instr = list->data;
+	iter = instr->redir_list;
 	if (!iter)
-		command->redir_list = redir;
+		instr->redir_list = redir;
 	else
 	{
 		while (iter->next)

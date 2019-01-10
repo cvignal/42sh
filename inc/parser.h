@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 18:20:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 10:45:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define PS_ELSE (1 << 3)
 # define PS_WHILENOCD (1 << 4)
 # define PS_WHILECD (1 << 5)
+# define PS_EXPR (1 << 6)
 # define PS_ALL (~0)
 
 struct s_shell;
@@ -54,6 +55,12 @@ typedef struct			s_match_desc
 	char				desc;
 	t_char_cmp			func;
 }						t_match_desc;
+
+typedef struct			s_precedence
+{
+	int					type;
+	int					prec;
+}						t_precedence;
 
 typedef enum			e_lstate
 {
@@ -99,6 +106,9 @@ typedef struct			s_lss
 typedef struct			s_pss
 {
 	int					state;
+	struct s_ast_token	*output_queue;
+	struct s_ast_token	*op_stack;
+	struct s_ast		*ret;
 	struct s_pss		*next;
 }						t_pss;
 
@@ -113,8 +123,8 @@ typedef struct			s_lexer
 typedef struct			s_parser
 {
 	t_pss				*pss;
-	struct s_ast_token	*input_queue;
 	struct s_ast		*ret;
+	struct s_ast_token	*input_queue;
 }						t_parser;
 
 /*
@@ -127,7 +137,7 @@ t_lstate				lss_pop(t_lexer *lexer);
 ** parser/pss.c
 */
 int						pss_push(t_parser *parser, int state);
-int						pss_pop(t_parser *parser);
+struct s_ast			*pss_pop(t_parser *parser);
 
 /*
 ** parser/parser.c
@@ -211,6 +221,6 @@ int						ccmp(char a, char b);
 /*
 ** parser/keywords.c
 */
-int						keyword_type(t_token *token);
+int						keyword_type(const char *s);
 
 #endif

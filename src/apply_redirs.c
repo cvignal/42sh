@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   apply_redirs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/14 14:57:22 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:56:33 by gchainet         ###   ########.fr       */
+/*   Created: 2019/01/06 20:01:29 by gchainet          #+#    #+#             */
+/*   Updated: 2019/01/08 10:14:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
 #include "21sh.h"
-#include "libft.h"
+#include "ast.h"
 
-void	signal_sigint(int sig)
+int		apply_redirs(t_shell *shell, t_ast *instr)
 {
-	(void)sig;
+	(void)shell;
+	if (instr->fds[STDIN_FILENO] != STDIN_FILENO)
+		dup2(instr->fds[STDIN_FILENO], STDIN_FILENO);
+	if (instr->fds[STDOUT_FILENO] != STDOUT_FILENO)
+		dup2(instr->fds[STDOUT_FILENO], STDOUT_FILENO);
+	if (instr->fds[STDERR_FILENO] != STDERR_FILENO)
+		dup2(instr->fds[STDOUT_FILENO], STDOUT_FILENO);
+	return (0);
 }

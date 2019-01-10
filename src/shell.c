@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/29 18:03:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/07 21:57:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ void		free_shell(t_shell *shell)
 
 int			init_shell(t_shell *shell, char **environ)
 {
-	if (init_lexer(&shell->lexer))
-		return (1);
-	if (init_parser(&shell->parser))
+	if (init_lexer(&shell->lexer) || init_parser(&shell->parser))
 		return (1);
 	shell->hash_table = malloc(sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
 	if (!shell->hash_table)

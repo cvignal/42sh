@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:56:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/08 07:44:44 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@
 
 int		exec_cmd(t_shell *shell, t_ast *ast)
 {
-	(void)shell;
-	(void)ast;
-	return (0);
+	int	ret;
+
+	redir_save(ast->redir_list, ast);
+	prepare_redirs(shell, ast, ast);
+	ret = exec(shell, ast);
+	reset_redirs(ast);
+	return (ret);
 }
 
 void	free_cmd(t_ast *ast)
 {
 	free_command(ast->data);
-	free(ast);
+	free_ast(ast);
 }

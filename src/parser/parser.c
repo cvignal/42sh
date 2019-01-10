@@ -6,29 +6,31 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/02 10:53:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 08:39:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <limits.h>
+#include <unistd.h>
 
 #include "21sh.h"
 #include "libft.h"
 #include "ast.h"
 #include "libft.h"
 
-static int			reduce(t_parser *parser, t_ast_token *input_queue)
+static int			reduce(t_parser *parser)
 {
 	t_ast_act		act;
+	int				did_reduce;
 
-	if ((act = get_rule(input_queue, parser->pss
-					? parser->pss->state : PS_NONE)))
+	did_reduce = 0;
+	while (parser->input_queue
+			&& (act = get_rule(parser->input_queue, parser->pss->state)))
 	{
-		if (act(parser, input_queue))
-			return (2);
-		return (1);
+		if (act(parser, parser->input_queue))
+			return (1);
+		did_reduce = 1;
 	}
-	return (0);
+	return (did_reduce ? 2 : 0);
 }
 
 static t_ast_token	*lookup(t_token **tokens)
@@ -49,58 +51,64 @@ static t_ast_token	*lookup(t_token **tokens)
 	return (input_queue);
 }
 
-static int			get_return(t_parser *parser)
+static int			clean_exit(t_parser *parser)
 {
-	if (parser->pss)
-		return (PARSER_MORE_INPUT);
-	else if (parser->input_queue->type == TT_STATEMENT
-			&& parser->input_queue->next == NULL)
+	t_pss			*pss;
+
+	ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, SYNTAX_ERROR_MSG);
+	while (parser->pss->state != PS_NONE)
 	{
-		parser->ret = parser->input_queue->data;
-		free(parser->input_queue);
-		parser->input_queue = NULL;
-		return (PARSER_COMPLETE);
+		pss = parser->pss;
+		parser->pss = parser->pss->next;
+		free_input_queue(pss->output_queue);
+		free_input_queue(pss->op_stack);
+		if (pss->ret)
+			((t_ast *)pss->ret)->del(pss->ret);
+		free(pss);
 	}
-	else
-	{
-		free_input_queue(parser->input_queue);
-		parser->input_queue = NULL;
-		while (parser->pss)
-			pss_pop(parser);
-	}
+	free_input_queue(parser->input_queue);
+	parser->input_queue = NULL;
+	free_input_queue(parser->pss->output_queue);
+	parser->pss->output_queue = NULL;
+	free_input_queue(parser->pss->op_stack);
+	parser->pss->op_stack = NULL;
 	return (PARSER_EMPTY);
 }
 
-static int			get_parser_state(t_parser *parser, t_ast_token *token)
+static int			get_return(t_parser *parser)
 {
-	if (parser->pss && token->pop)
-		pss_pop(parser);
-	if (token->state != PS_NONE)
-		return (pss_push(parser, token->state));
-	return (0);
+	t_ast	*ret;
+
+	if (parser->pss->state != PS_NONE)
+		return (PARSER_MORE_INPUT);
+	else
+	{
+		if (parser->input_queue)
+			return (clean_exit(parser));
+		ret = queue_to_ast(parser->pss);
+		if (!ret)
+			return (clean_exit(parser));
+	}
+	parser->ret = ret;
+	return (PARSER_COMPLETE);
 }
 
 int					parse(t_shell *shell, t_token *tokens)
 {
-	t_ast_token	*lookup_queue;
-	int			did_reduce;
+	int				ret;
 
 	add_to_ast_token_list(&shell->parser.input_queue, lookup(&tokens));
-	did_reduce = 1;
-	while (did_reduce)
+	while (shell->parser.input_queue)
 	{
-		did_reduce = 0;
-		lookup_queue = shell->parser.input_queue;
-		while (shell->parser.pss)
-			pss_pop(&shell->parser);
-		while (lookup_queue)
-		{
-			get_parser_state(&shell->parser, lookup_queue);
-			if (reduce(&shell->parser, lookup_queue) == 1)
-				did_reduce = 1;
-			else
-				lookup_queue = lookup_queue->next;
-		}
+		if ((ret = reduce(&shell->parser)) == 1)
+			return (clean_exit(&shell->parser));
+		else if (!ret)
+			return (clean_exit(&shell->parser));
 	}
+	if (shell->parser.pss->state != PS_NONE)
+		return (get_return(&shell->parser));
+	while (shell->parser.pss->op_stack)
+		add_to_ast_token_list(&shell->parser.pss->output_queue,
+				pop_ast_token(&shell->parser.pss->op_stack));
 	return (get_return(&shell->parser));
 }

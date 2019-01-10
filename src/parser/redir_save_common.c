@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   n_cap.c                                            :+:      :+:    :+:   */
+/*   redir_save_common.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/27 17:17:09 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 08:37:52 by gchainet         ###   ########.fr       */
+/*   Created: 2019/01/07 20:26:25 by gchainet          #+#    #+#             */
+/*   Updated: 2019/01/07 20:39:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _DEFAULT_SOURCE
-
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#include <stdlib.h>
 
 #include "21sh.h"
 
-int	expr_n_cap(t_shell *shell, char **args)
+int	redir_save_l(struct s_redir *, t_ast *instr)
 {
-	struct stat	st;
+	instr->old_fd[redir->in] = dup(STDIN_FILENO);
+}
 
-	(void)shell;
-	if (lstat(args[1], &st))
-		return (1);
-	if (st.st_mtimespec.tv_sec > st.st_atimespec.tv_sec)
-		return (0);
-	return (1);
+int	redir_save_ll(t_redir *redir, t_ast *instr)
+{
+	instr->old_fd[redir->in] = dup(STDIN_FILENO);
+}
+
+int redir_save_r(t_redir *redir, t_ast *instr)
+{
+	instr->old_fds[redir->out] = dup(STDIN_FILENO);
+}
+
+int redir_save_rr(t_redir *redir, t_ast *instr)
+{
+	instr->old_fds[redir->out] = dup(STDIN_FILENO);
 }

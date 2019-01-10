@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 18:44:01 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 09:00:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,22 @@ typedef struct		s_shell
 	char			*pbpaste;
 }					t_shell;
 
-struct s_command;
 struct s_redir;
-typedef int			(*t_redir_act)(t_shell *, struct s_redir *);
+typedef int			(*t_redir_act)(t_shell *, t_ast *, struct s_redir *);
+typedef int			(*t_redir_reset)(struct s_redir *, t_ast *);
+typedef int			(*t_redir_save)(struct s_redir *, t_ast *);
+
+int					redir_save(struct s_redir *redir, t_ast *instr);
+int					redir_l_save(struct s_redir *redir, t_ast *instr);
+int					redir_ll_save(struct s_redir *redir, t_ast *instr);
+int					redir_r_save(struct s_redir *redir, t_ast *instr);
+int					redir_rr_save(struct s_redir *redir, t_ast *instr);
+
+int					reset_redirs(t_ast *instr);
+int					redir_l_reset(struct s_redir *redir, t_ast *instr);
+int					redir_ll_reset(struct s_redir *redir, t_ast *instr);
+int					redir_r_reset(struct s_redir *redir, t_ast *instr);
+int					redir_rr_reset(struct s_redir *redir, t_ast *instr);
 
 typedef struct		s_redir
 {
@@ -77,8 +90,18 @@ typedef struct		s_redir
 	int				in;
 	int				out;
 	t_redir_act		redir_act;
+	t_redir_reset	reset;
+	t_redir_save 	save;
 	struct s_redir	*next;
 }					t_redir;
+
+typedef struct		s_redir_desc
+{
+	int				type;
+	t_redir_act		act;
+	t_redir_save	save;
+	t_redir_reset	reset;
+}					t_redir_desc;
 
 typedef struct		s_command
 {
@@ -86,17 +109,7 @@ typedef struct		s_command
 	size_t			alloc_size;
 	size_t			args_len;
 	pid_t			pid;
-	t_redir			*redir_list;
 }					t_command;
-
-typedef struct		s_pipeline
-{
-	t_command			*command;
-	int					in_fd[2];
-	int					out_fd[2];
-	int					fd_copy[3];
-	struct s_pipeline	*next;
-}					t_pipeline;
 
 typedef int			(*t_builtin)(t_shell *, char **);
 
@@ -129,11 +142,10 @@ int					add_to_command(t_command *command, char *word);
 /*
 ** exec.c
 */
-int					exec(t_shell *shell, t_pipeline *pipeline,
-					t_pipeline *current);
+pid_t				exec(t_shell *shell, t_ast *instr);
 int					exec_from_char(t_shell *shell, char **arg,
 					t_shell *tmp_shell);
-int					wait_loop(t_pipeline *pipeline);
+int					wait_loop(t_ast *ast);
 
 /*
 ** path.c
@@ -179,7 +191,7 @@ int					builtin_unsetenv(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
 int					exec_builtin(t_shell *shell, t_builtin builtin,
-					t_pipeline *current);
+		t_ast *instr);
 
 /*
 ** replace.c
@@ -222,40 +234,48 @@ void				free_while(struct s_ast *ast);
 ** redir.c
 */
 t_redir				*create_redir(t_ttype type, char *arg, t_redir_act act);
-void				add_to_redir_list(t_command *command, t_redir *redir);
+void				add_to_redir_list(t_ast *instr, t_redir *redir);
 
 /*
 ** redir_internal.c
 */
-int					apply_redirs(t_shell *shell, t_command *command);
-int					redir_l(t_shell *shell, t_redir *redir);
-int					redir_ll(t_shell *shell, t_redir *redir);
-int					redir_r(t_shell *shell, t_redir *redir);
-int					redir_rr(t_shell *shell, t_redir *redir);
+int					prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root);
+int					redir_l(t_shell *shell, t_ast *ast, t_redir *redir);
+int					redir_ll(t_shell *shell, t_ast *ast, t_redir *redir);
+int					redir_r(t_shell *shell, t_ast *ast, t_redir *redir);
+int					redir_rr(t_shell *shell, t_ast *ast, t_redir *redir);
+
+/*
+** apply_redirs.c
+*/
+int					apply_redirs(t_shell *shell, t_ast *instr);
+int					reset_redirs(t_ast *instr);
+int					save_redirs(t_ast *instr);
 
 /*
 ** redir_r_comp.c
 */
-int					redir_r_comp(t_shell *shell, t_redir *redir);
+int					redir_r_comp(t_shell *shell, t_ast *ast, t_redir *redir);
 
 /*
 ** redir_r_close.c
 */
-int					redir_r_close(t_shell *shell, t_redir *redir);
+int					redir_r_close(t_shell *shell, t_ast *ast, t_redir *redir);
 
 /*
 ** redir_r_both.c
 */
-int					redir_r_both(t_shell *shell, t_redir *redir);
+int					redir_r_both(t_shell *shell, t_ast *ast, t_redir *redir);
 
 /*
 ** pipeline.c
 */
-int					add_to_pipeline(t_pipeline *first, t_command *last);
-t_pipeline			*create_pipeline(t_command *command);
-void				delete_pipeline(t_pipeline *pipeline);
-int					prepare_pipeline(t_pipeline *pipeline);
-void				open_close_pipe(t_pipeline *pipeline, t_pipeline *current);
+int					set_pipeline(t_ast *instr);
+
+/*
+** propagate_pipe.c
+*/
+int					propagate_pipe_left(t_ast *pipe, t_ast *instr);
 
 /*
 ** hash.c

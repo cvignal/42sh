@@ -6,12 +6,15 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 18:23:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 08:46:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
+
+# define PIPE_PARENT 0
+# define PIPE_NODE 1
 
 # include "parser.h"
 
@@ -50,6 +53,7 @@ typedef enum			e_ttype
 	TT_DO,
 	TT_DONE,
 	TT_STATEMENT,
+	TT_OP,
 	TT_OVER
 }						t_ttype;
 
@@ -57,20 +61,28 @@ typedef struct			s_ast_token
 {
 	t_ttype				type;
 	void				*data;
-	int					state;
-	int					pop;
 	struct s_ast_token	*next;
 }						t_ast_token;
 
 /*
 ** parser/ast_token.c
 */
-t_ast_token				*alloc_ast_token(char *data, t_ttype type);
+t_ast_token				*alloc_ast_token(void *data, t_ttype type);
 void					add_to_ast_token_list(t_ast_token **list,
 		t_ast_token *node);
+void					push_ast_token(t_ast_token **list, t_ast_token *node);
+t_ast_token				*pop_ast_token(t_ast_token **list);
+
+/*
+** parser/utils.c
+*/
+void					shift_ast_token(t_parser *parser, t_ast_token *list,
+		int del);
+void					clean_last_end_token(t_parser *parser);
 
 struct s_ast;
 struct s_shell;
+struct s_redir;
 typedef int				(*t_exec)(struct s_shell *, struct s_ast *);
 typedef void			(*t_free)(struct s_ast *);
 
@@ -79,7 +91,14 @@ typedef struct			s_ast
 	t_ttype				type;
 	t_exec				exec;
 	t_free				del;
+	int					pipes_in[2][2];
+	int					pipes_out[2][2];
+	int					old_fds[3];
+	int					fds[3];
 	void				*data;
+	pid_t				pid;
+	int					ret;
+	struct s_redir		*redir_list;
 	struct s_ast		*left;
 	struct s_ast		*right;
 }						t_ast;
@@ -89,7 +108,7 @@ typedef int				(*t_ast_act)(t_parser *, t_ast_token *);
 typedef struct			s_ast_rule
 {
 	int					state_mask;
-	t_ttype				types[4];
+	t_ttype				types[3];
 	size_t				len;
 	t_ast_act			act;
 }						t_ast_rule;
@@ -99,8 +118,10 @@ typedef struct			s_ast_rule
 */
 int						rule_create_cmd(t_parser *parser, t_ast_token *list);
 int						rule_add_to_cmd(t_parser *parser, t_ast_token *list);
-int						rule_create_end(t_parser *parser, t_ast_token *list);
 int						rule_cmd_list(t_parser *parser, t_ast_token *list);
+int						rule_create_end(t_parser *parser, t_ast_token *list);
+int						rule_create_end_second(t_parser *parser,
+		t_ast_token *list);
 
 /*
 ** parser/rules_shift.c
@@ -140,10 +161,7 @@ int						rule_redir_r_both(t_parser *parser, t_ast_token *list);
 /*
 ** parser/rules_pipeline.c
 */
-int						rule_create_pipeline(t_parser *parser,
-		t_ast_token *list);
-int						rule_add_to_pipeline(t_parser *parser,
-		t_ast_token *list);
+int						rule_pipe(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_expr.c
@@ -151,6 +169,7 @@ int						rule_add_to_pipeline(t_parser *parser,
 int						rule_create_expr(t_parser *parser, t_ast_token *list);
 int						rule_add_to_expr(t_parser *parser, t_ast_token *list);
 int						rule_close_expr(t_parser *parser, t_ast_token *list);
+int						rule_make_expr(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_statement.c
@@ -161,15 +180,9 @@ int						rule_create_statement(t_parser *parser,
 /*
 ** parser/rules_if.c
 */
-int						rule_add_to_if(t_parser *parser, t_ast_token *list);
-int						rule_create_elif(t_parser *parser, t_ast_token *list);
+int						rule_elif(t_parser *parser, t_ast_token *list);
+int						rule_else(t_parser *parser, t_ast_token *list);
 int						rule_close_if(t_parser *parser, t_ast_token *list);
-
-/*
-** parser/rules_else.c
-*/
-int						rule_create_else(t_parser *parser, t_ast_token *list);
-int						rule_add_to_else(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_if_nocd.c
@@ -177,16 +190,22 @@ int						rule_add_to_else(t_parser *parser, t_ast_token *list);
 int						rule_create_if_nocd(t_parser *parser,
 		t_ast_token *list);
 int						rule_if_add_cd(t_parser *parser, t_ast_token *list);
-int						rule_create_elif_nocd(t_parser *parser,
-		t_ast_token *list);
+int						rule_if_close_cd(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_while.c
 */
 int						rule_create_while(t_parser *parser, t_ast_token *list);
 int						rule_while_add_cd(t_parser *parser, t_ast_token *list);
-int						rule_while_add(t_parser *parser, t_ast_token *list);
+int						rule_while_close_cd(t_parser *parser,
+		t_ast_token *list);
 int						rule_while_close(t_parser *parser, t_ast_token *list);
+
+/*
+** parser/rules_shunting_yard.c
+*/
+int						rule_send_to_shunting_yard(t_parser *parser,
+		t_ast_token *list);
 
 /*
 ** parser/ast.c
@@ -194,8 +213,12 @@ int						rule_while_close(t_parser *parser, t_ast_token *list);
 t_ast					*alloc_ast(void *data, t_ttype type,
 		t_exec exec, t_free del);
 void					free_ast(t_ast *ast);
-void					unshift_ast_token(t_ast_token **tokens);
 
+/*
+** parser/shunting_yard.c
+*/
+void					shunting_yard(t_parser *parser);
+t_ast					*queue_to_ast(t_pss *pss);
 /*
 ** pasrser/parser_rules.c
 */

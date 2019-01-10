@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:46:05 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 17:09:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/02 11:22:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	init_lexer_zero(t_lexer *lexer)
 	lexer->lexer_actions[LSTATE_NONE][0] = &lexer_over;
 	lexer->lexer_actions[LSTATE_DQUOTE][0] = &lexer_more_input;
 	lexer->lexer_actions[LSTATE_SQUOTE][0] = &lexer_more_input;
+	lexer->lexer_actions[LSTATE_META][0] = &lexer_cut;
 }
 
 static void	init_lexer_basics(t_lexer *lexer)

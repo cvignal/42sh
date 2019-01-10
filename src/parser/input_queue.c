@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 18:22:45 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/16 19:14:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 06:49:41 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	free_input_queue(t_ast_token *input)
 
 	while (input)
 	{
-		if (input->type == TT_CMD)
+		if (input->type == TT_STATEMENT || input->type == TT_OP)
 			((t_ast *)input->data)->del(input->data);
-		else
+		else if (input->data)
 			free(input->data);
 		tmp = input;
 		input = input->next;

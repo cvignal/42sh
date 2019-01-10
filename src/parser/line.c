@@ -5,9 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/25 10:04:30 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 18:43:41 by gchainet         ###   ########.fr       */
-/*   Updated: 2018/12/31 17:14:51 by gchainet         ###   ########.fr       */
+/*   Created: 2019/01/10 08:40:13 by gchainet          #+#    #+#             */
+/*   Updated: 2019/01/10 08:40:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +31,8 @@ static int	realloc_line(t_line *line)
 		++i;
 	}
 	ft_bzero(new_data + i, line->alloc_size + LINE_ALLOC_SIZE - i + 1);
-	free(line->data);
+	if (line->data)
+		free(line->data);
 	line->data = new_data;
 	line->alloc_size += LINE_ALLOC_SIZE;
 	return (0);

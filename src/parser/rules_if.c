@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 11:49:38 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 17:29:05 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 07:09:08 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,65 +15,55 @@
 #include "21sh.h"
 #include "ast.h"
 
-int	rule_add_to_if(t_parser *parser, t_ast_token *list)
+static int	pop_if(t_parser *parser)
 {
-	t_ast		*node;
-	t_ast_token	*tmp;
-	t_ast		*iter;
-
-	(void)parser;
-	iter = list->data;
-	while (iter->right)
-		iter = iter->right;
-	if (iter->left)
-	{
-		if (!(node = alloc_ast(NULL, TT_END, &exec_end, &free_end)))
-			return (1);
-		node->left = iter->left;
-		node->right = list->next->data;
-		iter->left = node;
-	}
-	else
-		iter->left = list->next->data;
-	tmp = list->next->next;
-	free(list->next);
-	list->next = tmp;
-	return (0);
-}
-
-int	rule_create_elif(t_parser *parser, t_ast_token *list)
-{
-	t_ast		*node;
-	t_ast		*iter;
-	t_ast_token	*tmp;
-
-	(void)parser;
-	node = alloc_ast(list->next->next->data, TT_ELIF, &exec_if, &free_if);
-	if (!node)
+	clean_last_end_token(parser);
+	while (parser->pss->op_stack)
+		add_to_ast_token_list(&parser->pss->output_queue,
+				pop_ast_token(&parser->pss->op_stack));
+	parser->pss->ret->left = queue_to_ast(parser->pss);
+	if (!parser->pss->ret->left)
 		return (1);
-	iter = list->data;
-	while (iter->right)
-		iter = iter->right;
-	iter->right = node;
-	tmp = list->next->next;
-	free(list->next->data);
-	free(list->next);
-	list->next = tmp;
-	list->state = PS_IFNOCD;
-	list->pop = 1;
+	if (parser->input_queue->type == TT_STATEMENT)
+		parser->pss->ret->right = parser->input_queue->data;
+	parser->input_queue->data = pss_pop(parser);
+	parser->input_queue->type = TT_STATEMENT;
 	return (0);
 }
 
-int	rule_close_if(t_parser *parser, t_ast_token *list)
+int			rule_elif(t_parser *parser, t_ast_token *list)
 {
-	t_ast_token	*tmp;
+	t_ast	*node;
 
-	(void)parser;
-	tmp = list->next->next;
-	free(list->next->data);
-	free(list->next);
-	list->next = tmp;
-	list->type = TT_STATEMENT;
-	list->state = PS_NONE;
+	node = alloc_ast(NULL, TT_ELIF, &exec_if, &free_if);
+	if (!node || pss_push(parser, PS_IFNOCD | PS_NONE))
+		return (1);
+	parser->pss->ret = node;
+	shift_ast_token(parser, list, 1);
+	return (0);
+}
+
+int			rule_close_if(t_parser *parser, t_ast_token *list)
+{
+	free(list->data);
+	if (parser->pss->ret->type == TT_ELSE && pop_if(parser))
+		return (1);
+	while (parser->pss->ret->type == TT_ELIF)
+		if (pop_if(parser))
+			return (1);
+	if (pop_if(parser))
+		return (1);
+	return (0);
+}
+
+int			rule_else(t_parser *parser, t_ast_token *list)
+{
+	t_ast	*node;
+
+	node = alloc_ast(NULL, TT_ELSE, &exec_else, &free_else);
+	if (!node || pss_push(parser, PS_IFCD | PS_NONE))
+		return (1);
+	parser->pss->ret = node;
+	shift_ast_token(parser, list, 1);
 	return (0);
 }

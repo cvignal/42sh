@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 19:02:27 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/03 09:44:49 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ static int	change_dir(t_shell *shell, char *dir)
 		return (1);
 	cwd = getcwd(NULL, MAX_PATH);
 	if (chdir(dir))
+	{
+		free(cwd);
 		return (exit_error(dir, "no such file or directory"));
+	}
 	set_env_var(shell, "OLDPWD", cwd);
 	free(cwd);
 	return (0);
