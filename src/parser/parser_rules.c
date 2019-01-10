@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 06:11:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 06:21:00 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,14 @@ static const t_ast_rule g_rules[] =\
 {
 	{PS_WHILENOCD, {TT_STATEMENT, 0, 0}, 1, &rule_while_add_cd},
 	{PS_WHILENOCD, {TT_DO, 0, 0}, 1, &rule_while_close_cd},
-	{PS_WHILENOCD, {TT_OVER, 0, 0}, 1, &rule_shift_first},
-	{PS_WHILENOCD, {TT_END, 0, 0}, 1, &rule_shift_first},
+	{PS_WHILENOCD | PS_IFNOCD, {TT_OVER, 0, 0}, 1, &rule_shift_first},
+	{PS_WHILENOCD | PS_IFNOCD, {TT_END, 0, 0}, 1, &rule_shift_first},
 	{PS_WHILECD, {TT_DONE, 0, 0}, 1, &rule_while_close},
-	{PS_WHILECD, {TT_STATEMENT, TT_OVER, 0}, 2, &rule_create_end_second},
+	{PS_WHILECD | PS_IFCD,
+		{TT_STATEMENT, TT_OVER, 0}, 2, &rule_create_end_second},
 	{PS_IFNOCD, {TT_STATEMENT, 0, 0}, 1, &rule_if_add_cd},
-	{PS_IFNOCD, {TT_THEN, 0, 0}, 1, &rule_if_close_cd},
-	{PS_IFNOCD, {TT_OVER, 0, 0}, 1, &rule_shift_first},
 	{PS_IFNOCD, {TT_END, 0, 0}, 1, &rule_shift_first},
 	{PS_IFCD, {TT_FI, 0, 0}, 1, &rule_close_if},
-	{PS_IFCD, {TT_STATEMENT, TT_OVER, 0}, 2, &rule_create_end_second},
 	{PS_IFCD, {TT_ELIF, 0, 0}, 1, &rule_elif},
 	{PS_IFCD, {TT_ELSE, 0, 0}, 1, &rule_else},
 	{PS_EXPR, {TT_WORD, 0, 0}, 1, &rule_make_expr},
