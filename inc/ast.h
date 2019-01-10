@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 11:09:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 06:04:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_ast_token				*pop_ast_token(t_ast_token **list);
 */
 void					shift_ast_token(t_parser *parser, t_ast_token *list,
 		int del);
+void					clean_last_end_token(t_parser *parser);
 
 struct s_ast;
 struct s_shell;
@@ -196,7 +197,8 @@ int						rule_if_close_cd(t_parser *parser, t_ast_token *list);
 */
 int						rule_create_while(t_parser *parser, t_ast_token *list);
 int						rule_while_add_cd(t_parser *parser, t_ast_token *list);
-int						rule_while_add(t_parser *parser, t_ast_token *list);
+int						rule_while_close_cd(t_parser *parser, 
+		t_ast_token *list);
 int						rule_while_close(t_parser *parser, t_ast_token *list);
 
 /*

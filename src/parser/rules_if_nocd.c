@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 11:53:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 13:42:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 18:31:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 
 #include "21sh.h"
 #include "ast.h"
-
-int	rule_create_elif_nocd(t_parser *parser, t_ast_token *list)
-{
-	(void)parser;
-	(void)list;
-	return (0);
-}
 
 int	rule_create_if_nocd(t_parser *parser, t_ast_token *list)
 {

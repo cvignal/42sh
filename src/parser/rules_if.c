@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 11:49:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 13:40:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/09 18:36:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,6 @@
 
 #include "21sh.h"
 #include "ast.h"
-
-static void	clean_last_end_token(t_parser *parser)
-{
-	t_ast_token	*tmp;
-
-	if (parser->pss->op_stack)
-	{
-		tmp = parser->pss->op_stack->next;
-		free(parser->pss->op_stack->data);
-		free(parser->pss->op_stack);
-		if (!tmp)
-			parser->pss->op_stack = NULL;
-		else
-			parser->pss->op_stack = tmp;
-	}
-}
 
 int			rule_elif(t_parser *parser, t_ast_token *list)
 {

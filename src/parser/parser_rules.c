@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 13:41:37 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 06:11:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 
 static const t_ast_rule g_rules[] =\
 {
+	{PS_WHILENOCD, {TT_STATEMENT, 0, 0}, 1, &rule_while_add_cd},
+	{PS_WHILENOCD, {TT_DO, 0, 0}, 1, &rule_while_close_cd},
+	{PS_WHILENOCD, {TT_OVER, 0, 0}, 1, &rule_shift_first},
+	{PS_WHILENOCD, {TT_END, 0, 0}, 1, &rule_shift_first},
+	{PS_WHILECD, {TT_DONE, 0, 0}, 1, &rule_while_close},
+	{PS_WHILECD, {TT_STATEMENT, TT_OVER, 0}, 2, &rule_create_end_second},
 	{PS_IFNOCD, {TT_STATEMENT, 0, 0}, 1, &rule_if_add_cd},
 	{PS_IFNOCD, {TT_THEN, 0, 0}, 1, &rule_if_close_cd},
 	{PS_IFNOCD, {TT_OVER, 0, 0}, 1, &rule_shift_first},
@@ -49,7 +55,8 @@ static const t_ast_rule g_rules[] =\
 	{PS_NONE, {TT_END, TT_END, 0}, 2, &rule_shift_first},
 	{PS_NONE, {TT_END, 0, 0}, 1, &rule_create_end},
 	{PS_NONE, {TT_OVER, TT_OVER, 0}, 2, &rule_shift_second},
-	{PS_NONE, {TT_IF, 0, 0}, 1, &rule_create_if_nocd}
+	{PS_NONE, {TT_IF, 0, 0}, 1, &rule_create_if_nocd},
+	{PS_NONE, {TT_WHILE, 0, 0}, 1, &rule_create_while}
 };
 
 static size_t	count_tokens(t_ast_token *tokens)
