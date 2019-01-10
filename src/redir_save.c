@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 
-#include "21sh.h"
+#include "shell.h"
 
 int	redir_save(t_redir *redir, t_ast *instr)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell.h"
 #include "ast.h"
 
 int		exec_if(t_shell *shell, t_ast *ast)

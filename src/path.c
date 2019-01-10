@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 static char	*concat_path(const char *path, const char *bin, size_t size_path)

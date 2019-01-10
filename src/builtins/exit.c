@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 int	builtin_exit(t_shell *shell, char **args)

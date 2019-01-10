@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 int	expr_eq(t_shell *shell, char **args)

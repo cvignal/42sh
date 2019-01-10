@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 19:02:11 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/27 16:03:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/10 09:58:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <termios.h>
 #include <sys/ioctl.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 #include "fill_line.h"
 
@@ -31,7 +31,7 @@ static void	down_one_line(t_line line, int width, int flag)
 	len_last_line = line.len % width;
 	if (flag)
 		i = cursor->col - len_last_line - 4;
-	else 
+	else
 		i = 0;
 	while (i > 0)
 	{
@@ -43,7 +43,7 @@ static void	down_one_line(t_line line, int width, int flag)
 
 static void	back_to_startline(void)
 {
-	t_curs	*cursor;
+	t_curs		*cursor;
 	int			i;
 
 	cursor = get_cursor_pos();

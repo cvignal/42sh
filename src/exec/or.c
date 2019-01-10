@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "ast.h"
 
 int		exec_or(t_shell *shell, t_ast *ast)

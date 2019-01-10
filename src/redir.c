@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 static const t_redir_desc g_redir_desc[] =\

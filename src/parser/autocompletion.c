@@ -15,7 +15,7 @@
 #include <term.h>
 #include <curses.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 #include "fill_line.h"
 

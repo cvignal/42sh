@@ -13,7 +13,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "21sh.h"
+#include "shell.h"
 
 int	expr_a(t_shell *shell, char **args)
 {

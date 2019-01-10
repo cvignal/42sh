@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 static char	*create_env_var(const char *var, const char *value)

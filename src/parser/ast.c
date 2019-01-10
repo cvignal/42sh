@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 #include "ast.h"
-#include "21sh.h"
+#include "shell.h"
 
 static void	set_pipes(t_ast *new_node)
 {

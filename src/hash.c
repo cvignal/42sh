@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-#include "21sh.h"
+#include "shell.h"
 
 static int		get_hash_index(const char *s)
 {

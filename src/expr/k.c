@@ -15,7 +15,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 int	expr_k(t_shell *shell, char **args)

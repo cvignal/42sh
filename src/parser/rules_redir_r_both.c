@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 #include "ast.h"
-#include "21sh.h"
+#include "shell.h"
 #include "parser.h"
 
 int	rule_redir_r_both(t_parser *parser, t_ast_token *list)

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "21sh.h"
+#include "shell.h"
 
 int	lexer_create_dquote(t_shell *shell, t_token *token, char c)
 {

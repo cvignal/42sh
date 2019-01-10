@@ -14,7 +14,7 @@
 #include <curses.h>
 
 #include "fill_line.h"
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 void	ft_nextword(t_shell *shell)

@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "21sh.h"
+#include "shell.h"
 
 int	set_pipeline(t_ast *instr)
 {

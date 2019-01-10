@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/02 12:06:54 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/10 09:58:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <curses.h>
 #include <sys/ioctl.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 #include "fill_line.h"
 
@@ -81,7 +81,6 @@ void	ft_backspace(t_shell *shell)
 	cursor = get_cursor_pos();
 	if (shell->line.cursor > 0 && shell->line.mode == 0)
 	{
-		
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
 		tputs(tgetstr("dc", NULL), 0, ft_printchar);
 		if (cursor->col == win.ws_col)

@@ -15,7 +15,7 @@
 #include <curses.h>
 
 #include "libft.h"
-#include "21sh.h"
+#include "shell.h"
 #include "fill_line.h"
 
 t_key	g_special_keys[] =\

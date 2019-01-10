@@ -16,7 +16,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#include "21sh.h"
+#include "shell.h"
 
 int	redir_r_both(t_shell *shell, t_ast *instr, t_redir *redir)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell.h"
 
 int		exec_expr(t_shell *shell, struct s_ast *ast)
 {

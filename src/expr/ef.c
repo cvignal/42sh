@@ -15,7 +15,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "21sh.h"
+#include "shell.h"
 
 int	expr_ef(t_shell *shell, char **args)
 {

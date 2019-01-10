@@ -14,7 +14,7 @@
 
 #include "ast.h"
 #include "parser.h"
-#include "21sh.h"
+#include "shell.h"
 
 int	rule_create_expr(t_parser *parser, t_ast_token *list)
 {

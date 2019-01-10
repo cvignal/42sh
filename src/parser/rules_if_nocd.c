@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "ast.h"
 
 int	rule_create_if_nocd(t_parser *parser, t_ast_token *list)

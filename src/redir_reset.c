@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 
-#include "21sh.h"
+#include "shell.h"
 
 int	reset_redirs(t_ast *instr)
 {

@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 static int	exit_error(const char *file, const char *msg)

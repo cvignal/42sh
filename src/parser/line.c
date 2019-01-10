@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 static int	realloc_line(t_line *line)

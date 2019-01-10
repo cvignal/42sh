@@ -14,7 +14,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 int	prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root)

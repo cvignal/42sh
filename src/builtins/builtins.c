@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 static const t_builtin_desc	g_builtin_desc[] =

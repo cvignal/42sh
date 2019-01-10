@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 static int	insert_var(t_shell *shell, t_token *token, int pos)

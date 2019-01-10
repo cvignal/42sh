@@ -15,7 +15,7 @@
 
 #include "ast.h"
 #include "parser.h"
-#include "21sh.h"
+#include "shell.h"
 
 static int	rule_redir_generic(t_ast_token *list, t_ttype type, int def_in,
 		t_redir_act act)

@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 int	expr_t(t_shell *shell, char **args)

@@ -17,7 +17,7 @@
 #include <curses.h>
 #include <sys/ioctl.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "fill_line.h"
 #include "libft.h"
 

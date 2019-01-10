@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "ast.h"
 
 static int	pop_if(t_parser *parser)

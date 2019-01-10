@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 int	builtin_echo(t_shell *shell, char **args)

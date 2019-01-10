@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "21sh.h"
+#include "shell.h"
 #include "ast.h"
 
 int	lexer_add_meta(t_shell *shell, t_token *token, char c)

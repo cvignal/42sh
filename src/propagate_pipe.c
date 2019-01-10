@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "ast.h"
 
 int	propagate_pipe_left(t_ast *pipe, t_ast *instr)

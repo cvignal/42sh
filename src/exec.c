@@ -15,7 +15,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 static int	bin_not_found(const char *bin)

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "ast.h"
-#include "21sh.h"
+#include "shell.h"
 #include "parser.h"
 
 int	rule_pipe(t_parser *parser, t_ast_token *list)

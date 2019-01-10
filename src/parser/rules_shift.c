@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "ast.h"
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 int	rule_shift_first(t_parser *parser, t_ast_token *list)

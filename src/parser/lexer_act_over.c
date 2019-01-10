@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell.h"
 #include "parser.h"
 
 int	lexer_over(struct s_shell *shell, t_token *token, char c)

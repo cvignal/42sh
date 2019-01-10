@@ -13,7 +13,7 @@
 #include <stdlib.h>
 
 #include "ast.h"
-#include "21sh.h"
+#include "shell.h"
 #include "libft.h"
 
 static t_redir	*create_redir_comp(char *data)

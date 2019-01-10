@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   21sh.h                                             :+:      :+:    :+:   */
+/*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 09:00:50 by gchainet         ###   ########.fr       */
+/*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
+/*   Updated: 2019/01/10 09:57:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef SHELL_H
+# define SHELL_H
 
 # include "parser.h"
 # include "ast.h"
 # include "expr.h"
 # include "libft.h"
 
-# define EXEC_NAME "21sh"
+# define EXEC_NAME "shell"
 # define PROMPT "$>"
 # define INCOMPLETE_INPUT_PROMPT ">"
 
@@ -91,7 +91,7 @@ typedef struct		s_redir
 	int				out;
 	t_redir_act		redir_act;
 	t_redir_reset	reset;
-	t_redir_save 	save;
+	t_redir_save	save;
 	struct s_redir	*next;
 }					t_redir;
 

@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "21sh.h"
+#include "shell.h"
 #include "ast.h"
 
 int			set_node_pipes(t_ast *ast)

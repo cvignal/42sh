@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "ast.h"
-#include "21sh.h"
+#include "shell.h"
 
 static t_redir	*create_redir_close(char *data)
 {

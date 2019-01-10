@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "shell.h"
 #include "ast.h"
 
 int	rule_send_to_shunting_yard(t_parser *parser, t_ast_token *list)
