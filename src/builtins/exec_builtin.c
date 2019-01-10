@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/08 10:15:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 09:27:26 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,9 @@ static int	prepare_pipeline(t_ast *instr, int *old)
 	old[STDIN_FILENO] = dup(STDIN_FILENO);
 	old[STDOUT_FILENO] = dup(STDOUT_FILENO);
 	if (instr->pipes_in[PIPE_PARENT][STDIN_FILENO] != -1)
-	{
 		dup2(instr->pipes_in[PIPE_PARENT][STDIN_FILENO], STDIN_FILENO);
-		close(instr->pipes_in[PIPE_PARENT][STDIN_FILENO]);
-	}
 	if (instr->pipes_out[PIPE_PARENT][STDOUT_FILENO] != -1)
-	{
 		dup2(instr->pipes_out[PIPE_PARENT][STDOUT_FILENO], STDOUT_FILENO);
-		close(instr->pipes_out[PIPE_PARENT][STDOUT_FILENO]);
-	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 18:57:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 08:47:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/10 09:00:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,12 @@ int					redir_r_both(t_shell *shell, t_ast *ast, t_redir *redir);
 ** pipeline.c
 */
 int					set_pipeline(t_ast *instr);
+
+/*
+** propagate_pipe.c
+*/
+int					propagate_pipe_left(t_ast *pipe, t_ast *instr);
+
 /*
 ** hash.c
 */
