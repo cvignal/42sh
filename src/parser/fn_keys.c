@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 16:24:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/02 13:09:15 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/11 18:35:18 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,13 @@ void	ft_prevword(t_shell *shell)
 		if (shell->line.cursor > 0)
 			ft_rightkey(shell);
 	}
+}
+
+void	ft_ctrld(t_shell *shell)
+{
+	char	*args[2];
+
+	args[0] = "0";
+	args[1] = NULL;
+	builtin_exit(shell, args);
 }

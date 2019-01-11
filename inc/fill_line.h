@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/07 09:48:09 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/11 18:35:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void			ft_nextword(t_shell *shell);
 void			ft_prevword(t_shell *shell);
 void			ft_lineup(t_shell *shell);
 void			ft_linedown(t_shell *shell);
+void			ft_ctrld(t_shell *shell);
 void			ft_switch_mode(t_shell *shell);
 void			ft_copy(t_shell *shell);
 void			ft_paste(t_shell *shell);
