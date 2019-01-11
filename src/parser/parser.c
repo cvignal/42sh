@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 08:39:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/11 23:45:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,13 @@ static int			get_return(t_parser *parser)
 		if (parser->input_queue)
 			return (clean_exit(parser));
 		ret = queue_to_ast(parser->pss);
-		if (!ret)
+		if (parser->pss->error)
 			return (clean_exit(parser));
 	}
-	parser->ret = ret;
-	return (PARSER_COMPLETE);
+	if ((parser->ret = ret))
+		return (PARSER_COMPLETE);
+	else
+		return (PARSER_EMPTY);
 }
 
 int					parse(t_shell *shell, t_token *tokens)

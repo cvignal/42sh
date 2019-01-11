@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 08:41:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/11 23:42:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ t_ast		*queue_to_ast(t_pss *pss)
 		if (pss->output_queue->type == TT_OP)
 		{
 			if (set_leaves(pss->output_queue->data, &stack))
+			{
+				pss->error = 1;
 				return (NULL);
+			}
 		}
 		push_ast_token(&stack, pop_ast_token(&pss->output_queue));
 	}
