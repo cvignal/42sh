@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/11 23:45:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/11 23:52:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int					parse(t_shell *shell, t_token *tokens)
 {
 	int				ret;
 
+	shell->parser.pss->error = 0;
 	add_to_ast_token_list(&shell->parser.input_queue, lookup(&tokens));
 	while (shell->parser.input_queue)
 	{
