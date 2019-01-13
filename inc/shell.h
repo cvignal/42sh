@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 09:57:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/13 16:11:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,7 @@ typedef struct		s_heredoc
 t_heredoc			*alloc_heredoc(void);
 int					add_to_heredoc(t_heredoc *heredoc, const char *line);
 int					heredoc_exit_error(t_heredoc *heredoc);
-int					read_heredoc(t_shell *shell, t_heredoc *heredoc,
-		t_redir *redir);
+int					read_heredoc(t_heredoc *heredoc, t_redir *redir);
 
 /*
 ** command.c
