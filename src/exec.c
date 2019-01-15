@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 20:53:15 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/15 13:59:18 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	if ((builtin = is_builtin(((t_command *)instr->data)->args[0])))
 		return (exec_builtin(shell, builtin, instr));
 	bin_path = hbt_command(shell, ((t_command *)instr->data)->args[0]);
+	ignore_signal();
 	if (bin_path)
 		pid = fork();
 	else
@@ -98,6 +99,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	{
 		set_pipeline(instr);
 		apply_redirs(shell, instr);
+		enable_signal();
 		execve(bin_path, ((t_command *)instr->data)->args, shell->env);
 	}
 	else
