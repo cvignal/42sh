@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/13 16:11:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/15 14:13:18 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,5 +280,12 @@ int					propagate_pipe_left(t_ast *pipe, t_ast *instr);
 ** hash.c
 */
 char				*hbt_command(t_shell *shell, const char *elem);
+
+/*
+** signal.c
+*/
+void				disable_signal(t_shell *shell);
+void				enable_signal(void);
+void				ignore_signal(void);
 
 #endif
