@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 17:17:09 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/11 18:39:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/13 16:22:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	expr_n_cap(t_shell *shell, char **args)
 	(void)shell;
 	if (lstat(args[1], &st))
 		return (1);
-	if (st.st_mtime > st.st_atime)
+	if (st.st_mtim.tv_sec > st.st_atim.tv_sec)
 		return (0);
 	return (1);
 }

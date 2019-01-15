@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 07:46:37 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 09:02:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/14 05:37:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ int			exec_pipeline(t_shell *shell, t_ast *ast)
 
 void		free_pipeline(t_ast *ast)
 {
-	ast->left->del(ast->left);
-	ast->right->del(ast->right);
+	if (ast->left)
+		ast->left->del(ast->left);
+	if (ast->right)
+		ast->right->del(ast->right);
 	free_ast(ast);
 }

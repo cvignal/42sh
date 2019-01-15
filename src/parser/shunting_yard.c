@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 08:41:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/11 23:51:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,13 @@ static int	set_leaves(t_ast *node, t_ast_token **stack)
 	return (0);
 }
 
+static t_ast	*clean_exit(t_pss *pss, t_ast_token *stack)
+{
+	pss->error = 1;
+	free_input_queue(stack);
+	return (NULL);
+}
+
 void		shunting_yard(t_parser *parser)
 {
 	if (parser->input_queue->type == TT_OP)
@@ -91,12 +98,14 @@ t_ast		*queue_to_ast(t_pss *pss)
 		if (pss->output_queue->type == TT_OP)
 		{
 			if (set_leaves(pss->output_queue->data, &stack))
-				return (NULL);
+				return (clean_exit(pss, stack));
 		}
 		push_ast_token(&stack, pop_ast_token(&pss->output_queue));
 	}
 	if (stack)
 	{
+		if (stack->next)
+			return (clean_exit(pss, stack));
 		ret = stack->data;
 		free(stack);
 	}

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 10:45:42 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/11 23:41:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct			s_lss
 typedef struct			s_pss
 {
 	int					state;
+	int					error;
 	struct s_ast_token	*output_queue;
 	struct s_ast_token	*op_stack;
 	struct s_ast		*ret;

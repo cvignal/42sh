@@ -6,11 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:15:24 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 15:43:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/11 23:57:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 #include "shell.h"
@@ -51,7 +53,11 @@ static char	*get_path(char **env)
 
 static char	*get_local_exec(const char *path)
 {
-	if (access(path, X_OK))
+	struct stat	st;
+
+	if (stat(path, &st) || access(path, X_OK))
+		return (NULL);
+	if (!(st.st_mode & S_IFREG))
 		return (NULL);
 	return (ft_strdup(path));
 }
