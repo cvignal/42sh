@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/15 14:04:32 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/15 14:57:06 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ int			main(int ac, char **av, char **environ)
 		return (1);
 	print_prompt(PROMPT, &shell.parser);
 	shell.history = NULL;
-	disable_signal(&shell);
+	disable_signal();
 	while (!fill_line(&shell))
 	{
-		disable_signal(&shell);
 		tokens = lex(&shell);
+		disable_signal();
 		if (!tokens)
 			print_prompt(INCOMPLETE_INPUT_PROMPT, &shell.parser);
 		else

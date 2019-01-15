@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/15 14:13:18 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/15 16:50:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,7 @@ char				*hbt_command(t_shell *shell, const char *elem);
 /*
 ** signal.c
 */
-void				disable_signal(t_shell *shell);
+void				disable_signal(void);
 void				enable_signal(void);
 void				ignore_signal(void);
 
