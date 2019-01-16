@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/16 12:32:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/16 13:19:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct		s_redir
 	char			*target;
 	int				in;
 	int				out;
+	int				applied;
 	t_redir_act		redir_act;
 	t_redir_reset	reset;
 	t_redir_save	save;

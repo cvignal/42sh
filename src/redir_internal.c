@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/13 16:11:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/16 13:22:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,18 @@ int	prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root)
 {
 	t_redir	*redir;
 
-	if (root == instr)
-	{
-		redir = root->redir_list;
-		while (redir)
-		{
-			if (redir->redir_act(shell, instr, redir))
-				return (1);
-			redir = redir->next;
-		}
-	}
-	else
+	if (root && root != instr)
 	{
 		ft_memcpy(instr->old_fds, root->old_fds, sizeof(instr->old_fds));
 		ft_memcpy(instr->fds, root->fds, sizeof(instr->fds));
+	}
+	redir = instr->redir_list;
+	while (redir)
+	{
+		if (!redir->applied && redir->redir_act(shell, instr, redir))
+			return (1);
+		redir->applied = 1;
+		redir = redir->next;
 	}
 	if (instr->left)
 		prepare_redirs(shell, instr->left, root);
