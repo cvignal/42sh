@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/13 16:11:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/16 12:32:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,18 @@ int					redir_l_save(struct s_redir *redir, t_ast *instr);
 int					redir_ll_save(struct s_redir *redir, t_ast *instr);
 int					redir_r_save(struct s_redir *redir, t_ast *instr);
 int					redir_rr_save(struct s_redir *redir, t_ast *instr);
+int					redir_r_comp_save(struct s_redir *redir, t_ast *instr);
+int					redir_r_both_save(struct s_redir *redir, t_ast *instr);
+int					redir_r_close_save(struct s_redir *redir, t_ast *instr);
 
 int					reset_redirs(t_ast *instr);
 int					redir_l_reset(struct s_redir *redir, t_ast *instr);
 int					redir_ll_reset(struct s_redir *redir, t_ast *instr);
 int					redir_r_reset(struct s_redir *redir, t_ast *instr);
 int					redir_rr_reset(struct s_redir *redir, t_ast *instr);
+int					redir_r_comp_reset(struct s_redir *redir, t_ast *instr);
+int					redir_r_both_reset(struct s_redir *redir, t_ast *instr);
+int					redir_r_close_reset(struct s_redir *redir, t_ast *instr);
 
 typedef struct		s_redir
 {
