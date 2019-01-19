@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 20:53:15 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/19 13:34:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 		set_pipeline(instr);
 		apply_redirs(shell, instr);
 		execve(bin_path, ((t_command *)instr->data)->args, shell->env);
+		exit(1);
 	}
 	else
 		instr->pid = pid;
