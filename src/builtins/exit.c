@@ -6,11 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/21 17:04:49 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/21 21:29:32 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "shell.h"
 #include "fill_line.h"
@@ -30,7 +31,8 @@ int	builtin_exit(t_shell *shell, char **args)
 		return (1);
 	}
 	remove_env(shell);
-	save_history(shell);
+	if (close(shell->fd) == -1)
+		ft_dprintf(2, "Error on closing the history file\n");
 	free_shell(shell);
 	exit(arg_count == 2 ? ft_atoi(args[1]) : 0);
 }

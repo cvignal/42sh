@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/21 17:02:01 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/21 21:20:49 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,5 @@ int				nb_multi_lines(size_t len);
 void			clear_cmd_line(t_shell *shell);
 void			ft_add_builtins(char *word, t_list **list);
 int				load_history(t_shell *shell);
-int				save_history(t_shell *shell);
 
 #endif
