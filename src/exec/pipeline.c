@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 07:46:37 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/14 05:37:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/16 13:29:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,13 @@ int			exec_pipeline(t_shell *shell, t_ast *ast)
 {
 	if (set_node_pipes(ast))
 		return (1);
+	if (prepare_redirs(shell, ast, NULL))
+		return (1);
 	ast->left->exec(shell, ast->left);
 	ast->right->exec(shell, ast->right);
 	close_all_pipes(ast);
 	wait_loop(ast);
+	ast->ret = ast->right->ret;
 	return (ast->right->ret);
 }
 

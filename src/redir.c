@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:36:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 08:44:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/16 13:19:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,12 @@ static const t_redir_desc g_redir_desc[] =\
 	{TT_REDIR_L, &redir_l, &redir_l_save, &redir_l_reset},
 	{TT_REDIR_LL, &redir_ll, &redir_ll_save, &redir_ll_reset},
 	{TT_REDIR_R, &redir_r, &redir_r_save, &redir_r_reset},
-	{TT_REDIR_RR, &redir_rr, &redir_rr_save, &redir_rr_reset}
+	{TT_REDIR_RR, &redir_rr, &redir_rr_save, &redir_rr_reset},
+	{TT_REDIR_R_COMP, &redir_r_comp, &redir_r_comp_save, &redir_r_comp_reset},
+	{TT_REDIR_R_CLOSE, &redir_r_close, &redir_r_close_save,
+		&redir_r_close_reset},
+	{TT_REDIR_R_BOTH, &redir_r_both, &redir_r_both_save, &redir_r_both_reset},
+
 };
 
 static const t_redir_desc	*get_redir_desc(int type)
@@ -71,6 +76,7 @@ t_redir						*create_redir(t_ttype type, char *arg,
 	new_redir->type = type;
 	new_redir->next = NULL;
 	new_redir->redir_act = act;
+	new_redir->applied = 0;
 	if ((rd = get_redir_desc(type)))
 	{
 		new_redir->redir_act = rd->act;

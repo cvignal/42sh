@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nt.c                                               :+:      :+:    :+:   */
+/*   redir_reset_spec.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/27 17:40:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/21 19:59:56 by gchainet         ###   ########.fr       */
+/*   Created: 2019/01/16 12:40:35 by gchainet          #+#    #+#             */
+/*   Updated: 2019/01/16 12:42:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
 #include "shell.h"
 
-int	expr_nt(t_shell *shell, char **args)
+int	redir_r_comp_reset(struct s_redir *redir, t_ast *instr)
 {
-	struct stat	f1;
-	struct stat	f2;
+	(void)redir;
+	(void)instr;
+	return (0);
+}
 
-	(void)shell;
-	if (lstat(args[0], &f1))
-		return (1);
-	if (lstat(args[2], &f2))
-		return (0);
-	if (f1.st_mtimespec.tv_sec > f2.st_mtimespec.tv_sec)
-		return (0);
-	return (1);
+int	redir_r_both_reset(struct s_redir *redir, t_ast *instr)
+{
+	(void)redir;
+	(void)instr;
+	return (0);
+}
+
+int	redir_r_close_reset(struct s_redir *redir, t_ast *instr)
+{
+	(void)redir;
+	(void)instr;
+	return (0);
 }

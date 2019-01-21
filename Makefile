@@ -6,7 +6,11 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2019/01/21 17:00:20 by cvignal          ###   ########.fr        #
+=======
+#    Updated: 2019/01/16 12:41:53 by gchainet         ###   ########.fr        #
+>>>>>>> redir
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +92,8 @@ SRC		=							\
 	redir.c							\
 	redir_reset.c					\
 	redir_save.c					\
+	redir_reset_spec.c				\
+	redir_save_spec.c				\
 	apply_redirs.c					\
 	redir_r_comp.c					\
 	redir_r_close.c					\
