@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/03 09:44:49 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/21 15:03:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 static int	exit_error(const char *file, const char *msg)
 {
 	if (file)
-		ft_dprintf(2, "%s: cd: %s: msg\n", 2, EXEC_NAME, file, msg);
+		ft_dprintf(2, "%s: cd: %s: %s\n", EXEC_NAME, file, msg);
 	else
-		ft_dprintf(2, "%s: cd: msg\n", 2, EXEC_NAME, msg);
+		ft_dprintf(2, "%s: cd: %s\n", EXEC_NAME, msg);
 	return (1);
 }
 
