@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/21 17:04:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/21 21:17:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,6 @@
 #include "ast.h"
 #include "libft.h"
 #include "fill_line.h"
-
-static void	exec_ast(t_shell *shell, t_token *tokens)
-{
-	t_ast	*ast;
-
-	if (parse(shell, tokens) == PARSER_COMPLETE)
-	{
-		ast = shell->parser.ret;
-		ast->exec(shell, ast);
-		wait_loop(ast);
-		ast->del(ast);
-	}
-}
 
 static void	add_to_history(char *str, t_shell *shell, int flag)
 {
@@ -52,10 +39,24 @@ static void	add_to_history(char *str, t_shell *shell, int flag)
 	}
 	else if (!flag && !multi_line && ft_strlen(str))
 	{
-		
 		new = ft_lstnew(str, ft_strlen(str) + 1);
 		ft_lstadd(&shell->history, new);
 	}
+}
+
+static void	exec_ast(t_shell *shell, t_token *tokens)
+{
+	t_ast	*ast;
+
+	if (parse(shell, tokens) == PARSER_COMPLETE)
+	{
+		ast = shell->parser.ret;
+		ast->exec(shell, ast);
+		wait_loop(ast);
+		ast->del(ast);
+	}
+	add_to_history(shell->line.data, shell, 0);
+	raw_terminal_mode();
 }
 
 static void	print_prompt(const char *def, t_parser *parser)
@@ -76,14 +77,10 @@ int			main(int ac, char **av, char **environ)
 	if (init_shell(&shell, environ))
 		return (1);
 	print_prompt(PROMPT, &shell.parser);
-	shell.history = NULL;
-	disable_signal();
-	load_history(&shell);
 	while (!fill_line(&shell))
 	{
-		tokens = lex(&shell);
 		disable_signal();
-		if (!tokens)
+		if (!(tokens = lex(&shell)))
 		{
 			add_to_history(shell.line.data, &shell, 1);
 			print_prompt(INCOMPLETE_INPUT_PROMPT, &shell.parser);
@@ -92,7 +89,6 @@ int			main(int ac, char **av, char **environ)
 		{
 			exec_ast(&shell, tokens);
 			print_prompt(PROMPT, &shell.parser);
-			add_to_history(shell.line.data, &shell, 0);
 		}
 		free_line(&shell.line);
 	}

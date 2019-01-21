@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/21 16:42:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/21 20:19:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,8 @@ void	ft_rightkey(t_shell *shell)
 				ft_printf("%c", shell->line.data[curs]);
 		}
 		else
-		{
-			if (win.ws_col == cursor->col)
-				tputs(tgetstr("do", NULL), 0, ft_printchar);
-			else
-				tputs(tgetstr("nd", NULL), 0, ft_printchar);
-		}
+			tputs(tgetstr(win.ws_col == cursor->col ? "do" : "nd", NULL), 0,
+					ft_printchar);
 	}
 	free(cursor);
 }
