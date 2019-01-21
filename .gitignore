@@ -8,6 +8,7 @@
 *.dylib
 
 # Debug files
+.shperso_history
 .gdb_history
 *.dSYM/
 

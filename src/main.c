@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/21 16:31:36 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/21 17:04:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int			main(int ac, char **av, char **environ)
 	print_prompt(PROMPT, &shell.parser);
 	shell.history = NULL;
 	disable_signal();
+	load_history(&shell);
 	while (!fill_line(&shell))
 	{
 		tokens = lex(&shell);

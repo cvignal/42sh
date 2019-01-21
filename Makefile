@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/01/15 14:12:29 by cvignal          ###   ########.fr        #
+#    Updated: 2019/01/21 17:00:20 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRC		=							\
 	parser/keys.c					\
 	parser/tools_keys.c				\
 	parser/tools_auto.c				\
+	parser/tools_history.c			\
 	parser/autocompletion.c			\
 	parser/display_auto.c			\
 	parser/history.c				\
