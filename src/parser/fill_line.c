@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/07 10:56:58 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/21 16:39:28 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int			fill_line(t_shell *shell)
 		ft_addchar(shell, "");
 	clean_under_line();
 	ft_printf("\n");
+	shell->his_pos = -1;
 	return (0);
 }
