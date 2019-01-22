@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/21 21:20:49 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/22 10:54:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define MAJ_TAB "\033[Z"
 # define ESCAPE "\033"
 # define EOC "\e[0m"
+# define HIST_SIZE_MAX 50000
 
 typedef struct	s_key
 {

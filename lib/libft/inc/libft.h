@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/27 16:08:49 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/22 11:35:30 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,6 @@ size_t				ft_char_size_utf8(unsigned int c);
 int					ft_printf(const char *format, ...);
 int					ft_dprintf(int fd, const char *format, ...);
 void				quicksort(char **array, int first, int last);
+int					ft_match(char *pattern, char *str);
 
 #endif
