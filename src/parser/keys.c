@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/21 16:42:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/23 17:28:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 #include "libft.h"
 #include "fill_line.h"
 
+static void	go_to_end_of_line(t_shell *shell)
+{
+	tputs(tgetstr("up", NULL), 0, ft_printchar);
+}
+
 void	ft_leftkey(t_shell *shell)
 {
 	unsigned int	curs;
@@ -30,6 +35,8 @@ void	ft_leftkey(t_shell *shell)
 	{
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
 		shell->line.cursor--;
+		if (shell->line.data[curs - 1] == '\n')
+			go_to_end_of_line(shell);
 		if (shell->line.mode)
 		{
 			if (shell->line.cursor <= shell->line.select_curs)
@@ -63,12 +70,8 @@ void	ft_rightkey(t_shell *shell)
 				ft_printf("%c", shell->line.data[curs]);
 		}
 		else
-		{
-			if (win.ws_col == cursor->col)
-				tputs(tgetstr("do", NULL), 0, ft_printchar);
-			else
-				tputs(tgetstr("nd", NULL), 0, ft_printchar);
-		}
+			tputs(tgetstr(win.ws_col == cursor->col ? "do" : "nd", NULL)
+					, 0, ft_printchar);
 	}
 	free(cursor);
 }
@@ -94,16 +97,4 @@ void	ft_backspace(t_shell *shell)
 		shell->line.cursor--;
 	}
 	free(cursor);
-}
-
-void	ft_homekey(t_shell *shell)
-{
-	while (shell->line.cursor > 0)
-		ft_leftkey(shell);
-}
-
-void	ft_endkey(t_shell *shell)
-{
-	while (shell->line.cursor < shell->line.len)
-		ft_rightkey(shell);
 }
