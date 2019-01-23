@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/21 20:19:58 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/23 12:01:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void			shunting_yard(t_parser *parser)
 				pop_ast_token(&parser->input_queue));
 }
 
-t_ast		*queue_to_ast(t_pss *pss)
+t_ast			*queue_to_ast(t_pss *pss)
 {
 	t_ast		*ret;
 	t_ast_token	*stack;

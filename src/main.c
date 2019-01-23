@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/23 11:58:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/23 12:11:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	exec_ast(t_shell *shell, t_token *tokens)
 	}
 	add_to_history(shell->line.data, shell, 0);
 	raw_terminal_mode();
+	print_prompt(PROMPT, shell->parser);
 }
 
 static void	print_prompt(const char *def, t_parser *parser)
@@ -90,10 +91,7 @@ int			main(int ac, char **av, char **environ)
 			print_prompt(INCOMPLETE_INPUT_PROMPT, &shell.parser);
 		}
 		else
-		{
 			exec_ast(&shell, tokens);
-			print_prompt(PROMPT, &shell.parser);
-		}
 		free_line(&shell.line);
 	}
 	free_shell(&shell);
