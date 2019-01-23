@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 08:46:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/23 12:17:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ typedef struct			s_ast
 	t_free				del;
 	int					pipes_in[2][2];
 	int					pipes_out[2][2];
-	int					old_fds[3];
-	int					fds[3];
+	int					old_fds[10];
+	int					fds[10];
 	void				*data;
 	pid_t				pid;
 	int					ret;

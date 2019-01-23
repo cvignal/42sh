@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 13:01:03 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/12 17:41:19 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/23 14:02:08 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 int		exec_if(t_shell *shell, t_ast *ast)
 {
-	redir_save(ast->redir_list, ast);
 	prepare_redirs(shell, ast, ast);
 	((t_ast *)ast->data)->exec(shell, ast->data);
 	wait_loop(ast->data);

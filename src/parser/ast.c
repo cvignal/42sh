@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:26:16 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 08:40:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/23 13:43:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,22 @@ static void	set_pipes(t_ast *new_node)
 	new_node->pipes_out[PIPE_NODE][STDOUT_FILENO] = -1;
 }
 
+static void	set_ast_fd(t_ast *new_node)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < 10)
+	{
+		new_node->fds[i] = -1;
+		new_node->old_fds[i] = -1;
+		++i;
+	}
+	new_node->old_fds[STDIN_FILENO] = STDIN_FILENO;
+	new_node->old_fds[STDOUT_FILENO] = STDERR_FILENO;
+	new_node->old_fds[STDERR_FILENO] = STDERR_FILENO;
+}
+
 t_ast		*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 {
 	t_ast	*new_node;
@@ -39,17 +55,12 @@ t_ast		*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 	new_node->type = type;
 	new_node->exec = exec;
 	new_node->del = del;
-	new_node->fds[STDIN_FILENO] = STDIN_FILENO;
-	new_node->fds[STDOUT_FILENO] = STDOUT_FILENO;
-	new_node->fds[STDERR_FILENO] = STDERR_FILENO;
-	new_node->old_fds[STDIN_FILENO] = STDIN_FILENO;
-	new_node->old_fds[STDOUT_FILENO] = STDOUT_FILENO;
-	new_node->old_fds[STDERR_FILENO] = STDERR_FILENO;
 	new_node->pid = -1;
 	new_node->ret = 0;
 	new_node->redir_list = NULL;
 	new_node->right = NULL;
 	new_node->left = NULL;
+	set_ast_fd(new_node);
 	set_pipes(new_node);
 	return (new_node);
 }

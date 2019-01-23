@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/23 12:11:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/23 13:52:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ static void	add_to_history(char *str, t_shell *shell, int flag)
 	}
 }
 
+static void	print_prompt(const char *def, t_parser *parser)
+{
+	if (parser->pss->state != PS_NONE)
+		ft_printf("%s ", INCOMPLETE_INPUT_PROMPT);
+	else
+		ft_printf("%s ", def);
+}
+
 static void	exec_ast(t_shell *shell, t_token *tokens)
 {
 	t_ast	*ast;
@@ -60,16 +68,7 @@ static void	exec_ast(t_shell *shell, t_token *tokens)
 		ast->del(ast);
 	}
 	add_to_history(shell->line.data, shell, 0);
-	raw_terminal_mode();
-	print_prompt(PROMPT, shell->parser);
-}
-
-static void	print_prompt(const char *def, t_parser *parser)
-{
-	if (parser->pss->state != PS_NONE)
-		ft_printf("%s ", INCOMPLETE_INPUT_PROMPT);
-	else
-		ft_printf("%s ", def);
+	print_prompt(PROMPT, &shell->parser);
 }
 
 int			main(int ac, char **av, char **environ)
@@ -92,6 +91,7 @@ int			main(int ac, char **av, char **environ)
 		}
 		else
 			exec_ast(&shell, tokens);
+		raw_terminal_mode();
 		free_line(&shell.line);
 	}
 	free_shell(&shell);

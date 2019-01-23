@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/21 21:20:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/23 14:00:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,8 @@ typedef struct		s_shell
 
 struct s_redir;
 typedef int			(*t_redir_act)(t_shell *, t_ast *, struct s_redir *);
-typedef int			(*t_redir_reset)(struct s_redir *, t_ast *);
-typedef int			(*t_redir_save)(struct s_redir *, t_ast *);
-
-int					redir_save(struct s_redir *redir, t_ast *instr);
-int					redir_l_save(struct s_redir *redir, t_ast *instr);
-int					redir_ll_save(struct s_redir *redir, t_ast *instr);
-int					redir_r_save(struct s_redir *redir, t_ast *instr);
-int					redir_rr_save(struct s_redir *redir, t_ast *instr);
-int					redir_r_comp_save(struct s_redir *redir, t_ast *instr);
-int					redir_r_both_save(struct s_redir *redir, t_ast *instr);
-int					redir_r_close_save(struct s_redir *redir, t_ast *instr);
 
 int					reset_redirs(t_ast *instr);
-int					redir_l_reset(struct s_redir *redir, t_ast *instr);
-int					redir_ll_reset(struct s_redir *redir, t_ast *instr);
-int					redir_r_reset(struct s_redir *redir, t_ast *instr);
-int					redir_rr_reset(struct s_redir *redir, t_ast *instr);
-int					redir_r_comp_reset(struct s_redir *redir, t_ast *instr);
-int					redir_r_both_reset(struct s_redir *redir, t_ast *instr);
-int					redir_r_close_reset(struct s_redir *redir, t_ast *instr);
 
 typedef struct		s_redir
 {
@@ -98,8 +80,6 @@ typedef struct		s_redir
 	int				out;
 	int				applied;
 	t_redir_act		redir_act;
-	t_redir_reset	reset;
-	t_redir_save	save;
 	struct s_redir	*next;
 }					t_redir;
 
@@ -107,8 +87,6 @@ typedef struct		s_redir_desc
 {
 	int				type;
 	t_redir_act		act;
-	t_redir_save	save;
-	t_redir_reset	reset;
 }					t_redir_desc;
 
 typedef struct		s_command

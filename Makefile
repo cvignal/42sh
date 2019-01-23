@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/01/21 20:01:59 by gchainet         ###   ########.fr        #
+#    Updated: 2019/01/23 13:59:54 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,9 +87,6 @@ SRC		=							\
 	propagate_pipe.c				\
 	redir.c							\
 	redir_reset.c					\
-	redir_save.c					\
-	redir_reset_spec.c				\
-	redir_save_spec.c				\
 	apply_redirs.c					\
 	redir_r_comp.c					\
 	redir_r_close.c					\
