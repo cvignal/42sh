@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/21 21:17:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/23 11:58:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ static void	add_to_history(char *str, t_shell *shell, int flag)
 		shell->history->content = ft_strdup(multi_line);
 		shell->history->content_size = ft_strlen(multi_line) + 1;
 		if (!flag)
+		{
+			ft_dprintf(shell->fd, "%s\n", multi_line);
 			ft_strdel(&multi_line);
+		}
 	}
 	else if (flag && !multi_line)
 	{
@@ -41,6 +44,7 @@ static void	add_to_history(char *str, t_shell *shell, int flag)
 	{
 		new = ft_lstnew(str, ft_strlen(str) + 1);
 		ft_lstadd(&shell->history, new);
+		ft_dprintf(shell->fd, "%s\n", str);
 	}
 }
 

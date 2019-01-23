@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/21 20:01:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/21 21:20:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct		s_shell
 	int				his_pos;
 	t_hbt			**hash_table;
 	char			*pbpaste;
+	int				fd;
 }					t_shell;
 
 struct s_redir;
