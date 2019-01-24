@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/24 13:56:23 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/24 18:13:05 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,15 @@ void		ft_backspace(t_shell *shell)
 {
 	struct winsize	win;
 	t_curs			*cursor;
-	size_t			curs;
 
 	ioctl(0, TIOCGWINSZ, &win);
 	cursor = get_cursor_pos();
-	curs = shell->line.cursor;
-	if (curs > 0 && shell->line.mode == 0)
+	if (shell->line.cursor > 0 && shell->line.mode == 0)
 	{
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
 		shell->line.len--;
 		shell->line.cursor--;
-		if (shell->line.data[curs - 1] == '\n')
+		if (shell->line.data[shell->line.cursor] == '\n')
 			go_to_end_of_line(shell);
 		tputs(tgetstr("dc", NULL), 0, ft_printchar);
 		if (cursor->col == win.ws_col)

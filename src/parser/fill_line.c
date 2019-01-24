@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/21 16:39:28 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/24 16:47:01 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		reset_terminal_mode(void)
 
 int			fill_line(t_shell *shell)
 {
-	char			buf[8];
+	char			buf[9];
 	int				ret;
 
 	check_validity();
@@ -90,6 +90,8 @@ int			fill_line(t_shell *shell)
 	}
 	if (!shell->line.data)
 		ft_addchar(shell, "");
+	while (shell->line.cursor < shell->line.len)
+		ft_rightkey(shell);
 	clean_under_line();
 	ft_printf("\n");
 	shell->his_pos = -1;

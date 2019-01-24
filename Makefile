@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/01/24 11:29:43 by cvignal          ###   ########.fr        #
+#    Updated: 2019/01/24 16:50:01 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -175,7 +175,7 @@ CC		?=	cc
 
 INCFLAG	:= -I $(INCDIR) $(LIB_INC)
 STDFLAG	?=	
-WFLAGS	?=	-Wall -Wextra -Werror
+WFLAGS	?=	-Wall -Wextra -Werror 
 CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG)
 
 DEPGEN	:=	$(CC)
@@ -289,11 +289,19 @@ sure: warn ffcheck norm
 
 #### DEBUGING ####
 # Change warning flag to debug and local recompile
-debug:	WFLAGS := -g3 -ggdb
+debug:	WFLAGS	:= -g3 -ggdb
 debug:	all
 
-rdebug:	WFLAGS := -g3 -ggdb
+rdebug:	WFLAGS	:= -g3 -ggdb
 rdebug:	lre
+
+fsan:	WFLAGS	:= -g -fsanitize=address
+fsan:	LDFLAG	+= -fsanitize=address
+fsan:	all
+
+rfsan:	WFLAGS	:= -g -fsanitize=address
+fsan:	LDFLAG	+= -fsanitize=address
+rfsan:	lre
 
 #### TESTS ####
 # Use when you have some error and just want to rest
