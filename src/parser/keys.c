@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/23 17:28:12 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/24 13:56:23 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,20 @@
 
 static void	go_to_end_of_line(t_shell *shell)
 {
+	size_t	len;
+
 	tputs(tgetstr("up", NULL), 0, ft_printchar);
+	if (shell->line.data[shell->line.cursor - 1] == '\n')
+		return ;
+	len = length_line(shell);
+	while (len > 0)
+	{
+		tputs(tgetstr("nd", NULL), 0, ft_printchar);
+		len--;
+	}
 }
 
-void	ft_leftkey(t_shell *shell)
+void		ft_leftkey(t_shell *shell)
 {
 	unsigned int	curs;
 
@@ -50,7 +60,7 @@ void	ft_leftkey(t_shell *shell)
 	}
 }
 
-void	ft_rightkey(t_shell *shell)
+void		ft_rightkey(t_shell *shell)
 {
 	struct winsize	win;
 	t_curs			*cursor;
@@ -72,29 +82,35 @@ void	ft_rightkey(t_shell *shell)
 		else
 			tputs(tgetstr(win.ws_col == cursor->col ? "do" : "nd", NULL)
 					, 0, ft_printchar);
+		if (shell->line.data[curs] == '\n')
+			tputs(tgetstr("do", NULL), 0, ft_printchar);
 	}
 	free(cursor);
 }
 
-void	ft_backspace(t_shell *shell)
+void		ft_backspace(t_shell *shell)
 {
 	struct winsize	win;
 	t_curs			*cursor;
+	size_t			curs;
 
 	ioctl(0, TIOCGWINSZ, &win);
 	cursor = get_cursor_pos();
-	if (shell->line.cursor > 0 && shell->line.mode == 0)
+	curs = shell->line.cursor;
+	if (curs > 0 && shell->line.mode == 0)
 	{
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
+		shell->line.len--;
+		shell->line.cursor--;
+		if (shell->line.data[curs - 1] == '\n')
+			go_to_end_of_line(shell);
 		tputs(tgetstr("dc", NULL), 0, ft_printchar);
 		if (cursor->col == win.ws_col)
 			tputs(tgetstr("dc", NULL), 0, ft_printchar);
 		if (shell->line.cursor < shell->line.len)
-			ft_del_char(shell->line.data, shell->line.cursor - 1);
+			ft_del_char(shell->line.data, shell->line.cursor);
 		else
-			shell->line.data[shell->line.cursor - 1] = 0;
-		shell->line.len--;
-		shell->line.cursor--;
+			shell->line.data[shell->line.cursor] = 0;
 	}
 	free(cursor);
 }
