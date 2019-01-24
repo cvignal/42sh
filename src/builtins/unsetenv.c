@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:22:56 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 19:03:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/24 13:32:54 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,8 @@ int			builtin_unsetenv(t_shell *shell, char **args)
 		++env_size;
 	if (!(new_env = malloc(sizeof(*new_env) * (env_size + 1))))
 		return (1);
-	return (replace_env(shell, new_env, env_size, args[1]));
+	replace_env(shell, new_env, env_size, args[1]);
+	if (!ft_strcmp(args[1], "PATH"))
+		sanitize_hash(shell);
+	return (0);
 }

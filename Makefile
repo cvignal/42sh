@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/01/23 13:59:54 by gchainet         ###   ########.fr        #
+#    Updated: 2019/01/24 13:31:29 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,7 @@ SRC		=							\
 	env.c							\
 	env_utils.c						\
 	hash.c							\
+	hash_sanitize.c					\
 	replace.c						\
 	heredoc.c						\
 	propagate_pipe.c				\
