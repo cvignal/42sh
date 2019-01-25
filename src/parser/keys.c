@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/25 14:19:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/25 17:41:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	go_to_end_of_line(t_shell *shell)
 	tputs(tgetstr("up", NULL), 0, ft_printchar);
 	if (shell->line.data[shell->line.cursor - 1] == '\n')
 		return ;
-	len = length_line(shell);
+	len = length_prev_line(shell);
 	while (len > 0)
 	{
 		tputs(tgetstr("nd", NULL), 0, ft_printchar);
@@ -106,7 +106,10 @@ void		ft_backspace(t_shell *shell)
 		if (cursor->col == win.ws_col)
 			tputs(tgetstr("dc", NULL), 0, ft_printchar);
 		if (shell->line.cursor < shell->line.len)
+		{
+			scroll_lines(shell);
 			ft_del_char(shell->line.data, shell->line.cursor);
+		}
 		else
 			shell->line.data[shell->line.cursor] = 0;
 	}
