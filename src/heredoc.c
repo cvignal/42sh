@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:01:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/25 14:54:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/25 15:12:28 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int			add_to_heredoc(t_heredoc *heredoc, const char *line)
 			return (1);
 	}
 	i = 0;
-	while (i < len)
+	while (i < len - 2)
 		heredoc->data[heredoc->len++] = line[i++];
 	heredoc->data[heredoc->len++] = '\n';
 	heredoc->data[heredoc->len] = 0;
