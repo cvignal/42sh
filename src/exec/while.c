@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 17:57:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/23 14:02:20 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/25 17:27:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		exec_while(t_shell *shell, t_ast *ast)
 		((t_ast *)ast->data)->exec(shell, ast->data);
 		wait_loop(ast->data);
 	}
-	reset_redirs(ast);
+	reset_redirs(shell, ast);
 	return (ast->left->ret);
 }
 

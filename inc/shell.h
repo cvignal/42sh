@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/24 13:31:47 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/25 17:29:28 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ typedef struct		s_line
 	int				mode;
 }					t_line;
 
+typedef struct		s_fd
+{
+	int				fd;
+	struct s_fd		*next;
+}					t_fd;
+
 typedef struct		s_shell
 {
 	t_lexer			lexer;
@@ -65,12 +71,13 @@ typedef struct		s_shell
 	t_hbt			**hash_table;
 	char			*pbpaste;
 	int				fd;
+	t_fd			*used_fd;
 }					t_shell;
 
 struct s_redir;
 typedef int			(*t_redir_act)(t_shell *, t_ast *, struct s_redir *);
 
-int					reset_redirs(t_ast *instr);
+int					reset_redirs(t_shell *shell, t_ast *instr);
 
 typedef struct		s_redir
 {
@@ -234,7 +241,6 @@ int					redir_rr(t_shell *shell, t_ast *ast, t_redir *redir);
 ** apply_redirs.c
 */
 int					apply_redirs(t_shell *shell, t_ast *instr);
-int					reset_redirs(t_ast *instr);
 int					save_redirs(t_ast *instr);
 
 /*
@@ -274,5 +280,14 @@ void				sanitize_hash(t_shell *shell);
 void				disable_signal(void);
 void				enable_signal(void);
 void				ignore_signal(void);
+
+/*
+** fd.c
+*/
+
+int					add_fd(t_shell *shell, int fd);
+int					open_file(t_shell *shell, const char *file, int mode,
+		int perm);
+void				remove_fd(t_shell *shell, int fd);
 
 #endif

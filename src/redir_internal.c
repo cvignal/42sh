@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/16 13:22:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/25 17:20:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int	prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root)
 	while (redir)
 	{
 		if (!redir->applied && redir->redir_act(shell, instr, redir))
+		{
+			ft_dprintf(2, "%s: redirection failed\n", EXEC_NAME);
 			return (1);
+		}
 		redir->applied = 1;
 		redir = redir->next;
 	}
@@ -46,7 +49,7 @@ int	redir_l(t_shell *shell, t_ast *instr, t_redir *redir)
 	int	fd;
 
 	(void)shell;
-	fd = open(redir->target, O_RDONLY);
+	fd = open_file(shell, redir->target, O_RDONLY, 0);
 	if (fd < 0)
 		return (1);
 	instr->fds[redir->in] = fd;
@@ -78,7 +81,7 @@ int	redir_r(t_shell *shell, t_ast *instr, t_redir *redir)
 	int	fd;
 
 	(void)shell;
-	fd = open(redir->target, O_WRONLY | O_CREAT | O_TRUNC,
+	fd = open_file(shell, redir->target, O_WRONLY | O_CREAT | O_TRUNC,
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
 		return (1);
@@ -91,7 +94,7 @@ int	redir_rr(t_shell *shell, t_ast *instr, t_redir *redir)
 	int	fd;
 
 	(void)shell;
-	fd = open(redir->target, O_WRONLY | O_CREAT | O_APPEND,
+	fd = open_file(shell, redir->target, O_WRONLY | O_CREAT | O_APPEND,
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
 		return (1);

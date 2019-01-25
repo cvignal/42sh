@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/01/25 14:20:16 by gchainet         ###   ########.fr        #
+#    Updated: 2019/01/25 17:15:13 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,7 +143,8 @@ SRC		=							\
 	expr/le.c						\
 	expr/gt.c						\
 	expr/ge.c						\
-	signal.c
+	signal.c						\
+	fd.c
 
 SRCDIR	:=	src
 OBJDIR	:=	obj
@@ -172,7 +173,6 @@ include $(LIBFT_PATH)/include.mk
 CC		?=	cc
 
 INCFLAG	:= -I $(INCDIR) $(LIB_INC)
-STDFLAG	?=	
 WFLAGS	?=	-Wall -Wextra -Werror 
 CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG)
 
