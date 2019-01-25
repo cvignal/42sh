@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:14:32 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 03:48:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/25 15:21:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	rule_pipe(t_parser *parser, t_ast_token *list)
 	pipe_node = alloc_ast(NULL, TT_PIPE, &exec_pipeline, &free_pipeline);
 	if (!pipe_node)
 		return (1);
+	free(list->data);
 	list->data = pipe_node;
 	list->type = TT_OP;
 	return (0);
