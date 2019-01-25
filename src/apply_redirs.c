@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/06 20:01:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/23 12:31:57 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/25 14:47:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int		apply_redirs(t_shell *shell, t_ast *instr)
 	i = 0;
 	while (i < 10)
 	{
-		if (instr->fds[i] != -1)
+		if (instr->fds[i] >= 0)
 			dup2(instr->fds[i], i);
+		else if (instr->fds[i] == -2)
+			close(i);
 		++i;
 	}
 	return (0);

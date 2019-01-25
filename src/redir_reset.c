@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 10:26:43 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/23 13:56:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/25 14:44:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	reset_redirs(t_ast *instr)
 	i = 0;
 	while (i < 10)
 	{
-		if (instr->fds[i] != -1)
+		if (instr->old_fds[i] != -1)
 			dup2(instr->old_fds[i], instr->fds[i]);
 		++i;
 	}
