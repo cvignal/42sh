@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/23 12:14:38 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/25 14:19:59 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 #include "ast.h"
 #include "libft.h"
 #include "fill_line.h"
+
+static void	print_prompt(const char *def, t_parser *parser)
+{
+	if (parser->pss->state != PS_NONE)
+		ft_printf("%s ", INCOMPLETE_INPUT_PROMPT);
+	else
+		ft_printf("%s ", def);
+}
 
 static void	exec_ast(t_shell *shell, t_token *tokens)
 {
@@ -28,14 +36,8 @@ static void	exec_ast(t_shell *shell, t_token *tokens)
 		wait_loop(ast);
 		ast->del(ast);
 	}
-}
-
-static void	print_prompt(const char *def, t_parser *parser)
-{
-	if (parser->pss->state != PS_NONE)
-		ft_printf("%s ", INCOMPLETE_INPUT_PROMPT);
-	else
-		ft_printf("%s ", def);
+	add_to_history(shell->line.data, shell, 0);
+	print_prompt(PROMPT, &shell->parser);
 }
 
 int			main(int ac, char **av, char **environ)
@@ -48,24 +50,17 @@ int			main(int ac, char **av, char **environ)
 	if (init_shell(&shell, environ))
 		return (1);
 	print_prompt(PROMPT, &shell.parser);
-	shell.history = NULL;
-	disable_signal();
-	load_history(&shell);
 	while (!fill_line(&shell))
 	{
-		tokens = lex(&shell);
 		disable_signal();
-		if (!tokens)
+		if (!(tokens = lex(&shell)))
 		{
 			add_to_history(shell.line.data, &shell, 1);
 			print_prompt(INCOMPLETE_INPUT_PROMPT, &shell.parser);
 		}
 		else
-		{
 			exec_ast(&shell, tokens);
-			print_prompt(PROMPT, &shell.parser);
-			add_to_history(shell.line.data, &shell, 0);
-		}
+		raw_terminal_mode();
 		free_line(&shell.line);
 	}
 	free_shell(&shell);

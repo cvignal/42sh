@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 19:38:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/16 13:21:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/23 14:01:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,17 @@ static t_redir	*create_redir_close(char *data)
 	new_redir->type = TT_REDIR_R_CLOSE;
 	new_redir->next = NULL;
 	new_redir->redir_act = &redir_r_close;
-	new_redir->reset = &redir_r_close_reset;
-	new_redir->save = &redir_r_close_save;
 	new_redir->target = NULL;
 	new_redir->applied = 0;
 	if (ft_isdigit(*data))
+	{
 		new_redir->in = ft_atoi(data);
+		if (new_redir->in < 0 || new_redir->in > 9)
+		{
+			free(new_redir);
+			return (NULL);
+		}
+	}
 	else
 		new_redir->in = 1;
 	return (new_redir);

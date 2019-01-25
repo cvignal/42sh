@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:14:44 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 19:03:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/24 13:34:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,13 @@ int			builtin_setenv(t_shell *shell, char **args)
 	if (arg_count > 3)
 		return (exit_error("too many arguments"));
 	else if (arg_count == 3)
-		return (set_env_var(shell, args[1], args[2]));
+	{
+		if (set_env_var(shell, args[1], args[2]))
+			return (1);
+		if (!ft_strcmp(args[1], "PATH"))
+			sanitize_hash(shell);
+		return (0);
+	}
 	if (arg_count == 1)
 	{
 		print_env(shell);

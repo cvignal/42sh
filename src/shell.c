@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/07 21:57:15 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/21 21:27:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,8 @@ int			init_shell(t_shell *shell, char **environ)
 	}
 	shell->his_pos = -1;
 	raw_terminal_mode();
+	shell->history = NULL;
+	disable_signal();
+	load_history(shell);
 	return (0);
 }

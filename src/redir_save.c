@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 20:15:02 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/07 21:49:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/23 13:59:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 #include "shell.h"
 
-int	redir_save(t_redir *redir, t_ast *instr)
+int	redir_save(t_ast *instr)
 {
-	t_redir	*iter;
+	unsigned int	i;
 
-	iter = instr->redir_list;
-	while (iter)
+	i = 0;
+	while (i < 10)
 	{
-		iter->save(redir, instr);
-		iter = iter->next;
+		if (ast->fd[i] != -1)
+		{
+		}
 	}
 	return (0);
 }

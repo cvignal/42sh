@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/01/24 16:50:01 by cvignal          ###   ########.fr        #
+#    Updated: 2019/01/25 14:20:16 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,14 +84,12 @@ SRC		=							\
 	env.c							\
 	env_utils.c						\
 	hash.c							\
+	hash_sanitize.c					\
 	replace.c						\
 	heredoc.c						\
 	propagate_pipe.c				\
 	redir.c							\
 	redir_reset.c					\
-	redir_save.c					\
-	redir_reset_spec.c				\
-	redir_save_spec.c				\
 	apply_redirs.c					\
 	redir_r_comp.c					\
 	redir_r_close.c					\

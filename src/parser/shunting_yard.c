@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/11 23:51:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/23 12:01:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static const t_precedence	g_precedence[] =\
 	{TT_AND, 0}
 };
 
-static int	precedence(t_ttype type)
+static int		precedence(t_ttype type)
 {
 	unsigned int	i;
 
@@ -37,7 +37,7 @@ static int	precedence(t_ttype type)
 	return (-1);
 }
 
-static int	set_leaves(t_ast *node, t_ast_token **stack)
+static int		set_leaves(t_ast *node, t_ast_token **stack)
 {
 	t_ast_token	*right;
 	t_ast_token	*left;
@@ -70,7 +70,7 @@ static t_ast	*clean_exit(t_pss *pss, t_ast_token *stack)
 	return (NULL);
 }
 
-void		shunting_yard(t_parser *parser)
+void			shunting_yard(t_parser *parser)
 {
 	if (parser->input_queue->type == TT_OP)
 	{
@@ -87,7 +87,7 @@ void		shunting_yard(t_parser *parser)
 				pop_ast_token(&parser->input_queue));
 }
 
-t_ast		*queue_to_ast(t_pss *pss)
+t_ast			*queue_to_ast(t_pss *pss)
 {
 	t_ast		*ret;
 	t_ast_token	*stack;

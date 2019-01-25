@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/21 20:00:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/21 20:15:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 static int	bin_not_found(const char *bin)
 {
 	ft_dprintf(2, "%s: %s: %s\n", EXEC_NAME, COMMAND_NOT_FOUND_MSG, bin);
-	return (1);
+	return (-1);
 }
 
 static int	ft_wait(int *status)
@@ -93,10 +93,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 		pid = fork();
 	}
 	else
-	{
-		bin_not_found(((t_command *)instr->data)->args[0]);
-		return (-1);
-	}
+		return (bin_not_found(((t_command *)instr->data)->args[0]));
 	if (!pid)
 	{
 		set_pipeline(instr);

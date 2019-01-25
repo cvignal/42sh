@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 13:50:27 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/15 16:49:58 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/21 20:20:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 #include "libft.h"
 #include "shell.h"
-
 
 static void	print_newline(int i)
 {
