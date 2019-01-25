@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/21 20:15:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/25 14:49:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <sys/wait.h>
 
 #include "shell.h"
+#include "fill_line.h"
 #include "libft.h"
 
 static int	bin_not_found(const char *bin)
@@ -99,6 +100,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 		set_pipeline(instr);
 		apply_redirs(shell, instr);
 		enable_signal();
+		reset_terminal_mode();
 		execve(bin_path, ((t_command *)instr->data)->args, shell->env);
 		exit(1);
 	}
