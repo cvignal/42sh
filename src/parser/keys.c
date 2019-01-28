@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/25 17:53:48 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/28 10:46:13 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,11 @@ void		ft_leftkey(t_shell *shell)
 			go_to_end_of_line(shell);
 		if (shell->line.mode)
 		{
-			if (shell->line.cursor <= shell->line.select_curs)
-			{
+			if (shell->line.cursor < shell->line.select_curs)
 				ft_printf("%s%c%s", "\e[7;m", shell->line.data[curs - 1], EOC);
-				tputs(tgetstr("le", NULL), 0, ft_printchar);
-			}
 			else
 				ft_printf("%c", shell->line.data[curs - 1]);
+			tputs(tgetstr("le", NULL), 0, ft_printchar);
 		}
 	}
 }
