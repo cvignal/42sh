@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 15:22:24 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 16:58:49 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int			ft_tab(t_shell *shell)
 	char	*word;
 
 	list = NULL;
-	if (shell->line.mode != 0)
+	if (shell->line.mode != 0 || !shell->line.len)
 		return (0);
 	clean_under_line();
 	if (first_arg(&shell->line))

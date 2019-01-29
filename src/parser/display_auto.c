@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/31 11:37:42 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 16:54:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void		display_list(t_list *list)
 	else
 		nb = 0;
 	array = ft_listtotab(list, table[2]);
-	quicksort(array, 0, table[2] - 1);
+	ft_bubblesort(array, table[2]);
 	display_table(array, table);
 	tputs(tgetstr("rc", NULL), 0, ft_printchar);
 	while (--nb > 0)

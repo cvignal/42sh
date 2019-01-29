@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/01/29 14:11:07 by cvignal          ###   ########.fr        #
+#    Updated: 2019/01/29 18:08:24 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -316,6 +316,7 @@ lclean:
 		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" obj ; (exit 0)
 	@ rm -r $(DEPDIR) &> /dev/null && \
 		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" dep ; (exit 0)
+	@ rm -r 21sh.dSYM
 
 lfclean: lclean
 	@ rm $(NAME) &> /dev/null && \

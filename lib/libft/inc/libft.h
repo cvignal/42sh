@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/22 11:35:30 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 16:53:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ int					ft_printf(const char *format, ...);
 int					ft_dprintf(int fd, const char *format, ...);
 void				quicksort(char **array, int first, int last);
 int					ft_match(char *pattern, char *str);
+void				ft_bubblesort(char **array, size_t len);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/25 14:18:44 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/29 16:05:38 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int			load_history(t_shell *shell)
 		return (0);
 	while (get_next_line(shell->fd, &line) == 1)
 	{
-		new = ft_lstnew(line, ft_strlen(line) + 1);
+		if (!(new = ft_lstnew(line, ft_strlen(line) + 1)))
+			return (0);
 		ft_lstadd(&shell->history, new);
 		free(line);
 	}
