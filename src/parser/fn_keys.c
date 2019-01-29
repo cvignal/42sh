@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 16:24:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/15 09:38:08 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 14:14:02 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,10 @@ void	ft_ctrld(t_shell *shell)
 	args[1] = NULL;
 	if (shell->line.len == 0)
 		builtin_exit(shell, args);
+}
+
+void ft_ctrlc(t_shell *shell)
+{
+	ft_printf("\n$> ");
+	free_line(&shell->line);
 }

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 10:19:16 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 13:58:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define TAB_KEY "\t"
 # define CTRL_D "\x4\0\0\0\0\0"
 # define CTRL_R "\x12\0\0\0\0\0"
+# define CTRL_C "\x3\0\0\0\0\0"
 # define RETURN "\n"
 # define BACKSPACE "\b"
 # define CURS_POS "\033[6n"
@@ -63,6 +64,7 @@ int				is_a_special_key(char *buf);
 void			apply_key(char *buf, t_shell *shell);
 void			ft_addchar(t_shell *shell, char *buf);
 int				ft_printchar(int c);
+void			ft_ctrlc(t_shell *shell);
 void			ft_leftkey(t_shell *shell);
 void			ft_homekey(t_shell *shell);
 void			ft_endkey(t_shell *shell);

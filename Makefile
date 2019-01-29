@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/01/28 18:05:43 by cvignal          ###   ########.fr        #
+#    Updated: 2019/01/29 14:11:07 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -294,11 +294,11 @@ rdebug:	WFLAGS	:= -g3 -ggdb
 rdebug:	lre
 
 fsan:	WFLAGS	:= -g -fsanitize=address
-fsan:	LDFLAG	:= -fsanitize=address
+fsan:	LDFLAG	+= -fsanitize=address
 fsan:	all
 
 rfsan:	WFLAGS	:= -g -fsanitize=address
-fsan:	LDFLAG	:= -fsanitize=address
+fsan:	LDFLAG	+= -fsanitize=address
 rfsan:	lre
 
 #### TESTS ####

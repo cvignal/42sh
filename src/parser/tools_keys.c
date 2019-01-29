@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/11 18:36:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 14:13:27 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ t_key	g_special_keys[] =\
 	{F2_KEY, &ft_copy},
 	{F3_KEY, &ft_paste},
 	{F4_KEY, &ft_cut},
-	{CTRL_D, &ft_ctrld}
+	{CTRL_D, &ft_ctrld},
+	{CTRL_C, &ft_ctrlc}
 };
 
 int		is_a_special_key(char *buf)
@@ -61,13 +62,13 @@ void	ft_addchar(t_shell *shell, char *buf)
 
 void	apply_key(char *buf, t_shell *shell)
 {
-	int		i;
+	size_t	i;
 	size_t	len;
 
 	i = 0;
 	if (*buf == 127)
 		ft_backspace(shell);
-	while (i < 17)
+	while (i < 18)
 	{
 		len = ft_strlen(g_special_keys[i].value);
 		if (ft_strnequ(g_special_keys[i].value, buf, len))
