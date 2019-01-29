@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/23 17:28:14 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 15:28:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	clear_cmd_line(t_shell *shell)
 		ft_backspace(shell);
 }
 
-void	ft_hisdown(t_shell *shell)
+int		ft_hisdown(t_shell *shell)
 {
 	t_list	*curr;
 	int		i;
 
 	if (!(curr = shell->history) || shell->line.mode != 0)
-		return ;
+		return (0);
 	i = 0;
 	if (shell->his_pos > -1)
 		shell->his_pos--;
@@ -47,15 +47,16 @@ void	ft_hisdown(t_shell *shell)
 		shell->line.alloc_size = curr->content_size;
 		shell->line.cursor = curr->content_size - 1;
 	}
+	return (0);
 }
 
-void	ft_hisup(t_shell *shell)
+int		ft_hisup(t_shell *shell)
 {
 	t_list	*curr;
 	int		i;
 
 	if (!(curr = shell->history) || shell->line.mode != 0)
-		return ;
+		return (0);
 	clear_cmd_line(shell);
 	i = 0;
 	if (shell->his_pos < (int)ft_lstlen(shell->history) - 1)
@@ -72,4 +73,5 @@ void	ft_hisup(t_shell *shell)
 	shell->line.alloc_size = curr->content_size;
 	ft_printf("%s", shell->line.data);
 	shell->line.cursor = curr->content_size - 1;
+	return (0);
 }

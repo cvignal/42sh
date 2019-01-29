@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 13:37:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/25 17:53:49 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 15:25:46 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #include "fill_line.h"
 #include "libft.h"
 
-void	ft_copy(t_shell *shell)
+int	ft_copy(t_shell *shell)
 {
 	unsigned int	begin;
 	unsigned int	end;
 
 	if (!shell->line.mode)
-		return ;
+		return (0);
 	if (shell->line.cursor > shell->line.select_curs)
 	{
 		begin = shell->line.select_curs;
@@ -36,15 +36,17 @@ void	ft_copy(t_shell *shell)
 	if (shell->pbpaste)
 		ft_strdel(&shell->pbpaste);
 	shell->pbpaste = ft_strsub(shell->line.data, begin, end - begin);
+	return (0);
 }
 
-void	ft_paste(t_shell *shell)
+int	ft_paste(t_shell *shell)
 {
 	if (shell->pbpaste && shell->line.mode)
 		ft_addchar(shell, shell->pbpaste);
+	return (0);
 }
 
-void	ft_cut(t_shell *shell)
+int	ft_cut(t_shell *shell)
 {
 	ft_copy(shell);
 	if (shell->line.cursor > shell->line.select_curs)
@@ -54,9 +56,10 @@ void	ft_cut(t_shell *shell)
 			ft_backspace(shell);
 		shell->line.mode = 1;
 	}
+	return (0);
 }
 
-void	ft_switch_mode(t_shell *shell)
+int	ft_switch_mode(t_shell *shell)
 {
 	if (shell->line.mode == 0)
 	{
@@ -71,4 +74,5 @@ void	ft_switch_mode(t_shell *shell)
 		ft_printf("$> %s", shell->line.data);
 		shell->line.cursor = shell->line.len;
 	}
+	return (0);
 }

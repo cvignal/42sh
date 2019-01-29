@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 10:25:54 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 15:23:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	go_to_end_of_line(t_shell *shell)
 	}
 }
 
-void		ft_leftkey(t_shell *shell)
+int			ft_leftkey(t_shell *shell)
 {
 	unsigned int	curs;
 
@@ -56,9 +56,10 @@ void		ft_leftkey(t_shell *shell)
 			tputs(tgetstr("le", NULL), 0, ft_printchar);
 		}
 	}
+	return (0);
 }
 
-void		ft_rightkey(t_shell *shell)
+int			ft_rightkey(t_shell *shell)
 {
 	struct winsize	win;
 	t_curs			*cursor;
@@ -84,9 +85,10 @@ void		ft_rightkey(t_shell *shell)
 			tputs(tgetstr("do", NULL), 0, ft_printchar);
 	}
 	free(cursor);
+	return (0);
 }
 
-void		ft_backspace(t_shell *shell)
+int			ft_backspace(t_shell *shell)
 {
 	struct winsize	win;
 	t_curs			*cursor;
@@ -111,4 +113,5 @@ void		ft_backspace(t_shell *shell)
 			shell->line.data[shell->line.cursor] = 0;
 	}
 	free(cursor);
+	return (0);
 }

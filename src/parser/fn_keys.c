@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 16:24:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 14:14:02 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 15:49:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@
 #include "shell.h"
 #include "libft.h"
 
-void	ft_nextword(t_shell *shell)
+int	ft_nextword(t_shell *shell)
 {
 	size_t	i;
 
 	i = shell->line.cursor;
-	(void)shell;
 	if (shell->line.cursor < shell->line.len)
 	{
 		while (shell->line.data[i] != ' ' && i < shell->line.len)
@@ -36,14 +35,14 @@ void	ft_nextword(t_shell *shell)
 			i++;
 		}
 	}
+	return (0);
 }
 
-void	ft_prevword(t_shell *shell)
+int	ft_prevword(t_shell *shell)
 {
 	size_t	i;
 
 	i = shell->line.cursor;
-	(void)shell;
 	if (shell->line.cursor > 0)
 	{
 		while (shell->line.data[i] != ' ' && i > 0)
@@ -64,20 +63,25 @@ void	ft_prevword(t_shell *shell)
 		if (shell->line.cursor > 0)
 			ft_rightkey(shell);
 	}
+	return (0);
 }
 
-void	ft_ctrld(t_shell *shell)
+int	ft_ctrld(t_shell *shell)
 {
-	char	*args[2];
+	char *args[2];
 
 	args[0] = "0";
 	args[1] = NULL;
-	if (shell->line.len == 0)
+	if (!shell->ctrld && shell->line.len == 0)
 		builtin_exit(shell, args);
+	if (shell->line.len == 0)
+		shell->end_heredoc = 1;
+	return (shell->end_heredoc);
 }
 
-void ft_ctrlc(t_shell *shell)
+int ft_ctrlc(t_shell *shell)
 {
 	ft_printf("\n$> ");
 	free_line(&shell->line);
+	return (0);
 }

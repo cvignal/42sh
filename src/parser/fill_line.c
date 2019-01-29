@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 14:05:59 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 15:42:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ int			fill_line(t_shell *shell)
 		if (ft_strchr(buf, '\n'))
 			break ;
 		if (is_a_special_key(buf))
-			apply_key(buf, shell);
+		{
+			if (apply_key(buf, shell))
+				break ;
+		}
 		else if (shell->line.mode == 0)
 			ft_addchar(shell, buf);
 	}
@@ -93,7 +96,8 @@ int			fill_line(t_shell *shell)
 	while (shell->line.cursor < shell->line.len)
 		ft_rightkey(shell);
 	clean_under_line();
-	ft_printf("\n");
+	if (!shell->end_heredoc)
+		ft_printf("\n");
 	shell->his_pos = -1;
 	return (0);
 }

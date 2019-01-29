@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 19:02:11 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/10 09:58:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/29 15:26:46 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			nb_multi_lines(size_t len)
 	return (nb);
 }
 
-void		ft_lineup(t_shell *shell)
+int			ft_lineup(t_shell *shell)
 {
 	int				cursor_nb;
 	int				width;
@@ -95,9 +95,10 @@ void		ft_lineup(t_shell *shell)
 		else
 			shell->line.cursor -= width;
 	}
+	return (0);
 }
 
-void		ft_linedown(t_shell *shell)
+int			ft_linedown(t_shell *shell)
 {
 	int				line_nb;
 	int				cursor_nb;
@@ -115,4 +116,5 @@ void		ft_linedown(t_shell *shell)
 		if (shell->line.cursor > shell->line.len)
 			shell->line.cursor = shell->line.len;
 	}
+	return (0);
 }

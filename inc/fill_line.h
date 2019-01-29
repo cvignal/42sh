@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 13:58:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 15:34:18 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 typedef struct	s_key
 {
 	char	*value;
-	void	(*f)(t_shell *shell);
+	int		(*f)(t_shell *shell);
 }				t_key;
 
 typedef struct	s_curs
@@ -61,31 +61,31 @@ typedef struct	s_curs
 
 int				fill_line(t_shell *shell);
 int				is_a_special_key(char *buf);
-void			apply_key(char *buf, t_shell *shell);
+int				apply_key(char *buf, t_shell *shell);
 void			ft_addchar(t_shell *shell, char *buf);
 int				ft_printchar(int c);
-void			ft_ctrlc(t_shell *shell);
-void			ft_leftkey(t_shell *shell);
-void			ft_homekey(t_shell *shell);
-void			ft_endkey(t_shell *shell);
-void			ft_rightkey(t_shell *shell);
-void			ft_tab(t_shell *shell);
-void			ft_backspace(t_shell *shell);
-void			ft_nextword(t_shell *shell);
-void			ft_prevword(t_shell *shell);
-void			ft_lineup(t_shell *shell);
-void			ft_linedown(t_shell *shell);
-void			ft_ctrld(t_shell *shell);
-void			ft_switch_mode(t_shell *shell);
-void			ft_copy(t_shell *shell);
-void			ft_paste(t_shell *shell);
-void			ft_cut(t_shell *shell);
+int				ft_ctrlc(t_shell *shell);
+int				ft_leftkey(t_shell *shell);
+int				ft_homekey(t_shell *shell);
+int				ft_endkey(t_shell *shell);
+int				ft_rightkey(t_shell *shell);
+int				ft_tab(t_shell *shell);
+int				ft_backspace(t_shell *shell);
+int				ft_nextword(t_shell *shell);
+int				ft_prevword(t_shell *shell);
+int				ft_lineup(t_shell *shell);
+int				ft_linedown(t_shell *shell);
+int				ft_ctrld(t_shell *shell);
+int				ft_switch_mode(t_shell *shell);
+int				ft_copy(t_shell *shell);
+int				ft_paste(t_shell *shell);
+int				ft_cut(t_shell *shell);
 int				ft_comp(char *word, char *name);
 char			*find_path(char *word);
 void			display_list(t_list *list);
 void			clean_under_line(void);
-void			ft_hisdown(t_shell *shell);
-void			ft_hisup(t_shell *shell);
+int				ft_hisdown(t_shell *shell);
+int				ft_hisup(t_shell *shell);
 t_curs			*get_cursor_pos(void);
 void			reset_terminal_mode(void);
 void			raw_terminal_mode(void);

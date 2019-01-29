@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 14:13:27 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/29 15:35:15 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,20 @@ void	ft_addchar(t_shell *shell, char *buf)
 	tputs(tgetstr("ei", NULL), 1, ft_printchar);
 }
 
-void	apply_key(char *buf, t_shell *shell)
+int		apply_key(char *buf, t_shell *shell)
 {
 	size_t	i;
 	size_t	len;
 
 	i = 0;
 	if (*buf == 127)
-		ft_backspace(shell);
+		return (ft_backspace(shell));
 	while (i < 18)
 	{
 		len = ft_strlen(g_special_keys[i].value);
 		if (ft_strnequ(g_special_keys[i].value, buf, len))
-			g_special_keys[i].f(shell);
+			return (g_special_keys[i].f(shell));
 		i++;
 	}
+	return (0);
 }
