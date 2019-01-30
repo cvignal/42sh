@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 16:54:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/30 10:38:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	ask_for_many_possibilities(int *table, t_curs *cursor)
 		if (cursor->line + 1 > tgetnum("li"))
 			tputs(tgetstr("up", NULL), 0, ft_printchar);
 		clean_under_line();
-		return (buf[0] == 'y');
+		return (buf[0] == 'y' || buf[0] == '\n');
 	}
 }
 

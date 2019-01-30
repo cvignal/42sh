@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 15:42:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/30 12:11:36 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,35 +21,22 @@
 #include "fill_line.h"
 #include "libft.h"
 
-static void	check_validity(void)
+int		check_validity(void)
 {
 	char	*name;
 	int		res;
 
 	if (!isatty(0))
-	{
-		ft_dprintf(2, "Not a tty\n");
-		exit(0);
-	}
+		return (1);
 	if (!(name = getenv("TERM")))
-	{
-		ft_dprintf(2, "Specify a terminal type with set TERM <whatyouwant>\n");
-		exit(0);
-	}
+		return (1);
 	res = tgetent(NULL, name);
-	if (res < 0)
-	{
-		ft_dprintf(2, "Could not access the termcap data base\n");
-		exit(0);
-	}
-	if (!res)
-	{
-		ft_dprintf(2, "Terminal type %s is not defined\n", name);
-		exit(0);
-	}
+	if (res <= 0)
+		return (1);
+	return (0);
 }
 
-void		raw_terminal_mode(void)
+void	raw_terminal_mode(void)
 {
 	struct termios term;
 
@@ -62,7 +49,7 @@ void		raw_terminal_mode(void)
 	tgetent(NULL, getenv("TERM"));
 }
 
-void		reset_terminal_mode(void)
+void	reset_terminal_mode(void)
 {
 	struct termios term;
 
@@ -72,12 +59,26 @@ void		reset_terminal_mode(void)
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term);
 }
 
-int			fill_line(t_shell *shell)
+int		alt_fill_line(t_shell *shell)
+{
+	char *line;
+
+	ft_printf(NOT_A_TTY);
+	reset_terminal_mode();
+	if (get_next_line(0, &line) <= 0)
+		return (1);
+	shell->line.data = line;
+	shell->line.len = ft_strlen(line);
+	return (0);
+}
+
+int		fill_line(t_shell *shell)
 {
 	char			buf[9];
 	int				ret;
 
-	check_validity();
+	if (check_validity())
+		return (alt_fill_line(shell));
 	while ((ret = read(STDIN_FILENO, buf, 8)) > 0)
 	{
 		buf[ret] = 0;
@@ -93,9 +94,7 @@ int			fill_line(t_shell *shell)
 	}
 	if (!shell->line.data)
 		ft_addchar(shell, "");
-	while (shell->line.cursor < shell->line.len)
-		ft_rightkey(shell);
-	clean_under_line();
+	clean_under_line(shell);
 	if (!shell->end_heredoc)
 		ft_printf("\n");
 	shell->his_pos = -1;

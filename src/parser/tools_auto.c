@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/07 10:53:07 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/30 12:11:29 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,11 @@ char		*word_to_complete(t_line *line)
 	return (ret);
 }
 
-void		clean_under_line(void)
+void		clean_under_line(t_shell *shell)
 {
 	tputs(tgetstr("sc", NULL), 0, ft_printchar);
+	while (shell->line.cursor < shell->line.len)
+		ft_rightkey(shell);
 	ft_printf("\n");
 	tputs(tgetstr("cd", NULL), 0, ft_printchar);
 	tputs(tgetstr("rc", NULL), 0, ft_printchar);
