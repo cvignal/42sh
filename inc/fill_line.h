@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/30 12:11:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/30 18:11:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define CTRL_D "\x4\0\0\0\0\0"
 # define CTRL_C "\x3\0\0\0\0\0"
 # define CTRL_L "\xc\0\0\0\0\0"
+# define CTRL_R "\x12\0\0\0\0\0"
 # define RETURN "\n"
 # define BACKSPACE "\b"
 # define CURS_POS "\033[6n"
@@ -93,6 +94,7 @@ int				ft_cut(t_shell *shell);
 int				ft_hisdown(t_shell *shell);
 int				ft_hisup(t_shell *shell);
 int				ft_ctrll(t_shell *shell);
+int				ft_ctrlr(t_shell *shell);
 
 /*
 ** Tools for autocompletion

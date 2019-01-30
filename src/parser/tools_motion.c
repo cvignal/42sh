@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 11:28:55 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/30 17:59:54 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/30 18:05:05 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	scroll_lines(t_shell *shell)
 	tputs(tgetstr("sc", NULL), 0, ft_printchar);
 	tputs(tgetstr("cd", NULL), 0, ft_printchar);
 	ft_printf("%s", shell->line.data + shell->line.cursor + 1);
-//	tputs(tgetstr("do", NULL), 0, ft_printchar);
 	tputs(tgetstr("rc", NULL), 0, ft_printchar);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/30 18:01:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/30 18:10:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int			ft_backspace(t_shell *shell)
 		tputs(tgetstr("dc", NULL), 0, ft_printchar);
 		if (cursor->col == win.ws_col)
 			tputs(tgetstr("dc", NULL), 0, ft_printchar);
-		if (shell->line.data[shell->line.cursor] == '\n' || nb_multi_lines(shell->line.len))
+		if (shell->line.data[shell->line.cursor] == '\n'
+				|| nb_multi_lines(shell->line.len))
 			scroll_lines(shell);
 		if (shell->line.cursor < shell->line.len)
 			ft_del_char(shell->line.data, shell->line.cursor);

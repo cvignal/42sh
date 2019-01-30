@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/01/29 18:08:24 by cvignal          ###   ########.fr        #
+#    Updated: 2019/01/30 18:13:10 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRC		=							\
 	parser/line_keys.c				\
 	parser/switch_mode.c			\
 	parser/utils.c					\
+	parser/history_research.c		\
 	exec/cmd.c						\
 	exec/pipeline.c					\
 	exec/end.c						\
