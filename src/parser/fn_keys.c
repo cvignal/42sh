@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 16:24:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/30 11:23:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/30 16:46:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,12 @@ int	ft_ctrld(t_shell *shell)
 
 int	ft_ctrlc(t_shell *shell)
 {
-	ft_printf("\n$> ");
 	free_line(&shell->line);
-	return (0);
+	if (shell->ctrld)
+		shell->end_heredoc = 1;
+	else
+		ft_printf("\n$> ");
+	return (shell->end_heredoc);
 }
 
 int	ft_ctrll(t_shell *shell)
