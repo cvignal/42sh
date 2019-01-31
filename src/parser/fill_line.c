@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/30 12:11:36 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/01/31 14:03:34 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,21 @@
 #include "fill_line.h"
 #include "libft.h"
 
-int		check_validity(void)
+int		check_validity(t_shell *shell)
 {
 	char	*name;
 	int		res;
-
+	char	*default_term[3];
+	
 	if (!isatty(0))
 		return (1);
 	if (!(name = getenv("TERM")))
-		return (1);
+	{
+		default_term[0] = "TERM";
+		default_term[1] = "xterm-256color";
+		set_env_var(shell, default_term[0], default_term [1]);
+		name = default_term[1];
+	}
 	res = tgetent(NULL, name);
 	if (res <= 0)
 		return (1);
@@ -77,7 +83,7 @@ int		fill_line(t_shell *shell)
 	char			buf[9];
 	int				ret;
 
-	if (check_validity())
+	if (check_validity(shell))
 		return (alt_fill_line(shell));
 	while ((ret = read(STDIN_FILENO, buf, 8)) > 0)
 	{

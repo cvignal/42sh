@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 10:30:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/01/31 15:27:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int		clean_exit(t_lexer *lexer, t_token **list, t_token **current,
 			free(tmp);
 		}
 	}
-	if (current)
+	if (current && *current)
 	{
 		free((*current)->data);
 		free(*current);
