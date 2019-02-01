@@ -2,7 +2,7 @@
 DONE 2) env -i ./21sh -> set un TERM default 
 DONE 3) cat | cat | cat | ls -> mauvais comportement
 DONE 4) ls ;;;;; ls -> pas d'erreur de syntaxe detectee
-5) comportement de && et || a inverser
+DONE 5) comportement de && et || a inverser
 6) cd /tmp envoie dans /private/tmp
 DONE 7) ls -R / | grep l | grep b -> n'affiche rien
 8) ./21sh 1>&- -> choisir un comportement
