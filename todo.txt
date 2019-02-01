@@ -14,7 +14,7 @@ DONE 13) les redirections impliquent des conditionnal jump on unitiliazed values
 14) mkdir pop ; chmod 000 pop ; cd pop ---> mauvais message d'erreur
 15) cd /bin/ls -> mauvais message d'erreur
 16) ls '>' -> mal interprete
-17) echo | echo casse le terminal
+DONE 17) echo | echo casse le terminal
 18) cd - n'affiche pas le OLDPWD
 DONE 19) cd | quitte le shell
 20) touch test ; chmod 000 test ; cat < test bug
