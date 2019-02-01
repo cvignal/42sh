@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 11:28:55 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/30 18:05:05 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/01 14:01:21 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	length_prev_line(t_shell *shell)
 	j = 0;
 	ret = 0;
 	k = 0;
-	while (j < shell->line.cursor - 1)
+	while (shell->line.cursor > 0 && j < shell->line.cursor - 1)
 	{
 		j++;
 		ret++;
