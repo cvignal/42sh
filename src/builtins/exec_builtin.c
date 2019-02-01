@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/25 17:31:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/01 14:16:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ static int	prepare_pipeline(t_ast *instr, int *old)
 	return (0);
 }
 
+static void	reset_pipeline(int *old)
+{
+	dup2(old[STDIN_FILENO], STDIN_FILENO);
+	dup2(old[STDOUT_FILENO], STDOUT_FILENO);
+}
+
 int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 {
 	int		fd[2];
@@ -33,5 +39,6 @@ int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 	prepare_pipeline(instr, fd);
 	apply_redirs(shell, instr);
 	instr->ret = builtin(shell, ((t_command *)instr->data)->args);
+	reset_pipeline(fd);
 	return (instr->ret);
 }

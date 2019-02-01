@@ -16,7 +16,7 @@ DONE 13) les redirections impliquent des conditionnal jump on unitiliazed values
 16) ls '>' -> mal interprete
 17) echo | echo casse le terminal
 18) cd - n'affiche pas le OLDPWD
-19) cd | quitte le shell
+DONE 19) cd | quitte le shell
 20) touch test ; chmod 000 test ; cat < test bug
 21) stdout > fd invalide : pas de message d'erreur
 22) expansion ~ pas gere
