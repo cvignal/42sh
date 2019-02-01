@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/31 15:25:02 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/01 14:10:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_key	g_special_keys[] =\
 	{LEFT_ARROW, &ft_leftkey},
 	{RIGHT_ARROW, &ft_rightkey},
 	{BACKSPACE, &ft_backspace},
+	{DEL_KEY, &ft_backspace},
 	{TAB_KEY, &ft_tab},
 	{DOWN_ARROW, &ft_hisdown},
 	{UP_ARROW, &ft_hisup},
@@ -50,7 +51,7 @@ int		is_a_special_key(char *buf)
 	i = 0;
 	if (*buf == 127)
 		return (1);
-	while (i < 20)
+	while (i < sizeof(g_special_keys) / sizeof(*g_special_keys))
 	{
 		len = ft_strlen(g_special_keys[i].value);
 		if (ft_strnequ(g_special_keys[i].value, buf, len))
@@ -83,7 +84,7 @@ int		apply_key(char *buf, t_shell *shell)
 	i = 0;
 	if (*buf == 127)
 		return (ft_backspace(shell));
-	while (i < 20)
+	while (i < sizeof(g_special_keys) / sizeof(*g_special_keys))
 	{
 		len = ft_strlen(g_special_keys[i].value);
 		if (ft_strnequ(g_special_keys[i].value, buf, len))

@@ -25,7 +25,7 @@ DONE 23) Leaks si autocompletion sur fichiers/dossiers sans droits
 25) 	"
 	> 	"
 	> Entree puis up arrow, delete du premier " puis re up arrow -> segfault
-26) delete pas gere
+DONE 26) delete pas gere
 
 Premieres reflexions :
 Les syntax error affichent un prompt correspondant a une commande incomplete
