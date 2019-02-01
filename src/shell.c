@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/30 17:29:06 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/01 12:27:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int			init_shell(t_shell *shell, char **environ)
 	shell->hash_table = malloc(sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
 	if (!shell->hash_table)
 		return (1);
+	shell->used_fd = NULL;
 	ft_bzero(shell->hash_table, sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
 	ft_bzero(&shell->line, sizeof(shell->line));
 	if (!(shell->env = copy_env(environ)))
