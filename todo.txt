@@ -14,6 +14,19 @@ DONE 2) env -i ./21sh -> set un TERM default
 14) mkdir pop ; chmod 000 pop ; cd pop ---> mauvais message d'erreur
 15) cd /bin/ls -> mauvais message d'erreur
 16) ls '>' -> mal interprete
+17) echo | echo casse le terminal
+18) cd - n'affiche pas le OLDPWD
+19) cd | quitte le shell
+20) touch test ; chmod 000 test ; cat < test bug
+21) stdout > fd invalide : pas de message d'erreur
+22) expansion ~ pas gere
+23) Leaks si autocompletion sur fichiers/dossiers sans droits
+24) ./21sh | ./21sh casse le terminal (pas de reset a la sortie)
+25) 	"
+	> 	"
+	> Entree
+	puis up arrow, delete du premier " puis re up arrow -> segfault
+26) delete pas gere
 
 Premieres reflexions :
 Les syntax error affichent un prompt correspondant a une commande incomplete
