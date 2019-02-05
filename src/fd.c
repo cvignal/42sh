@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:06:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/25 17:29:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/05 16:39:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #include "shell.h"
 
-static int	get_next_fd(t_shell *shell)
+int			get_next_fd(t_shell *shell)
 {
 	int		new_fd;
 	t_fd	*iter;
@@ -31,7 +31,7 @@ static int	get_next_fd(t_shell *shell)
 	return (new_fd);
 }
 
-int			add_fd(t_shell *shell, int fd)
+int			add_fd(t_shell *shell, int fd, int is_pipe)
 {
 	t_fd	*new_fd;
 	t_fd	*iter;
@@ -40,6 +40,7 @@ int			add_fd(t_shell *shell, int fd)
 	if (!new_fd)
 		return (-1);
 	new_fd->fd = fd;
+	new_fd->is_pipe = is_pipe;
 	new_fd->next = NULL;
 	iter = shell->used_fd;
 	if (!iter || iter->fd > fd)
@@ -85,6 +86,19 @@ void		remove_fd(t_shell *shell, int fd)
 	}
 }
 
+void		close_everything(t_shell *shell)
+{
+	t_fd	*next;
+
+	while (shell->used_fd)
+	{
+		next = shell->used_fd->next;
+		close(shell->used_fd->fd);
+		free(shell->used_fd);
+		shell->used_fd = next;
+	}
+}
+
 int			open_file(t_shell *shell, const char *file, int mode, int perm)
 {
 	int	fd;
@@ -107,5 +121,5 @@ int			open_file(t_shell *shell, const char *file, int mode, int perm)
 	}
 	else
 		new_fd = fd;
-	return (add_fd(shell, new_fd));
+	return (add_fd(shell, new_fd, 0));
 }

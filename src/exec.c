@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/01 12:24:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/05 16:41:48 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,6 @@ static int	ft_wait(int *status)
 		if (WIFEXITED(*status) || WIFSIGNALED(*status))
 			return (0);
 	}
-}
-
-int			wait_loop(t_ast *ast)
-{
-	int		status;
-
-	if (ast)
-	{
-		wait_loop(ast->left);
-		if (ast->pid != -1)
-		{
-			waitpid(ast->pid, &status, 0);
-			while (!WIFEXITED(status) && !WIFSIGNALED(status))
-				waitpid(ast->pid, &status, 0);
-			ast->pid = -1;
-			ast->ret = WEXITSTATUS(status);
-		}
-		wait_loop(ast->right);
-	}
-	return (0);
 }
 
 int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
@@ -97,7 +77,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	}
 	if (!pid)
 	{
-		set_pipeline(instr);
+		set_pipeline(shell, instr);
 		apply_redirs(shell, instr);
 		reset_terminal_mode();
 		execve(bin_path, ((t_command *)instr->data)->args, shell->env);
