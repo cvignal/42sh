@@ -1,8 +1,8 @@
 1) " + \n + ctrl c -> read infini
 DONE 2) env -i ./21sh -> set un TERM default 
 DONE 3) cat | cat | cat | ls -> mauvais comportement
-4) ls ;;;;; ls -> pas d'erreur de syntaxe detectee
-5) comportement de && et || a inverser
+DONE 4) ls ;;;;; ls -> pas d'erreur de syntaxe detectee
+DONE 5) comportement de && et || a inverser
 6) cd /tmp envoie dans /private/tmp
 DONE 7) ls -R / | grep l | grep b -> n'affiche rien
 8) ./21sh 1>&- -> choisir un comportement
@@ -10,7 +10,7 @@ DONE 7) ls -R / | grep l | grep b -> n'affiche rien
 10) das ldla;fl asf ’asd as;d <>A D<’A <d;as -> interprete comme une commande incomplete
 11) Caractere unicode font segfault
 12) setenv C $A$B ne concatene pas A et B dans C (de facon generale, $A$B n'est pas interpretee correctement)
-13) les redirections impliquent des conditionnal jump on unitiliazed values (segfault possible)
+DONE 13) les redirections impliquent des conditionnal jump on unitiliazed values (segfault possible)
 14) mkdir pop ; chmod 000 pop ; cd pop ---> mauvais message d'erreur
 15) cd /bin/ls -> mauvais message d'erreur
 16) ls '>' -> mal interprete

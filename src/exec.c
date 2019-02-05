@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/29 14:02:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/01 12:24:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	if (bin_path)
 		pid = fork();
 	else
+	{
+		instr->ret = 1;
 		return (bin_not_found(((t_command *)instr->data)->args[0]));
+	}
 	if (!pid)
 	{
 		set_pipeline(instr);
