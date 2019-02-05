@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/01/30 18:13:10 by cvignal          ###   ########.fr        #
+#    Updated: 2019/02/01 14:51:13 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,25 +50,25 @@ SRC		=							\
 	parser/rules_while.c			\
 	parser/rules_shunting_yard.c	\
 	parser/shunting_yard.c			\
-	parser/line.c					\
 	parser/ast.c					\
 	parser/ast_token.c				\
-	parser/fill_line.c				\
-	parser/keys.c					\
-	parser/other_keys.c				\
-	parser/tools_keys.c				\
-	parser/tools_auto.c				\
-	parser/tools_motion.c			\
-	parser/tools_history.c			\
-	parser/autocompletion.c			\
-	parser/display_auto.c			\
-	parser/history.c				\
-	parser/cursor.c					\
-	parser/fn_keys.c				\
-	parser/line_keys.c				\
-	parser/switch_mode.c			\
 	parser/utils.c					\
-	parser/history_research.c		\
+	line_edition/line.c				\
+	line_edition/fill_line.c		\
+	line_edition/keys.c				\
+	line_edition/other_keys.c		\
+	line_edition/tools_keys.c		\
+	line_edition/tools_auto.c		\
+	line_edition/tools_motion.c		\
+	line_edition/tools_history.c	\
+	line_edition/autocompletion.c	\
+	line_edition/display_auto.c		\
+	line_edition/history.c			\
+	line_edition/cursor.c			\
+	line_edition/fn_keys.c			\
+	line_edition/line_keys.c		\
+	line_edition/switch_mode.c		\
+	line_edition/history_research.c	\
 	exec/cmd.c						\
 	exec/pipeline.c					\
 	exec/end.c						\
@@ -317,7 +317,7 @@ lclean:
 		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" obj ; (exit 0)
 	@ rm -r $(DEPDIR) &> /dev/null && \
 		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" dep ; (exit 0)
-	@ rm -r 21sh.dSYM
+	@ rm -rfd 21sh.dSYM
 
 lfclean: lclean
 	@ rm $(NAME) &> /dev/null && \
