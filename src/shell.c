@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 14:18:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/05 14:52:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ int			init_shell(t_shell *shell, char **environ)
 	raw_terminal_mode();
 	shell->history = NULL;
 	shell->ctrld = 0;
-	shell->output = NULL;
-	shell->current = NULL;
 	shell->end_heredoc = 0;
 	load_history(shell);
 	return (0);
