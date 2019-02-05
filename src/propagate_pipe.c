@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 08:57:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 09:05:44 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/01 11:53:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,5 @@ int	propagate_pipe_left(t_ast *pipe, t_ast *instr)
 		pipe->pipes_in[PIPE_NODE][STDOUT_FILENO];
 	if (instr->left)
 		propagate_pipe_left(pipe, instr->left);
-	if (instr->right)
-		propagate_pipe_left(pipe, instr->right);
 	return (0);
 }

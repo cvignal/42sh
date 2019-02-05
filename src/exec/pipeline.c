@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 07:46:37 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/16 13:29:57 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/01 12:03:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ int			exec_pipeline(t_shell *shell, t_ast *ast)
 	ast->left->exec(shell, ast->left);
 	ast->right->exec(shell, ast->right);
 	close_all_pipes(ast);
-	wait_loop(ast);
-	ast->ret = ast->right->ret;
-	return (ast->right->ret);
+	return (0);
 }
 
 void		free_pipeline(t_ast *ast)
