@@ -1,6 +1,6 @@
-1) " + \n + ctrl c -> read infini
+DONE 1) " + \n + ctrl c -> read infini
 DONE 2) env -i ./21sh -> set un TERM default 
-DONE 3) cat | cat | cat | ls -> mauvais comportement
+NOT DONE 3) cat | cat | cat | ls -> mauvais comportement
 DONE 4) ls ;;;;; ls -> pas d'erreur de syntaxe detectee
 DONE 5) comportement de && et || a inverser
 6) cd /tmp envoie dans /private/tmp
@@ -8,8 +8,8 @@ DONE 7) ls -R / | grep l | grep b -> n'affiche rien
 8) ./21sh 1>&- -> choisir un comportement
 9) ls 2> k 1>&2 -> cree un fichier k mais ne redirige pas le ls dedans
 10) das ldla;fl asf ’asd as;d <>A D<’A <d;as -> interprete comme une commande incomplete
-11) Caractere unicode font segfault
-12) setenv C $A$B ne concatene pas A et B dans C (de facon generale, $A$B n'est pas interpretee correctement)
+KIND OF DONE 11) Caractere unicode font segfault
+KIND OF DONE 12) setenv C $A$B ne concatene pas A et B dans C (de facon generale, $A$B n'est pas interpretee correctement)
 DONE 13) les redirections impliquent des conditionnal jump on unitiliazed values (segfault possible)
 14) mkdir pop ; chmod 000 pop ; cd pop ---> mauvais message d'erreur
 15) cd /bin/ls -> mauvais message d'erreur
@@ -20,13 +20,13 @@ DONE 19) cd | quitte le shell
 20) touch test ; chmod 000 test ; cat < test bug
 21) stdout > fd invalide : pas de message d'erreur
 22) expansion ~ pas gere
-23) Leaks si autocompletion sur fichiers/dossiers sans droits
+DONE 23) Leaks si autocompletion sur fichiers/dossiers sans droits
 24) ./21sh | ./21sh casse le terminal (pas de reset a la sortie)
 25) 	"
 	> 	"
 	> Entree
 	puis up arrow, delete du premier " puis re up arrow -> segfault
-26) delete pas gere
+DONE 26) delete pas gere
 
 Premieres reflexions :
 Les syntax error affichent un prompt correspondant a une commande incomplete
