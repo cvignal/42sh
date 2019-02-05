@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/31 15:27:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/05 12:43:26 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ static t_token	*get_return(t_token **output, int *pos)
 
 t_token			*lex(t_shell *shell)
 {
-	static t_token	*output = NULL;
-	static t_token	*current = NULL;
 	int				pos;
 	int				ret;
 
@@ -94,17 +92,17 @@ t_token			*lex(t_shell *shell)
 		if (shell->line.data[pos] >= 0)
 		{
 			ret = shell->lexer.lexer_actions[shell->lexer.lss->state]
-				[(int)shell->line.data[pos]](shell, current,
+				[(int)shell->line.data[pos]](shell, shell->current,
 						shell->line.data[pos]);
-			if (handle_ret(&shell->lexer, ret, &current, &output))
+			if (handle_ret(&shell->lexer, ret, &shell->current, &shell->output))
 				return (NULL);
 			pos += !!(ret & (1 << LEXER_RET_CONT));
 		}
 		else
 		{
-			clean_exit(&shell->lexer, &output, &current, SYNTAX_ERROR_MSG);
+			clean_exit(&shell->lexer, &shell->output, &shell->current, SYNTAX_ERROR_MSG);
 			return (NULL);
 		}
 	}
-	return (get_return(&output, &pos));
+	return (get_return(&shell->output, &pos));
 }
