@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/01 12:17:03 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/05 17:09:45 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int		check_validity(t_shell *shell)
 	char	*name;
 	int		res;
 	char	*default_term[3];
-	
+
 	if (!isatty(0))
 		return (1);
 	if (!(name = getenv("TERM")))
 	{
 		default_term[0] = "TERM";
 		default_term[1] = "xterm-256color";
-		set_env_var(shell, default_term[0], default_term [1]);
+		set_env_var(shell, default_term[0], default_term[1]);
 		name = default_term[1];
 	}
 	res = tgetent(NULL, name);

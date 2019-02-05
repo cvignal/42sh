@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 14:17:20 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/05 17:00:59 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,8 +212,8 @@ int						lexer_more_input(struct s_shell *shell, t_token *token,
 */
 t_token					*lex(struct s_shell *shell);
 int						init_lexer(t_lexer *lexer);
-int						clean_exit_lexer(t_lexer *lexer, t_token **list, t_token **current,
-		const char *msg);
+int						clean_exit_lexer(t_lexer *lexer, t_token **list
+		, t_token **current, const char *msg);
 
 /*
 ** parser/token_type_desc.c

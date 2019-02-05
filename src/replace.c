@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 12:16:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 12:32:02 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/05 17:00:34 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "shell.h"
 #include "libft.h"
 
-int		remove_quotes(t_shell *shell, t_token *token)
+int			remove_quotes(t_shell *shell, t_token *token)
 {
 	if (token->data[0] == 39)
 	{
@@ -28,7 +28,7 @@ int		remove_quotes(t_shell *shell, t_token *token)
 	return (insert_var(shell, token));
 }
 
-int		insert_var(t_shell *shell, t_token *token)
+int			insert_var(t_shell *shell, t_token *token)
 {
 	char	**variables;
 	size_t	i;
@@ -41,7 +41,7 @@ int		insert_var(t_shell *shell, t_token *token)
 		return (-1);
 	i = 0;
 	pos = 0;
-	while(variables[i])
+	while (variables[i])
 	{
 		if ((var_value = get_env_value(shell, variables[i])))
 		{
@@ -50,7 +50,8 @@ int		insert_var(t_shell *shell, t_token *token)
 		}
 		i++;
 	}
-	token->data[pos] = 0 ;
+	token->data[pos] = 0;
+	ft_deltab(&variables);
 	return (1);
 }
 

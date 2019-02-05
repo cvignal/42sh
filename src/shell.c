@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 14:52:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/05 17:00:09 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void		free_shell(t_shell *shell)
 		free(shell->env);
 	}
 	free_line(&shell->line);
-	i = 0;
+	i = -1;
 	if (shell->hash_table)
 	{
-		while (i < HASH_TABLE_SIZE)
+		while (++i < HASH_TABLE_SIZE)
 		{
 			if (shell->hash_table[i])
 			{
@@ -58,7 +58,6 @@ void		free_shell(t_shell *shell)
 				free(shell->hash_table[i]->bin);
 				free(shell->hash_table[i]);
 			}
-			++i;
 		}
 		free(shell->hash_table);
 	}
@@ -88,7 +87,6 @@ int			init_shell(t_shell *shell, char **environ)
 	}
 	shell->his_pos = -1;
 	raw_terminal_mode();
-	shell->history = NULL;
 	shell->ctrld = 0;
 	shell->end_heredoc = 0;
 	load_history(shell);

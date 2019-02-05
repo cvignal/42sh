@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 14:17:09 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/05 17:10:02 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ t_token			*lex(t_shell *shell)
 		}
 		else
 		{
-			clean_exit_lexer(&shell->lexer, &shell->output, &shell->current, SYNTAX_ERROR_MSG);
+			clean_exit_lexer(&shell->lexer, &shell->output, &shell->current
+					, SYNTAX_ERROR_MSG);
 			return (NULL);
 		}
 	}
