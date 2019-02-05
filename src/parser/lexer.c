@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 12:43:26 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/05 14:17:09 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 #include "ast.h"
 #include "libft.h"
 
-static int		clean_exit(t_lexer *lexer, t_token **list, t_token **current,
+int		clean_exit_lexer(t_lexer *lexer, t_token **list, t_token **current,
 		const char *msg)
 {
 	t_token	*tmp;
 
-	ft_dprintf(2, "%s: %s\n", EXEC_NAME, msg);
+	if (msg)
+		ft_dprintf(2, "%s: %s\n", EXEC_NAME, msg);
 	while (*list)
 	{
 		tmp = *list;
@@ -48,11 +49,11 @@ static int		handle_ret(t_lexer *lexer, int ret, t_token **current,
 		t_token **output)
 {
 	if (ret & (1 << LEXER_RET_ERROR))
-		return (clean_exit(lexer, output, current, SYNTAX_ERROR_MSG));
+		return (clean_exit_lexer(lexer, output, current, SYNTAX_ERROR_MSG));
 	if (ret & (1 << LEXER_RET_CREATE))
 	{
 		if (!(*current = alloc_token()))
-			return (clean_exit(lexer, output, current, MEMORY_ERROR_MSG));
+			return (clean_exit_lexer(lexer, output, current, MEMORY_ERROR_MSG));
 	}
 	if (ret & (1 << LEXER_RET_CUT))
 	{
@@ -100,7 +101,7 @@ t_token			*lex(t_shell *shell)
 		}
 		else
 		{
-			clean_exit(&shell->lexer, &shell->output, &shell->current, SYNTAX_ERROR_MSG);
+			clean_exit_lexer(&shell->lexer, &shell->output, &shell->current, SYNTAX_ERROR_MSG);
 			return (NULL);
 		}
 	}

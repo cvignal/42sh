@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 16:05:38 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/05 14:21:15 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int			load_history(t_shell *shell)
 	char	*line;
 	t_list	*new;
 
+	shell->output = NULL;
+	shell->current = NULL;
 	if ((shell->fd = open(".shperso_history", O_RDWR | O_APPEND
 					| O_CREAT, 0644)) == -1)
 		return (0);
