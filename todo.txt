@@ -1,6 +1,6 @@
 DONE 1) " + \n + ctrl c -> read infini
 DONE 2) env -i ./21sh -> set un TERM default 
-NOT DONE 3) cat | cat | cat | ls -> mauvais comportement
+DONE 3) cat | cat | cat | ls -> mauvais comportement
 DONE 4) ls ;;;;; ls -> pas d'erreur de syntaxe detectee
 DONE 5) comportement de && et || a inverser
 6) cd /tmp envoie dans /private/tmp
@@ -14,9 +14,9 @@ DONE 13) les redirections impliquent des conditionnal jump on unitiliazed values
 14) mkdir pop ; chmod 000 pop ; cd pop ---> mauvais message d'erreur
 15) cd /bin/ls -> mauvais message d'erreur
 16) ls '>' -> mal interprete
-17) echo | echo casse le terminal
+DONE 17) echo | echo casse le terminal
 18) cd - n'affiche pas le OLDPWD
-19) cd | quitte le shell
+DONE 19) cd | quitte le shell
 20) touch test ; chmod 000 test ; cat < test bug
 21) stdout > fd invalide : pas de message d'erreur
 22) expansion ~ pas gere

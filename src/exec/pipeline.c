@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 07:46:37 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/01 12:03:19 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/05 15:34:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 #include "shell.h"
 #include "ast.h"
 
-int			set_node_pipes(t_ast *ast)
+int			set_node_pipes(t_shell *shell, t_ast *ast)
 {
 	int		pipe_fd[2];
 
-	if (pipe(pipe_fd))
+	if (open_pipe(shell, pipe_fd))
 		return (1);
 	ast->pipes_in[PIPE_NODE][STDIN_FILENO] = pipe_fd[0];
 	ast->pipes_in[PIPE_NODE][STDOUT_FILENO] = pipe_fd[1];
@@ -38,32 +38,42 @@ int			set_node_pipes(t_ast *ast)
 	return (0);
 }
 
-static void	close_all_pipes(t_ast *ast)
+static void	close_all_pipes(t_shell *shell, t_ast *ast)
 {
-	if (ast)
+	if (ast->pipes_in[PIPE_NODE][STDIN_FILENO] != -1)
 	{
-		close_all_pipes(ast->left);
-		close_all_pipes(ast->right);
-		if (ast->pipes_in[PIPE_NODE][STDIN_FILENO] != -1)
-			close(ast->pipes_in[PIPE_NODE][STDIN_FILENO]);
-		if (ast->pipes_in[PIPE_NODE][STDOUT_FILENO] != -1)
-			close(ast->pipes_in[PIPE_NODE][STDOUT_FILENO]);
-		if (ast->pipes_out[PIPE_NODE][STDIN_FILENO] != -1)
-			close(ast->pipes_out[PIPE_NODE][STDIN_FILENO]);
-		if (ast->pipes_out[PIPE_NODE][STDOUT_FILENO] != -1)
-			close(ast->pipes_out[PIPE_NODE][STDOUT_FILENO]);
+		remove_fd(shell, ast->pipes_in[PIPE_NODE][STDIN_FILENO]);
+		close(ast->pipes_in[PIPE_NODE][STDIN_FILENO]);
+	}
+	if (ast->pipes_in[PIPE_NODE][STDOUT_FILENO] != -1)
+	{
+		remove_fd(shell, ast->pipes_in[PIPE_NODE][STDOUT_FILENO]);
+		close(ast->pipes_in[PIPE_NODE][STDOUT_FILENO]);
+	}
+	if (ast->pipes_out[PIPE_NODE][STDIN_FILENO] != -1)
+	{
+		remove_fd(shell, ast->pipes_out[PIPE_NODE][STDIN_FILENO]);
+		close(ast->pipes_out[PIPE_NODE][STDIN_FILENO]);
+	}
+	if (ast->pipes_out[PIPE_NODE][STDOUT_FILENO] != -1)
+	{
+		remove_fd(shell, ast->pipes_out[PIPE_NODE][STDOUT_FILENO]);
+		close(ast->pipes_out[PIPE_NODE][STDOUT_FILENO]);
 	}
 }
 
 int			exec_pipeline(t_shell *shell, t_ast *ast)
 {
-	if (set_node_pipes(ast))
+	if (set_node_pipes(shell, ast))
+	{
+		ft_dprintf(2, "%s: Unable to create pipe\n", EXEC_NAME);
 		return (1);
+	}
 	if (prepare_redirs(shell, ast, NULL))
 		return (1);
 	ast->left->exec(shell, ast->left);
 	ast->right->exec(shell, ast->right);
-	close_all_pipes(ast);
+	close_all_pipes(shell, ast);
 	return (0);
 }
 

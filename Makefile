@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/01 14:51:13 by cvignal          ###   ########.fr        #
+#    Updated: 2019/02/05 15:53:12 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -145,7 +145,8 @@ SRC		=							\
 	expr/gt.c						\
 	expr/ge.c						\
 	signal.c						\
-	fd.c
+	fd.c							\
+	wait.c
 
 SRCDIR	:=	src
 OBJDIR	:=	obj

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/30 16:27:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/05 16:32:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	exec_ast(t_shell *shell, t_token *tokens)
 	{
 		ast = shell->parser.ret;
 		ast->exec(shell, ast);
+		close_everything(shell);
 		wait_loop(ast);
 		ast->del(ast);
 	}

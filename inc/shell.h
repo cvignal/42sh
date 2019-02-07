@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 12:41:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/05 16:42:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "expr.h"
 # include "libft.h"
 
-# define EXEC_NAME "shell"
+# define EXEC_NAME "21sh"
 # define PROMPT "$>"
 # define INCOMPLETE_INPUT_PROMPT ">"
 
@@ -57,6 +57,7 @@ typedef struct		s_line
 typedef struct		s_fd
 {
 	int				fd;
+	int				is_pipe;
 	struct s_fd		*next;
 }					t_fd;
 
@@ -267,7 +268,8 @@ int					redir_r_both(t_shell *shell, t_ast *ast, t_redir *redir);
 /*
 ** pipeline.c
 */
-int					set_pipeline(t_ast *instr);
+int					set_pipeline(t_shell *shell, t_ast *instr);
+int					open_pipe(t_shell *shell, int *fd);
 
 /*
 ** propagate_pipe.c
@@ -290,10 +292,11 @@ void				ignore_signal(void);
 /*
 ** fd.c
 */
-
-int					add_fd(t_shell *shell, int fd);
+int					get_next_fd(t_shell *shell);
+int					add_fd(t_shell *shell, int fd, int is_pipe);
 int					open_file(t_shell *shell, const char *file, int mode,
 		int perm);
 void				remove_fd(t_shell *shell, int fd);
+void				close_everything(t_shell *shell);
 
 #endif
