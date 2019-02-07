@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 17:00:59 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/07 16:48:58 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <limits.h>
 
 # define META_CHARS ";|&<>"
+# define SPECIAL_CHARS ";|&<>$~"
 
 # define TOKEN_ALLOC_SIZE	128
 
@@ -100,6 +101,7 @@ enum
 typedef struct			s_lss
 {
 	t_lstate			state;
+	int					escaped;
 	struct s_lss		*next;
 }						t_lss;
 
@@ -170,7 +172,7 @@ int						lexer_create(struct s_shell *shell,
 		t_token *token, char c);
 int						lexer_pass(struct s_shell *shell,
 		t_token *token, char c);
-int						lexer_cut_pass(struct s_shell *shell,
+int						lexer_pop_pass(struct s_shell *shell,
 		t_token *token, char c);
 
 /*
@@ -189,6 +191,10 @@ int						lexer_try_meta(struct s_shell *shell,
 int						lexer_create_dquote(struct s_shell *shell,
 		t_token *token, char c);
 int						lexer_create_squote(struct s_shell *shell,
+		t_token *token, char c);
+int						lexer_push_dquote(struct s_shell *shell,
+		t_token *token, char c);
+int						lexer_push_squote(struct s_shell *shell,
 		t_token *token, char c);
 
 /*

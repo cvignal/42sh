@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:46:31 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:45:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/07 16:50:58 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@
 
 int		lexer_add(t_shell *shell, t_token *token, char c)
 {
-	int	ret;
-
-	(void)shell;
-	ret = 0;
 	token->type = TT_WORD;
+	if (shell->lexer.lss->state == LSTATE_SQUOTE
+			&& ft_strchr(SPECIAL_CHARS, c))
+	{
+		if (add_to_token(token, '\\'))
+			return (1 << LEXER_RET_ERROR);
+	}
 	if (add_to_token(token, c))
-		ret |= (1 << LEXER_RET_ERROR);
-	ret |= (1 << LEXER_RET_CONT);
-	return (ret);
+		return (1 << LEXER_RET_ERROR);
+	return (1 << LEXER_RET_CONT);
 }
 
 int		lexer_pass(t_shell *shell, t_token *token, char c)
@@ -54,14 +55,10 @@ int		lexer_create(t_shell *shell, t_token *token, char c)
 	return (1 << LEXER_RET_CREATE);
 }
 
-int		lexer_cut_pass(t_shell *shell, t_token *token, char c)
+int		lexer_pop_pass(t_shell *shell, t_token *token, char c)
 {
-	int	ret;
-
 	(void)token;
 	(void)c;
 	lss_pop(&shell->lexer);
-	ret = (1 << LEXER_RET_CUT);
-	ret |= (1 << LEXER_RET_CONT);
-	return (ret);
+	return (1 << LEXER_RET_CONT);
 }

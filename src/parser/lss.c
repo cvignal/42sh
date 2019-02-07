@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 08:56:06 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 17:08:33 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/07 16:33:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int			lss_push(t_lexer *lexer, t_lstate state)
 	if (!new_state)
 		return (1);
 	new_state->state = state;
+	new_state->escaped = 0;
 	new_state->next = lexer->lss;
 	lexer->lss = new_state;
 	return (0);
