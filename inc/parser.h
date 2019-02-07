@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/07 16:57:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:03:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ typedef enum			e_lstate
 	LSTATE_META,
 	LSTATE_SQUOTE,
 	LSTATE_DQUOTE,
-	LSTATE_VAR,
 	NUMBER_LSTATE
 }						t_lstate;
 
