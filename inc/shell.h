@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 16:42:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/07 15:02:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,11 @@ int					exec_builtin(t_shell *shell, t_builtin builtin,
 int					replace_vars(t_shell *shell, t_token *token);
 int					remove_quotes(t_shell *shell, t_token *token);
 int					insert_var(t_shell *shell, t_token *token);
+
+/*
+** tools_expand.c
+*/
+int					expand_var_into_token(char **variables, t_token *token, t_shell *shell, int pos);
 
 /*
 ** signal.c

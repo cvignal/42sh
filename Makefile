@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/05 15:53:12 by gchainet         ###   ########.fr        #
+#    Updated: 2019/02/07 15:02:40 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ SRC		=							\
 	exec/else.c						\
 	exec/while.c					\
 	shell.c							\
+	tools_expand.c					\
 	command.c						\
 	exec.c							\
 	path.c							\
