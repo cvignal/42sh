@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 12:16:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/07 15:06:25 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/07 17:24:36 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,26 @@ static int	insert_home(t_shell *shell, t_token *token, int pos)
 	return (pos);
 }
 
-int			replace_vars(t_shell *shell, t_token *token)
+int			expand_vars(t_shell *shell, char *arg)
 {
 	int	pos;
 	int	ret;
 
-	if (token->data[0] == CHAR_TILDE)
-	{
-		if (insert_home(shell, token, 0) == -1)
-			return (1);
-	}
 	pos = 0;
-	while (token->data[pos])
+	while (arg[pos])
 	{
-		if (token->data[pos] == CHAR_VAR && token->data[pos + 1])
+		if (arg[pos] == '\\' && arg[pos + 1] && (arg[pos + 1] == CHAR_VAR
+					|| arg[pos + 1] == CHAR_HOME))
+			remove_backslash();
+		else if (arg[pos] == CHAR_VAR && token->data[pos + 1])
 		{
 			if ((ret = insert_var(shell, token)) == -1)
+				return (1);
+			break ;
+		}
+		else if (arg[pos] == CHAR_HOME)
+		{
+			if ((ret = insert_var(shell, arg) == -1))
 				return (1);
 			break ;
 		}
