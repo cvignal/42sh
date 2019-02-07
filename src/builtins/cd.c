@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/21 15:03:42 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/07 10:48:29 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ static int	exit_error(const char *file, const char *msg)
 	return (1);
 }
 
+static int	exit_error_cd(const char *file)
+{
+	char	type;
+
+	if (access(file, F_OK))
+		return (exit_error(file, "no such file or directory"));
+	if (access(file, R_OK))
+		return (exit_error(file, "permission denied"));
+	type = file_type((char*)file);
+	if (type != 'l' || type != 'd')
+		return (exit_error(file, "not a directory"));
+	return (1);
+}
+
 static int	change_dir(t_shell *shell, char *dir)
 {
 	char	*cwd;
@@ -35,9 +49,12 @@ static int	change_dir(t_shell *shell, char *dir)
 	if (chdir(dir))
 	{
 		free(cwd);
-		return (exit_error(dir, "no such file or directory"));
+		return (exit_error_cd(dir));
 	}
 	set_env_var(shell, "OLDPWD", cwd);
+	free(cwd);
+	cwd = getcwd(NULL, MAX_PATH);
+	set_env_var(shell, "PWD", cwd);
 	free(cwd);
 	return (0);
 }
@@ -60,6 +77,7 @@ int			builtin_cd(t_shell *shell, char **args)
 		{
 			if (!(dir = get_env_value(shell, "OLDPWD")))
 				return (exit_error(NULL, "OLDPWD not set"));
+			ft_printf("%s\n", dir);
 			return (change_dir(shell, dir));
 		}
 		else
