@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 16:42:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/07 19:33:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct		s_shell
 
 struct s_redir;
 typedef int			(*t_redir_act)(t_shell *, t_ast *, struct s_redir *);
+typedef int			(*t_redir_apply)(struct s_redir *);
 
 int					reset_redirs(t_shell *shell, t_ast *instr);
 
@@ -90,6 +91,7 @@ typedef struct		s_redir
 	char			*target;
 	int				in;
 	int				out;
+	int				fd;
 	int				applied;
 	t_redir_act		redir_act;
 	struct s_redir	*next;
@@ -100,6 +102,12 @@ typedef struct		s_redir_desc
 	int				type;
 	t_redir_act		act;
 }					t_redir_desc;
+
+typedef struct		s_redir_apply_desc
+{
+	t_ttype			type;
+	t_redir_apply	apply;
+}					t_redir_apply_desc;
 
 typedef struct		s_command
 {
@@ -248,7 +256,10 @@ int					redir_rr(t_shell *shell, t_ast *ast, t_redir *redir);
 ** apply_redirs.c
 */
 int					apply_redirs(t_shell *shell, t_ast *instr);
-int					save_redirs(t_ast *instr);
+int					apply_redir_generic(t_redir *redir);
+int					apply_redir_r_close(t_redir *redir);
+int					apply_redir_r_both(t_redir *redir);
+int					apply_redir_r_comp(t_redir *redir);
 
 /*
 ** redir_r_comp.c
