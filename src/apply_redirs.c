@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/06 20:01:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/07 19:38:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/07 23:13:26 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		apply_redir_generic(t_redir *redir)
 
 int		apply_redir_r_close(t_redir *redir)
 {
-	if (close(redir->fd))
+	if (close(redir->in))
 	{
 		ft_dprintf(2, "%s: unable to close file descriptor %d\n", redir->fd);
 		return (1);
