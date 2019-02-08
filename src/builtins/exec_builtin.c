@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 11:37:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 13:47:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,7 @@ static void	reset_pipeline(int *old)
 int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 {
 	int		fd[2];
-	int		i;
 
-	i = 1;
-	while (((t_command*)instr->data)->args[i])
-	{
-		if (expand_vars(shell, &((t_command*)instr->data)->args[i]))
-			return (1);
-		i++;
-	}
 	prepare_pipeline(instr, fd);
 	if (apply_redirs(shell, instr))
 		return (-1);
