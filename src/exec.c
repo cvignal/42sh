@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 11:25:24 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 15:36:30 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
 	{
 		if (expand_vars(shell, &args[i]))
 			return (1);
-		ft_printf("|DONE|\n");
 		i++;
 	}
 	if (get_env_value(tmp_shell, "PATH"))
@@ -97,7 +96,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 		set_pipeline(shell, instr);
 		if (apply_redirs(shell, instr))
 			return (-1);
-		reset_terminal_mode();
+		reset_terminal_mode(shell);
 		execve(bin_path, ((t_command *)instr->data)->args, shell->env);
 		exit(1);
 	}

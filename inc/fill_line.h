@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/01 14:09:07 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 15:12:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct	s_curs
 	int	line;
 }				t_curs;
 
+extern int		g_fd_output;
+
 /*
 ** Initialization and read
 */
@@ -70,8 +72,9 @@ int				is_a_special_key(char *buf);
 int				apply_key(char *buf, t_shell *shell);
 void			ft_addchar(t_shell *shell, char *buf);
 int				ft_printchar(int c);
-void			reset_terminal_mode(void);
-void			raw_terminal_mode(void);
+void			reset_terminal_mode(t_shell *shell);
+void			raw_terminal_mode(t_shell *shell);
+int				check_validity(t_shell *shell);
 
 /*
 ** Special keys

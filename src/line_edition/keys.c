@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:55:56 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/05 17:09:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 15:39:02 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int			ft_leftkey(t_shell *shell)
 		if (shell->line.mode)
 		{
 			if (shell->line.cursor < shell->line.select_curs)
-				ft_printf("%s%c%s", "\e[7;m", shell->line.data[curs - 1], EOC);
+				ft_dprintf(g_fd_output, "%s%c%s", "\e[7;m", shell->line.data[curs - 1], EOC);
 			else
-				ft_printf("%c", shell->line.data[curs - 1]);
+				ft_dprintf(g_fd_output, "%c", shell->line.data[curs - 1]);
 			tputs(tgetstr("le", NULL), 0, ft_printchar);
 		}
 	}
@@ -75,9 +75,9 @@ int			ft_rightkey(t_shell *shell)
 		if (shell->line.mode)
 		{
 			if (shell->line.cursor >= shell->line.select_curs)
-				ft_printf("%s%c%s", "\e[7;m", shell->line.data[curs], EOC);
+				ft_dprintf(g_fd_output, "%s%c%s", "\e[7;m", shell->line.data[curs], EOC);
 			else
-				ft_printf("%c", shell->line.data[curs]);
+				ft_dprintf(g_fd_output, "%c", shell->line.data[curs]);
 		}
 		else
 			tputs(tgetstr(win.ws_col == cursor->col ? "do" : "nd", NULL)

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/22 11:08:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 14:52:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,15 @@ int	builtin_exit(t_shell *shell, char **args)
 		return (1);
 	}
 	remove_env(shell);
-	ft_dprintf(shell->fd, "exit");
+	ft_dprintf(shell->fd_hf, "exit");
 	if (args[1])
-		ft_dprintf(shell->fd, " %s\n", args[1]);
+		ft_dprintf(shell->fd_hf, " %s\n", args[1]);
 	else
-		ft_dprintf(shell->fd, "\n");
-	if (close(shell->fd) == -1)
+		ft_dprintf(shell->fd_hf, "\n");
+	if (close(shell->fd_hf) == -1)
 		ft_dprintf(2, "Error on closing the history file\n");
+	if (close(shell->fd_op) == -1)
+		ft_dprintf(2, "Error on closing the tty fd\n");
 	free_shell(shell);
 	if (arg_count == 2 && !ft_isdigit(args[1][0]) && args[1][0] != '-'
 			&& args[1][0] != '+')

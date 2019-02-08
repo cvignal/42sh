@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 13:50:27 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/08 13:53:22 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 15:46:29 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 #include "libft.h"
 #include "shell.h"
+#include "fill_line.h"
 
 static void	print_newline(int i)
 {
 	(void)i;
-	ft_printf("\n");
+	ft_dprintf(g_fd_output, "\n");
 }
 
 void		disable_signal(void)

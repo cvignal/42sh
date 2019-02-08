@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/30 16:25:54 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 15:45:25 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	display_table(char **array, int table[4])
 	int	i;
 	int	j;
 
-	ft_printf("\n");
+	ft_dprintf(g_fd_output, "\n");
 	i = 0;
 	if (table[0] == 0)
 		table[1] = 0;
@@ -60,11 +60,11 @@ static void	display_table(char **array, int table[4])
 		j = i;
 		while (j < table[2])
 		{
-			ft_printf("%-*s", table[1] + 1, array[j]);
+			ft_dprintf(g_fd_output, "%-*s", table[1] + 1, array[j]);
 			j += table[3];
 		}
 		if (i + 1 < table[3])
-			ft_printf("\n");
+			ft_dprintf(g_fd_output, "\n");
 		i++;
 	}
 	ft_deltab(&array);
@@ -80,7 +80,7 @@ static int	ask_for_many_possibilities(int *table, t_curs *cursor)
 		return (1);
 	else
 	{
-		ft_printf("\nsh: do you wish to see all %d possibilities (%d lines)? ",
+		ft_dprintf(g_fd_output, "\nsh: do you wish to see all %d possibilities (%d lines)? ",
 				table[2], table[3]);
 		ret = read(STDIN_FILENO, buf, 10);
 		buf[ret] = 0;

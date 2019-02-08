@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 17:00:09 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 15:00:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		free_shell(t_shell *shell)
 		}
 		free(shell->hash_table);
 	}
-	reset_terminal_mode();
+	reset_terminal_mode(shell);
 }
 
 int			init_shell(t_shell *shell, char **environ)
@@ -86,7 +86,7 @@ int			init_shell(t_shell *shell, char **environ)
 		return (1);
 	}
 	shell->his_pos = -1;
-	raw_terminal_mode();
+	raw_terminal_mode(shell);
 	shell->ctrld = 0;
 	shell->end_heredoc = 0;
 	load_history(shell);
