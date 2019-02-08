@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:29:44 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/24 13:32:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/08 16:42:35 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void		sanitize_hash_entry(t_shell *shell, t_hbt *node)
 	}
 }
 
-void		sanitize_hash(t_shell *shell)
+void			sanitize_hash(t_shell *shell)
 {
 	unsigned int	i;
 

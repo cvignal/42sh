@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 17:10:02 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 16:43:14 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 #include "ast.h"
 #include "libft.h"
 
-int		clean_exit_lexer(t_lexer *lexer, t_token **list, t_token **current,
-		const char *msg)
+int				clean_exit_lexer(t_lexer *lexer, t_token **list
+		, t_token **current, const char *msg)
 {
 	t_token	*tmp;
 

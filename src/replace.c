@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 12:16:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 12:54:58 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 16:42:23 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*insert_var(t_shell *shell, char *arg)
 	{
 		if (!(ret = ft_strjoin_free(ret, "$", 1)))
 			return (NULL);
-	}		
+	}
 	ft_deltab(&dolz);
 	return (ret);
 }
@@ -88,7 +88,8 @@ int			expand_vars(t_shell *shell, char **arg)
 	}
 	while ((*arg)[pos])
 	{
-		if ((*arg)[pos] == '\\' && (*arg)[pos + 1] && ((*arg)[pos + 1] == CHAR_VAR
+		if ((*arg)[pos] == '\\' && (*arg)[pos + 1]
+				&& ((*arg)[pos + 1] == CHAR_VAR
 					|| (*arg)[pos + 1] == '~'))
 			remove_backslash(*arg, &pos);
 		else if ((*arg)[pos] == CHAR_VAR && (*arg)[pos + 1])

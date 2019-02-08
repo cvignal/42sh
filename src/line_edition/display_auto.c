@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/08 15:45:25 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 16:29:44 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ static int	ask_for_many_possibilities(int *table, t_curs *cursor)
 		return (1);
 	else
 	{
-		ft_dprintf(g_fd_output, "\nsh: do you wish to see all %d possibilities (%d lines)? ",
+		ft_dprintf(g_fd_output,
+				"\nsh: do you wish to see all %d possibilities (%d lines)? ",
 				table[2], table[3]);
 		ret = read(STDIN_FILENO, buf, 10);
 		buf[ret] = 0;
