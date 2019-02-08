@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:46:05 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 10:34:59 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 13:52:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static void	init_lexer_quote(t_lexer *lexer)
 		++i;
 	}
 	lexer->lexer_actions[LSTATE_WORD]['\''] = &lexer_push_squote;
-	lexer->lexer_actions[LSTATE_SQUOTE]['\''] = &lexer_pop_pass;
+	lexer->lexer_actions[LSTATE_SQUOTE]['\''] = &lexer_pop_quote;
 	lexer->lexer_actions[LSTATE_WORD]['"'] = &lexer_push_dquote;
-	lexer->lexer_actions[LSTATE_DQUOTE]['"'] = &lexer_pop_pass;
+	lexer->lexer_actions[LSTATE_DQUOTE]['"'] = &lexer_pop_quote;
 }
 
 static void	init_lexer_zero(t_lexer *lexer)

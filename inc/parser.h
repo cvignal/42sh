@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/07 23:15:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/08 13:53:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,13 +187,11 @@ int						lexer_try_meta(struct s_shell *shell,
 /*
 ** parser/lexer_act_quote.c
 */
-int						lexer_create_dquote(struct s_shell *shell,
-		t_token *token, char c);
-int						lexer_create_squote(struct s_shell *shell,
-		t_token *token, char c);
 int						lexer_push_dquote(struct s_shell *shell,
 		t_token *token, char c);
 int						lexer_push_squote(struct s_shell *shell,
+		t_token *token, char c);
+int						lexer_pop_quote(struct s_shell *shell,
 		t_token *token, char c);
 
 /*
