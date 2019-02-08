@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 12:16:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 10:29:25 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 12:52:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,52 @@
 #include "shell.h"
 #include "libft.h"
 
-static char	*insert_var(t_shell *shell, char *arg, int pos)
+static char	*add_var_values(t_shell *shell, char **dollars, char *arg)
 {
-	int		len_name;
-	int		len_rest;
+	int		i;
 	char	*var_value;
-	char	*var_name;
-	char	*ret;
 
-	len_name = ft_strlen(arg + pos) - ft_strlen(ft_strchr(arg + pos + 1, '$'));
-	len_rest = ft_strlen(arg) - pos - len_name;
-	if (!(var_name = ft_strndup(arg + pos, len_name)))
+	i = 0;
+	while (dollars[i])
+	{
+		if ((var_value = get_env_value(shell, dollars[i])))
+		{
+			if (!(arg = ft_strjoin_free(arg, var_value, 1)))
+				return (NULL);
+		}
+		i++;
+	}
+	return (arg);
+}
+
+static char	*insert_var(t_shell *shell, char *arg)
+{
+	char	*ret;
+	int		end_dollar;
+	char	**dolz;
+	int		len;
+
+	end_dollar = (arg[ft_strlen(arg) - 1] == '$');
+	len = ft_strlen(arg) - ft_strlen(ft_strchr(arg, '$'));
+	if (!(ret = ft_strndup(arg, len)))
 		return (NULL);
-	var_value = get_env_value(shell, var_name);
-	if (!(ret = ft_insert_free(arg, var_value, pos, 0)))
+	if (!(dolz = ft_strsplit(ft_strchr(arg, '$'), "$")))
 		return (NULL);
+	if (!(ret = add_var_values(shell, dolz, ret)))
+		return (NULL);
+	if (end_dollar)
+	{
+		if (!(ret = ft_strjoin_free(ret, "$", 1)))
+			return (NULL);
+	}		
+	ft_deltab(&dolz);
 	return (ret);
 }
 
 static void	remove_backslash(char *arg, int *pos)
 {
 	ft_memmove(arg + *pos, arg + *pos + 1, ft_strlen(arg) - *pos - 1);
+	arg[ft_strlen(arg) - *pos - 1] = 0;
 	*pos += 2;
 }
 
@@ -46,7 +71,7 @@ static char	*insert_home(t_shell *shell, char *arg)
 
 	if (!(home = get_env_value(shell, "HOME")))
 		return (NULL);
-	if (!(ret = ft_strjoin(arg + 1, home)))
+	if (!(ret = ft_strjoin(home, arg + 1)))
 		return (NULL);
 	return (ret);
 }
@@ -66,9 +91,9 @@ int			expand_vars(t_shell *shell, char **arg)
 		if ((*arg)[pos] == '\\' && (*arg)[pos + 1] && ((*arg)[pos + 1] == CHAR_VAR
 					|| (*arg)[pos + 1] == '~'))
 			remove_backslash(*arg, &pos);
-		else if ((*arg)[pos] == CHAR_VAR && pos > 0)
+		else if ((*arg)[pos] == CHAR_VAR && (*arg)[pos + 1])
 		{
-			if (!(*arg = insert_var(shell, *arg, pos)))
+			if (!(*arg = insert_var(shell, *arg)))
 				return (1);
 		}
 		else

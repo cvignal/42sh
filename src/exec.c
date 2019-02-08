@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 04:34:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/08 11:25:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,16 @@ int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
 	pid_t		pid;
 	int			status;
 	char		*bin_path;
+	int			i;
 
+	i = 1;
+	while (args[i])
+	{
+		if (expand_vars(shell, &args[i]))
+			return (1);
+		ft_printf("|DONE|\n");
+		i++;
+	}
 	if (get_env_value(tmp_shell, "PATH"))
 		bin_path = find_command(tmp_shell, args[0]);
 	else
@@ -64,9 +73,17 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	pid_t		pid;
 	char		*bin_path;
 	t_builtin	builtin;
+	int			i;
 
 	if ((builtin = is_builtin(((t_command *)instr->data)->args[0])))
 		return (exec_builtin(shell, builtin, instr));
+	i = 1;
+	while (((t_command*)instr->data)->args[i])
+	{
+		if (expand_vars(shell, &((t_command*)instr->data)->args[i]))
+			return (1);
+		i++;
+	}
 	bin_path = hbt_command(shell, ((t_command *)instr->data)->args[0]);
 	if (bin_path)
 		pid = fork();
