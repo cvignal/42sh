@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/25 17:20:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/07 19:23:58 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,12 @@ int	redir_l(t_shell *shell, t_ast *instr, t_redir *redir)
 	int	fd;
 
 	(void)shell;
+	(void)instr;
 	fd = open_file(shell, redir->target, O_RDONLY, 0);
 	if (fd < 0)
 		return (1);
 	instr->fds[redir->in] = fd;
+	redir->fd = fd;
 	return (0);
 }
 
@@ -62,6 +64,7 @@ int	redir_ll(t_shell *shell, t_ast *instr, t_redir *redir)
 	int			fd[2];
 
 	(void)shell;
+	(void)instr;
 	if (!(heredoc = alloc_heredoc()))
 		return (1);
 	if (read_heredoc(heredoc, redir))
@@ -70,7 +73,7 @@ int	redir_ll(t_shell *shell, t_ast *instr, t_redir *redir)
 		return (heredoc_exit_error(heredoc));
 	write(fd[1], heredoc->data, heredoc->len);
 	close(fd[1]);
-	instr->fds[redir->in] = fd[0];
+	redir->fd = fd[0];
 	free(heredoc->data);
 	free(heredoc);
 	return (0);
@@ -81,11 +84,12 @@ int	redir_r(t_shell *shell, t_ast *instr, t_redir *redir)
 	int	fd;
 
 	(void)shell;
+	(void)instr;
 	fd = open_file(shell, redir->target, O_WRONLY | O_CREAT | O_TRUNC,
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
 		return (1);
-	instr->fds[redir->in] = fd;
+	redir->fd = fd;
 	return (0);
 }
 
@@ -93,11 +97,12 @@ int	redir_rr(t_shell *shell, t_ast *instr, t_redir *redir)
 {
 	int	fd;
 
+	(void)instr;
 	(void)shell;
 	fd = open_file(shell, redir->target, O_WRONLY | O_CREAT | O_APPEND,
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
 		return (1);
-	instr->fds[redir->in] = fd;
+	redir->fd = fd;
 	return (0);
 }
