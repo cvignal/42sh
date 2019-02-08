@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 09:37:36 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/24 12:23:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/08 10:28:16 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	lexer_pop_var(t_shell *shell, t_token *token, char c)
 {
 	(void)token;
 	(void)c;
-	lss_pop(&shell->lexer);
-	replace_vars(shell, token);
+	(void)shell;
 	return (0);
 }

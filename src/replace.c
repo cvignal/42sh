@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 12:16:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/07 17:24:36 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 10:29:25 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,81 +15,61 @@
 #include "shell.h"
 #include "libft.h"
 
-int			remove_quotes(t_shell *shell, t_token *token)
+static char	*insert_var(t_shell *shell, char *arg, int pos)
 {
-	if (token->data[0] == 39)
-	{
-		token->data[token->len - 1] = 0;
-		ft_memmove(token->data, token->data + 1, token->len - 1);
-		return (0);
-	}
-	token->data[token->len - 1] = 0;
-	ft_memmove(token->data, token->data + 1, token->len - 1);
-	return (insert_var(shell, token));
+	int		len_name;
+	int		len_rest;
+	char	*var_value;
+	char	*var_name;
+	char	*ret;
+
+	len_name = ft_strlen(arg + pos) - ft_strlen(ft_strchr(arg + pos + 1, '$'));
+	len_rest = ft_strlen(arg) - pos - len_name;
+	if (!(var_name = ft_strndup(arg + pos, len_name)))
+		return (NULL);
+	var_value = get_env_value(shell, var_name);
+	if (!(ret = ft_insert_free(arg, var_value, pos, 0)))
+		return (NULL);
+	return (ret);
 }
 
-int			insert_var(t_shell *shell, t_token *token)
+static void	remove_backslash(char *arg, int *pos)
 {
-	char	**variables;
-	size_t	pos;
-	int		end_dollar;
-
-	if (token->data[0] == 39 || token->data[0] == '"')
-		return (remove_quotes(shell, token));
-	if (!(variables = ft_strsplit(token->data, "$")))
-		return (-1);
-	pos = 0;
-	end_dollar = 0;
-	if (token->data[token->len - 1] == CHAR_VAR)
-		end_dollar = 1;
-	if (token->data[0] != CHAR_VAR)
-	{
-		insert_into_token(token, variables[0], pos);
-		pos += ft_strlen(variables[0]);
-	}
-	pos = expand_var_into_token(variables, token, shell, pos);
-	if (end_dollar)
-		insert_into_token(token, "$", pos++);
-	token->data[pos] = 0;
-	ft_deltab(&variables);
-	return (1);
+	ft_memmove(arg + *pos, arg + *pos + 1, ft_strlen(arg) - *pos - 1);
+	*pos += 2;
 }
 
-static int	insert_home(t_shell *shell, t_token *token, int pos)
+static char	*insert_home(t_shell *shell, char *arg)
 {
 	char	*home;
+	char	*ret;
 
-	home = get_env_value(shell, "HOME");
-	if (home)
-	{
-		insert_into_token(token, home, pos);
-		return (pos + ft_strlen(home));
-	}
-	return (pos);
+	if (!(home = get_env_value(shell, "HOME")))
+		return (NULL);
+	if (!(ret = ft_strjoin(arg + 1, home)))
+		return (NULL);
+	return (ret);
 }
 
-int			expand_vars(t_shell *shell, char *arg)
+int			expand_vars(t_shell *shell, char **arg)
 {
 	int	pos;
-	int	ret;
 
 	pos = 0;
-	while (arg[pos])
+	if ((*arg)[0] == '~')
 	{
-		if (arg[pos] == '\\' && arg[pos + 1] && (arg[pos + 1] == CHAR_VAR
-					|| arg[pos + 1] == CHAR_HOME))
-			remove_backslash();
-		else if (arg[pos] == CHAR_VAR && token->data[pos + 1])
+		if (!((*arg) = insert_home(shell, *arg)))
+			return (1);
+	}
+	while ((*arg)[pos])
+	{
+		if ((*arg)[pos] == '\\' && (*arg)[pos + 1] && ((*arg)[pos + 1] == CHAR_VAR
+					|| (*arg)[pos + 1] == '~'))
+			remove_backslash(*arg, &pos);
+		else if ((*arg)[pos] == CHAR_VAR && pos > 0)
 		{
-			if ((ret = insert_var(shell, token)) == -1)
+			if (!(*arg = insert_var(shell, *arg, pos)))
 				return (1);
-			break ;
-		}
-		else if (arg[pos] == CHAR_HOME)
-		{
-			if ((ret = insert_var(shell, arg) == -1))
-				return (1);
-			break ;
 		}
 		else
 			++pos;
