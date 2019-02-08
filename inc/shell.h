@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 13:46:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/08 21:38:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "ast.h"
 # include "expr.h"
 # include "libft.h"
+# include "expand.h"
 
 # define EXEC_NAME "21sh"
 # define PROMPT "$>"
@@ -65,6 +66,7 @@ typedef struct		s_shell
 {
 	t_lexer			lexer;
 	t_parser		parser;
+	t_exp_lexer		exp_lexer;
 	char			**env;
 	t_line			line;
 	t_list			*history;

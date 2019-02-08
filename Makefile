@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/08 13:46:47 by gchainet         ###   ########.fr        #
+#    Updated: 2019/02/08 21:34:22 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -144,7 +144,14 @@ SRC		=							\
 	expr/ge.c						\
 	signal.c						\
 	fd.c							\
-	wait.c
+	wait.c							\
+	expansion/buffer.c				\
+	expansion/exp_ss.c				\
+	expansion/expand.c				\
+	expansion/init.c				\
+	expansion/lexer.c				\
+	expansion/lexer_methods.c		\
+	expansion/lexer_methods_quotes.c
 
 SRCDIR	:=	src
 OBJDIR	:=	obj

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 13:47:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/08 21:55:26 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "shell.h"
 #include "fill_line.h"
 #include "libft.h"
+#include "expand.h"
 
 static int	bin_not_found(const char *bin)
 {
@@ -50,7 +51,14 @@ int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
 	else
 		return (bin_not_found(args[0]));
 	if (!pid)
+	{
+		if (expand_params(shell, args))
+		{
+			free_shell(shell);
+			exit(1);
+		}
 		execve(bin_path, args, tmp_shell->env);
+	}
 	else
 	{
 		free(bin_path);
@@ -78,8 +86,12 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	if (!pid)
 	{
 		set_pipeline(shell, instr);
-		if (apply_redirs(shell, instr))
-			return (-1);
+		if (expand_params(shell, ((t_command *)instr->data)->args)
+				|| apply_redirs(shell, instr))
+		{
+			free_shell(shell);
+			exit(1);
+		}
 		reset_terminal_mode();
 		execve(bin_path, ((t_command *)instr->data)->args, shell->env);
 		exit(1);
