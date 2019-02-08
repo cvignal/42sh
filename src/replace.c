@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 12:16:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 12:52:10 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 12:54:58 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	remove_backslash(char *arg, int *pos)
 {
 	ft_memmove(arg + *pos, arg + *pos + 1, ft_strlen(arg) - *pos - 1);
 	arg[ft_strlen(arg) - *pos - 1] = 0;
-	*pos += 2;
+	*pos += 1;
 }
 
 static char	*insert_home(t_shell *shell, char *arg)
