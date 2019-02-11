@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 12:43:13 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 22:27:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/11 23:59:12 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int				rule_redir_r_comp(t_parser *parser, t_ast_token *list)
 	t_redir		*redir;
 	t_redir		*iter;
 
-	redir = create_redir_comp(list->next->data);
+	if (!(redir = create_redir_comp(list->data)))
+		return (1);
 	instr = parser->pss->ret;
 	iter = instr->redir_list;
 	if (!iter)
