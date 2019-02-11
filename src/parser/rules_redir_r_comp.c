@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 12:43:13 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/23 14:01:42 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/11 19:36:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static t_redir	*create_redir_comp(char *data)
 	new_redir = create_redir(TT_REDIR_R_COMP, NULL, &redir_r_comp);
 	if (!new_redir)
 		return (NULL);
+	new_redir->in = 1;
 	if (ft_isdigit(*data))
 	{
 		new_redir->in = ft_atoi(data);
