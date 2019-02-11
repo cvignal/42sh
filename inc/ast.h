@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/23 12:17:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/11 22:43:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,12 @@ typedef struct			s_ast_rule
 /*
 ** parser/rules.c
 */
-int						rule_create_cmd(t_parser *parser, t_ast_token *list);
+int						rule_push_cmd(t_parser *parser, t_ast_token *list);
 int						rule_add_to_cmd(t_parser *parser, t_ast_token *list);
-int						rule_cmd_list(t_parser *parser, t_ast_token *list);
 int						rule_create_end(t_parser *parser, t_ast_token *list);
 int						rule_create_end_second(t_parser *parser,
 		t_ast_token *list);
+int						rule_first_word(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_shift.c
@@ -175,6 +175,8 @@ int						rule_make_expr(t_parser *parser, t_ast_token *list);
 ** parser/rules_statement.c
 */
 int						rule_create_statement(t_parser *parser,
+		t_ast_token *list);
+int						rule_pop_cmd_statement(t_parser *parser,
 		t_ast_token *list);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:32:11 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/23 12:28:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/11 22:27:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@
 #include "parser.h"
 #include "shell.h"
 
-static int	rule_redir_generic(t_ast_token *list, t_ttype type, int def_in,
-		t_redir_act act)
+int			rule_redir_l(t_parser *parser, t_ast_token *list)
 {
-	t_ast_token	*tmp;
 	t_redir		*redir;
 
-	if (!(redir = create_redir(type, list->next->next->data, act)))
+	if (!(redir = create_redir(TT_REDIR_L, list->next->data,
+					&redir_l)))
 		return (1);
-	if (ft_isdigit(*(char *)list->next->data))
+	if (ft_isdigit(*(char *)list->data))
 	{
 		redir->in = ft_atoi(list->next->data);
 		if (redir->in < 0 || redir->in > 9)
@@ -35,37 +34,89 @@ static int	rule_redir_generic(t_ast_token *list, t_ttype type, int def_in,
 		}
 	}
 	else
-		redir->in = def_in;
-	add_to_redir_list(list->data, redir);
-	tmp = list->next->next->next;
-	free(list->next->next->data);
-	free(list->next->next);
-	free(list->next->data);
-	free(list->next);
-	list->next = tmp;
+		redir->in = STDIN_FILENO;
+	add_to_redir_list(parser->pss->ret, redir);
+	free(parser->input_queue->data);
+	free(pop_ast_token(&parser->input_queue));
+	free(parser->input_queue->data);
+	free(pop_ast_token(&parser->input_queue));
 	return (0);
-}
-
-int			rule_redir_l(t_parser *parser, t_ast_token *list)
-{
-	(void)parser;
-	return (rule_redir_generic(list, TT_REDIR_L, STDIN_FILENO, &redir_l));
 }
 
 int			rule_redir_ll(t_parser *parser, t_ast_token *list)
 {
-	(void)parser;
-	return (rule_redir_generic(list, TT_REDIR_LL, STDIN_FILENO, &redir_ll));
+	t_redir		*redir;
+
+	if (!(redir = create_redir(TT_REDIR_LL, list->next->data,
+					&redir_ll)))
+		return (1);
+	if (ft_isdigit(*(char *)list->data))
+	{
+		redir->in = ft_atoi(list->next->data);
+		if (redir->in < 0 || redir->in > 9)
+		{
+			free(redir);
+			return (1);
+		}
+	}
+	else
+		redir->in = STDIN_FILENO;
+	add_to_redir_list(parser->pss->ret, redir);
+	free(parser->input_queue->data);
+	free(pop_ast_token(&parser->input_queue));
+	free(parser->input_queue->data);
+	free(pop_ast_token(&parser->input_queue));
+	return (0);
 }
 
 int			rule_redir_r(t_parser *parser, t_ast_token *list)
 {
-	(void)parser;
-	return (rule_redir_generic(list, TT_REDIR_R, STDOUT_FILENO, &redir_r));
+	t_redir		*redir;
+
+	if (!(redir = create_redir(TT_REDIR_R, list->next->data,
+					&redir_r)))
+		return (1);
+	if (ft_isdigit(*(char *)list->data))
+	{
+		redir->in = ft_atoi(list->next->data);
+		if (redir->in < 0 || redir->in > 9)
+		{
+			free(redir);
+			return (1);
+		}
+	}
+	else
+		redir->in = STDOUT_FILENO;
+	add_to_redir_list(parser->pss->ret, redir);
+	free(parser->input_queue->data);
+	free(pop_ast_token(&parser->input_queue));
+	free(parser->input_queue->data);
+	free(pop_ast_token(&parser->input_queue));
+	return (0);
 }
 
 int			rule_redir_rr(t_parser *parser, t_ast_token *list)
 {
-	(void)parser;
-	return (rule_redir_generic(list, TT_REDIR_RR, STDOUT_FILENO, &redir_rr));
+	t_redir		*redir;
+
+	if (!(redir = create_redir(TT_REDIR_RR, list->next->data,
+					&redir_rr)))
+		return (1);
+	if (ft_isdigit(*(char *)list->data))
+	{
+		redir->in = ft_atoi(list->next->data);
+		if (redir->in < 0 || redir->in > 9)
+		{
+			free(redir);
+			return (1);
+		}
+	}
+	else
+		redir->in = STDOUT_FILENO;
+	add_to_redir_list(parser->pss->ret, redir);
+	free(parser->input_queue->data);
+	free(pop_ast_token(&parser->input_queue));
+	free(parser->input_queue->data);
+	free(pop_ast_token(&parser->input_queue));
+	return (0);
 }

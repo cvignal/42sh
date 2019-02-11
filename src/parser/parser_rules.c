@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/01 12:20:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/11 22:42:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,28 @@ static const t_ast_rule g_rules[] =\
 	{PS_EXPR, {TT_EXPR, TT_WORD, 0}, 2, &rule_add_to_expr},
 	{PS_EXPR, {TT_EXPR_CLOSE, 0, 0}, 1, &rule_close_expr},
 	{PS_NONE, {TT_OVER, 0, 0}, 1, &rule_shift_first},
-	{PS_NONE, {TT_WORD, 0, 0}, 1, &rule_create_cmd},
-	{PS_NONE, {TT_CMD, TT_WORD, 0}, 2, &rule_add_to_cmd},
-	{PS_NONE, {TT_STATEMENT, TT_REDIR_R, TT_WORD}, 3, &rule_redir_r},
-	{PS_NONE, {TT_STATEMENT, TT_REDIR_R_BOTH, TT_WORD}, 3, &rule_redir_r_both},
-	{PS_NONE, {TT_STATEMENT, TT_REDIR_RR, TT_WORD}, 3, &rule_redir_rr},
-	{PS_NONE, {TT_STATEMENT, TT_REDIR_L, TT_WORD}, 3, &rule_redir_l},
-	{PS_NONE, {TT_STATEMENT, TT_REDIR_LL, TT_WORD}, 3, &rule_redir_ll},
-	{PS_NONE, {TT_STATEMENT, TT_REDIR_R_COMP, 0}, 2, &rule_redir_r_comp},
-	{PS_NONE, {TT_STATEMENT, TT_REDIR_R_CLOSE, 0}, 2, &rule_redir_r_close},
+	{PS_NONE, {TT_WORD, 0, 0}, 1, &rule_first_word},
+	{PS_CMD, {TT_WORD, 0}, 1, &rule_add_to_cmd},
+	{PS_CMD, {TT_REDIR_R, TT_WORD, 0}, 2, &rule_redir_r},
+	{PS_CMD, {TT_REDIR_R_BOTH, TT_WORD, 0}, 2, &rule_redir_r_both},
+	{PS_CMD, {TT_REDIR_RR, TT_WORD, 0}, 2, &rule_redir_rr},
+	{PS_CMD, {TT_REDIR_L, TT_WORD, 0}, 2, &rule_redir_l},
+	{PS_CMD, {TT_REDIR_LL, TT_WORD, 0}, 2, &rule_redir_ll},
+	{PS_CMD, {TT_REDIR_R_COMP, 0, 0}, 1, &rule_redir_r_comp},
+	{PS_CMD, {TT_REDIR_R_CLOSE, 0, 0}, 1, &rule_redir_r_close},
+	{PS_CMD, {0, 0, 0}, 0, &rule_pop_cmd_statement},
+	{PS_NONE, {TT_WORD, 0}, 1, &rule_push_cmd},
+	{PS_NONE, {TT_REDIR_R, TT_WORD, 0}, 2, &rule_push_cmd},
+	{PS_NONE, {TT_REDIR_R_BOTH, TT_WORD, 0}, 2, &rule_push_cmd},
+	{PS_NONE, {TT_REDIR_RR, TT_WORD, 0}, 2, &rule_push_cmd},
+	{PS_NONE, {TT_REDIR_L, TT_WORD, 0}, 2, &rule_push_cmd},
+	{PS_NONE, {TT_REDIR_LL, TT_WORD, 0}, 2, &rule_push_cmd},
+	{PS_NONE, {TT_REDIR_R_COMP, 0, 0}, 1, &rule_push_cmd},
+	{PS_NONE, {TT_REDIR_R_CLOSE, 0, 0}, 1, &rule_push_cmd},
 	{PS_NONE | PS_EXPR, {TT_STATEMENT, 0, 0}, 1, &rule_send_to_shunting_yard},
 	{PS_NONE | PS_EXPR, {TT_OP, 0, 0}, 1, &rule_send_to_shunting_yard},
 	{PS_NONE, {TT_EXPR_OPEN, 0, 0}, 1, &rule_create_expr},
 	{PS_NONE | PS_EXPR, {TT_EXPR, 0, 0}, 1, &rule_create_statement},
-	{PS_NONE, {TT_CMD, 0, 0}, 1, &rule_create_statement},
 	{PS_NONE, {TT_PIPE, 0, 0}, 1, &rule_pipe},
 	{PS_NONE | PS_EXPR, {TT_OR, 0, 0}, 1, &rule_or},
 	{PS_NONE | PS_EXPR, {TT_AND, 0, 0}, 1, &rule_and},
