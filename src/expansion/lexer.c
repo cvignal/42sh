@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/09 03:53:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/11 13:45:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static char	*expand(t_shell *shell, char *arg, int *error)
 
 	ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
 	ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
-	i = 0;
+	if ((i = expand_home(shell, arg, error)) == -1)
+		return (NULL);
 	while (arg[i])
 	{
 		ret = shell->exp_lexer.methods[shell->exp_lexer.state->state][(int)arg[i]]

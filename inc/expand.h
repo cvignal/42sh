@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 21:57:01 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/11 13:44:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,14 @@ int					exp_ss_push(t_exp_lexer *lexer, t_exp_state state);
 void				exp_ss_pop(t_exp_lexer *lexer);
 
 /*
- * expansion/expand.c
+ * expansion/lexer.c
 */
 int					expand_params(struct s_shell *shell, char **args);
+
+/*
+ * expansion/home.c
+*/
+int					expand_home(struct s_shell *shell, char *arg, int *error);
 
 /*
  * expansion/buffer.c
