@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 18:40:34 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 21:26:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	exec_ast(t_shell *shell, t_token *tokens)
 		close_everything(shell);
 		wait_loop(ast);
 		ast->del(ast);
-		add_to_history(shell->line.data, shell, 0);
 	}
+	add_to_history(shell->line.data, shell, 0);
 	print_prompt(PROMPT, &shell->parser, shell);
 }
 

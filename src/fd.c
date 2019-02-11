@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:06:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 11:12:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 21:11:44 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,21 +90,29 @@ void		close_everything(t_shell *shell)
 {
 	t_fd	*next;
 	t_fd	*tty_fd;
+	t_fd	*hf_fd;
 
 	while (shell->used_fd)
 	{
 		next = shell->used_fd->next;
-		if (shell->used_fd->fd != shell->fd_op)
+		if (shell->used_fd->fd == shell->fd_op)
+			tty_fd = shell->used_fd;
+		else if (shell->used_fd->fd == shell->fd_hf)
+			hf_fd = shell->used_fd;
+		else
 		{
 			close(shell->used_fd->fd);
 			free(shell->used_fd);
 		}
-		else
-			tty_fd = shell->used_fd;
 		shell->used_fd = next;
 	}
-	shell->used_fd = tty_fd;
-	shell->used_fd->next = NULL;
+	if (tty_fd)
+	{
+		shell->used_fd = tty_fd;
+		shell->used_fd->next = hf_fd;
+		if (hf_fd)
+			shell->used_fd->next->next = NULL;
+	}
 }
 
 int			open_file(t_shell *shell, const char *file, int mode, int perm)

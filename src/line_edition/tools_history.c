@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/11 19:27:50 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 21:21:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int			load_history(t_shell *shell)
 {
 	char	*line;
 	t_list	*new;
+	int		new_fd;
 
 	shell->history = NULL;
 	shell->output = NULL;
@@ -50,6 +51,13 @@ int			load_history(t_shell *shell)
 	if ((shell->fd_hf = open(".shperso_history", O_RDWR | O_APPEND
 					| O_CREAT, 0644)) == -1)
 		return (1);
+	new_fd = get_next_fd(shell);
+	if (dup2(shell->fd_hf, new_fd) == -1)
+		return (1);
+	close(shell->fd_hf);
+	if (add_fd(shell, new_fd, 0) == -1)
+		return (1);
+	shell->fd_hf = new_fd;
 	while (get_next_line(shell->fd_hf, &line) == 1)
 	{
 		if (!(new = ft_lstnew(line, ft_strlen(line) + 1)))

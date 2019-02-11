@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/08 15:13:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 21:23:42 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,8 @@ int		ft_printchar(int c)
 
 void	ft_addchar(t_shell *shell, char *buf)
 {
-	tputs(tgetstr("im", NULL), 1, ft_printchar);
 	if (add_to_line(&shell->line, buf))
 		ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-	else
-		ft_dprintf(shell->fd_op, "%s", buf);
-	tputs(tgetstr("ei", NULL), 1, ft_printchar);
 }
 
 int		apply_key(char *buf, t_shell *shell)
