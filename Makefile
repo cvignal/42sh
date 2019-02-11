@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/08 21:34:22 by gchainet         ###   ########.fr        #
+#    Updated: 2019/02/11 13:39:23 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -151,7 +151,8 @@ SRC		=							\
 	expansion/init.c				\
 	expansion/lexer.c				\
 	expansion/lexer_methods.c		\
-	expansion/lexer_methods_quotes.c
+	expansion/lexer_methods_quotes.c\
+	expansion/home.c
 
 SRCDIR	:=	src
 OBJDIR	:=	obj

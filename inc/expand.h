@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 11:39:39 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 14:24:39 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int					expand_params(struct s_shell *shell, char **args);
 /*
 ** expansion/buffer.c
 */
+int					expand_home(struct s_shell *shell, char *arg, int *error);
 int					add_to_exp_buff(t_exp_buff *buffer, char c);
-
 int					exp_lexer_add_to_buff(struct s_shell *shell,
 		t_exp_lexer *lexer, char c);
 int					exp_lexer_add_to_var(struct s_shell *shell,
