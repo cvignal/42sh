@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/11 14:19:56 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 16:37:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,39 +39,12 @@ static void	add_and_display(t_list *list, char *word, t_shell *shell)
 	if (ft_strchr(word, '/'))
 		to_add = str + ft_strlen(ft_strrchr(word, '/') + 1);
 	else
-		to_add = str + ft_strlen(word);
+		to_add = str + ft_strlen(word) - (ft_strchr(word, '$') != NULL);
 	tputs(tgetstr("im", NULL), 0, ft_printchar);
 	ft_dprintf(g_fd_output, "%s", to_add);
 	tputs(tgetstr("ei", NULL), 0, ft_printchar);
 	add_to_line(&shell->line, to_add);
 	ft_strdel(&word);
-}
-
-static int	is_a_command(t_line *line)
-{
-	int		ret;
-	size_t	i;
-	char	c;
-	int		prev_word;
-
-	i = 0;
-	ret = 1;
-	prev_word = -1;
-	while (line->data[i] && i < line->cursor)
-	{
-		c = line->data[i];
-		if ((c == ' ' || c == '>' || c == '<') && prev_word == 1)
-			ret = 0;
-		if (c == ';' || c == '&' || c == '|')
-		{
-			prev_word = -1;
-			ret = 1;
-		}
-		if (ft_isalnum(c) && prev_word < 1)
-			prev_word = 1;
-		i++;
-	}
-	return (ret);
 }
 
 static void	ft_add_files(char *word, t_list **list)
@@ -101,6 +74,34 @@ static void	ft_add_files(char *word, t_list **list)
 	ft_strdel(&path);
 }
 
+static void	ft_add_var(char *word, t_list **list, t_shell *shell)
+{
+	t_list	*new;
+	int		i;
+	char	*name;
+
+	word++;
+	if (shell->env)
+	{
+		i = 0;
+		while (shell->env[i])
+		{
+			if (!(name = ft_strdup(shell->env[i])))
+				return ;
+			name[ft_strlen(name) - ft_strlen(ft_strchr(name, '='))] = 0;
+			if (ft_comp(word, name))
+			{
+				if (!(new = ft_lstnew(name, ft_strlen(name) + 1)))
+					return ;
+				ft_lstadd(list, new);
+			}
+			ft_strdel(&name);
+			i++;
+		}
+	}
+	word--;
+}
+
 static void	ft_add_exec(char *word, t_list **list)
 {
 	char	**paths;
@@ -108,16 +109,16 @@ static void	ft_add_exec(char *word, t_list **list)
 	char	*prog;
 
 	if (ft_strchr(word, '/'))
-	{
-		ft_add_files(word, list);
+		return (ft_add_files(word, list));
+	if (!(paths = ft_strsplit(getenv("PATH"), ":")))
 		return ;
-	}
-	paths = ft_strsplit(getenv("PATH"), ":");
 	i = 0;
 	while (paths[i])
 	{
-		prog = ft_strjoin(paths[i], "/");
-		prog = ft_strjoin_free(prog, word, 1);
+		if (!(prog = ft_strjoin(paths[i], "/")))
+			return ;
+		if (!(prog = ft_strjoin_free(prog, word, 1)))
+			return ;
 		ft_add_files(prog, list);
 		ft_strdel(&prog);
 		i++;
@@ -130,17 +131,16 @@ int			ft_tab(t_shell *shell)
 {
 	t_list	*list;
 	char	*word;
+	int		type;
 
 	list = NULL;
 	if (shell->line.mode != 0 || !shell->line.len)
 		return (0);
 	clean_under_line(NULL);
-	if (is_a_command(&shell->line))
+	if ((type = is_a_command(&shell->line)) == 1)
 	{
-		if (!word_to_complete(&shell->line))
+		if (!(word = word_to_complete(&shell->line)))
 			word = ft_strdup(shell->line.data);
-		else
-			word = word_to_complete(&shell->line);
 		if (!*word)
 			return (0);
 		ft_add_exec(word, &list);
@@ -148,7 +148,7 @@ int			ft_tab(t_shell *shell)
 	else
 	{
 		word = word_to_complete(&shell->line);
-		ft_add_files(word, &list);
+		!type ? ft_add_files(word, &list) : ft_add_var(word, &list, shell);
 	}
 	add_and_display(list, word, shell);
 	ft_lstdel(&list, &ft_delelt);

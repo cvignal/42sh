@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/30 16:38:37 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 16:09:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,31 @@ char		*word_to_complete(t_line *line)
 	return (ret);
 }
 
-void		clean_under_line(t_shell *shell)
+int	is_a_command(t_line *line)
 {
-	tputs(tgetstr("sc", NULL), 0, ft_printchar);
-	if (shell)
+	int		ret;
+	size_t	i;
+	char	c;
+	int		prev_word;
+
+	i = 0;
+	ret = 1;
+	prev_word = -1;
+	while (line->data[i] && i < line->cursor)
 	{
-		while (shell->line.cursor < shell->line.len)
-			ft_rightkey(shell);
+		c = line->data[i];
+		if ((c == ' ' || c == '>' || c == '<') && prev_word == 1)
+			ret = 0;
+		if (c == ';' || c == '&' || c == '|')
+		{
+			prev_word = -1;
+			ret = 1;
+		}
+		if (c == '$')
+			ret = 2;
+		if (ft_isalnum(c) && prev_word < 1)
+			prev_word = 1;
+		i++;
 	}
-	tputs(tgetstr("cd", NULL), 0, ft_printchar);
-	if (!shell)
-		tputs(tgetstr("rc", NULL), 0, ft_printchar);
+	return (ret);
 }

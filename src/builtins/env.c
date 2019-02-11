@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 07:44:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 15:43:38 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 16:24:20 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	print_env(t_shell *shell)
 
 	i = 0;
 	while (shell->env[i])
-		ft_dprintf(shell->fd_op, "%s\n", shell->env[i++]);
+		ft_printf("%s\n", shell->env[i++]);
 }
 
 static int	exit_error(const char *msg)
