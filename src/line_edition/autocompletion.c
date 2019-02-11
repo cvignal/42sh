@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/08 15:45:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 14:19:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,28 @@ static void	add_and_display(t_list *list, char *word, t_shell *shell)
 	ft_strdel(&word);
 }
 
-static int	first_arg(t_line *line)
+static int	is_a_command(t_line *line)
 {
 	int		ret;
 	size_t	i;
+	char	c;
+	int		prev_word;
 
-	ret = 1;
 	i = 0;
+	ret = 1;
+	prev_word = -1;
 	while (line->data[i] && i < line->cursor)
 	{
-		if ((line->data[i] == ' ' || line->data[i] == '>') && i > 0
-				&& line->data[i - 1] != ';' && line->data[i - 1] != '|'
-				&& !ft_strnequ(line->data + i - 1, "&&", 2))
+		c = line->data[i];
+		if ((c == ' ' || c == '>' || c == '<') && prev_word == 1)
 			ret = 0;
-		if (line->data[i] == ';' || line->data[i] == '|'
-			|| ft_strnequ(line->data + i, "&&", 2)
-			|| line->data[i] == '<')
+		if (c == ';' || c == '&' || c == '|')
+		{
+			prev_word = -1;
 			ret = 1;
+		}
+		if (ft_isalnum(c) && prev_word < 1)
+			prev_word = 1;
 		i++;
 	}
 	return (ret);
@@ -130,7 +135,7 @@ int			ft_tab(t_shell *shell)
 	if (shell->line.mode != 0 || !shell->line.len)
 		return (0);
 	clean_under_line(NULL);
-	if (first_arg(&shell->line))
+	if (is_a_command(&shell->line))
 	{
 		if (!word_to_complete(&shell->line))
 			word = ft_strdup(shell->line.data);
