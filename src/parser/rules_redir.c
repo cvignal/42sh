@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:32:11 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 22:27:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 00:49:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int			rule_redir_l(t_parser *parser, t_ast_token *list)
 		return (1);
 	if (ft_isdigit(*(char *)list->data))
 	{
-		redir->in = ft_atoi(list->next->data);
+		redir->in = ft_atoi(list->data);
 		if (redir->in < 0 || redir->in > 9)
 		{
 			free(redir);
@@ -52,7 +52,7 @@ int			rule_redir_ll(t_parser *parser, t_ast_token *list)
 		return (1);
 	if (ft_isdigit(*(char *)list->data))
 	{
-		redir->in = ft_atoi(list->next->data);
+		redir->in = ft_atoi(list->data);
 		if (redir->in < 0 || redir->in > 9)
 		{
 			free(redir);
@@ -78,7 +78,7 @@ int			rule_redir_r(t_parser *parser, t_ast_token *list)
 		return (1);
 	if (ft_isdigit(*(char *)list->data))
 	{
-		redir->in = ft_atoi(list->next->data);
+		redir->in = ft_atoi(list->data);
 		if (redir->in < 0 || redir->in > 9)
 		{
 			free(redir);
@@ -104,7 +104,7 @@ int			rule_redir_rr(t_parser *parser, t_ast_token *list)
 		return (1);
 	if (ft_isdigit(*(char *)list->data))
 	{
-		redir->in = ft_atoi(list->next->data);
+		redir->in = ft_atoi(list->data);
 		if (redir->in < 0 || redir->in > 9)
 		{
 			free(redir);
