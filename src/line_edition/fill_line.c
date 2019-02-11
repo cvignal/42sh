@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/05 17:09:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 15:30:32 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,35 +42,37 @@ int		check_validity(t_shell *shell)
 	return (0);
 }
 
-void	raw_terminal_mode(void)
+void	raw_terminal_mode(t_shell *shell)
 {
 	struct termios term;
 
-	tcgetattr(STDIN_FILENO, &term);
+	(void)shell;
+	tcgetattr(0, &term);
 	term.c_lflag &= ~(ICANON | ECHO | ISIG);
 	term.c_lflag &= ~(OPOST);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
-	tcsetattr(STDIN_FILENO, TCSADRAIN, &term);
+	tcsetattr(0, TCSADRAIN, &term);
 	tgetent(NULL, getenv("TERM"));
 }
 
-void	reset_terminal_mode(void)
+void	reset_terminal_mode(t_shell *shell)
 {
 	struct termios term;
 
-	tcgetattr(STDIN_FILENO, &term);
+	(void)shell;
+	tcgetattr(0, &term);
 	term.c_lflag |= (ICANON | ECHO | ISIG);
 	term.c_lflag |= (OPOST);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term);
+	tcsetattr(0, TCSAFLUSH, &term);
 }
 
 int		alt_fill_line(t_shell *shell)
 {
 	char *line;
 
-	ft_printf(NOT_A_TTY);
-	reset_terminal_mode();
+	ft_dprintf(2, NOT_A_TTY);
+	reset_terminal_mode(shell);
 	if (get_next_line(0, &line) <= 0)
 		return (1);
 	shell->line.data = line;
@@ -85,7 +87,7 @@ int		fill_line(t_shell *shell)
 
 	if (check_validity(shell))
 		return (alt_fill_line(shell));
-	while ((ret = read(STDIN_FILENO, buf, 8)) > 0)
+	while ((ret = read(0, buf, 8)) > 0)
 	{
 		buf[ret] = 0;
 		if (ft_strchr(buf, '\n'))
@@ -102,7 +104,7 @@ int		fill_line(t_shell *shell)
 		ft_addchar(shell, "");
 	clean_under_line(shell);
 	if (!shell->end_heredoc)
-		ft_printf("\n");
+		ft_dprintf(shell->fd_op, "\n");
 	shell->his_pos = -1;
 	return (0);
 }

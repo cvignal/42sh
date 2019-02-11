@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:06:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 16:39:35 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/08 16:26:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,11 @@ void		close_everything(t_shell *shell)
 	while (shell->used_fd)
 	{
 		next = shell->used_fd->next;
-		close(shell->used_fd->fd);
-		free(shell->used_fd);
+		if (shell->used_fd->fd != shell->fd_op)
+		{
+			close(shell->used_fd->fd);
+			free(shell->used_fd);
+		}
 		shell->used_fd = next;
 	}
 }

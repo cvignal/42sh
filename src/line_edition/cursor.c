@@ -6,13 +6,14 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:11:53 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/30 18:39:53 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 15:35:30 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
 #include <curses.h>
 #include <unistd.h>
+
 #include "libft.h"
 #include "fill_line.h"
 
@@ -40,7 +41,7 @@ t_curs	*get_cursor_pos(void)
 
 	if (!(res = (t_curs*)malloc(sizeof(t_curs))))
 		return (NULL);
-	write(1, CURS_POS, 4);
+	write(g_fd_output, CURS_POS, 4);
 	read_cursor_pos(buf);
 	res->line = ft_atoi(buf + 2);
 	res->col = ft_atoi(ft_strchr(buf, ';') + 1);

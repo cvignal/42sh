@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/01 14:10:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 15:13:46 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "libft.h"
 #include "shell.h"
 #include "fill_line.h"
+
+int		g_fd_output;
 
 t_key	g_special_keys[] =\
 {
@@ -63,7 +65,7 @@ int		is_a_special_key(char *buf)
 
 int		ft_printchar(int c)
 {
-	return (write(1, &c, 1));
+	return (write(g_fd_output, &c, 1));
 }
 
 void	ft_addchar(t_shell *shell, char *buf)
@@ -72,7 +74,7 @@ void	ft_addchar(t_shell *shell, char *buf)
 	if (add_to_line(&shell->line, buf))
 		ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
 	else
-		ft_printf("%s", buf);
+		ft_dprintf(shell->fd_op, "%s", buf);
 	tputs(tgetstr("ei", NULL), 1, ft_printchar);
 }
 

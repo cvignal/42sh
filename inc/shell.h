@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 21:38:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/11 09:46:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ typedef struct		s_shell
 	int				his_pos;
 	t_hbt			**hash_table;
 	char			*pbpaste;
-	int				fd;
+	int				fd_hf;
+	int				fd_op;
 	t_fd			*used_fd;
 	int				ctrld;
 	int				end_heredoc;

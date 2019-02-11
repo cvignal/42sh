@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/07 10:48:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 15:41:44 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "shell.h"
 #include "libft.h"
+#include "fill_line.h"
 
 static int	exit_error(const char *file, const char *msg)
 {
@@ -77,7 +78,7 @@ int			builtin_cd(t_shell *shell, char **args)
 		{
 			if (!(dir = get_env_value(shell, "OLDPWD")))
 				return (exit_error(NULL, "OLDPWD not set"));
-			ft_printf("%s\n", dir);
+			ft_dprintf(g_fd_output, "%s\n", dir);
 			return (change_dir(shell, dir));
 		}
 		else

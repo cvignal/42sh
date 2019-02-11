@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:01:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/29 15:35:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/08 14:08:08 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,12 @@ int			read_heredoc(t_heredoc *heredoc, t_redir *redir)
 	tmp_shell.end_heredoc = 0;
 	while (!fill_line(&tmp_shell))
 	{
-		if (tmp_shell.end_heredoc || !ft_strcmp(redir->target, tmp_shell.line.data))
+		if (tmp_shell.end_heredoc
+				|| !ft_strcmp(redir->target, tmp_shell.line.data))
 		{
 			free_line(&tmp_shell.line);
+			if (tmp_shell.end_heredoc == 2)
+				ft_strdel(&heredoc->data);
 			break ;
 		}
 		else if (add_to_heredoc(heredoc, tmp_shell.line.data))
