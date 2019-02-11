@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/11 16:37:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 19:54:33 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ static void	ft_add_exec(char *word, t_list **list)
 		i++;
 	}
 	ft_add_builtins(word, list);
+	if (!*list)
+		ft_add_files(word, list);
 	ft_deltab(&paths);
 }
 
