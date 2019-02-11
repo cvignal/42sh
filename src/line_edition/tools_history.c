@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/08 16:18:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 11:45:09 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	open_tty_fd(t_shell *shell)
 
 	if (check_validity(shell))
 		return (1);
+	raw_terminal_mode(shell);
 	new_fd = get_next_fd(shell);
 	if ((shell->fd_op = open(ttyname(0), O_WRONLY)) < 0)
 		return (1);

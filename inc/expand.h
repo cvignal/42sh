@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 21:57:01 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/11 11:39:39 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ typedef struct		s_exp_buff
 	unsigned int	alloc_size;
 }					t_exp_buff;
 
-struct 				s_exp_lexer;
-struct 				s_shell;
+struct s_exp_lexer;
+struct s_shell;
 
-typedef int			(*t_exp_lexer_f)(struct s_shell *, struct s_exp_lexer *, char);
+typedef int			(*t_exp_lexer_f)(struct s_shell *, struct s_exp_lexer *
+		, char);
 
 typedef struct		s_exp_lexer
 {
@@ -56,23 +57,23 @@ typedef struct		s_exp_lexer
 }					t_exp_lexer;
 
 /*
- * expansion/init.c
+** expansion/init.c
 */
 int					init_exp_lexer(t_exp_lexer *exp_lexer);
 
 /*
- * expansion/exp_ss.c
+** expansion/exp_ss.c
 */
 int					exp_ss_push(t_exp_lexer *lexer, t_exp_state state);
 void				exp_ss_pop(t_exp_lexer *lexer);
 
 /*
- * expansion/expand.c
+** expansion/expand.c
 */
 int					expand_params(struct s_shell *shell, char **args);
 
 /*
- * expansion/buffer.c
+** expansion/buffer.c
 */
 int					add_to_exp_buff(t_exp_buff *buffer, char c);
 

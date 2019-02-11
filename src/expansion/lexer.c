@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/09 03:53:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/11 11:45:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static char	*expand(t_shell *shell, char *arg, int *error)
 	i = 0;
 	while (arg[i])
 	{
-		ret = shell->exp_lexer.methods[shell->exp_lexer.state->state][(int)arg[i]]
-			(shell, &shell->exp_lexer, arg[i]);
+		ret = shell->exp_lexer.methods[shell->exp_lexer.state->state]
+			[(int)arg[i]](shell, &shell->exp_lexer, arg[i]);
 		if (ret & EXP_LEXER_RET_ERROR)
 			return (clean_exit(&shell->exp_lexer, error));
 		if (ret & EXP_LEXER_RET_CONT)
