@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/08 15:30:32 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 10:28:00 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ void	raw_terminal_mode(t_shell *shell)
 	struct termios term;
 
 	(void)shell;
-	tcgetattr(0, &term);
+	if (tcgetattr(0, &term) == -1)
+		return ;
 	term.c_lflag &= ~(ICANON | ECHO | ISIG);
 	term.c_lflag &= ~(OPOST);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
-	tcsetattr(0, TCSADRAIN, &term);
+	if (tcsetattr(0, TCSADRAIN, &term) == -1)
+		return ;
 	tgetent(NULL, getenv("TERM"));
 }
 
@@ -61,10 +63,12 @@ void	reset_terminal_mode(t_shell *shell)
 	struct termios term;
 
 	(void)shell;
-	tcgetattr(0, &term);
+	if (tcgetattr(0, &term) == -1)
+		return ;
 	term.c_lflag |= (ICANON | ECHO | ISIG);
 	term.c_lflag |= (OPOST);
-	tcsetattr(0, TCSAFLUSH, &term);
+	if (tcsetattr(0, TCSAFLUSH, &term) == -1)
+		return ;
 }
 
 int		alt_fill_line(t_shell *shell)
