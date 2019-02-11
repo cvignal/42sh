@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/11 18:57:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 19:27:50 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int			load_history(t_shell *shell)
 		ft_lstadd(&shell->history, new);
 		free(line);
 	}
+	shell->prev_cmd_state = 0;
 	return (open_tty_fd(shell));
 }
 
@@ -64,7 +65,7 @@ static int	add_complete_command(char *str, t_shell *shell, char **multi_line)
 {
 	t_list	*new;
 
-	if (*multi_line)
+	if (*multi_line && !shell->prev_cmd_state)
 	{
 		if (!(*multi_line = ft_strjoin_free(*multi_line, str, 1)))
 			return (1);
@@ -80,6 +81,7 @@ static int	add_complete_command(char *str, t_shell *shell, char **multi_line)
 		return (1);
 	ft_lstadd(&shell->history, new);
 	ft_dprintf(shell->fd_hf, "%s\n", str);
+	shell->prev_cmd_state = 0;
 	return (0);
 }
 
