@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:14:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 21:36:07 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/11 18:53:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	realloc_exp_buff(t_exp_buff *buffer)
 		new_buffer[i] = buffer->buffer[i];
 		++i;
 	}
-	ft_bzero(new_buffer + buffer->alloc_size, EXP_BUFFER_ALLOC_SIZE);
 	free(buffer->buffer);
 	buffer->buffer = new_buffer;
 	buffer->alloc_size += EXP_BUFFER_ALLOC_SIZE;
@@ -45,5 +44,6 @@ int			add_to_exp_buff(t_exp_buff *buffer, char c)
 			return (1);
 	}
 	buffer->buffer[buffer->pos++] = c;
+	buffer->buffer[buffer->pos] = 0;
 	return (0);
 }
