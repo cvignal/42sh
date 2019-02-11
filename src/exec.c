@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 09:45:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 09:49:14 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,6 @@ int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
 	int			status;
 	char		*bin_path;
 
-<<<<<<< HEAD
-=======
-	i = 1;
-	while (args[i])
-	{
-		if (expand_vars(shell, &args[i]))
-			return (1);
-		i++;
-	}
->>>>>>> Termcaps
 	if (get_env_value(tmp_shell, "PATH"))
 		bin_path = find_command(tmp_shell, args[0]);
 	else
@@ -96,19 +86,15 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	if (!pid)
 	{
 		set_pipeline(shell, instr);
-<<<<<<< HEAD
 		if (expand_params(shell, ((t_command *)instr->data)->args)
 				|| apply_redirs(shell, instr))
 		{
 			free_shell(shell);
 			exit(1);
 		}
-		reset_terminal_mode();
-=======
+		reset_terminal_mode(shell);
 		if (apply_redirs(shell, instr))
 			return (-1);
-		reset_terminal_mode(shell);
->>>>>>> Termcaps
 		execve(bin_path, ((t_command *)instr->data)->args, shell->env);
 		exit(1);
 	}
