@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/11 11:45:09 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 18:57:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,30 +83,38 @@ static int	add_complete_command(char *str, t_shell *shell, char **multi_line)
 	return (0);
 }
 
-int			add_to_history(char *str, t_shell *shell, int flag)
+static int	add_incomplete_command(char *str, t_shell *shell, char **multi_line)
 {
-	t_list		*new;
-	static char	*multi_line = NULL;
+	t_list *new;
 
-	if (flag && multi_line)
+	if (*multi_line)
 	{
-		if (!(multi_line = ft_strjoin_free(multi_line, str, 1)))
+		if (!(*multi_line = ft_strjoin_free(*multi_line, str, 1)))
 			return (1);
-		if (!(multi_line = ft_strjoin_free(multi_line, "\n", 1)))
+		if (!(*multi_line = ft_strjoin_free(*multi_line, "\n", 1)))
 			return (1);
 		free(shell->history->content);
-		if (!(shell->history->content = ft_strdup(multi_line)))
+		if (!(shell->history->content = ft_strdup(*multi_line)))
 			return (1);
-		shell->history->content_size = ft_strlen(multi_line) + 1;
+		shell->history->content_size = ft_strlen(*multi_line) + 1;
 	}
-	else if (flag && !multi_line)
+	else
 	{
-		if (!(multi_line = ft_strjoin_free(str, "\n", 0)))
+		if (!(*multi_line = ft_strjoin_free(str, "\n", 0)))
 			return (1);
 		if (!(new = ft_lstnew(str, ft_strlen(str) + 1)))
 			return (1);
 		ft_lstadd(&shell->history, new);
 	}
+	return (0);
+}
+
+int			add_to_history(char *str, t_shell *shell, int flag)
+{
+	static char	*multi_line = NULL;
+
+	if (flag == 1)
+		return (add_incomplete_command(str, shell, &multi_line));
 	else if (!flag && ft_strlen(str))
 		return (add_complete_command(str, shell, &multi_line));
 	return (0);
