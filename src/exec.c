@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 02:37:17 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 02:44:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	ft_wait(int *status)
 	}
 }
 
-static void	exec_internal(t_shell *shell, t_ast *instr)
+static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 {
 	set_pipeline(shell, instr);
 	if (expand_params(shell, ((t_command *)instr->data)->args)
@@ -98,7 +98,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 		return (bin_not_found(((t_command *)instr->data)->args[0]));
 	}
 	if (!pid)
-		exec_internal(shell, instr);
+		exec_internal(shell, instr, bin_path);
 	else
 		instr->pid = pid;
 	return (0);
