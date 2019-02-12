@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 19:31:44 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 21:10:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,27 @@
 
 #include "shell.h"
 #include "ast.h"
+
+static void	debug(t_command *command)
+{
+	unsigned int	len;
+	unsigned int	i;
+
+	i = 0;
+	len = 0;
+	while (command->args[len])
+		++len;
+	ft_printf("len args: %u\n", len);
+	while (i < len)
+		ft_printf("%s\n", command->args[i++]);
+	len = 0;
+	i = 0;
+	while (command->args_value[len])
+		++len;
+	ft_printf("len value: %u\n", len);
+	while (i < len)
+		ft_printf("%s\n", command->args_value[i++]);
+}
 
 int		exec_cmd(t_shell *shell, t_ast *ast)
 {
@@ -25,6 +46,7 @@ int		exec_cmd(t_shell *shell, t_ast *ast)
 		return (1);
 	}
 	ret = exec(shell, ast);
+	debug(ast->data);
 	reset_redirs(shell, ast);
 	return (ret);
 }
