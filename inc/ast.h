@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 22:43:47 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 01:56:26 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef enum			e_ttype
 	TT_REDIR_R,
 	TT_REDIR_R_BOTH,
 	TT_REDIR_RR,
+	TT_REDIR_RW,
 	TT_EXPR_OPEN,
 	TT_EXPR_CLOSE,
 	TT_EXPR_INCOMPLETE,
@@ -154,9 +155,15 @@ int						rule_redir_r_comp(t_parser *parser, t_ast_token *list);
 int						rule_redir_r_close(t_parser *parser, t_ast_token *list);
 
 /*
-** parse/rules_redir_r_both.c
+** parser/rules_redir_r_both.c
 */
 int						rule_redir_r_both(t_parser *parser, t_ast_token *list);
+
+
+/*
+** parser/rules_redir_rw.c
+*/
+int						rule_redir_rw(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_pipeline.c

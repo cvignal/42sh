@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 09:46:07 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 01:28:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,7 @@ int					apply_redir_generic(t_redir *redir);
 int					apply_redir_r_close(t_redir *redir);
 int					apply_redir_r_both(t_redir *redir);
 int					apply_redir_r_comp(t_redir *redir);
+int					apply_redir_rw(t_redir *redir);
 
 /*
 ** redir_r_comp.c
@@ -271,6 +272,11 @@ int					redir_r_close(t_shell *shell, t_ast *ast, t_redir *redir);
 ** redir_r_both.c
 */
 int					redir_r_both(t_shell *shell, t_ast *ast, t_redir *redir);
+
+/*
+** redir_rw.c
+*/
+int					redir_rw(t_shell *shell, t_ast *ast, t_redir *redir);
 
 /*
 ** pipeline.c
