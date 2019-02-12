@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 11:44:35 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 15:45:26 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 20:47:40 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	print_multi_lines(t_shell *shell, char *buf)
 	tputs(tgetstr("rc", NULL), 0, ft_printchar);
 	if (!(cursor = get_cursor_pos()))
 		return ;
-	if (cursor->col - 1 == win.ws_col)
+	if (cursor->col  == win.ws_col)
 		tputs(tgetstr("do", NULL), 0, ft_printchar);
 	free(cursor);
 }

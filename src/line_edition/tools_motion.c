@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 11:28:55 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 11:14:58 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 19:59:43 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,6 @@ size_t	length_curr_line(t_shell *shell)
 			break ;
 	}
 	return (ret);
-}
-
-void	scroll_lines(t_shell *shell)
-{
-	tputs(tgetstr("sc", NULL), 0, ft_printchar);
-	tputs(tgetstr("cd", NULL), 0, ft_printchar);
-	ft_dprintf(g_fd_output, "%s", shell->line.data + shell->line.cursor + 1);
-	tputs(tgetstr("rc", NULL), 0, ft_printchar);
 }
 
 void		clean_under_line(t_shell *shell)
