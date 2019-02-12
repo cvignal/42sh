@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 11:57:26 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 23:18:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ t_key	g_special_keys[] =\
 	{CTRL_D, &ft_ctrld},
 	{CTRL_C, &ft_ctrlc},
 	{CTRL_L, &ft_ctrll},
-	{CTRL_R, &ft_ctrlr}
+	{CTRL_R, &ft_ctrlr},
+	{CTRL_A, &ft_homekey}
 };
 
 int		is_a_special_key(char *buf)

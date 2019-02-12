@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 13:59:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 23:18:28 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define CTRL_C "\x3\0\0\0\0\0"
 # define CTRL_L "\xc\0\0\0\0\0"
 # define CTRL_R "\x12\0\0\0\0\0"
+# define CTRL_A	"\x1\0\0\0\0\0"
 # define RETURN "\n"
 # define BACKSPACE "\b"
 # define DEL_KEY "\033[3~"
