@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 19:02:11 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 15:32:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 22:58:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <curses.h>
 #include <termios.h>
 #include <sys/ioctl.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 #include "shell.h"
 #include "libft.h"
@@ -24,14 +26,18 @@ static void	down_one_line(t_line line, int width, int flag)
 	t_curs	*cursor;
 	int		i;
 	int		len_last_line;
+	int		fd;
 
+	fd = open("output.log", O_WRONLY | O_CREAT, 0644);
 	if (!(cursor = get_cursor_pos()))
 		return ;
 	tputs(tgoto(tgetstr("cm", NULL), cursor->col - 1, cursor->line)
 			, 0, ft_printchar);
-	len_last_line = line.len % width;
+	len_last_line = (line.len + 3) % width;
+	ft_dprintf(fd, "%d %d %d\n", len_last_line, line.len, width);
+	close(fd);
 	if (flag)
-		i = cursor->col - len_last_line - 4;
+		i = cursor->col - len_last_line - 1;
 	else
 		i = 0;
 	while (i > 0)
