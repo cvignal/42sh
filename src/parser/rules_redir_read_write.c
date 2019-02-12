@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rules_redir_r_close.c                              :+:      :+:    :+:   */
+/*   rules_redir_read_write.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/23 19:38:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 22:49:22 by gchainet         ###   ########.fr       */
+/*   Created: 2019/02/12 01:02:14 by gchainet          #+#    #+#             */
+/*   Updated: 2019/02/12 02:24:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
 #include "shell.h"
+#include "libft.h"
 
-static t_redir	*create_redir_close(char *data)
+static t_redir	*create_redir_rw(t_ast_token *list)
 {
-	t_redir		*new_redir;
+	t_redir	*new_redir;
 
 	new_redir = malloc(sizeof(*new_redir));
 	if (!new_redir)
 		return (NULL);
-	new_redir->type = TT_REDIR_R_CLOSE;
+	new_redir->type = TT_REDIR_RW;
 	new_redir->next = NULL;
-	new_redir->redir_act = &redir_r_close;
-	new_redir->target = NULL;
+	new_redir->redir_act = &redir_rw;
+	new_redir->target = list->next->data;
 	new_redir->applied = 0;
-	if (ft_isdigit(*data))
+	if (ft_isdigit(*(char *)list->data))
 	{
-		new_redir->in = ft_atoi(data);
+		new_redir->in = ft_atoi(list->data);
 		if (new_redir->in < 0 || new_redir->in > 9)
 		{
 			free(new_redir);
@@ -35,17 +35,17 @@ static t_redir	*create_redir_close(char *data)
 		}
 	}
 	else
-		new_redir->in = 1;
+		new_redir->in = 0;
 	return (new_redir);
 }
 
-int				rule_redir_r_close(t_parser *parser, t_ast_token *list)
+int				rule_redir_rw(t_parser *parser, t_ast_token *list)
 {
 	t_ast		*instr;
 	t_redir		*redir;
 	t_redir		*iter;
 
-	if (!(redir = create_redir_close(list->data)))
+	if (!(redir = create_redir_rw(list)))
 		return (1);
 	instr = parser->pss->ret;
 	iter = instr->redir_list;
@@ -58,6 +58,7 @@ int				rule_redir_r_close(t_parser *parser, t_ast_token *list)
 		iter->next = redir;
 	}
 	free(parser->input_queue->data);
+	free(pop_ast_token(&parser->input_queue));
 	free(pop_ast_token(&parser->input_queue));
 	return (0);
 }

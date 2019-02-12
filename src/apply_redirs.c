@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/06 20:01:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 16:42:03 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 01:26:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static t_redir_apply_desc	g_redir_apply_desc[] =\
 	{TT_REDIR_LL, &apply_redir_generic},
 	{TT_REDIR_R_CLOSE, &apply_redir_r_close},
 	{TT_REDIR_R_COMP, &apply_redir_r_comp},
-	{TT_REDIR_R_BOTH, &apply_redir_r_both}
+	{TT_REDIR_R_BOTH, &apply_redir_r_both},
+	{TT_REDIR_RW, &apply_redir_rw}
 };
 
 int		apply_redirs(t_shell *shell, t_ast *instr)
@@ -62,19 +63,14 @@ int		apply_redir_generic(t_redir *redir)
 
 int		apply_redir_r_close(t_redir *redir)
 {
-	if (close(redir->in))
-	{
-		ft_dprintf(2, "%s: unable to close file descriptor %d\n"
-				, EXEC_NAME, redir->fd);
-		return (1);
-	}
+	close(redir->in);
 	return (0);
 }
 
 int		apply_redir_r_both(t_redir *redir)
 {
-	if (dup2(redir->fd, STDIN_FILENO) == -1
-			|| dup2(redir->fd, STDERR_FILENO == -1))
+	if (dup2(redir->fd, STDOUT_FILENO) == -1
+			|| dup2(redir->fd, STDERR_FILENO) == -1)
 	{
 		ft_dprintf(2, "%s: unable to create redirection\n", EXEC_NAME);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 09:49:14 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/11 23:58:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 			exit(1);
 		}
 		reset_terminal_mode(shell);
-		if (apply_redirs(shell, instr))
-			return (-1);
 		execve(bin_path, ((t_command *)instr->data)->args, shell->env);
 		exit(1);
 	}

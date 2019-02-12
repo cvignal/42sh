@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:54:28 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/31 17:13:19 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 01:12:06 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static const t_token_desc	g_token_desc[] =
 	{"d*>", TT_REDIR_R},
 	{"&>", TT_REDIR_R_BOTH},
 	{">&", TT_REDIR_R_BOTH},
+	{"d*<>", TT_REDIR_RW},
 	{"d*>&", TT_PARTIAL},
 	{"d*>&-", TT_REDIR_R_CLOSE},
 	{"d*>&d*", TT_REDIR_R_COMP},

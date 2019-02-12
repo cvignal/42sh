@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 18:49:33 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 00:57:29 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ static char	*expand(t_shell *shell, char *arg, int *error)
 		if (exp_lexer_cut_var(shell, &shell->exp_lexer, 0)
 				& EXP_LEXER_RET_ERROR)
 			return (clean_exit(&shell->exp_lexer, error));
-	expand_home(shell, error);
+	if (shell->exp_lexer.buffer.buffer)
+		expand_home(shell, error);
 	return (shell->exp_lexer.buffer.buffer);
 }
 

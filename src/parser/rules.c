@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:20:26 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/25 15:22:05 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/11 22:32:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,43 +16,42 @@
 #include "shell.h"
 #include "libft.h"
 
-int	rule_create_cmd(t_parser *parser, t_ast_token *list)
+int	rule_first_word(t_parser *parser, t_ast_token *list)
 {
-	t_command	*new_command;
-	t_ast		*new_node;
-	int			type;
+	int	type;
 
-	(void)parser;
 	type = keyword_type(list->data);
-	if (type == TT_WORD)
-	{
-		if (!(new_command = alloc_command()))
-			return (1);
-		add_to_command(new_command, list->data);
-		if (!(new_node = alloc_ast(new_command, TT_CMD, exec_cmd, free_cmd)))
-		{
-			free(new_command);
-			return (1);
-		}
-		list->type = TT_CMD;
-		list->data = new_node;
-	}
-	else
+	if (type != TT_WORD)
 		list->type = type;
+	else
+		return (rule_push_cmd(parser, list));
+	return (0);
+}
+
+int	rule_push_cmd(t_parser *parser, t_ast_token *list)
+{
+	t_ast	*node;
+
+	(void)list;
+	node = alloc_ast(NULL, TT_CMD, &exec_cmd, &free_cmd);
+	if (!node || pss_push(parser, PS_CMD))
+		return (1);
+	node->data = alloc_command();
+	if (!node->data)
+	{
+		free(node);
+		return (1);
+	}
+	parser->pss->ret = node;
 	return (0);
 }
 
 int	rule_add_to_cmd(t_parser *parser, t_ast_token *list)
 {
-	int			ret;
-	t_ast_token	*tmp;
-
-	(void)parser;
-	ret = add_to_command(((t_ast *)list->data)->data, list->next->data);
-	tmp = list->next->next;
-	free(list->next);
-	list->next = tmp;
-	return (ret);
+	if (add_to_command(parser->pss->ret->data, list->data))
+		return (1);
+	free(pop_ast_token(&parser->input_queue));
+	return (0);
 }
 
 int	rule_create_end(t_parser *parser, t_ast_token *list)

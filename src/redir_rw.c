@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redir_r_both.c                                     :+:      :+:    :+:   */
+/*   redir_rw.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/24 10:52:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 22:55:00 by gchainet         ###   ########.fr       */
+/*   Created: 2019/02/12 01:08:46 by gchainet          #+#    #+#             */
+/*   Updated: 2019/02/12 01:26:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
 
 #include "shell.h"
 
-int	redir_r_both(t_shell *shell, t_ast *instr, t_redir *redir)
+int	redir_rw(t_shell *shell, t_ast *ast, t_redir *redir)
 {
 	int	fd;
 
-	(void)shell;
-	(void)instr;
-	fd = open(redir->target, O_WRONLY | O_CREAT | O_TRUNC,
+	(void)ast;
+	fd = open_file(shell, redir->target, O_RDWR | O_CREAT,
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
 		return (1);

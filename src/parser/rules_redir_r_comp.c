@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 12:43:13 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/23 14:01:42 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 00:43:28 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static t_redir	*create_redir_comp(char *data)
 	new_redir = create_redir(TT_REDIR_R_COMP, NULL, &redir_r_comp);
 	if (!new_redir)
 		return (NULL);
+	new_redir->in = 1;
 	if (ft_isdigit(*data))
 	{
 		new_redir->in = ft_atoi(data);
@@ -46,13 +47,12 @@ static t_redir	*create_redir_comp(char *data)
 int				rule_redir_r_comp(t_parser *parser, t_ast_token *list)
 {
 	t_ast		*instr;
-	t_ast_token	*tmp;
 	t_redir		*redir;
 	t_redir		*iter;
 
-	(void)parser;
-	redir = create_redir_comp(list->next->data);
-	instr = list->data;
+	if (!(redir = create_redir_comp(list->data)))
+		return (1);
+	instr = parser->pss->ret;
 	iter = instr->redir_list;
 	if (!iter)
 		instr->redir_list = redir;
@@ -62,9 +62,7 @@ int				rule_redir_r_comp(t_parser *parser, t_ast_token *list)
 			iter = iter->next;
 		iter->next = redir;
 	}
-	tmp = list->next->next;
-	free(list->next->data);
-	free(list->next);
-	list->next = tmp;
+	free(parser->input_queue->data);
+	free(pop_ast_token(&parser->input_queue));
 	return (0);
 }
