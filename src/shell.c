@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 21:40:35 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 21:46:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ static void	free_shell_aux(t_shell *shell)
 	free_token_list(shell->output);
 	free_token_list(shell->current);
 	if (shell->parser.ret)
+	{
 		shell->parser.ret->del(shell->parser.ret);
+		shell->parser.ret = NULL;
+	}
 	exp_ss_pop(&shell->exp_lexer);
 	free_history(shell);
 }
