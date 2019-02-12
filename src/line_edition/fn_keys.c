@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 16:24:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/11 19:26:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 02:34:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,15 @@ int	ft_ctrld(t_shell *shell)
 
 	args[0] = "0";
 	args[1] = NULL;
-	if (!shell->ctrld && shell->line.len == 0 && !shell->output && !shell->current)
+	if (!shell->ctrld && shell->line.len == 0 && !shell->output
+			&& !shell->current)
 		builtin_exit(shell, args);
 	if (shell->line.len == 0)
 	{
 		shell->end_heredoc = shell->ctrld;
 		if (!shell->ctrld)
-			clean_exit_lexer(&shell->lexer, &shell->output, &shell->current, NULL);
+			clean_exit_lexer(&shell->lexer, &shell->output,
+					&shell->current, NULL);
 		shell->prev_cmd_state = 1;
 		return (1);
 	}

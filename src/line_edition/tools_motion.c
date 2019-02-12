@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 11:28:55 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/11 16:09:27 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 02:32:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	move_lines(t_shell *shell)
 	tputs(tgetstr("le", NULL), 0, ft_printchar);
 }
 
-void		clean_under_line(t_shell *shell)
+void	clean_under_line(t_shell *shell)
 {
 	tputs(tgetstr("sc", NULL), 0, ft_printchar);
 	if (shell)

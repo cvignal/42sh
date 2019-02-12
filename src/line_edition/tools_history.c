@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/11 21:21:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 02:33:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int	open_tty_fd(t_shell *shell)
 {
 	int	new_fd;
 
+	shell->prev_cmd_state = 0;
 	if (check_validity(shell))
 		return (1);
 	raw_terminal_mode(shell);
@@ -65,7 +66,6 @@ int			load_history(t_shell *shell)
 		ft_lstadd(&shell->history, new);
 		free(line);
 	}
-	shell->prev_cmd_state = 0;
 	return (open_tty_fd(shell));
 }
 

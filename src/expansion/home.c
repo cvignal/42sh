@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:35:26 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 18:52:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 02:37:28 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	replace_home(t_exp_buff *buffer, const char *home)
 	return (0);
 }
 
-int	expand_home(t_shell *shell, int *error)
+int			expand_home(t_shell *shell, int *error)
 {
 	char	*home;
 

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/11 16:09:48 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 02:32:08 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char		*word_to_complete(t_line *line)
 	return (ret);
 }
 
-int	is_a_command(t_line *line)
+int			is_a_command(t_line *line)
 {
 	int		ret;
 	size_t	i;

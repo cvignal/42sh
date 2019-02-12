@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 01:56:26 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 02:37:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,6 @@ int						rule_redir_r_close(t_parser *parser, t_ast_token *list);
 ** parser/rules_redir_r_both.c
 */
 int						rule_redir_r_both(t_parser *parser, t_ast_token *list);
-
 
 /*
 ** parser/rules_redir_rw.c

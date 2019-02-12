@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 23:58:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 02:37:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,20 @@ static int	ft_wait(int *status)
 		if (WIFEXITED(*status) || WIFSIGNALED(*status))
 			return (0);
 	}
+}
+
+static void	exec_internal(t_shell *shell, t_ast *instr)
+{
+	set_pipeline(shell, instr);
+	if (expand_params(shell, ((t_command *)instr->data)->args)
+			|| apply_redirs(shell, instr))
+	{
+		free_shell(shell);
+		exit(1);
+	}
+	reset_terminal_mode(shell);
+	execve(bin_path, ((t_command *)instr->data)->args, shell->env);
+	exit(1);
 }
 
 int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
@@ -84,18 +98,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 		return (bin_not_found(((t_command *)instr->data)->args[0]));
 	}
 	if (!pid)
-	{
-		set_pipeline(shell, instr);
-		if (expand_params(shell, ((t_command *)instr->data)->args)
-				|| apply_redirs(shell, instr))
-		{
-			free_shell(shell);
-			exit(1);
-		}
-		reset_terminal_mode(shell);
-		execve(bin_path, ((t_command *)instr->data)->args, shell->env);
-		exit(1);
-	}
+		exec_internal(shell, instr);
 	else
 		instr->pid = pid;
 	return (0);
