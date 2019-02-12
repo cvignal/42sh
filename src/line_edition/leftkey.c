@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:48:22 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 17:04:20 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 21:37:54 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	left_key_multi(t_shell *shell)
 	ioctl(0, TIOCGWINSZ, &win);
 	if (cursor->col == 1)
 		tputs(tgoto(tgetstr("cm", NULL), win.ws_col - 1, cursor->line - 2)
-			, 0, ft_printchar);	
+			, 0, ft_printchar);
 	else
 		tputs(tgetstr("le", NULL), 0, ft_printchar);
 	shell->line.cursor--;
@@ -81,4 +81,3 @@ int			ft_leftkey(t_shell *shell)
 	}
 	return (0);
 }
-

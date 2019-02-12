@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 21:31:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 21:40:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,25 @@ static int	increment_shlvl(t_shell *shell)
 	return (0);
 }
 
+static void	free_history(t_shell *shell)
+{
+	t_list	*list;
+	t_list	*tmp;
+
+	list = shell->history;
+	while (list)
+	{
+		tmp = list->next;
+		free(list->content);
+		free(list);
+		list = tmp;
+	}
+}
+
 static void	free_shell_aux(t_shell *shell)
 {
 	t_fd	*fd;
 	t_fd	*next_fd;
-	t_list	*list;
-	t_list	*tmp;
 
 	lss_pop(&shell->lexer);
 	pss_pop(&shell->parser);
@@ -57,14 +70,7 @@ static void	free_shell_aux(t_shell *shell)
 	if (shell->parser.ret)
 		shell->parser.ret->del(shell->parser.ret);
 	exp_ss_pop(&shell->exp_lexer);
-	list = shell->history;
-	while (list)
-	{
-		tmp = list->next;
-		free(list->content);
-		free(list);
-		list = tmp;
-	}
+	free_history(shell);
 }
 
 void		free_shell(t_shell *shell)
@@ -83,14 +89,12 @@ void		free_shell(t_shell *shell)
 	if (shell->hash_table)
 	{
 		while (++i < HASH_TABLE_SIZE)
-		{
 			if (shell->hash_table[i])
 			{
 				free(shell->hash_table[i]->path);
 				free(shell->hash_table[i]->bin);
 				free(shell->hash_table[i]);
 			}
-		}
 		free(shell->hash_table);
 	}
 	free_shell_aux(shell);

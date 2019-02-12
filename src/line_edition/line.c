@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 08:40:13 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 11:56:58 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 21:38:06 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 #include "shell.h"
 #include "libft.h"
-
 
 static int	realloc_line(t_line *line)
 {
