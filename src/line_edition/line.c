@@ -6,18 +6,15 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 08:40:13 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 21:47:28 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 11:56:58 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <curses.h>
-#include <term.h>
-#include <sys/ioctl.h>
 
 #include "shell.h"
 #include "libft.h"
-#include "fill_line.h"
+
 
 static int	realloc_line(t_line *line)
 {
@@ -49,25 +46,6 @@ void		free_line(t_line *line)
 	ft_bzero(line, sizeof(*line));
 }
 
-static void	reprint_line(t_line *line)
-{
-	t_curs			*cursor;
-	struct winsize	win;
-
-	cursor = get_cursor_pos();
-	ioctl(0, TIOCGWINSZ, &win);
-	tputs(tgetstr("sc", NULL), 0, ft_printchar);
-	if (cursor->col != win.ws_col)
-		tputs(tgetstr("ce", NULL), 0, ft_printchar);
-	tputs(tgetstr("do", NULL), 0, ft_printchar);
-	tputs(tgetstr("cd", NULL), 0, ft_printchar);
-	tputs(tgetstr("rc", NULL), 0, ft_printchar);
-	if (cursor->col == win.ws_col)
-		tputs(tgetstr("nd", NULL), 0, ft_printchar);
-	ft_dprintf(g_fd_output, "%s", line->data + line->cursor);
-	tputs(tgetstr("rc", NULL), 0, ft_printchar);
-}
-
 int			add_to_line(t_line *line, char *s)
 {
 	size_t	add_len;
@@ -83,10 +61,5 @@ int			add_to_line(t_line *line, char *s)
 	ft_strncpy(line->data + line->cursor, s, add_len);
 	line->len += add_len;
 	line->cursor += add_len;
-	tputs(tgetstr("im", NULL), 0, ft_printchar);
-	ft_dprintf(g_fd_output, "%s", s);
-	if (nb_multi_lines(line->len) != nb_multi_lines(line->cursor))
-		reprint_line(line);
-	tputs(tgetstr("ei", NULL), 0, ft_printchar);
 	return (0);
 }

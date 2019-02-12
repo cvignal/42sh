@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/12 01:27:00 by gchainet         ###   ########.fr        #
+#    Updated: 2019/02/12 13:47:56 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,9 @@ SRC		=							\
 	parser/utils.c					\
 	line_edition/line.c				\
 	line_edition/fill_line.c		\
-	line_edition/keys.c				\
+	line_edition/leftkey.c			\
+	line_edition/rightkey.c			\
+	line_edition/backspace.c		\
 	line_edition/other_keys.c		\
 	line_edition/tools_keys.c		\
 	line_edition/tools_auto.c		\
@@ -69,6 +71,7 @@ SRC		=							\
 	line_edition/line_keys.c		\
 	line_edition/switch_mode.c		\
 	line_edition/history_research.c	\
+	line_edition/tools_insertion.c	\
 	exec/cmd.c						\
 	exec/pipeline.c					\
 	exec/end.c						\

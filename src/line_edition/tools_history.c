@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 02:33:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 20:55:20 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ static int	add_complete_command(char *str, t_shell *shell, char **multi_line)
 		return (1);
 	ft_lstadd(&shell->history, new);
 	ft_dprintf(shell->fd_hf, "%s\n", str);
+	if (*multi_line && shell->prev_cmd_state)
+		ft_strdel(multi_line);
 	shell->prev_cmd_state = 0;
 	return (0);
 }
