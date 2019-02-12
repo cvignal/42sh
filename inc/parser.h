@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 22:23:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 21:21:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ t_token					*alloc_token(void);
 int						add_to_token(t_token *token, char c);
 int						insert_into_token(t_token *token, char *data, int pos);
 void					add_to_token_list(t_token **list, t_token *new_token);
+void					free_token_list(t_token *list);
 
 /*
 ** parser/token_type.c

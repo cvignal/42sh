@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 11:45:13 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 21:31:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "shell.h"
 #include "libft.h"
 #include "fill_line.h"
+#include "expand.h"
 
 static int	increment_shlvl(t_shell *shell)
 {
@@ -33,6 +34,37 @@ static int	increment_shlvl(t_shell *shell)
 	set_env_var(shell, "SHLVL", new_value);
 	free(new_value);
 	return (0);
+}
+
+static void	free_shell_aux(t_shell *shell)
+{
+	t_fd	*fd;
+	t_fd	*next_fd;
+	t_list	*list;
+	t_list	*tmp;
+
+	lss_pop(&shell->lexer);
+	pss_pop(&shell->parser);
+	fd = shell->used_fd;
+	while (fd)
+	{
+		next_fd = fd->next;
+		free(fd);
+		fd = next_fd;
+	}
+	free_token_list(shell->output);
+	free_token_list(shell->current);
+	if (shell->parser.ret)
+		shell->parser.ret->del(shell->parser.ret);
+	exp_ss_pop(&shell->exp_lexer);
+	list = shell->history;
+	while (list)
+	{
+		tmp = list->next;
+		free(list->content);
+		free(list);
+		list = tmp;
+	}
 }
 
 void		free_shell(t_shell *shell)
@@ -61,6 +93,7 @@ void		free_shell(t_shell *shell)
 		}
 		free(shell->hash_table);
 	}
+	free_shell_aux(shell);
 	reset_terminal_mode(shell);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 11:43:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 21:24:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	builtin_exit(t_shell *shell, char **args)
 	if (close(shell->fd_op) == -1)
 		ft_dprintf(2, "Error on closing the tty fd\n");
 	free_shell(shell);
-	free(shell->used_fd);
 	if (arg_count == 2 && !ft_isdigit(args[1][0]) && args[1][0] != '-'
 			&& args[1][0] != '+')
 		exit(255);

@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/12 13:47:56 by cvignal          ###   ########.fr        #
+#    Updated: 2019/02/12 21:22:57 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ NAME	:=	21sh
 SRC		=							\
 	main.c							\
 	parser/token.c					\
+	parser/free_token.c				\
 	parser/token_type.c				\
 	parser/token_type_desc.c		\
 	parser/parser.c					\
