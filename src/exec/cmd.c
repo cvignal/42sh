@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 21:14:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 21:15:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int		exec_cmd(t_shell *shell, t_ast *ast)
 		return (1);
 	}
 	ret = exec(shell, ast);
-	debug(ast->data);
 	reset_redirs(shell, ast);
 	return (ret);
 }
