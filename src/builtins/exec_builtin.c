@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 19:27:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 03:07:01 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 		instr->ret = 0;
 		return (0);
 	}
-	if (expand_params(shell, ((t_command *)instr->data)->args))
+	if (expand_params(shell, instr->data))
 		return (-1);
 	prepare_pipeline(instr, fd);
 	if (apply_redirs(shell, instr))
 		return (-1);
-	instr->ret = builtin(shell, ((t_command *)instr->data)->args);
+	instr->ret = builtin(shell, ((t_command *)instr->data)->args_value);
 	reset_pipeline(fd);
 	return (instr->ret);
 }

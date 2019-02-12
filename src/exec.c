@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 02:44:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 03:07:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,13 @@ static int	ft_wait(int *status)
 static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 {
 	set_pipeline(shell, instr);
-	if (expand_params(shell, ((t_command *)instr->data)->args)
-			|| apply_redirs(shell, instr))
+	if (expand_params(shell, instr->data) || apply_redirs(shell, instr))
 	{
 		free_shell(shell);
 		exit(1);
 	}
 	reset_terminal_mode(shell);
-	execve(bin_path, ((t_command *)instr->data)->args, shell->env);
+	execve(bin_path, ((t_command *)instr->data)->args_value, shell->env);
 	exit(1);
 }
 
@@ -65,14 +64,7 @@ int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
 	else
 		return (bin_not_found(args[0]));
 	if (!pid)
-	{
-		if (expand_params(shell, args))
-		{
-			free_shell(shell);
-			exit(1);
-		}
 		execve(bin_path, args, tmp_shell->env);
-	}
 	else
 	{
 		free(bin_path);

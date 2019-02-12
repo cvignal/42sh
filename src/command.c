@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 08:38:43 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/06 07:24:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 03:08:48 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,13 @@ void		free_command(t_command *command)
 
 	i = 0;
 	while (command->args[i])
+	{
+		if (command->args_value[i])
+			free(command->args_value[i]);
 		free(command->args[i++]);
+	}
 	free(command->args);
+	free(command->args_value);
 	free(command);
 }
 

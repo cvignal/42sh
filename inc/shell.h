@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 02:31:00 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 02:54:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct		s_redir_apply_desc
 typedef struct		s_command
 {
 	char			**args;
+	char			**args_value;
 	size_t			alloc_size;
 	size_t			args_len;
 	pid_t			pid;

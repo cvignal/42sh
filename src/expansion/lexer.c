@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 00:57:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/12 03:03:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,31 +52,29 @@ static char	*expand(t_shell *shell, char *arg, int *error)
 	return (shell->exp_lexer.buffer.buffer);
 }
 
-int			expand_params(t_shell *shell, char **params)
+int			expand_params(t_shell *shell, t_command *command)
 {
 	int		i;
 	int		j;
-	char	*value;
 	int		error;
 
 	i = 1;
 	j = 0;
-	while (params[i])
+	while (command->args[i])
 	{
 		error = 0;
-		value = expand(shell, params[i], &error);
+		if (command->args_value[i - j])
+			free(command->args_value[i - j]);
+		command->args_value[i - j] = expand(shell, command->args[i], &error);
 		if (error)
 		{
 			ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
 			return (1);
 		}
-		if (!value)
+		if (!command->args_value[i - j])
 			++j;
-		else
-			free(params[i]);
-		params[i - j] = value ? value : params[i - j];
 		++i;
 	}
-	params[i - j] = NULL;
+	command->args_value[i - j] = NULL;
 	return (0);
 }
