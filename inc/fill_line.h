@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/11 16:10:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 13:59:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ void			clear_cmd_line(t_shell *shell);
 t_curs			*get_cursor_pos(void);
 size_t			length_curr_line(t_shell *shell);
 void			scroll_lines(t_shell *shell);
-void			move_lines(t_shell *shell);
+void			print_line(t_shell *shell, char *buf);
+void			go_to_end_of_line(t_shell *shell);
 
 /*
 ** Tools for history

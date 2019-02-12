@@ -24,6 +24,7 @@ callgraph.ps
 
 ### Tests ###
 test/
+log/
 
 ### Build ###
 # Prerequisites

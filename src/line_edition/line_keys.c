@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 19:02:11 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 15:26:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/12 15:32:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ static void	down_one_line(t_line line, int width, int flag)
 	int		i;
 	int		len_last_line;
 
-	cursor = get_cursor_pos();
-	tputs(tgoto(tgetstr("cm", NULL), cursor->col - 1, cursor->line), 0,\
-			ft_printchar);
+	if (!(cursor = get_cursor_pos()))
+		return ;
+	tputs(tgoto(tgetstr("cm", NULL), cursor->col - 1, cursor->line)
+			, 0, ft_printchar);
 	len_last_line = line.len % width;
 	if (flag)
 		i = cursor->col - len_last_line - 4;
