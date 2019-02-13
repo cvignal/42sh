@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 12:04:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 18:23:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int			add_to_history(char *str, t_shell *shell, int flag)
 
 	if (flag == 1)
 		return (add_incomplete_command(str, shell, &multi_line));
-	else if (!flag && ft_strlen(str))
+	else if (!flag && ft_strlen(str) && !ft_strnequ(str, "\033[", 2))
 		return (add_complete_command(str, shell, &multi_line));
 	return (0);
 }
