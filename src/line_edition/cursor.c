@@ -6,13 +6,14 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:11:53 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 13:49:15 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 16:05:09 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
 #include <curses.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include "libft.h"
 #include "fill_line.h"
@@ -24,7 +25,7 @@ void	read_cursor_pos(char *buf)
 
 	i = 0;
 	c = 0;
-	while (c != 'R' && i < 29)
+	while (c != 'R' && i < 28)
 	{
 		c = 0;
 		read(0, &c, 1);

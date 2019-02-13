@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 11:53:31 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 14:45:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,6 @@ typedef struct	s_key
 	char	*value;
 	int		(*f)(t_shell *shell);
 }				t_key;
-
-typedef struct	s_curs
-{
-	int	col;
-	int	line;
-}				t_curs;
 
 extern int		g_fd_output;
 

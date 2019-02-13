@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:48:22 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 11:53:44 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 15:19:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	left_key_multi(t_shell *shell)
 	else
 		t_puts("le");
 	shell->line.cursor--;
+	free(cursor);
 }
 
 int			ft_leftkey(t_shell *shell)
