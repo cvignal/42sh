@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 18:23:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 19:35:28 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	open_tty_fd(t_shell *shell)
 	shell->fd_op = new_fd;
 	g_fd_output = new_fd;
 	shell->pbpaste = NULL;
+	ft_dprintf(shell->fd_hf, "hf_fd : %d\ntty_fd : %d\n", shell->fd_hf, shell->fd_op);
 	return (0);
 }
 

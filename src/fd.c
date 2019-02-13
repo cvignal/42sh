@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:06:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 21:11:44 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 19:40:23 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			get_next_fd(t_shell *shell)
 	int		new_fd;
 	t_fd	*iter;
 
-	new_fd = 10;
+	new_fd = 11;
 	iter = shell->used_fd;
 	while (iter && iter->fd == new_fd)
 	{
@@ -106,13 +106,7 @@ void		close_everything(t_shell *shell)
 		}
 		shell->used_fd = next;
 	}
-	if (tty_fd)
-	{
-		shell->used_fd = tty_fd;
-		shell->used_fd->next = hf_fd;
-		if (hf_fd)
-			shell->used_fd->next->next = NULL;
-	}
+	add_tty_history_fd(shell, tty_fd, hf_fd);
 }
 
 int			open_file(t_shell *shell, const char *file, int mode, int perm)

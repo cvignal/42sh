@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/12 21:22:57 by gchainet         ###   ########.fr        #
+#    Updated: 2019/02/13 19:27:21 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -150,6 +150,7 @@ SRC		=							\
 	expr/gt.c						\
 	expr/ge.c						\
 	signal.c						\
+	tools_fd.c						\
 	fd.c							\
 	wait.c							\
 	expansion/buffer.c				\

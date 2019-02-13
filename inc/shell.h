@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/13 17:58:32 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 19:26:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ char				*get_env_value(t_shell *shell, char *name);
 int					remove_env_value(t_shell *shell, char *name);
 
 /*
-** buiiltins/
+** builtins/
 */
 t_builtin			is_builtin(char *cmd);
 int					builtin_cd(t_shell *shell, char **args);
@@ -215,7 +215,7 @@ int					exec_builtin(t_shell *shell, t_builtin builtin,
 void				signal_sigint(int sig);
 
 /*
-** exec*
+** exec
 */
 struct s_ast;
 int					exec_cmd(t_shell *shell, struct s_ast *ast);
@@ -319,5 +319,10 @@ int					open_file(t_shell *shell, const char *file, int mode,
 		int perm);
 void				remove_fd(t_shell *shell, int fd);
 void				close_everything(t_shell *shell);
+
+/*
+** tools_fd.c
+*/
+void				add_tty_history_fd(t_shell *shell, t_fd *tty_fd, t_fd *hf_fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 17:51:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 19:42:30 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define DOWN_ARROW "\033[B"
 # define HOME_KEY "\033[H"
 # define END_KEY "\033[F"
+# define CTRL_HOME "\033[1;5H"
+# define CTRL_END "\033[1;5F"
 # define PAGE_UP "\033[5~"
 # define PAGE_DOWN "\033[6~"
 # define DEL_KEY "\033[3~"

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 15:48:13 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 20:04:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ t_key	g_special_keys[] =\
 	{CTRL_C, &ft_ctrlc},
 	{CTRL_L, &ft_ctrll},
 	{CTRL_R, &ft_ctrlr},
-	{CTRL_A, &ft_homekey}
+	{CTRL_A, &ft_homekey},
+	{CTRL_HOME, &ft_homekey},
+	{CTRL_END, &ft_endkey}
 };
 
 int		is_a_special_key(char *buf)
@@ -82,12 +84,22 @@ int		t_puts(char *id)
 
 void	ft_addchar(t_shell *shell, char *buf)
 {
-	if (add_to_line(&shell->line, buf))
+	int	i;
+
+	i = 0;
+	while (buf[i])
 	{
-		ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-		return ;
+		if (buf[i] >= 32 && buf[i] <= 126)
+		{
+			if (add_to_line(&shell->line, &buf[i]))
+			{
+				ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
+				return ;
+			}
+			print_line(shell, &buf[i]);
+		}
+		i++;
 	}
-	print_line(shell, buf);
 }
 
 int		apply_key(char *buf, t_shell *shell)
