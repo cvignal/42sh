@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:46:06 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 15:15:08 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 17:54:22 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	select_right_key(t_shell *shell)
 int			ft_rightkey(t_shell *shell)
 {
 	struct winsize	win;
-	t_curs			*cursor;
+	int				curs_col;
 	char			c;
 
 	if (shell->line.cursor < shell->line.len)
@@ -45,13 +45,11 @@ int			ft_rightkey(t_shell *shell)
 		shell->line.cursor++;
 		if (shell->line.mode)
 			return (select_right_key(shell));
-		if (!(cursor = get_cursor_pos()))
-			return (1);
 		ioctl(0, TIOCGWINSZ, &win);
-		t_puts(win.ws_col == cursor->col ? "do" : "nd");
+		curs_col = pos_cursor_col(shell, win.ws_col, 0);
+		t_puts(win.ws_col == curs_col ? "do" : "nd");
 		if (c == '\n')
 			t_puts("do");
-		free(cursor);
 	}
 	return (0);
 }

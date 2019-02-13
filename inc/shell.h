@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/13 15:49:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 17:58:32 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@
 
 # define MAX_PATH	1024
 
-typedef struct	s_curs
+typedef struct		s_curs
 {
 	int	col;
 	int	line;
-}				t_curs;
+}					t_curs;
 
 typedef struct		s_hbt
 {

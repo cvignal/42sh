@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 14:45:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 17:51:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,6 @@ size_t			length_prev_line(t_shell *shell);
 ** General tools
 */
 int				t_puts(char *id);
+int				pos_cursor_col(t_shell *shell, int width, int len);
 
 #endif

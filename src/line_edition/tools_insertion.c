@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 11:44:35 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 16:30:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 17:51:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,21 @@
 #include "shell.h"
 #include "fill_line.h"
 
-static int	pos_cursor_col(t_shell *shell, int width, int len)
+int			pos_cursor_col(t_shell *shell, int width, int len)
 {
 	int	ret;
-	int	fd_log;
+	int	length;
 
-	fd_log = open("log/cursor.log", O_RDWR | O_APPEND | O_CREAT, 0644);
 	if (!nb_multi_lines(shell->line.cursor - len))
 		ret = 3 + shell->line.cursor;
 	else
-		ret = shell->line.cursor % width;
-	ft_dprintf(fd_log, "|%s| %d %d\n", shell->line.data, ret, width);
+	{
+		length = (int)shell->line.cursor;
+		length -= width - 3;
+		ret = length % width;
+	}
 	if (ret <= 0)
-	   ret = width;
+		ret = width;
 	return (ret);
 }
 

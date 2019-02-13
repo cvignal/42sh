@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:48:22 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 15:19:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 17:55:40 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,21 @@ static void	left_key_multi(t_shell *shell)
 	ioctl(0, TIOCGWINSZ, &win);
 	if (cursor->col == 1)
 		tputs(tgoto(tgetstr("cm", NULL), win.ws_col - 1, cursor->line - 2)
-			, 0, ft_printchar);
+				, 0, ft_printchar);
 	else
 		t_puts("le");
 	shell->line.cursor--;
 	free(cursor);
+}
+
+static void	left_select(t_shell *shell, unsigned int curs)
+{
+	if (shell->line.cursor < shell->line.select_curs)
+		ft_dprintf(shell->fd_op, "%s%c%s", INV_COLOR
+				, shell->line.data[curs - 1], EOC);
+	else
+		ft_dprintf(shell->fd_op, "%c", shell->line.data[curs - 1]);
+	t_puts("le");
 }
 
 int			ft_leftkey(t_shell *shell)
@@ -61,7 +71,8 @@ int			ft_leftkey(t_shell *shell)
 	curs = shell->line.cursor;
 	if (shell->line.cursor > 0)
 	{
-		if (nb_multi_lines(shell->line.len + 1))
+		if (nb_multi_lines(shell->line.len + 1)
+				&& shell->line.data[curs - 1] != '\n')
 			left_key_multi(shell);
 		else
 		{
@@ -71,14 +82,7 @@ int			ft_leftkey(t_shell *shell)
 		if (shell->line.data[curs - 1] == '\n')
 			go_to_end_of_line(shell);
 		if (shell->line.mode)
-		{
-			if (shell->line.cursor < shell->line.select_curs)
-				ft_dprintf(shell->fd_op, "%s%c%s", INV_COLOR
-						, shell->line.data[curs - 1], EOC);
-			else
-				ft_dprintf(shell->fd_op, "%c", shell->line.data[curs - 1]);
-			t_puts("le");
-		}
+			left_select(shell, curs);
 	}
 	return (0);
 }
