@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:48:22 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 21:37:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/13 11:53:44 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void		go_to_end_of_line(t_shell *shell)
 {
 	size_t	len;
 
-	tputs(tgetstr("up", NULL), 0, ft_printchar);
+	t_puts("up");
 	if (shell->line.cursor > 0 &&
 			shell->line.data[shell->line.cursor - 1] == '\n')
 		return ;
 	len = length_prev_line(shell);
 	while (len > 0)
 	{
-		tputs(tgetstr("nd", NULL), 0, ft_printchar);
+		t_puts("nd");
 		len--;
 	}
 }
@@ -49,7 +49,7 @@ static void	left_key_multi(t_shell *shell)
 		tputs(tgoto(tgetstr("cm", NULL), win.ws_col - 1, cursor->line - 2)
 			, 0, ft_printchar);
 	else
-		tputs(tgetstr("le", NULL), 0, ft_printchar);
+		t_puts("le");
 	shell->line.cursor--;
 }
 
@@ -64,7 +64,7 @@ int			ft_leftkey(t_shell *shell)
 			left_key_multi(shell);
 		else
 		{
-			tputs(tgetstr("le", NULL), 0, ft_printchar);
+			t_puts("le");
 			shell->line.cursor--;
 		}
 		if (shell->line.data[curs - 1] == '\n')
@@ -72,11 +72,11 @@ int			ft_leftkey(t_shell *shell)
 		if (shell->line.mode)
 		{
 			if (shell->line.cursor < shell->line.select_curs)
-				ft_dprintf(shell->fd_op, "%s%c%s", "\e[7;m"
+				ft_dprintf(shell->fd_op, "%s%c%s", INV_COLOR
 						, shell->line.data[curs - 1], EOC);
 			else
 				ft_dprintf(shell->fd_op, "%c", shell->line.data[curs - 1]);
-			tputs(tgetstr("le", NULL), 0, ft_printchar);
+			t_puts("le");
 		}
 	}
 	return (0);

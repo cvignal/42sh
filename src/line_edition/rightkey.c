@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:46:06 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 20:40:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 13:35:31 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@
 #include "libft.h"
 #include "fill_line.h"
 
+static int	select_right_key(t_shell *shell)
+{
+	char	c;
+
+	c = shell->line.data[shell->line.cursor - 1];
+	if (shell->line.select_curs <= shell->line.cursor)
+		ft_dprintf(shell->fd_op, "%s%c%s", INV_COLOR, c, EOC);
+	else
+		ft_dprintf(shell->fd_op, "%c", c);
+	return (0);
+}
+
 int			ft_rightkey(t_shell *shell)
 {
 	struct winsize	win;
@@ -32,19 +44,13 @@ int			ft_rightkey(t_shell *shell)
 		c = shell->line.data[shell->line.cursor];
 		shell->line.cursor++;
 		if (shell->line.mode)
-		{
-			if (shell->line.cursor >= shell->line.select_curs)
-				ft_dprintf(shell->fd_op, "%s%c%s", "\e[7;m", c, EOC);
-			else
-				ft_dprintf(shell->fd_op, "%c", c);
-		}
+			return (select_right_key(shell));
 		if (!(cursor = get_cursor_pos()))
 			return (1);
 		ioctl(0, TIOCGWINSZ, &win);
-		tputs(tgetstr(win.ws_col == cursor->col ? "do" : "nd", NULL)
-					, 0, ft_printchar);
+		t_puts(win.ws_col == cursor->col ? "do" : "nd");
 		if (c == '\n')
-			tputs(tgetstr("do", NULL), 0, ft_printchar);
+			t_puts("do");
 		free(cursor);
 	}
 	return (0);

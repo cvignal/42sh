@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:11:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/30 18:46:30 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 11:34:29 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 int	ft_ctrlr(t_shell *shell)
 {
-	tputs(tgetstr("cr", NULL), 0, ft_printchar);
-	tputs(tgetstr("dl", NULL), 0, ft_printchar);
+	t_puts("cr");
+	t_puts("dl");
 	ft_printf("(reverse-i-search)`': ");
 	(void)shell;
 	return (0);

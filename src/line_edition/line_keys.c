@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 19:02:11 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 23:00:00 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/13 11:27:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	down_one_line(t_line line, int width, int flag)
 		i = 0;
 	while (i > 0)
 	{
-		tputs(tgetstr("le", NULL), 0, ft_printchar);
+		t_puts("le");
 		i--;
 	}
 	free(cursor);
@@ -51,7 +51,7 @@ static void	back_to_startline(void)
 	i = cursor->col - 4;
 	while (i < 0)
 	{
-		tputs(tgetstr("nd", NULL), 0, ft_printchar);
+		t_puts("nd");
 		i++;
 	}
 	free(cursor);
@@ -88,7 +88,7 @@ int			ft_lineup(t_shell *shell)
 	cursor_nb = nb_multi_lines(shell->line.cursor);
 	if (cursor_nb > 0)
 	{
-		tputs(tgetstr("up", NULL), 0, ft_printchar);
+		t_puts("up");
 		if (cursor_nb == 1)
 			back_to_startline();
 		if (shell->line.cursor < (size_t)width)

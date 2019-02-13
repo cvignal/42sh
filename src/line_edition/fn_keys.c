@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 16:24:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 02:34:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/13 11:32:46 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	ft_ctrlc(t_shell *shell)
 
 int	ft_ctrll(t_shell *shell)
 {
-	tputs(tgetstr("cl", NULL), 0, ft_printchar);
+	t_puts("cl");
 	if (shell->line.len)
 		ft_dprintf(g_fd_output, "$> %s", shell->line.data);
 	else

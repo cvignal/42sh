@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 11:28:55 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 20:55:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/13 11:36:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ size_t	length_curr_line(t_shell *shell)
 
 void	clean_under_line(t_shell *shell)
 {
-	tputs(tgetstr("sc", NULL), 0, ft_printchar);
+	t_puts("sc");
 	if (shell)
 	{
 		while (shell->line.cursor < shell->line.len)
 			ft_rightkey(shell);
 	}
-	tputs(tgetstr("cd", NULL), 0, ft_printchar);
+	t_puts("cd");
 	if (!shell)
-		tputs(tgetstr("rc", NULL), 0, ft_printchar);
+		t_puts("rc");
 }

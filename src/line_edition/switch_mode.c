@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 13:37:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/08 15:37:28 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 13:32:58 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,20 @@ int	ft_copy(t_shell *shell)
 	if (shell->line.cursor > shell->line.select_curs)
 	{
 		begin = shell->line.select_curs;
-		end = shell->line.cursor;
+		end = shell->line.cursor + 1;
 	}
 	else
 	{
 		begin = shell->line.cursor;
-		end = shell->line.select_curs;
+		end = shell->line.select_curs + 1;
 	}
 	if (shell->pbpaste)
 		ft_strdel(&shell->pbpaste);
-	shell->pbpaste = ft_strsub(shell->line.data, begin, end - begin);
+	if (!(shell->pbpaste = ft_strsub(shell->line.data, begin, end - begin)))
+		return (1);
+	t_puts("sc");
+	ft_printf("\n|%s|\n", shell->pbpaste);
+	t_puts("rc");
 	return (0);
 }
 
@@ -64,14 +68,23 @@ int	ft_switch_mode(t_shell *shell)
 	if (shell->line.mode == 0)
 	{
 		shell->line.mode = 1;
+		if (shell->line.cursor < shell->line.len)
+		{
+			ft_dprintf(shell->fd_op, "%s%c%s", INV_COLOR
+				, shell->line.data[shell->line.cursor], EOC);
+			t_puts("le");
+		}
 		shell->line.select_curs = shell->line.cursor;
 	}
 	else
 	{
 		shell->line.mode = 0;
-		tputs(tgetstr("dl", NULL), 0, ft_printchar);
-		tputs(tgetstr("cr", NULL), 0, ft_printchar);
-		ft_dprintf(g_fd_output, "$> %s", shell->line.data);
+		t_puts("dl");
+		t_puts("cr");
+		if (shell->line.data)
+			ft_dprintf(g_fd_output, "$> %s", shell->line.data);
+		else
+			ft_dprintf(shell->fd_op, "$> ");
 		shell->line.cursor = shell->line.len;
 	}
 	return (0);

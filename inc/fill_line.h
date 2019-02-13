@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 23:18:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/13 11:53:31 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define MAJ_TAB "\033[Z"
 # define ESCAPE "\033"
 # define EOC "\e[0m"
+# define INV_COLOR "\e[7;m"
 # define HIST_SIZE_MAX 50000
 # define NOT_A_TTY "Line edition disabled\n$> "
 
@@ -129,5 +130,10 @@ void			go_to_end_of_line(t_shell *shell);
 int				add_to_history(char *str, t_shell *shell, int flag);
 int				load_history(t_shell *shell);
 size_t			length_prev_line(t_shell *shell);
+
+/*
+** General tools
+*/
+int				t_puts(char *id);
 
 #endif

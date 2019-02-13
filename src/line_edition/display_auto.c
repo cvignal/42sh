@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/08 16:29:44 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/13 11:34:05 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	ask_for_many_possibilities(int *table, t_curs *cursor)
 	char	buf[10];
 	int		ret;
 
-	tputs(tgetstr("sc", NULL), 0, ft_printchar);
+	t_puts("sc");
 	if (table[2] < 75)
 		return (1);
 	else
@@ -85,9 +85,9 @@ static int	ask_for_many_possibilities(int *table, t_curs *cursor)
 				table[2], table[3]);
 		ret = read(STDIN_FILENO, buf, 10);
 		buf[ret] = 0;
-		tputs(tgetstr("rc", NULL), 0, ft_printchar);
+		t_puts("rc");
 		if (cursor->line + 1 > tgetnum("li"))
-			tputs(tgetstr("up", NULL), 0, ft_printchar);
+			t_puts("up");
 		clean_under_line(NULL);
 		return (buf[0] == 'y' || buf[0] == '\n');
 	}
@@ -100,7 +100,7 @@ void		display_list(t_list *list)
 	t_curs	*cursor;
 	int		nb;
 
-	tputs(tgetstr("sc", NULL), 0, ft_printchar);
+	t_puts("sc");
 	cursor = get_cursor_pos();
 	fill_table(table, list);
 	if (!ask_for_many_possibilities(table, cursor))
@@ -112,8 +112,8 @@ void		display_list(t_list *list)
 	array = ft_listtotab(list, table[2]);
 	ft_bubblesort(array, table[2]);
 	display_table(array, table);
-	tputs(tgetstr("rc", NULL), 0, ft_printchar);
+	t_puts("rc");
 	while (--nb > 0)
-		tputs(tgetstr("up", NULL), 0, ft_printchar);
+		t_puts("up");
 	free(cursor);
 }
