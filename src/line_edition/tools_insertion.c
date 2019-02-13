@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 11:44:35 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 21:38:26 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/13 10:26:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static void	print_multi_lines(t_shell *shell, char *buf)
 
 	ioctl(0, TIOCGWINSZ, &win);
 	tputs(tgetstr("ce", NULL), 0, ft_printchar);
+	if (!(cursor = get_cursor_pos()))
+		return ;
 	ft_dprintf(shell->fd_op, "%s", buf);
 	tputs(tgetstr("sc", NULL), 0, ft_printchar);
 	ft_dprintf(shell->fd_op, "%s", shell->line.data + shell->line.cursor);
 	tputs(tgetstr("rc", NULL), 0, ft_printchar);
-	if (!(cursor = get_cursor_pos()))
-		return ;
 	if (cursor->col == win.ws_col)
 		tputs(tgetstr("do", NULL), 0, ft_printchar);
 	free(cursor);
@@ -47,12 +47,12 @@ void		print_line(t_shell *shell, char *buf)
 	if (!nb_multi_lines(shell->line.len)
 			|| shell->line.len == shell->line.cursor)
 	{
+		if (!(cursor = get_cursor_pos()))
+			return ;
 		tputs(tgetstr("im", NULL), 0, ft_printchar);
 		ft_dprintf(shell->fd_op, "%s", buf);
 		tputs(tgetstr("ei", NULL), 0, ft_printchar);
-		if (!(cursor = get_cursor_pos()))
-			return ;
-		if (cursor->col - 1 == win.ws_col)
+		if (cursor->col == win.ws_col)
 			tputs(tgetstr("do", NULL), 0, ft_printchar);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 23:18:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/13 10:39:33 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,17 @@ int		is_a_special_key(char *buf)
 int		ft_printchar(int c)
 {
 	return (write(g_fd_output, &c, 1));
+}
+
+int		t_puts(char *id)
+{
+	char	*str;
+
+	if (!(str = tgetstr(id, NULL)))
+		return (1);
+	if (tputs(str, 0, ft_printchar) == ERR)
+		return (1);
+	return (0);
 }
 
 void	ft_addchar(t_shell *shell, char *buf)
