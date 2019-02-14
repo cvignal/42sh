@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 08:40:13 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/13 15:48:40 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 09:48:43 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ void		free_line(t_line *line)
 	ft_bzero(line, sizeof(*line));
 }
 
-int			add_to_line(t_line *line, char *s)
+int			add_to_line(t_line *line, char buf)
 {
 	size_t	add_len;
+	char	s[2];
 
-	add_len = ft_strlen(s);
+	add_len = 1;
 	while (line->len + add_len + 1 >= line->alloc_size)
 	{
 		if (realloc_line(line))
@@ -57,6 +58,8 @@ int			add_to_line(t_line *line, char *s)
 	}
 	ft_memmove(line->data + line->cursor + add_len, line->data + line->cursor,
 			line->len - line->cursor);
+	s[0] = buf;
+	s[1] = 0;
 	ft_strncpy(line->data + line->cursor, s, add_len);
 	line->len += add_len;
 	line->cursor += add_len;

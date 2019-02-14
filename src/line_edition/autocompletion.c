@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 15:46:01 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 09:50:54 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	add_and_display(t_list *list, char *word, t_shell *shell)
 {
 	char	*to_add;
 	char	*str;
+	int		i;
 
 	if (list && list->next)
 	{
@@ -31,10 +32,7 @@ static void	add_and_display(t_list *list, char *word, t_shell *shell)
 		return ;
 	}
 	if (!list)
-	{
-		ft_strdel(&word);
-		return ;
-	}
+		return (ft_strdel(&word));
 	str = list->content;
 	if (ft_strchr(word, '/'))
 		to_add = str + ft_strlen(ft_strrchr(word, '/') + 1);
@@ -43,7 +41,9 @@ static void	add_and_display(t_list *list, char *word, t_shell *shell)
 	t_puts("im");
 	ft_dprintf(g_fd_output, "%s", to_add);
 	t_puts("ei");
-	add_to_line(&shell->line, to_add);
+	i = 0;
+	while (to_add[i])
+		add_to_line(&shell->line, to_add[i++]);
 	ft_strdel(&word);
 }
 

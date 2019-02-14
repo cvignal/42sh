@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 19:35:28 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 10:50:26 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ static int	open_tty_fd(t_shell *shell)
 	int	new_fd;
 
 	shell->prev_cmd_state = 0;
-	if (check_validity(shell))
-		return (1);
+	shell->his_pos = -1;
+	shell->ctrld = 0;
+	shell->end_heredoc = 0;
 	raw_terminal_mode(shell);
 	new_fd = get_next_fd(shell);
 	if ((shell->fd_op = open(ttyname(0), O_WRONLY)) < 0)
@@ -38,7 +39,6 @@ static int	open_tty_fd(t_shell *shell)
 	shell->fd_op = new_fd;
 	g_fd_output = new_fd;
 	shell->pbpaste = NULL;
-	ft_dprintf(shell->fd_hf, "hf_fd : %d\ntty_fd : %d\n", shell->fd_hf, shell->fd_op);
 	return (0);
 }
 
@@ -127,6 +127,8 @@ int			add_to_history(char *str, t_shell *shell, int flag)
 {
 	static char	*multi_line = NULL;
 
+	if (check_validity(shell))
+		return (0);
 	if (flag == 1)
 		return (add_incomplete_command(str, shell, &multi_line));
 	else if (!flag && ft_strlen(str) && !ft_strnequ(str, "\033[", 2))

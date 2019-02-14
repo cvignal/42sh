@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 20:04:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 09:49:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ void	ft_addchar(t_shell *shell, char *buf)
 	{
 		if (buf[i] >= 32 && buf[i] <= 126)
 		{
-			if (add_to_line(&shell->line, &buf[i]))
+			if (add_to_line(&shell->line, buf[i]))
 			{
 				ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
 				return ;
 			}
-			print_line(shell, &buf[i]);
+			print_line(shell, buf[i]);
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/13 19:26:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 10:52:37 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ int					init_shell(t_shell *shell, char **environ);
 /*
 ** line.c
 */
-int					add_to_line(t_line *line, char *s);
+int					add_to_line(t_line *line, char buf);
 void				free_line(t_line *line);
 
 /*
@@ -324,5 +324,10 @@ void				close_everything(t_shell *shell);
 ** tools_fd.c
 */
 void				add_tty_history_fd(t_shell *shell, t_fd *tty_fd, t_fd *hf_fd);
+
+/*
+** alt_shell.c
+*/
+int					alt_init_shell(t_shell *shell);
 
 #endif

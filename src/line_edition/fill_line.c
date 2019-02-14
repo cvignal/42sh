@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 15:26:27 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 10:51:50 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		check_validity(t_shell *shell)
 
 	if (!isatty(0))
 		return (1);
-	if (!(name = getenv("TERM")))
+	if (!(name = getenv("TERM")) || ft_strnequ(name, "dumb", 4))
 	{
 		default_term[0] = "TERM";
 		default_term[1] = "xterm-256color";
@@ -74,14 +74,20 @@ void	reset_terminal_mode(t_shell *shell)
 
 int		alt_fill_line(t_shell *shell)
 {
-	char *line;
+	char	*line;
+	int		fd_log;
 
 	ft_dprintf(2, NOT_A_TTY);
 	reset_terminal_mode(shell);
+	shell->fd_op = 1;
+	g_fd_output = 1;
 	if (get_next_line(0, &line) <= 0)
 		return (1);
 	shell->line.data = line;
 	shell->line.len = ft_strlen(line);
+	shell->history = NULL;
+	fd_log = open("log/line.log", O_RDWR | O_APPEND | O_CREAT, 0644);
+	ft_dprintf(fd_log, "%ld\n", sizeof(shell->line.data));
 	return (0);
 }
 
@@ -92,7 +98,7 @@ int		fill_line(t_shell *shell)
 
 	if (check_validity(shell))
 		return (alt_fill_line(shell));
-	while ((ret = read(STDIN_FILENO, buf, 8)) > 0)
+	while ((ret = read(0, buf, 8)) > 0)
 	{
 		buf[ret] = 0;
 		if (ft_strchr(buf, '\n'))
@@ -105,8 +111,8 @@ int		fill_line(t_shell *shell)
 		else if (shell->line.mode == 0)
 			ft_addchar(shell, buf);
 	}
-	if (!shell->line.data)
-		ft_addchar(shell, "");
+	if (!shell->line.len)
+		shell->line.data = ft_strdup("");
 	clean_under_line(shell);
 	if (!shell->end_heredoc)
 		ft_dprintf(shell->fd_op, "\n");

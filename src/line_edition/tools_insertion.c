@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 11:44:35 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 17:51:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 09:46:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ int			pos_cursor_col(t_shell *shell, int width, int len)
 	return (ret);
 }
 
-static void	print_multi_lines(t_shell *shell, char *buf)
+static void	print_multi_lines(t_shell *shell, char buf)
 {
 	int				curs_col;
 	struct winsize	win;
 
 	ioctl(0, TIOCGWINSZ, &win);
 	t_puts("ce");
-	curs_col = pos_cursor_col(shell, win.ws_col, ft_strlen(buf));
-	ft_dprintf(shell->fd_op, "%s", buf);
+	curs_col = pos_cursor_col(shell, win.ws_col, 1);
+	ft_dprintf(shell->fd_op, "%c", buf);
 	t_puts("sc");
 	ft_dprintf(shell->fd_op, "%s", shell->line.data + shell->line.cursor);
 	t_puts("rc");
@@ -54,7 +54,7 @@ static void	print_multi_lines(t_shell *shell, char *buf)
 		t_puts("do");
 }
 
-void		print_line(t_shell *shell, char *buf)
+void		print_line(t_shell *shell, char buf)
 {
 	int				curs_col;
 	struct winsize	win;
@@ -63,9 +63,9 @@ void		print_line(t_shell *shell, char *buf)
 	if (!nb_multi_lines(shell->line.len)
 			|| shell->line.len == shell->line.cursor)
 	{
-		curs_col = pos_cursor_col(shell, win.ws_col, ft_strlen(buf));
+		curs_col = pos_cursor_col(shell, win.ws_col, 1);
 		t_puts("im");
-		ft_dprintf(shell->fd_op, "%s", buf);
+		ft_dprintf(shell->fd_op, "%c", buf);
 		t_puts("ei");
 		if (curs_col == win.ws_col)
 			t_puts("do");

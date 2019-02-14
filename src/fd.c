@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:06:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/13 19:40:23 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 10:03:35 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void		close_everything(t_shell *shell)
 	t_fd	*tty_fd;
 	t_fd	*hf_fd;
 
+	tty_fd = NULL;
+	hf_fd = NULL;
 	while (shell->used_fd)
 	{
 		next = shell->used_fd->next;
