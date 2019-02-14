@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/14 12:53:02 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 14:50:54 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,23 @@
 void		print_prompt(t_parser *parser, t_shell *shell, int flag)
 {
 	char	*cwd;
+	char	*str;
 
 	cwd = getcwd(NULL, MAX_PATH);
 	if ((parser && parser->pss->state != PS_NONE) || flag)
 	{
-		shell->prompt->len = 2;
+		shell->prompt_len = 2;
 		ft_dprintf(shell->fd_op, "%s ", INCOMPLETE_INPUT_PROMPT);
 	}
 	else
 	{
 		if (ft_strrchr(cwd, '/') && ft_strchr(cwd, '/') != ft_strrchr(cwd, '/'))
-			ft_strcpy(shell->prompt->str, ft_strrchr(cwd, '/') + 1);
+			str = ft_strrchr(cwd, '/') + 1;
 		else
-			ft_strcpy(shell->prompt->str, cwd);
-		shell->prompt->len = ft_strlen(shell->prompt->str) + 7;
+			str = cwd;
+		shell->prompt_len = ft_strlen(str) + 7;
 		ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
-				, EOC, GREEN, shell->prompt->str, EOC);
+				, EOC, GREEN, str, EOC);
 	}
 	free(cwd);
 }

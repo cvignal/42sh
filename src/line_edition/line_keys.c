@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 19:02:11 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/14 12:53:30 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 14:53:26 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,12 @@ int			ft_lineup(t_shell *shell)
 
 	ioctl(0, TIOCGWINSZ, &win);
 	width = win.ws_col;
-	cursor_nb = nb_multi_lines(shell->line.cursor, shell->prompt->len);
+	cursor_nb = nb_multi_lines(shell->line.cursor, shell->prompt_len);
 	if (cursor_nb > 0)
 	{
 		t_puts("up");
 		if (cursor_nb == 1)
-			back_to_startline(shell->prompt->len);
+			back_to_startline(shell->prompt_len);
 		if (shell->line.cursor < (size_t)width)
 			shell->line.cursor = 0;
 		else
@@ -109,11 +109,11 @@ int			ft_linedown(t_shell *shell)
 
 	ioctl(0, TIOCGWINSZ, &win);
 	width = win.ws_col;
-	line_nb = nb_multi_lines(shell->line.len, shell->prompt->len);
-	cursor_nb = nb_multi_lines(shell->line.cursor, shell->prompt->len);
+	line_nb = nb_multi_lines(shell->line.len, shell->prompt_len);
+	cursor_nb = nb_multi_lines(shell->line.cursor, shell->prompt_len);
 	if (cursor_nb < line_nb)
 	{
-		down_one_line(shell->line, width, shell->prompt->len
+		down_one_line(shell->line, width, shell->prompt_len
 				, (cursor_nb == line_nb - 1));
 		shell->line.cursor += width;
 		if (shell->line.cursor > shell->line.len)

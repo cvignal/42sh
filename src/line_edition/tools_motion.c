@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 11:28:55 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/14 12:18:20 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 14:52:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ size_t	length_prev_line(t_shell *shell)
 		}
 	}
 	if (!k)
-		ret += shell->prompt->len + 1;
+		ret += shell->prompt_len + 1;
 	return (ret);
 }
 
