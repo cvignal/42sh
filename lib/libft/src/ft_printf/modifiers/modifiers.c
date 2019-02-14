@@ -6,13 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 15:46:26 by gchainet          #+#    #+#             */
-/*   Updated: 2018/11/21 08:48:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/14 18:22:09 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static const t_modifier	g_modifiers[] =
+static const t_modifier	g_modifiers[] =\
 {
 	{ &mod_h, MOD_H },
 	{ &mod_l, MOD_L },

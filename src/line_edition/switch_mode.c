@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 13:37:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 13:32:58 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 18:04:42 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ int	ft_copy(t_shell *shell)
 		ft_strdel(&shell->pbpaste);
 	if (!(shell->pbpaste = ft_strsub(shell->line.data, begin, end - begin)))
 		return (1);
-	t_puts("sc");
-	ft_printf("\n|%s|\n", shell->pbpaste);
-	t_puts("rc");
 	return (0);
 }
 
@@ -82,9 +79,12 @@ int	ft_switch_mode(t_shell *shell)
 		t_puts("dl");
 		t_puts("cr");
 		if (shell->line.data)
-			ft_dprintf(g_fd_output, "$> %s", shell->line.data);
+		{
+			print_prompt(NULL, shell, 0);
+			ft_dprintf(g_fd_output, "%s", shell->line.data);
+		}
 		else
-			ft_dprintf(shell->fd_op, "$> ");
+			print_prompt(NULL, shell, 0);
 		shell->line.cursor = shell->line.len;
 	}
 	return (0);

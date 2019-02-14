@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 13:10:46 by gchainet          #+#    #+#             */
-/*   Updated: 2018/11/26 10:46:59 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/14 18:21:59 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ft_printf.h"
 #include "libft.h"
 
-static const t_format	g_formats[] =
+static const t_format	g_formats[] =\
 {
 	{ &printer_string, NULL, sizeof(void *),
 		{ TYPE_STRING, FORMAT_STRING }, NULL, 0},

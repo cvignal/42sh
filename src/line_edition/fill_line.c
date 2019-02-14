@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/14 17:44:30 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 18:16:21 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	raw_terminal_mode(t_shell *shell)
 	term.c_lflag &= ~(OPOST);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
-	if (tcsetattr(0, TCSAFLUSH, &term) == -1)
+	if (tcsetattr(0, TCSANOW, &term) == -1)
 		return ;
 	tgetent(NULL, getenv("TERM"));
 }
@@ -75,7 +75,6 @@ void	reset_terminal_mode(t_shell *shell)
 int		alt_fill_line(t_shell *shell)
 {
 	char	*line;
-	int		fd_log;
 
 	ft_dprintf(2, NOT_A_TTY);
 	reset_terminal_mode(shell);
@@ -86,8 +85,6 @@ int		alt_fill_line(t_shell *shell)
 	shell->line.data = line;
 	shell->line.len = ft_strlen(line);
 	shell->history = NULL;
-	fd_log = open("log/line.log", O_RDWR | O_APPEND | O_CREAT, 0644);
-	ft_dprintf(fd_log, "%ld\n", sizeof(shell->line.data));
 	return (0);
 }
 

@@ -6,13 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 13:11:28 by gchainet          #+#    #+#             */
-/*   Updated: 2018/11/16 12:09:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/14 18:21:37 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static const t_flag	g_flags[] =
+static const t_flag	g_flags[] =\
 {
 	{ FLAG_ALTERNATE, &flag_alternate },
 	{ FLAG_ZERO, &flag_zero },

@@ -6,14 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 12:07:42 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:51:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/14 18:22:30 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "libft.h"
 
-static const t_builtin_desc	g_builtin_desc[] =
+static const t_builtin_desc	g_builtin_desc[] =\
 {
 	{"echo", &builtin_echo},
 	{"env", &builtin_env},

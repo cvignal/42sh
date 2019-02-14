@@ -6,13 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 12:33:46 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/28 16:29:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/14 18:22:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static const t_expr_desc	g_expr_desc[] =
+static const t_expr_desc	g_expr_desc[] =\
 {
 	{"-a", &expr_a},
 	{"-b", &expr_b},

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:54:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 01:12:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/14 18:23:06 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "ast.h"
 #include "libft.h"
 
-static const t_token_desc	g_token_desc[] =
+static const t_token_desc	g_token_desc[] =\
 {
 	{";", TT_END},
 	{"|", TT_PIPE},
@@ -35,7 +35,7 @@ static const t_token_desc	g_token_desc[] =
 	{"d*>>", TT_REDIR_RR}
 };
 
-static const t_match_desc	g_match_desc[] =
+static const t_match_desc	g_match_desc[] =\
 {
 	{'d', &ccmp_digit}
 };
