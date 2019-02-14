@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:48:22 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/14 14:51:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 17:49:58 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void		go_to_end_of_line(t_shell *shell)
 	size_t	len;
 
 	t_puts("up");
-	if (shell->line.cursor > 0 &&
-			shell->line.data[shell->line.cursor - 1] == '\n')
+	if (shell->line.cursor > 0
+			&& shell->line.data[shell->line.cursor - 1] == '\n')
 		return ;
 	len = length_prev_line(shell);
 	while (len > 0)
