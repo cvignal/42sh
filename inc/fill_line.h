@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/14 09:47:06 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 12:44:02 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@
 # define MAJ_TAB "\033[Z"
 # define ESCAPE "\033"
 # define EOC "\e[0m"
+# define GREEN "\e[1;32m"
+# define YELLOW "\e[1;33m"
+# define ARROW "\u2190"
 # define INV_COLOR "\e[7;m"
 # define HIST_SIZE_MAX 50000
 # define NOT_A_TTY "Line edition disabled\n$> "
@@ -112,7 +115,7 @@ int				is_a_command(t_line *line);
 /*
 ** Tools for multi lines and cursor motion
 */
-int				nb_multi_lines(size_t len);
+int				nb_multi_lines(size_t len, int len_prompt);
 void			clear_cmd_line(t_shell *shell);
 t_curs			*get_cursor_pos(void);
 size_t			length_curr_line(t_shell *shell);
@@ -132,5 +135,6 @@ size_t			length_prev_line(t_shell *shell);
 */
 int				t_puts(char *id);
 int				pos_cursor_col(t_shell *shell, int width, int len);
+void			print_prompt(t_parser *parser, t_shell *shell, int flag);
 
 #endif

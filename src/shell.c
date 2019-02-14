@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/14 10:50:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 11:22:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ static void	free_shell_aux(t_shell *shell)
 	}
 	exp_ss_pop(&shell->exp_lexer);
 	free_history(shell);
+	free(shell->prompt->str);
+	free(shell->prompt);
 }
 
 void		free_shell(t_shell *shell)

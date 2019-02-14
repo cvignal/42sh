@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 16:24:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 11:32:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 12:45:16 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,10 @@ int	ft_ctrlc(t_shell *shell)
 	if (shell->ctrld)
 		shell->end_heredoc = 2;
 	else
-		ft_dprintf(g_fd_output, "\n$> ");
+	{
+		ft_dprintf(shell->fd_op, "\n");
+		print_prompt(NULL, shell, 0);
+	}
 	shell->prev_cmd_state = 1;
 	return (shell->end_heredoc);
 }
@@ -105,8 +108,11 @@ int	ft_ctrll(t_shell *shell)
 {
 	t_puts("cl");
 	if (shell->line.len)
-		ft_dprintf(g_fd_output, "$> %s", shell->line.data);
+	{
+		print_prompt(NULL, shell, 0);
+		ft_dprintf(shell->fd_op, "%s", shell->line.data);
+	}
 	else
-		ft_dprintf(g_fd_output, "$> ");
+		print_prompt(NULL, shell, 0);
 	return (0);
 }

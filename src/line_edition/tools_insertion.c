@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 11:44:35 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/14 09:46:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 12:41:50 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ int			pos_cursor_col(t_shell *shell, int width, int len)
 	int	ret;
 	int	length;
 
-	if (!nb_multi_lines(shell->line.cursor - len))
-		ret = 3 + shell->line.cursor;
+	if (!nb_multi_lines(shell->line.cursor - len, shell->prompt->len))
+		ret = shell->prompt->len + shell->line.cursor;
 	else
 	{
 		length = (int)shell->line.cursor;
-		length -= width - 3;
+		length -= width - shell->prompt->len;
 		ret = length % width;
 	}
 	if (ret <= 0)
@@ -60,7 +60,7 @@ void		print_line(t_shell *shell, char buf)
 	struct winsize	win;
 
 	ioctl(0, TIOCGWINSZ, &win);
-	if (!nb_multi_lines(shell->line.len)
+	if (!nb_multi_lines(shell->line.len, shell->prompt->len)
 			|| shell->line.len == shell->line.cursor)
 	{
 		curs_col = pos_cursor_col(shell, win.ws_col, 1);

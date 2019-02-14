@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/14 10:52:37 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 11:20:14 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ typedef struct		s_curs
 	int	col;
 	int	line;
 }					t_curs;
+
+typedef	struct		s_prompt
+{
+	char	*str;
+	int		len;
+}					t_prompt;
 
 typedef struct		s_hbt
 {
@@ -87,6 +93,7 @@ typedef struct		s_shell
 	int				prev_cmd_state;
 	t_token			*output;
 	t_token			*current;
+	t_prompt		*prompt;
 }					t_shell;
 
 struct s_redir;
@@ -323,7 +330,8 @@ void				close_everything(t_shell *shell);
 /*
 ** tools_fd.c
 */
-void				add_tty_history_fd(t_shell *shell, t_fd *tty_fd, t_fd *hf_fd);
+void				add_tty_history_fd(t_shell *shell, t_fd *tty_fd
+		, t_fd *hf_fd);
 
 /*
 ** alt_shell.c

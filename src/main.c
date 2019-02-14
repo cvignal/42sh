@@ -6,23 +6,39 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 21:47:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/14 12:53:02 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "shell.h"
 #include "ast.h"
 #include "libft.h"
 #include "fill_line.h"
 
-static void	print_prompt(const char *def, t_parser *parser, t_shell *shell)
+void		print_prompt(t_parser *parser, t_shell *shell, int flag)
 {
-	if (parser->pss->state != PS_NONE)
+	char	*cwd;
+
+	cwd = getcwd(NULL, MAX_PATH);
+	if ((parser && parser->pss->state != PS_NONE) || flag)
+	{
+		shell->prompt->len = 2;
 		ft_dprintf(shell->fd_op, "%s ", INCOMPLETE_INPUT_PROMPT);
+	}
 	else
-		ft_dprintf(shell->fd_op, "%s ", def);
+	{
+		if (ft_strrchr(cwd, '/') && ft_strchr(cwd, '/') != ft_strrchr(cwd, '/'))
+			ft_strcpy(shell->prompt->str, ft_strrchr(cwd, '/') + 1);
+		else
+			ft_strcpy(shell->prompt->str, cwd);
+		shell->prompt->len = ft_strlen(shell->prompt->str) + 7;
+		ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
+				, EOC, GREEN, shell->prompt->str, EOC);
+	}
+	free(cwd);
 }
 
 static void	exec_ast(t_shell *shell, t_token *tokens)
@@ -39,7 +55,7 @@ static void	exec_ast(t_shell *shell, t_token *tokens)
 		shell->parser.ret = NULL;
 	}
 	add_to_history(shell->line.data, shell, 0);
-	print_prompt(PROMPT, &shell->parser, shell);
+	print_prompt(&shell->parser, shell, 0);
 }
 
 int			main(int ac, char **av, char **environ)
@@ -51,14 +67,14 @@ int			main(int ac, char **av, char **environ)
 	(void)av;
 	if (init_shell(&shell, environ))
 		return (1);
-	print_prompt(PROMPT, &shell.parser, &shell);
+	print_prompt(&shell.parser, &shell, 0);
 	while (!fill_line(&shell))
 	{
 		disable_signal();
 		if (!(tokens = lex(&shell)))
 		{
 			add_to_history(shell.line.data, &shell, 1);
-			print_prompt(INCOMPLETE_INPUT_PROMPT, &shell.parser, &shell);
+			print_prompt(&shell.parser, &shell, 1);
 		}
 		else
 			exec_ast(&shell, tokens);

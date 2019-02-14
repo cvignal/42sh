@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 19:02:11 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 11:27:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 12:53:30 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "libft.h"
 #include "fill_line.h"
 
-static void	down_one_line(t_line line, int width, int flag)
+static void	down_one_line(t_line line, int width, int len_prompt, int flag)
 {
 	t_curs	*cursor;
 	int		i;
@@ -29,7 +29,7 @@ static void	down_one_line(t_line line, int width, int flag)
 		return ;
 	tputs(tgoto(tgetstr("cm", NULL), cursor->col - 1, cursor->line)
 			, 0, ft_printchar);
-	len_last_line = (line.len + 3) % width;
+	len_last_line = (line.len + len_prompt) % width;
 	if (flag)
 		i = cursor->col - len_last_line - 1;
 	else
@@ -42,13 +42,14 @@ static void	down_one_line(t_line line, int width, int flag)
 	free(cursor);
 }
 
-static void	back_to_startline(void)
+static void	back_to_startline(int len_prompt)
 {
 	t_curs		*cursor;
 	int			i;
 
-	cursor = get_cursor_pos();
-	i = cursor->col - 4;
+	if (!(cursor = get_cursor_pos()))
+		return ;
+	i = cursor->col - (len_prompt + 1);
 	while (i < 0)
 	{
 		t_puts("nd");
@@ -57,7 +58,7 @@ static void	back_to_startline(void)
 	free(cursor);
 }
 
-int			nb_multi_lines(size_t len)
+int			nb_multi_lines(size_t len, int len_prompt)
 {
 	int				length;
 	int				width;
@@ -67,8 +68,8 @@ int			nb_multi_lines(size_t len)
 	length = (int)len;
 	ioctl(0, TIOCGWINSZ, &win);
 	width = win.ws_col;
-	if (length + 3 >= width)
-		length -= width - 3;
+	if (length + len_prompt >= width)
+		length -= width - len_prompt;
 	else
 		return (0);
 	nb = 1;
@@ -85,12 +86,12 @@ int			ft_lineup(t_shell *shell)
 
 	ioctl(0, TIOCGWINSZ, &win);
 	width = win.ws_col;
-	cursor_nb = nb_multi_lines(shell->line.cursor);
+	cursor_nb = nb_multi_lines(shell->line.cursor, shell->prompt->len);
 	if (cursor_nb > 0)
 	{
 		t_puts("up");
 		if (cursor_nb == 1)
-			back_to_startline();
+			back_to_startline(shell->prompt->len);
 		if (shell->line.cursor < (size_t)width)
 			shell->line.cursor = 0;
 		else
@@ -108,11 +109,12 @@ int			ft_linedown(t_shell *shell)
 
 	ioctl(0, TIOCGWINSZ, &win);
 	width = win.ws_col;
-	line_nb = nb_multi_lines(shell->line.len);
-	cursor_nb = nb_multi_lines(shell->line.cursor);
+	line_nb = nb_multi_lines(shell->line.len, shell->prompt->len);
+	cursor_nb = nb_multi_lines(shell->line.cursor, shell->prompt->len);
 	if (cursor_nb < line_nb)
 	{
-		down_one_line(shell->line, width, (cursor_nb == line_nb - 1));
+		down_one_line(shell->line, width, shell->prompt->len
+				, (cursor_nb == line_nb - 1));
 		shell->line.cursor += width;
 		if (shell->line.cursor > shell->line.len)
 			shell->line.cursor = shell->line.len;

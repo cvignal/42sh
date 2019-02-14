@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:48:22 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 17:55:40 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/14 12:38:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			ft_leftkey(t_shell *shell)
 	curs = shell->line.cursor;
 	if (shell->line.cursor > 0)
 	{
-		if (nb_multi_lines(shell->line.len + 1)
+		if (nb_multi_lines(shell->line.len + 1, shell->prompt->len)
 				&& shell->line.data[curs - 1] != '\n')
 			left_key_multi(shell);
 		else
