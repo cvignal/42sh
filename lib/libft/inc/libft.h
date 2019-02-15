@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 16:53:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 10:05:38 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define LIBFT_H
 
 # define BUFF_SIZE 2048
-# define MAX(x, y) ((x) > (y) ? (x) : (y))
-# define MIN(x, y) ((x) < (y) ? (x) : (y))
-# define ABS(x) ((x) < 0 ? -(x) : (x))
 
 # include <stdarg.h>
 # include <sys/types.h>
@@ -102,7 +99,6 @@ char				*ft_ltoa_base(long long nb, int base);
 char				*ft_stoa_base(short nb, int base);
 unsigned long		ft_power(int base, int power);
 int					ft_nb_digits(unsigned long long value, int base);
-int					ft_max(int a, int b, int c);
 char				*ft_ultoa_base(unsigned long long nb, int base);
 char				*ft_dtoa(long double nb, int precision);
 size_t				ft_strfindchar(const char *str, char c);
@@ -122,5 +118,11 @@ int					ft_dprintf(int fd, const char *format, ...);
 void				quicksort(char **array, int first, int last);
 int					ft_match(char *pattern, char *str);
 void				ft_bubblesort(char **array, size_t len);
+int					ft_imax(int a, int b);
+int					ft_imin(int a, int b);
+int					ft_iabs(int a);
+long long			ft_llabs(long long a);
+long long			ft_llmax(long long a, long long b);
+long long			ft_llmin(long long a, long long b);
 
 #endif

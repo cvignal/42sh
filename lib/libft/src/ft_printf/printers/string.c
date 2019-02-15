@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 12:21:16 by gchainet          #+#    #+#             */
-/*   Updated: 2018/11/25 11:19:07 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/15 10:10:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int			printer_string(void *conv, va_list *vl, t_printf_buffer *buffer)
 	if (((t_conv *)conv)->precision_set)
 	{
 		if (arg)
-			len = MIN(ft_strlen(arg), ((t_conv *)conv)->precision);
+			len = ft_llmin(ft_strlen(arg), ((t_conv *)conv)->precision);
 		else
-			len = MIN(ft_strlen(NULL_PRINT), ((t_conv *)conv)->precision);
+			len = ft_llmin(ft_strlen(NULL_PRINT), ((t_conv *)conv)->precision);
 	}
 	else
 		len = ft_strlen(arg ? arg : NULL_PRINT);

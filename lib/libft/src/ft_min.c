@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_max.c                                           :+:      :+:    :+:   */
+/*   ft_min.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/27 12:05:24 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 10:06:23 by cvignal          ###   ########.fr       */
+/*   Created: 2019/02/15 10:02:19 by cvignal           #+#    #+#             */
+/*   Updated: 2019/02/15 10:06:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_imax(int a, int b)
+int			ft_imin(int a, int b)
 {
-	return (a > b ? a : b);
+	return (a < b ? a : b);
 }
 
-long long	ft_llmax(long long a, long long b)
+long long	ft_llmin(long long a, long long b)
 {
-	return (a > b ? a : b);
+	return (a < b ? a : b);
 }
