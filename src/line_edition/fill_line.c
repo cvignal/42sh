@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 16:18:21 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 17:52:09 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	raw_terminal_mode(t_shell *shell)
 	if (tcgetattr(0, &term) == -1)
 		return ;
 	term.c_lflag &= ~(ICANON | ECHO | ISIG | ECHOCTL);
+	term.c_iflag &= ~(IXON | ICRNL);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSANOW, &term) == -1)
@@ -66,6 +67,7 @@ void	reset_terminal_mode(t_shell *shell)
 	if (tcgetattr(0, &term) == -1)
 		return ;
 	term.c_lflag |= (ICANON | ECHO | ISIG | ECHOCTL);
+	term.c_lflag |= (IXON | ICRNL);
 	if (tcsetattr(0, TCSANOW, &term) == -1)
 		return ;
 }

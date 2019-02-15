@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 14:05:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 18:08:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 #include "shell.h"
 #include "libft.h"
+#include "fill_line.h"
 
 int	prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root)
 {

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 16:01:14 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 16:40:03 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define END_KEY "\033[F"
 # define CTRL_HOME "\033[1;5H"
 # define CTRL_END "\033[1;5F"
+# define ALT_HOME "\033[1;9H"
+# define ALT_END "\033[1;9F"
 # define PAGE_UP "\033[5~"
 # define PAGE_DOWN "\033[6~"
 # define DEL_KEY "\033[3~"
