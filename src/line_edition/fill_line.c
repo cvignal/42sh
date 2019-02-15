@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 09:59:01 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 10:13:08 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int		check_validity(t_shell *shell)
 	res = tgetent(NULL, name);
 	if (res <= 0)
 		return (1);
+	raw_terminal_mode(shell);
 	return (0);
 }
 

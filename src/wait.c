@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:49:17 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 16:28:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/15 11:13:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "shell.h"
 #include "libft.h"
+#include "fill_line.h"
 
 static int	is_over(t_ast *ast)
 {
@@ -60,6 +61,7 @@ static void	do_wait(t_ast *ast)
 
 int			wait_loop(t_ast *ast)
 {
+	reset_terminal_mode(NULL);
 	while (!is_over(ast))
 		do_wait(ast);
 	return (0);

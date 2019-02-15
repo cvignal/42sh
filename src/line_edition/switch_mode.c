@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 13:37:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/14 18:04:42 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 11:30:06 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,9 @@ int	ft_switch_mode(t_shell *shell)
 		shell->line.mode = 0;
 		t_puts("dl");
 		t_puts("cr");
+		print_prompt(NULL, shell, 0);
 		if (shell->line.data)
-		{
-			print_prompt(NULL, shell, 0);
 			ft_dprintf(g_fd_output, "%s", shell->line.data);
-		}
-		else
-			print_prompt(NULL, shell, 0);
 		shell->line.cursor = shell->line.len;
 	}
 	return (0);
