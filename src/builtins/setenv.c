@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:14:44 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 15:44:30 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 19:38:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ static int	exit_error(const char *msg)
 	return (1);
 }
 
-static void	print_env(t_shell *shell)
+static int	print_env(t_shell *shell)
 {
 	int		i;
 
 	i = 0;
 	while (shell->env[i])
 		ft_dprintf(shell->fd_op, "%s\n", shell->env[i++]);
+	return (0);
 }
 
 int			builtin_setenv(t_shell *shell, char **args)
@@ -39,6 +40,11 @@ int			builtin_setenv(t_shell *shell, char **args)
 		return (exit_error("too many arguments"));
 	else if (arg_count == 3)
 	{
+		if (ft_strlen(args[1]) > VAR_MAX || ft_strlen(args[2]) > VAR_MAX)
+		{
+			ft_dprintf(2, "%s: variable too long\n", EXEC_NAME);
+			return (1);
+		}
 		if (set_env_var(shell, args[1], args[2]))
 			return (1);
 		if (!ft_strcmp(args[1], "PATH"))
@@ -46,9 +52,6 @@ int			builtin_setenv(t_shell *shell, char **args)
 		return (0);
 	}
 	if (arg_count == 1)
-	{
-		print_env(shell);
-		return (0);
-	}
+		return (print_env(shell));
 	return (exit_error("usage: setenv var value"));
 }

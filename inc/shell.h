@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/15 19:32:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/15 19:37:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define CHAR_VAR '$'
 
 # define MAX_PATH	1024
+# define VAR_MAX 1024
 
 typedef struct		s_curs
 {
