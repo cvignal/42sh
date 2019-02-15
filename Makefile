@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/14 10:52:55 by cvignal          ###   ########.fr        #
+#    Updated: 2019/02/15 17:48:29 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -156,7 +156,6 @@ SRC		=							\
 	wait.c							\
 	expansion/buffer.c				\
 	expansion/exp_ss.c				\
-	expansion/expand.c				\
 	expansion/init.c				\
 	expansion/lexer.c				\
 	expansion/lexer_methods.c		\
