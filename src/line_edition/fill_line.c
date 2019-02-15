@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 15:21:52 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 16:18:21 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,21 +90,21 @@ int		fill_line(t_shell *shell)
 {
 	char			buf[9];
 	int				ret;
+	int				res;
 
 	if (check_validity(shell))
 		return (alt_fill_line(shell));
-	while ((ret = read(0, buf, 8)) > 0)
+	res = 0;
+	while (!res && (ret = read(0, buf, 8)) > 0)
 	{
 		buf[ret] = 0;
-		if (ft_strchr(buf, '\n') || ft_strchr(buf, 13))
-			break ;
 		if (is_a_special_key(buf))
 		{
 			if (apply_key(buf, shell))
 				break ;
 		}
-		else if (shell->line.mode == 0)
-			ft_addchar(shell, buf);
+		else
+			res = ft_addchar(shell, buf);
 	}
 	if (!shell->line.len)
 		shell->line.data = ft_strdup("");
@@ -112,5 +112,5 @@ int		fill_line(t_shell *shell)
 	if (!shell->end_heredoc)
 		ft_dprintf(shell->fd_op, "\n");
 	shell->his_pos = -1;
-	return (0);
+	return (res == -1);
 }
