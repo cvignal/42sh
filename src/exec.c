@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/15 11:15:26 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 18:13:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	ft_wait(int *status)
 static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 {
 	set_pipeline(shell, instr);
-	if (expand_params(shell, instr->data) || apply_redirs(shell, instr))
+	if (apply_redirs(shell, instr))
 	{
 		free_shell(shell);
 		exit(1);
@@ -78,15 +78,17 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	char		*bin_path;
 	t_builtin	builtin;
 
-	if ((builtin = is_builtin(((t_command *)instr->data)->args[0])))
+	if (expand_params(shell, instr->data))
+		return (1);
+	if ((builtin = is_builtin(((t_command *)instr->data)->args_value[0])))
 		return (exec_builtin(shell, builtin, instr));
-	bin_path = hbt_command(shell, ((t_command *)instr->data)->args[0]);
+	bin_path = hbt_command(shell, ((t_command *)instr->data)->args_value[0]);
 	if (bin_path)
 		pid = fork();
 	else
 	{
 		instr->ret = 1;
-		return (bin_not_found(((t_command *)instr->data)->args[0]));
+		return (bin_not_found(((t_command *)instr->data)->args_value[0]));
 	}
 	if (!pid)
 		exec_internal(shell, instr, bin_path);

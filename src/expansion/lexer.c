@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 21:12:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/15 18:01:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int			expand_params(t_shell *shell, t_command *command)
 	int		j;
 	int		error;
 
-	i = 1;
+	i = 0;
 	j = 0;
 	while (command->args[i])
 	{

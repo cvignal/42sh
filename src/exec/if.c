@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 13:01:03 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/25 17:28:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/15 18:05:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	free_if(t_ast *ast)
 		ast->right->del(ast->right);
 	if (ast->left)
 		ast->left->del(ast->left);
-	((t_ast *)ast->data)->del(ast->data);
+	if (ast->data)
+		((t_ast *)ast->data)->del(ast->data);
 	free_ast(ast);
 }
