@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/14 14:49:12 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 19:32:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,7 @@ int					propagate_pipe_left(t_ast *pipe, t_ast *instr);
 ** hash.c
 */
 char				*hbt_command(t_shell *shell, const char *elem);
+void				free_hbt(t_hbt *hbt);
 void				sanitize_hash(t_shell *shell);
 
 /*

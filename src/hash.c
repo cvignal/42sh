@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 15:20:51 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/24 13:29:33 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/15 19:32:23 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,18 @@ static t_hbt	*alloc_hbt_node(t_shell *shell, const char *bin)
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
+}
+
+void			free_hbt(t_hbt *hbt)
+{
+	if (hbt)
+	{
+		free_hbt(hbt->left);
+		free_hbt(hbt->right);
+		free(hbt->path);
+		free(hbt->bin);
+		free(hbt);
+	}
 }
 
 char			*get_hbt_elem(t_shell *shell, t_hbt **hbt, const char *elem)

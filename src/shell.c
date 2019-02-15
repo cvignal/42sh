@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/14 14:56:15 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 19:32:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,7 @@ void		free_shell(t_shell *shell)
 	{
 		while (++i < HASH_TABLE_SIZE)
 			if (shell->hash_table[i])
-			{
-				free(shell->hash_table[i]->path);
-				free(shell->hash_table[i]->bin);
-				free(shell->hash_table[i]);
-			}
+				free_hbt(shell->hash_table[i]);
 		free(shell->hash_table);
 	}
 	free_shell_aux(shell);
