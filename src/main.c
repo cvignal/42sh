@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/15 10:49:37 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 15:13:05 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void		print_prompt(t_parser *parser, t_shell *shell, int flag)
 	char	*cwd;
 	char	*str;
 
+	raw_terminal_mode(shell);
 	cwd = getcwd(NULL, MAX_PATH);
 	if ((parser && parser->pss->state != PS_NONE) || flag)
 	{
@@ -56,6 +57,8 @@ static void	exec_ast(t_shell *shell, t_token *tokens)
 		shell->parser.ret = NULL;
 	}
 	add_to_history(shell->line.data, shell, 0);
+	reset_terminal_mode(shell);
+	raw_terminal_mode(shell);
 	print_prompt(&shell->parser, shell, 0);
 }
 

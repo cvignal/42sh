@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 10:13:08 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 15:21:52 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ void	raw_terminal_mode(t_shell *shell)
 	(void)shell;
 	if (tcgetattr(0, &term) == -1)
 		return ;
-	term.c_lflag &= ~(ICANON | ECHO | ISIG);
-	term.c_lflag &= ~(OPOST);
+	term.c_lflag &= ~(ICANON | ECHO | ISIG | ECHOCTL);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSANOW, &term) == -1)
@@ -66,8 +65,7 @@ void	reset_terminal_mode(t_shell *shell)
 	(void)shell;
 	if (tcgetattr(0, &term) == -1)
 		return ;
-	term.c_lflag |= (ICANON | ECHO | ISIG);
-	term.c_lflag |= (OPOST);
+	term.c_lflag |= (ICANON | ECHO | ISIG | ECHOCTL);
 	if (tcsetattr(0, TCSANOW, &term) == -1)
 		return ;
 }
@@ -98,7 +96,7 @@ int		fill_line(t_shell *shell)
 	while ((ret = read(0, buf, 8)) > 0)
 	{
 		buf[ret] = 0;
-		if (ft_strchr(buf, '\n'))
+		if (ft_strchr(buf, '\n') || ft_strchr(buf, 13))
 			break ;
 		if (is_a_special_key(buf))
 		{
