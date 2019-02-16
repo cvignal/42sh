@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/15 19:11:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/16 10:37:13 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static int	prepare_pipeline(t_ast *instr, int *old)
 	old[STDERR_FILENO] = dup(STDERR_FILENO);
 	if (instr->pipes_in[PIPE_PARENT][STDIN_FILENO] != -1)
 	{
-		if (dup2(instr->pipes_in[PIPE_PARENT][STDIN_FILENO], STDIN_FILENO) == -1)
+		if (dup2(instr->pipes_in[PIPE_PARENT][STDIN_FILENO], STDIN_FILENO)
+				== -1)
 		{
 			ft_dprintf(STDERR_FILENO, "%s: pipe creation failed\n", EXEC_NAME);
 			return (1);
@@ -30,7 +31,8 @@ static int	prepare_pipeline(t_ast *instr, int *old)
 	}
 	if (instr->pipes_out[PIPE_PARENT][STDOUT_FILENO] != -1)
 	{
-		if (dup2(instr->pipes_out[PIPE_PARENT][STDOUT_FILENO], STDOUT_FILENO) == -1)
+		if (dup2(instr->pipes_out[PIPE_PARENT][STDOUT_FILENO], STDOUT_FILENO)
+				== -1)
 		{
 			ft_dprintf(STDERR_FILENO, "%s: pipe creation failed\n", EXEC_NAME);
 			return (1);

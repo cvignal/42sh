@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 13:01:03 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/15 18:05:37 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/16 10:32:11 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 int		exec_if(t_shell *shell, t_ast *ast)
 {
+	if (shell->ctrlc)
+		return (0);
 	prepare_redirs(shell, ast, ast);
 	((t_ast *)ast->data)->exec(shell, ast->data);
 	wait_loop(ast->data);
