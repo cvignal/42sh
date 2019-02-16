@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/14 13:37:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/16 15:51:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		ft_hisdown(t_shell *shell)
 	clear_cmd_line(shell);
 	free_line(&shell->line);
 	if (shell->his_pos > -1)
-		ft_addchar(shell, curr->content);
+		ft_addchar(shell, curr->content, 1);
 	return (0);
 }
 
@@ -63,6 +63,6 @@ int		ft_hisup(t_shell *shell)
 	}
 	clear_cmd_line(shell);
 	free_line(&shell->line);
-	ft_addchar(shell, curr->content);
+	ft_addchar(shell, curr->content, 1);
 	return (0);
 }

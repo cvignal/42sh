@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 13:37:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 11:30:06 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/16 15:53:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_copy(t_shell *shell)
 int	ft_paste(t_shell *shell)
 {
 	if (shell->pbpaste && shell->line.mode)
-		ft_addchar(shell, shell->pbpaste);
+		ft_addchar(shell, shell->pbpaste, 0);
 	return (0);
 }
 

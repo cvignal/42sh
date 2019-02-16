@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 16:40:03 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/16 15:52:37 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ extern int		g_fd_output;
 int				fill_line(t_shell *shell);
 int				is_a_special_key(char *buf);
 int				apply_key(char *buf, t_shell *shell);
-int				ft_addchar(t_shell *shell, char *buf);
+int				ft_addchar(t_shell *shell, char *buf, int flag);
 int				ft_printchar(int c);
 void			reset_terminal_mode(t_shell *shell);
 void			raw_terminal_mode(t_shell *shell);
