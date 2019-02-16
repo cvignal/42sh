@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 13:50:27 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/08 15:46:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/16 17:04:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,18 @@ static void	print_newline(int i)
 
 void		disable_signal(void)
 {
+	signal(SIGQUIT, print_newline);
 	signal(SIGINT, print_newline);
 }
 
 void		enable_signal(void)
 {
+	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 }
 
 void		ignore_signal(void)
 {
 	signal(SIGINT, print_newline);
+	signal(SIGQUIT, SIG_DFL);
 }
