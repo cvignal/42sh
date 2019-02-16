@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 16:40:24 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/16 16:15:45 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,16 @@ int		t_puts(char *id)
 	return (0);
 }
 
-int		ft_addchar(t_shell *shell, char *buf)
+int		ft_addchar(t_shell *shell, char *buf, int flag)
 {
 	int	i;
 
 	i = 0;
 	while (buf[i])
 	{
-		if (buf[i] == 10 || buf[i] == 13)
+		if ((buf[i] == 10 || buf[i] == 13) && !flag)
 			return (1);
-		if (buf[i] >= 32 && buf[i] <= 126)
+		else if ((buf[i] >= 32 && buf[i] <= 126) || (buf[i] == 10 && flag))
 		{
 			if (add_to_line(&shell->line, buf[i]))
 			{

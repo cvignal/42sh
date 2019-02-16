@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/16 11:58:26 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/16 15:52:22 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	reset_terminal_mode(t_shell *shell)
 	if (tcgetattr(0, &term) == -1)
 		return ;
 	term.c_lflag |= (ICANON | ECHO | ISIG | ECHOCTL);
-	term.c_lflag |= (IXON | ICRNL);
+	term.c_iflag |= (IXON | ICRNL);
 	if (tcsetattr(0, TCSANOW, &term) == -1)
 		return ;
 }
@@ -107,7 +107,7 @@ int		fill_line(t_shell *shell)
 				break ;
 		}
 		else
-			res = ft_addchar(shell, buf);
+			res = ft_addchar(shell, buf, 0);
 	}
 	if (!shell->line.len)
 		shell->line.data = ft_strdup("");
