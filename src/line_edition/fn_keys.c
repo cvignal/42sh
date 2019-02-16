@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 16:24:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 17:07:20 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/16 12:23:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,11 @@ int	ft_ctrlc(t_shell *shell)
 	if (!shell->ctrld)
 		clean_exit_lexer(&shell->lexer, &shell->output, &shell->current, NULL);
 	free_line(&shell->line);
+	ft_dprintf(shell->fd_op, "\n");
 	if (shell->ctrld)
 		shell->end_heredoc = 2;
 	else
-	{
-		ft_dprintf(shell->fd_op, "\n");
 		print_prompt(NULL, shell, 0);
-	}
 	shell->prev_cmd_state = 1;
 	return (shell->end_heredoc);
 }
