@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 17:52:09 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/16 11:04:42 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		check_validity(t_shell *shell)
 	if (res <= 0)
 		return (1);
 	raw_terminal_mode(shell);
+	shell->ctrlc = 0;
 	return (0);
 }
 
@@ -80,6 +81,7 @@ int		alt_fill_line(t_shell *shell)
 	reset_terminal_mode(shell);
 	shell->fd_op = 1;
 	g_fd_output = 1;
+	shell->ctrlc = 0;
 	if (get_next_line(0, &line) <= 0)
 		return (1);
 	shell->line.data = line;

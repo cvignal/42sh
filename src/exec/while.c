@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 17:57:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/25 17:27:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/16 10:32:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 int		exec_while(t_shell *shell, t_ast *ast)
 {
+	if (shell->ctrlc)
+		return (0);
 	((t_ast *)ast->data)->exec(shell, ast->data);
 	wait_loop(ast->data);
 	while (((t_ast *)ast->data)->ret == 0)
