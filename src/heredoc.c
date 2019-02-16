@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:01:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 14:08:08 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 18:52:40 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int			read_heredoc(t_heredoc *heredoc, t_redir *redir)
 		}
 		free_line(&tmp_shell.line);
 	}
-	return (0);
+	return (tmp_shell.end_heredoc == 2 ? 2 : 0);
 }
 
 int			heredoc_exit_error(t_heredoc *heredoc)

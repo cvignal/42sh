@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 14:05:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 18:59:29 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 #include "shell.h"
 #include "libft.h"
+#include "fill_line.h"
 
 int	prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root)
 {
@@ -62,13 +63,16 @@ int	redir_ll(t_shell *shell, t_ast *instr, t_redir *redir)
 {
 	t_heredoc	*heredoc;
 	int			fd[2];
+	int			ret;
 
 	(void)shell;
 	(void)instr;
 	if (!(heredoc = alloc_heredoc()))
 		return (1);
-	if (read_heredoc(heredoc, redir))
+	if ((ret = read_heredoc(heredoc, redir)) == 1)
 		return (heredoc_exit_error(heredoc));
+	else if (ret == 2)
+		shell->ctrlc = 1;
 	if (pipe(fd))
 		return (heredoc_exit_error(heredoc));
 	if (heredoc->data)

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/15 19:37:47 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/16 10:26:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct		s_shell
 	int				fd_op;
 	t_fd			*used_fd;
 	int				ctrld;
+	int				ctrlc;
 	int				end_heredoc;
 	int				prev_cmd_state;
 	t_token			*output;

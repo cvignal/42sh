@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 15:21:52 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/15 17:52:09 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	raw_terminal_mode(t_shell *shell)
 	if (tcgetattr(0, &term) == -1)
 		return ;
 	term.c_lflag &= ~(ICANON | ECHO | ISIG | ECHOCTL);
+	term.c_iflag &= ~(IXON | ICRNL);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSANOW, &term) == -1)
@@ -66,6 +67,7 @@ void	reset_terminal_mode(t_shell *shell)
 	if (tcgetattr(0, &term) == -1)
 		return ;
 	term.c_lflag |= (ICANON | ECHO | ISIG | ECHOCTL);
+	term.c_lflag |= (IXON | ICRNL);
 	if (tcsetattr(0, TCSANOW, &term) == -1)
 		return ;
 }
@@ -90,21 +92,21 @@ int		fill_line(t_shell *shell)
 {
 	char			buf[9];
 	int				ret;
+	int				res;
 
 	if (check_validity(shell))
 		return (alt_fill_line(shell));
-	while ((ret = read(0, buf, 8)) > 0)
+	res = 0;
+	while (!res && (ret = read(0, buf, 8)) > 0)
 	{
 		buf[ret] = 0;
-		if (ft_strchr(buf, '\n') || ft_strchr(buf, 13))
-			break ;
 		if (is_a_special_key(buf))
 		{
 			if (apply_key(buf, shell))
 				break ;
 		}
-		else if (shell->line.mode == 0)
-			ft_addchar(shell, buf);
+		else
+			res = ft_addchar(shell, buf);
 	}
 	if (!shell->line.len)
 		shell->line.data = ft_strdup("");
@@ -112,5 +114,5 @@ int		fill_line(t_shell *shell)
 	if (!shell->end_heredoc)
 		ft_dprintf(shell->fd_op, "\n");
 	shell->his_pos = -1;
-	return (0);
+	return (res == -1);
 }
