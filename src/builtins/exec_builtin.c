@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/16 10:37:13 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/18 14:02:20 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 {
 	int		fd[3];
 
-	if (builtin != &builtin_echo
-			&& instr->pipes_out[PIPE_PARENT][STDOUT_FILENO] != -1)
-	{
-		instr->ret = 0;
-		return (0);
-	}
 	if (expand_params(shell, instr->data))
 		return (-1);
 	if (prepare_pipeline(instr, fd))
