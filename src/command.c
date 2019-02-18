@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 08:38:43 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 03:08:48 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/18 15:07:05 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_command	*alloc_command(void)
 	new_command->alloc_size = ARGS_ALLOC_SIZE;
 	new_command->args_len = 0;
 	new_command->pid = -1;
+	new_command->args_value = NULL;
 	return (new_command);
 }
 
@@ -66,13 +67,15 @@ void		free_command(t_command *command)
 
 	i = 0;
 	while (command->args[i])
-	{
-		if (command->args_value[i])
-			free(command->args_value[i]);
 		free(command->args[i++]);
+	i = 0;
+	if (command->args_value)
+	{
+		while (command->args_value[i])
+			free(command->args_value[i++]);
+		free(command->args_value);
 	}
 	free(command->args);
-	free(command->args_value);
 	free(command);
 }
 
