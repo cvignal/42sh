@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 12:31:51 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 11:52:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/18 14:46:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_expr	*alloc_expr(void)
 	if (!new_expr)
 		return (NULL);
 	new_expr->args = NULL;
+	new_expr->args_value = NULL;
 	new_expr->len = 0;
 	return (new_expr);
 }
@@ -37,6 +38,17 @@ void	free_expr_internal(t_expr *expr)
 		while (i < expr->len)
 			free(expr->args[i++]);
 		free(expr->args);
+		if (expr->args_value)
+		{
+			i = 0;
+			while (i < expr->len)
+			{
+				if (expr->args_value[i])
+					free(expr->args_value[i]);
+				++i;
+			}
+			free(expr->args_value);
+		}
 	}
 	free(expr);
 }
@@ -59,11 +71,13 @@ int		exec_expr_internal(t_shell *shell, t_expr *expr)
 {
 	t_expr_exec	exec;
 
+	if (expand_expr(shell, expr))
+		return (1);
 	if (expr->len == 2)
 		exec = get_expr(expr->args[0]);
 	else if (expr->len == 3)
 		exec = get_expr(expr->args[1]);
 	else
 		return (1);
-	return (exec ? exec(shell, expr->args) : 1);
+	return (exec ? exec(shell, expr->args_value) : 1);
 }

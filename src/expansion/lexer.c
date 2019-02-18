@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/15 18:01:42 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/18 14:24:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*clean_exit(t_exp_lexer *lexer, int *error)
 	return (NULL);
 }
 
-static char	*expand(t_shell *shell, char *arg, int *error)
+char		*expand(t_shell *shell, char *arg, int *error)
 {
 	int	i;
 	int	ret;

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 21:38:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/18 14:25:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void				exp_ss_pop(t_exp_lexer *lexer);
 struct s_command;
 int					expand_params(struct s_shell *shell,
 		struct s_command *command);
+char				*expand(struct s_shell *shell, char *arg, int *error);
 
 /*
 ** expansion/home.c
@@ -97,5 +98,11 @@ int					exp_lexer_push_dquote(struct s_shell *shell,
 		t_exp_lexer *lexer, char c);
 int					exp_lexer_pop_quote(struct s_shell *shell,
 		t_exp_lexer *lexer, char c);
+
+/*
+** expansion/expr.c
+*/
+struct s_expr;
+int					expand_expr(struct s_shell *shell, struct s_expr *expr);
 
 #endif

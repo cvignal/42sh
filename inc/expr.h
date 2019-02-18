@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 12:37:43 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/28 16:29:12 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/18 14:08:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef int			(*t_expr_exec)(struct s_shell *, char **);
 typedef struct		s_expr
 {
 	char			**args;
+	char			**args_value;
 	size_t			len;
 }					t_expr;
 
