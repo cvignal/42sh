@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/12 02:32:08 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/18 13:36:11 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ char		*find_path(char *word)
 	else
 	{
 		ft_strdel(&ret);
-		ret = ft_strdup(word);
+		if (!(ret = ft_strdup(word)))
+			return (NULL);
 	}
 	if (ft_strchr(word, '/'))
 		*(ft_strrchr(ret, '/') + 1) = 0;

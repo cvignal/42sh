@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 11:28:55 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/14 14:52:07 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/18 14:26:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	clean_under_line(t_shell *shell)
 		while (shell->line.cursor < shell->line.len)
 			ft_rightkey(shell);
 	}
+	else
+		t_puts("do");
 	t_puts("cd");
-	if (!shell)
-		t_puts("rc");
+	t_puts("rc");
 }

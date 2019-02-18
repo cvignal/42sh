@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 11:34:05 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/18 14:15:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ static void	display_table(char **array, int table[4])
 	int	i;
 	int	j;
 
+	t_puts("im");
 	ft_dprintf(g_fd_output, "\n");
+	t_puts("ei");
 	i = 0;
 	if (table[0] == 0)
 		table[1] = 0;
@@ -101,7 +103,8 @@ void		display_list(t_list *list)
 	int		nb;
 
 	t_puts("sc");
-	cursor = get_cursor_pos();
+	if (!(cursor = get_cursor_pos()))
+		return ;
 	fill_table(table, list);
 	if (!ask_for_many_possibilities(table, cursor))
 		return ;
