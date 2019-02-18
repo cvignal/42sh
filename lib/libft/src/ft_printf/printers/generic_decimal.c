@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 14:40:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/15 10:10:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/18 09:50:37 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ int							printer_generic_number(void *c, va_list *vl,
 	print_padding_left(c, max_len, arg, buffer);
 	print_precision(c, len, arg, buffer);
 	if ((((t_conv *)c)->precision_set && arg) || !((t_conv *)c)->precision_set)
-		ft_putullnbr_base_buffer((((t_conv *)c)->format->is_signed) ?
-				ft_llabs((long long)arg) : (long long)arg,
+		ft_putullnbr_base_buffer((((t_conv *)c)->format->is_signed)
+				? ft_llabs((long long)arg) : (long long)arg,
 				((t_conv *)c)->format->base, buffer);
 	return (print_padding_right(c, max_len, arg, buffer));
 }

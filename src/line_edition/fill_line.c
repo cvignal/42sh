@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/16 15:52:22 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/18 09:49:13 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		check_validity(t_shell *shell)
 {
 	char	*name;
 	int		res;
-	char	*default_term[3];
+	char	*default_term[3];+
 
 	if (!isatty(0))
 		return (1);
