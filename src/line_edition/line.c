@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 08:40:13 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/18 13:51:28 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/18 16:13:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ static int	realloc_line(t_line *line)
 	char			*new_data;
 	unsigned int	i;
 
-	new_data = malloc(sizeof(*new_data)
-			* (line->alloc_size + LINE_ALLOC_SIZE + 1));
-	if (!new_data)
+	if (!(new_data = ft_strnew(line->alloc_size + LINE_ALLOC_SIZE)))
 		return (1);
 	i = 0;
 	while (i < line->len)
