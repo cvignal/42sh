@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/19 12:40:16 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/19 15:25:20 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int				ft_printchar(int c);
 void			reset_terminal_mode(t_shell *shell);
 void			raw_terminal_mode(t_shell *shell);
 int				check_validity(t_shell *shell);
+int				alt_fill_line(t_shell *shell);
 
 /*
 ** Special keys
