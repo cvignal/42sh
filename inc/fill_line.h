@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/19 17:20:33 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/19 17:56:43 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,18 +150,13 @@ int				hs_homekey(t_shell *shell);
 int				hs_endkey(t_shell *shell);
 int				hs_rightkey(t_shell *shell);
 int				hs_tab(t_shell *shell);
-int				hs_backspace(t_shell *shell);
 int				hs_nextword(t_shell *shell);
 int				hs_prevword(t_shell *shell);
 int				hs_lineup(t_shell *shell);
 int				hs_linedown(t_shell *shell);
 int				hs_ctrld(t_shell *shell);
-int				hs_switch_mode(t_shell *shell);
-int				hs_copy(t_shell *shell);
-int				hs_paste(t_shell *shell);
-int				hs_cut(t_shell *shell);
-int				hs_hisdown(t_shell *shell);
-int				hs_hisup(t_shell *shell);
+int				hs_downkey(t_shell *shell);
+int				hs_upkey(t_shell *shell);
 int				hs_ctrll(t_shell *shell);
 int				hs_ctrlr(t_shell *shell);
 int				hs_delete(t_shell *shell);
