@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/18 16:14:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/19 15:30:38 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,6 @@ void	reset_terminal_mode(t_shell *shell)
 		return ;
 }
 
-int		alt_fill_line(t_shell *shell)
-{
-	char	*line;
-
-	reset_terminal_mode(shell);
-	shell->fd_op = 1;
-	g_fd_output = 1;
-	shell->ctrlc = 0;
-	if (get_next_line(STDIN_FILENO, &line) <= 0)
-		return (1);
-	shell->line.data = line;
-	shell->line.len = ft_strlen(line);
-	shell->history = NULL;
-	return (0);
-}
-
 int		fill_line(t_shell *shell)
 {
 	char			buf[9];
@@ -115,5 +99,5 @@ int		fill_line(t_shell *shell)
 	if (!shell->end_heredoc)
 		ft_dprintf(shell->fd_op, "\n");
 	shell->his_pos = -1;
-	return (res == -1);
+	return (res == -1 || shell->line.data == NULL);
 }
