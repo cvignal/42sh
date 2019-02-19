@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 21:24:57 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/02/19 10:09:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,33 @@
 #include "fill_line.h"
 #include "libft.h"
 
-int	builtin_exit(t_shell *shell, char **args)
+static int	exit_value(t_shell *shell, char **args)
+{
+	int		ret;
+	char	*str;
+
+	if (args[1])
+		str = ft_strdup(args[1]);
+	else
+		str = NULL;
+	free_shell(shell);
+	if (str && !ft_isdigit(str[0]) && str[0] != '-'
+			&& str[0] != '+')
+	{
+		free(str);
+		exit(255);
+	}
+	if (str)
+	{
+		ret = ft_atoi(str);
+		free(str);
+		exit(ret);
+	}
+	else
+		exit(0);
+}
+
+int			builtin_exit(t_shell *shell, char **args)
 {
 	size_t	arg_count;
 
@@ -38,9 +64,5 @@ int	builtin_exit(t_shell *shell, char **args)
 		ft_dprintf(2, "Error on closing the history file\n");
 	if (close(shell->fd_op) == -1)
 		ft_dprintf(2, "Error on closing the tty fd\n");
-	free_shell(shell);
-	if (arg_count == 2 && !ft_isdigit(args[1][0]) && args[1][0] != '-'
-			&& args[1][0] != '+')
-		exit(255);
-	exit(arg_count == 2 ? ft_atoi(args[1]) : 0);
+	return (exit_value(shell, args));
 }
