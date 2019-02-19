@@ -6,12 +6,13 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 11:28:55 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/18 14:26:10 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/19 12:34:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
 #include <curses.h>
+#include <sys/ioctl.h>
 
 #include "libft.h"
 #include "fill_line.h"
@@ -62,13 +63,19 @@ size_t	length_curr_line(t_shell *shell)
 
 void	clean_under_line(t_shell *shell)
 {
+	t_curs		*curs;
+	struct winsize	win;
+
+	ioctl(0, TIOCGWINSZ, &win);
+	if (!(curs = get_cursor_pos()))
+		return ;
 	t_puts("sc");
 	if (shell)
 	{
 		while (shell->line.cursor < shell->line.len)
 			ft_rightkey(shell);
 	}
-	else
+	else if (curs->line != win.ws_row)
 		t_puts("do");
 	t_puts("cd");
 	t_puts("rc");
