@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/16 16:15:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/19 12:37:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_key	g_special_keys[] =\
 	{LEFT_ARROW, &ft_leftkey},
 	{RIGHT_ARROW, &ft_rightkey},
 	{BACKSPACE, &ft_backspace},
-	{DEL_KEY, &ft_backspace},
+	{DEL_KEY, &ft_delete},
 	{TAB_KEY, &ft_tab},
 	{DOWN_ARROW, &ft_hisdown},
 	{UP_ARROW, &ft_hisup},

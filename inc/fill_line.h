@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/16 15:52:37 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/19 12:40:16 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int				ft_hisdown(t_shell *shell);
 int				ft_hisup(t_shell *shell);
 int				ft_ctrll(t_shell *shell);
 int				ft_ctrlr(t_shell *shell);
+int				ft_delete(t_shell *shell);
 
 /*
 ** Tools for autocompletion
