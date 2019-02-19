@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/19 15:30:38 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/19 17:20:13 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include "shell.h"
 #include "fill_line.h"
 #include "libft.h"
+
+int		g_fd_output;
 
 int		check_validity(t_shell *shell)
 {
