@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/19 16:24:51 by cvignal          ###   ########.fr        #
+#    Updated: 2019/02/19 18:12:11 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,7 @@ SRC		=							\
 	line_edition/tools_insertion.c	\
 	line_edition/delete.c			\
 	history_research/init_search.c	\
+	history_research/move_keys.c	\
 	exec/cmd.c						\
 	exec/pipeline.c					\
 	exec/end.c						\
