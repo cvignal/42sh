@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/19 12:37:56 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/19 16:00:05 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include "libft.h"
 #include "shell.h"
 #include "fill_line.h"
-
-int		g_fd_output;
 
 t_key	g_special_keys[] =\
 {
