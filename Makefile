@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/20 10:15:25 by cvignal          ###   ########.fr        #
+#    Updated: 2019/02/20 16:18:16 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ SRC		=								\
 	history_research/other_movekeys.c	\
 	history_research/ctrl_keys.c		\
 	history_research/algo_search.c		\
+	history_research/tools_hs.c			\
 	exec/cmd.c							\
 	exec/pipeline.c						\
 	exec/end.c							\

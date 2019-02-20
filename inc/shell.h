@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/20 10:09:49 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/20 16:33:21 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct		s_line
 	char			*data;
 	char			search[SEARCH_MAX];
 	size_t			len_search;
+	size_t			curs_search;
 	size_t			alloc_size;
 	size_t			len;
 	unsigned int	cursor;
