@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 10:11:35 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/20 17:00:27 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/20 17:09:53 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int			hs_search(t_shell *shell, int flag)
 	shell->line.curs_search = 0;
 	while (curr)
 	{
-		if ((res = ft_strstr(curr->content, shell->line.search)))
+		if ((res = ft_strrstr(curr->content, shell->line.search)))
 			return (hs_display_res(shell, curr, i, ft_strlen(res)));
 		curr = curr->next;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 11:28:55 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/20 15:40:27 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/20 17:23:21 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,5 @@ void	clean_under_line(t_shell *shell)
 		t_puts("do");
 	t_puts("cd");
 	t_puts("rc");
+	free(curs);
 }

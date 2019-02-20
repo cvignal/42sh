@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 16:11:46 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/20 16:56:34 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/20 17:43:16 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,13 @@ void	fill_line_hs(t_shell *shell, char *buf)
 	print_prompt(NULL, shell, 0);
 	i = -1;
 	curr = shell->history;
+	if (!curr || shell->his_pos == -1)
+		return ;
 	while (++i < shell->his_pos)
 		curr = curr->next;
 	ft_addchar(shell, curr->content, 0);
+	while (shell->line.cursor > shell->line.curs_search)
+		ft_leftkey(shell);
 	if (is_a_special_key(buf))
 		apply_key(buf, shell);
 }
