@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/15 10:05:38 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/20 17:02:11 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ int					ft_iabs(int a);
 long long			ft_llabs(long long a);
 long long			ft_llmax(long long a, long long b);
 long long			ft_llmin(long long a, long long b);
+char				*ft_strrstr(const char *haystack, const char *needle);
 
 #endif
