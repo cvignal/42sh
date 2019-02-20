@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 10:46:07 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/19 15:24:50 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/20 15:40:39 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <unistd.h>
 
-int		alt_fill_line(t_shell *shell)
+int	alt_fill_line(t_shell *shell)
 {
 	char	*line;
 

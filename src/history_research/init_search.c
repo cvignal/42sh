@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:23:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/20 14:56:02 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/20 16:59:45 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ int			hs_keyapply(char *buf, t_shell *shell)
 
 static void	hs_backspace(t_shell *shell)
 {
-	int		nb;
+	size_t	nb;
 	size_t	len;
 
-	nb = 5;
+	nb = 5 + shell->line.curs_search;
 	len = ft_strlen(shell->line.search);
 	if (!len)
 		return ;
@@ -87,7 +87,7 @@ static void	hs_backspace(t_shell *shell)
 	while (--nb)
 		t_puts("le");
 	t_puts("dc");
-	while (++nb != 4)
+	while (++nb != 4 + shell->line.curs_search)
 		t_puts("nd");
 	shell->line.len_search--;
 	shell->his_pos = -1;
@@ -109,13 +109,7 @@ int			hs_addchar(char *buf, t_shell *shell)
 			shell->line.search[ft_strlen(shell->line.search)] = buf[i];
 			if (hs_search(shell, 0))
 				return (0);
-			while (--nb)
-				t_puts("le");
-			t_puts("im");
-			ft_dprintf(shell->fd_op, "%c", buf[i]);
-			t_puts("ei");
-			while (++nb != 4)
-				t_puts("nd");
+			display_char_in_research(shell, buf[i]);
 		}
 		else if (buf[i] == 127)
 			hs_backspace(shell);
@@ -129,8 +123,6 @@ int			ft_ctrlr(t_shell *shell)
 	int		ret;
 	char	buf[9];
 	int		res;
-	t_list	*curr;
-	int		i;
 
 	t_puts("cr");
 	t_puts("dl");
@@ -149,13 +141,6 @@ int			ft_ctrlr(t_shell *shell)
 		else
 			res = hs_addchar(buf, shell);
 	}
-	t_puts("cr");
-	t_puts("dl");
-	print_prompt(NULL, shell, 0);
-	i = -1;
-	curr = shell->history;
-	while (++i < shell->his_pos)
-		curr = curr->next;
-	ft_addchar(shell, curr->content, 0);
-	return (0);
+	fill_line_hs(shell, buf);
+	return (res);
 }
