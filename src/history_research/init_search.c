@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:23:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/19 18:10:33 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/20 14:56:02 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ t_key		g_hs_keys[] =\
 {
 	{LEFT_ARROW, &hs_leftkey},
 	{RIGHT_ARROW, &hs_rightkey},
-	{DEL_KEY, &hs_delete},
-	{TAB_KEY, &hs_tab},
 	{DOWN_ARROW, &hs_downkey},
 	{UP_ARROW, &hs_upkey},
 	{HOME_KEY, &hs_homekey},
@@ -76,17 +74,23 @@ int			hs_keyapply(char *buf, t_shell *shell)
 
 static void	hs_backspace(t_shell *shell)
 {
-	int	nb;
-	int	len;
+	int		nb;
+	size_t	len;
 
 	nb = 5;
 	len = ft_strlen(shell->line.search);
 	if (!len)
 		return ;
+	shell->line.search[len - 1] = 0;
+	if (shell->line.len_search < len)
+		return ;
 	while (--nb)
 		t_puts("le");
 	t_puts("dc");
-	shell->line.search[len - 1] = 0;
+	while (++nb != 4)
+		t_puts("nd");
+	shell->line.len_search--;
+	shell->his_pos = -1;
 }
 
 int			hs_addchar(char *buf, t_shell *shell)
@@ -102,12 +106,14 @@ int			hs_addchar(char *buf, t_shell *shell)
 			return (1);
 		else if (buf[i] >= 32 && buf[i] <= 126)
 		{
+			shell->line.search[ft_strlen(shell->line.search)] = buf[i];
+			if (hs_search(shell, 0))
+				return (0);
 			while (--nb)
 				t_puts("le");
 			t_puts("im");
 			ft_dprintf(shell->fd_op, "%c", buf[i]);
 			t_puts("ei");
-			shell->line.search[ft_strlen(shell->line.search)] = buf[i];
 			while (++nb != 4)
 				t_puts("nd");
 		}
@@ -123,13 +129,16 @@ int			ft_ctrlr(t_shell *shell)
 	int		ret;
 	char	buf[9];
 	int		res;
+	t_list	*curr;
+	int		i;
 
 	t_puts("cr");
 	t_puts("dl");
 	ft_dprintf(shell->fd_op, "(reverse-i-search)`': ");
 	ft_bzero(shell->line.search, SEARCH_MAX);
+	ft_strdel(&shell->pbpaste);
 	res = 0;
-	while ((ret = read(0, buf, 8) && !res))
+	while (!res && (ret = read(0, buf, 8)))
 	{
 		buf[ret] = 0;
 		if (hs_specialkeys(buf))
@@ -140,5 +149,13 @@ int			ft_ctrlr(t_shell *shell)
 		else
 			res = hs_addchar(buf, shell);
 	}
-	return (res == -1);
+	t_puts("cr");
+	t_puts("dl");
+	print_prompt(NULL, shell, 0);
+	i = -1;
+	curr = shell->history;
+	while (++i < shell->his_pos)
+		curr = curr->next;
+	ft_addchar(shell, curr->content, 0);
+	return (0);
 }

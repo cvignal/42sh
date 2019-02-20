@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/19 17:56:43 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/20 10:15:01 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,6 @@ int				hs_ctrlr(t_shell *shell);
 int				hs_delete(t_shell *shell);
 int				hs_keyapply(char *buf, t_shell *shell);
 int				hs_addchar(char *buf, t_shell *shell);
+int				hs_search(t_shell *shell, int flag);
 
 #endif
