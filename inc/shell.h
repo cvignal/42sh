@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/20 16:33:21 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/21 14:22:34 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define SYNTAX_ERROR_MSG "syntax error"
 # define MEMORY_ERROR_MSG "unable to allocate memory"
 # define COMMAND_NOT_FOUND_MSG "command not found"
+# define ERR_CHAR_VAR "invalid characters"
+# define ERR_LEN_VAR "variable too long"
 
 # define ARGS_ALLOC_SIZE 8
 # define HEREDOC_ALLOC_SIZE 256
