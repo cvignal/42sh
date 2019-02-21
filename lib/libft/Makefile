@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/20 14:14:18 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/20 17:05:18 by cvignal          ###   ########.fr        #
+#    Updated: 2019/02/21 14:38:01 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,7 +125,6 @@ SRC			= ft_memset.c										\
 			  ft_printf/conversion.c							\
 			  ft_printf/format.c								\
 			  ft_printf/buffer.c								\
-			  ft_put_tab.c										\
 			  ft_atoi_base.c									\
 			  get_next_line.c									\
 			  ft_strndup.c										\
