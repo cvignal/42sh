@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/18 14:26:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/26 17:49:11 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int			ft_tab(t_shell *shell)
 	int		type;
 
 	list = NULL;
-	if (shell->line.mode != 0 || !shell->line.len)
+	if (!shell->line.len)
 		return (0);
 	clean_under_line(NULL);
 	if ((type = is_a_command(&shell->line)) == 1)

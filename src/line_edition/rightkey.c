@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:46:06 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 17:54:22 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/26 17:47:31 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include "libft.h"
 #include "fill_line.h"
 
-static int	select_right_key(t_shell *shell)
+int	select_right_key(t_shell *shell)
 {
 	char	c;
 
@@ -43,8 +43,6 @@ int			ft_rightkey(t_shell *shell)
 	{
 		c = shell->line.data[shell->line.cursor];
 		shell->line.cursor++;
-		if (shell->line.mode)
-			return (select_right_key(shell));
 		ioctl(0, TIOCGWINSZ, &win);
 		curs_col = pos_cursor_col(shell, win.ws_col, 0);
 		t_puts(win.ws_col == curs_col ? "do" : "nd");

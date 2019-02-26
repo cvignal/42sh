@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:48:22 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/14 17:49:58 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:41:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	left_key_multi(t_shell *shell)
 	free(cursor);
 }
 
-static void	left_select(t_shell *shell, unsigned int curs)
+void	left_select(t_shell *shell, unsigned int curs)
 {
 	if (shell->line.cursor < shell->line.select_curs)
 		ft_dprintf(shell->fd_op, "%s%c%s", INV_COLOR
@@ -81,8 +81,6 @@ int			ft_leftkey(t_shell *shell)
 		}
 		if (shell->line.data[curs - 1] == '\n')
 			go_to_end_of_line(shell);
-		if (shell->line.mode)
-			left_select(shell, curs);
 	}
 	return (0);
 }
