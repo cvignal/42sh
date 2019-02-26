@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:46:47 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 15:15:24 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/26 17:47:46 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		ft_backspace(t_shell *shell)
 {
 	size_t	curs;
 
-	if (shell->line.cursor > 0 && !shell->line.mode)
+	if (shell->line.cursor > 0)
 	{
 		shell->line.len--;
 		curs = shell->line.cursor - 1;

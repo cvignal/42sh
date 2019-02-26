@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/19 16:00:05 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/26 17:39:59 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ t_key	g_special_keys[] =\
 	{MAJ_RIGHT, &ft_nextword},
 	{MAJ_UP, &ft_lineup},
 	{MAJ_DOWN, &ft_linedown},
-	{F1_KEY, &ft_switch_mode},
-	{F2_KEY, &ft_copy},
-	{F3_KEY, &ft_paste},
-	{F4_KEY, &ft_cut},
+	{F1_KEY, &visual_mode},
+	{CTRL_P, &ft_paste},
 	{CTRL_D, &ft_ctrld},
 	{CTRL_C, &ft_ctrlc},
 	{CTRL_L, &ft_ctrll},

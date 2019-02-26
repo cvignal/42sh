@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/21 14:22:34 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/26 17:29:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct		s_line
 	size_t			len;
 	unsigned int	cursor;
 	unsigned int	select_curs;
-	int				mode;
 }					t_line;
 
 typedef struct		s_fd

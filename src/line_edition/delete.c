@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 12:38:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/19 13:15:48 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/26 17:50:36 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	ft_delete(t_shell *shell)
 {
-	if (shell->line.cursor < shell->line.len && !shell->line.mode)
+	if (shell->line.cursor < shell->line.len)
 	{
 		shell->line.len--;
 		t_puts("dc");

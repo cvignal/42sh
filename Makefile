@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/20 16:18:16 by cvignal          ###   ########.fr        #
+#    Updated: 2019/02/26 17:50:14 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,6 @@ SRC		=								\
 	line_edition/cursor.c				\
 	line_edition/fn_keys.c				\
 	line_edition/line_keys.c			\
-	line_edition/switch_mode.c			\
 	line_edition/tools_insertion.c		\
 	line_edition/delete.c				\
 	history_research/init_search.c		\
@@ -80,6 +79,7 @@ SRC		=								\
 	history_research/ctrl_keys.c		\
 	history_research/algo_search.c		\
 	history_research/tools_hs.c			\
+	visual_mode/visual_mode.c			\
 	exec/cmd.c							\
 	exec/pipeline.c						\
 	exec/end.c							\
