@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/26 17:52:06 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/27 18:35:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define CTRL_L "\xc\0\0\0\0\0"
 # define CTRL_R "\x12\0\0\0\0\0"
 # define CTRL_A	"\x1\0\0\0\0\0"
-# define CTRL_P "\xf\0\0\0\0\0"
+# define CTRL_P "\20"
 # define RETURN "\n"
 # define BACKSPACE "\b"
 # define DEL_KEY "\033[3~"
@@ -167,7 +167,7 @@ void			fill_line_hs(t_shell *shell, char *buf);
 /*
 ** Visual mode
 */
-int				vm_paste(t_shell *shell);
+int				vm_copy(t_shell *shell);
 int				vm_cut(t_shell *shell);
 int				vm_leftkey(t_shell *shell);
 int				vm_rightkey(t_shell *shell);

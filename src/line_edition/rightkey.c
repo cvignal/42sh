@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:46:06 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/26 17:47:31 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/27 17:11:46 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,6 @@
 #include "shell.h"
 #include "libft.h"
 #include "fill_line.h"
-
-int	select_right_key(t_shell *shell)
-{
-	char	c;
-
-	c = shell->line.data[shell->line.cursor - 1];
-	if (shell->line.select_curs <= shell->line.cursor)
-		ft_dprintf(shell->fd_op, "%s%c%s", INV_COLOR, c, EOC);
-	else
-		ft_dprintf(shell->fd_op, "%c", c);
-	return (0);
-}
 
 int			ft_rightkey(t_shell *shell)
 {

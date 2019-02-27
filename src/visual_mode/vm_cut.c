@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   switch_mode.c                                      :+:      :+:    :+:   */
+/*   vm_cut.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/31 13:37:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/27 17:11:03 by cvignal          ###   ########.fr       */
+/*   Created: 2019/02/26 17:56:31 by cvignal           #+#    #+#             */
+/*   Updated: 2019/02/27 16:00:02 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <term.h>
-#include <curses.h>
-
+#include "shell.h"
 #include "fill_line.h"
-#include "libft.h"
 
-int	ft_paste(t_shell *shell)
+int	vm_cut(t_shell *shell)
 {
-	if (shell->pbpaste)
-		ft_addchar(shell, shell->pbpaste, 0);
-	return (0);
+	if (vm_copy(shell) == -1)
+		return (1);
+	if (shell->line.cursor > shell->line.select_curs)
+	{
+		while (shell->line.cursor >= shell->line.select_curs)
+			ft_backspace(shell);
+	}
+	else
+	{
+		while (shell->line.cursor <= shell->line.select_curs)
+		{
+			ft_delete(shell);
+			shell->line.select_curs--;
+		}
+	}
+	return (1);
 }
