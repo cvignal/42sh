@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:48:22 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/21 16:41:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/27 18:36:05 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	left_key_multi(t_shell *shell)
 	t_curs			*cursor;
 	struct winsize	win;
 
+	(void)shell;
 	if (!(cursor = get_cursor_pos()))
 		return ;
 	ioctl(0, TIOCGWINSZ, &win);
@@ -50,18 +51,7 @@ static void	left_key_multi(t_shell *shell)
 				, 0, ft_printchar);
 	else
 		t_puts("le");
-	shell->line.cursor--;
 	free(cursor);
-}
-
-void	left_select(t_shell *shell, unsigned int curs)
-{
-	if (shell->line.cursor < shell->line.select_curs)
-		ft_dprintf(shell->fd_op, "%s%c%s", INV_COLOR
-				, shell->line.data[curs - 1], EOC);
-	else
-		ft_dprintf(shell->fd_op, "%c", shell->line.data[curs - 1]);
-	t_puts("le");
 }
 
 int			ft_leftkey(t_shell *shell)
@@ -75,10 +65,8 @@ int			ft_leftkey(t_shell *shell)
 				&& shell->line.data[curs - 1] != '\n')
 			left_key_multi(shell);
 		else
-		{
 			t_puts("le");
-			shell->line.cursor--;
-		}
+		shell->line.cursor--;
 		if (shell->line.data[curs - 1] == '\n')
 			go_to_end_of_line(shell);
 	}

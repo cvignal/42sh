@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:46:47 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/26 17:47:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/27 17:53:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ int		ft_backspace(t_shell *shell)
 	{
 		shell->line.len--;
 		curs = shell->line.cursor - 1;
-		while (shell->line.cursor)
-			ft_leftkey(shell);
-		t_puts("cd");
-		t_puts("sc");
+		clear_cmd_line(shell);
+		shell->line.cursor = 0;
 		if (curs < shell->line.len)
 			ft_del_char(shell->line.data, curs);
 		else
 			shell->line.data[shell->line.len] = 0;
+		t_puts("sc");
 		ft_dprintf(shell->fd_op, "%s", shell->line.data);
 		t_puts("rc");
 		while (shell->line.cursor < curs)
