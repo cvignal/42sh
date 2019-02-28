@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:55:29 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/27 18:45:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/02/28 16:26:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	vm_rightkey(t_shell *shell)
 	int				curs_col;
 	struct winsize	win;
 
-	if (shell->line.cursor == shell->line.len)
+	if (shell->line.cursor == shell->line.len
+			|| shell->line.data[shell->line.cursor] == '\n')
 		return (0);
 	shell->line.cursor++;
 	c = shell->line.data[shell->line.cursor - 1];
