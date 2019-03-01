@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:14:44 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/27 18:56:40 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/01 16:19:09 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			builtin_setenv(t_shell *shell, char **args)
 	{
 		if (ft_strlen(args[1]) > VAR_MAX || ft_strlen(args[2]) > VAR_MAX)
 			return (setenv_error_display(ERR_LEN_VAR));
-		else if (valid_value(args[1]))
+		else if (valid_value(args[1]) || ft_strchr(args[2], '='))
 			return (setenv_error_display(ERR_CHAR_VAR));
 		if (set_env_var(shell, args[1], args[2]))
 			return (1);
