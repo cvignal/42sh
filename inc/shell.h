@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/01 12:16:03 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/01 12:30:03 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,8 +217,10 @@ int					builtin_exit(t_shell *shell, char **args);
 int					exec_builtin(t_shell *shell, t_builtin builtin,
 		t_ast *instr);
 int					builtin_type(t_shell *shell, char **args);
-void				print_only_type(char **args, int i, char *flags, t_shell *shell);
-void				print_loc_type(char **args, int i, char *flags, t_shell *shell);
+void				print_only_type(char **args, int i, char *flags
+		, t_shell *shell);
+void				print_loc_type(char **args, int i, char *flags
+		, t_shell *shell);
 
 /*
 ** signal.c
