@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/02/27 14:46:17 by cvignal          ###   ########.fr        #
+#    Updated: 2019/03/01 12:14:35 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,6 +123,8 @@ SRC		=								\
 	builtins/setenv.c					\
 	builtins/unsetenv.c					\
 	builtins/exit.c						\
+	builtins/type.c						\
+	builtins/tools_type.c				\
 	expr/expression.c					\
 	expr/desc.c							\
 	expr/a.c							\

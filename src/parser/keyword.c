@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 12:24:56 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/09 10:29:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/03/01 10:18:22 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,18 @@ int	keyword_type(const char *s)
 		++i;
 	}
 	return (TT_WORD);
+}
+
+int	is_a_keyword(const char *s)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < sizeof(g_keywords) / sizeof(*g_keywords))
+	{
+		if (!ft_strcmp(g_keywords[i].str, s))
+			return (1);
+		++i;
+	}
+	return (0);
 }
