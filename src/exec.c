@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/16 15:26:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/02 18:29:45 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 		free_shell(shell);
 		exit(1);
 	}
+	enable_signal();
 	execve(bin_path, ((t_command *)instr->data)->args_value, shell->env);
 	exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:23:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/20 16:59:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/02 16:21:54 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_key		g_hs_keys[] =\
 	{MAJ_UP, &hs_lineup},
 	{MAJ_DOWN, &hs_linedown},
 	{CTRL_D, &hs_ctrld},
-	{CTRL_C, &ft_ctrlc},
+	{CTRL_C, &hs_ctrlc},
 	{CTRL_R, &hs_ctrlr},
 	{CTRL_A, &hs_homekey},
 	{CTRL_HOME, &hs_homekey},

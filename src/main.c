@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/19 15:19:03 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/02 18:10:00 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void		print_prompt(t_parser *parser, t_shell *shell, int flag)
 		else
 			str = cwd;
 		shell->prompt_len = ft_strlen(str) + 7;
-		ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
-				, EOC, GREEN, str, EOC);
+		ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", 	YELLOW, "\xE2\x86\xAA"
+				, EOC, !shell->ret_cmd ? GREEN : RED, str, EOC);
 	}
 	free(cwd);
 }
@@ -55,6 +55,7 @@ static void	exec_ast(t_shell *shell, t_token *tokens)
 		ast->exec(shell, ast);
 		close_everything(shell);
 		wait_loop(ast);
+		shell->ret_cmd = ast->ret;
 		ast->del(ast);
 		shell->parser.ret = NULL;
 	}
