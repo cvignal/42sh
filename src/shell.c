@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/16 10:34:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/02 16:34:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void		free_shell(t_shell *shell)
 
 int			init_shell(t_shell *shell, char **environ)
 {
+	ft_bzero(shell, sizeof(*shell));
 	if (init_lexer(&shell->lexer) || init_parser(&shell->parser)
 			|| init_exp_lexer(&shell->exp_lexer))
 		return (1);

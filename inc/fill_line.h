@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/27 18:35:48 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/02 16:32:22 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define EOC "\e[0m"
 # define GREEN "\e[1;32m"
 # define YELLOW "\e[1;33m"
+# define RED "\e[1;31m"
 # define ARROW "\u2190"
 # define INV_COLOR "\e[7;m"
 # define HIST_SIZE_MAX 50000

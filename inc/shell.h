@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/02 11:53:16 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/02 17:19:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct		s_shell
 	int				ctrlc;
 	int				end_heredoc;
 	int				prev_cmd_state;
+	int				ret_cmd;
 	t_token			*output;
 	t_token			*current;
 	int				prompt_len;
@@ -227,7 +228,7 @@ void				print_rec_tree(t_hbt *node);
 /*
 ** signal.c
 */
-void				signal_sigint(int sig);
+t_shell				*save_shell(t_shell *shell);
 
 /*
 ** exec
