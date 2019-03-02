@@ -17,7 +17,7 @@
 *.pdf
 
 # Program
-21sh
+42sh
 
 # Callgraph
 callgraph.ps
