@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:54:44 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/28 16:40:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/05 10:45:05 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,10 @@ static int	vm_left_multi(t_shell *shell)
 int			vm_leftkey(t_shell *shell)
 {
 	size_t	curs;
-	int		flag;
 
 	curs = shell->line.cursor;
 	if (curs == 0 || shell->line.data[curs - 1] == '\n')
 		return (0);
-	flag = 1;
 	if (nb_multi_lines(shell->line.len + 1, shell->prompt_len)
 			&& shell->line.data[curs - 1] != '\n')
 		return (vm_left_multi(shell));

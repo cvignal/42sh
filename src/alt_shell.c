@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 10:46:07 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/20 15:40:39 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/04 18:37:00 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	alt_fill_line(t_shell *shell)
 	shell->fd_op = 1;
 	g_fd_output = 1;
 	shell->ctrlc = 0;
-	if (get_next_line(STDIN_FILENO, &line) <= 0)
+	if (get_next_line(0, &line) <= 0)
 		return (1);
 	shell->line.data = line;
 	shell->line.len = ft_strlen(line);

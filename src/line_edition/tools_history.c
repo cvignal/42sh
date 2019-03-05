@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/16 16:15:07 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/05 16:23:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,32 +46,28 @@ int			load_history(t_shell *shell)
 {
 	char	*line;
 	t_list	*new;
-	int		new_fd;
+	int		fd_hf;
 
 	shell->history = NULL;
 	shell->output = NULL;
 	shell->current = NULL;
-	if ((shell->fd_hf = open(".shperso_history", O_RDWR | O_APPEND
+	if ((fd_hf = open(".shperso_history", O_RDWR | O_APPEND
 					| O_CREAT, 0644)) == -1)
 		return (1);
-	new_fd = get_next_fd(shell);
-	if (dup2(shell->fd_hf, new_fd) == -1)
-		return (1);
-	close(shell->fd_hf);
-	if (add_fd(shell, new_fd, 0) == -1)
-		return (1);
-	shell->fd_hf = new_fd;
-	while (get_next_line(shell->fd_hf, &line) == 1)
+	while (get_next_line(fd_hf, &line) == 1)
 	{
 		if (!(new = ft_lstnew(line, ft_strlen(line) + 1)))
 			return (1);
 		ft_lstadd(&shell->history, new);
 		free(line);
 	}
+	if (close(fd_hf) == -1)
+		return (1);
 	return (open_tty_fd(shell));
 }
 
-static int	add_complete_command(char *str, t_shell *shell, char **multi_line)
+static int	add_complete_command(char *str, t_shell *shell
+		, char **multi_line, int fd_hf)
 {
 	t_list	*new;
 
@@ -83,14 +79,14 @@ static int	add_complete_command(char *str, t_shell *shell, char **multi_line)
 		if (!(shell->history->content = ft_strdup(*multi_line)))
 			return (1);
 		shell->history->content_size = ft_strlen(*multi_line) + 1;
-		ft_dprintf(shell->fd_hf, "%s\n", *multi_line);
+		ft_dprintf(fd_hf, "%s\n", *multi_line);
 		ft_strdel(multi_line);
 		return (0);
 	}
 	if (!(new = ft_lstnew(str, ft_strlen(str) + 1)))
 		return (1);
 	ft_lstadd(&shell->history, new);
-	ft_dprintf(shell->fd_hf, "%s\n", str);
+	ft_dprintf(fd_hf, "%s\n", str);
 	if (*multi_line && shell->prev_cmd_state)
 		ft_strdel(multi_line);
 	shell->prev_cmd_state = 0;
@@ -126,12 +122,22 @@ static int	add_incomplete_command(char *str, t_shell *shell, char **multi_line)
 int			add_to_history(char *str, t_shell *shell, int flag)
 {
 	static char	*multi_line = NULL;
+	int			fd_hf;
+	int			ret;
 
 	if (check_validity(shell))
 		return (0);
 	if (flag)
 		return (add_incomplete_command(str, shell, &multi_line));
 	else if (!flag && ft_strlen(str) && !ft_strnequ(str, "\033[", 2))
-		return (add_complete_command(str, shell, &multi_line));
+	{
+		if ((fd_hf = open(".shperso_history", O_RDWR | O_APPEND
+					| O_CREAT, 0644)) == -1)
+			return (1);
+		ret = add_complete_command(str, shell, &multi_line, fd_hf);
+		if (close(fd_hf) == -1)
+			return (1);
+		return (ret);
+	}
 	return (0);
 }

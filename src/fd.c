@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:06:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/15 18:43:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/03/05 16:17:08 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			get_next_fd(t_shell *shell)
 	int		new_fd;
 	t_fd	*iter;
 
-	new_fd = 11;
+	new_fd = 10;
 	iter = shell->used_fd;
 	while (iter && iter->fd == new_fd)
 	{
@@ -90,25 +90,26 @@ void		close_everything(t_shell *shell)
 {
 	t_fd	*next;
 	t_fd	*tty_fd;
-	t_fd	*hf_fd;
 
 	tty_fd = NULL;
-	hf_fd = NULL;
 	while (shell->used_fd)
 	{
 		next = shell->used_fd->next;
 		if (shell->used_fd->fd == shell->fd_op)
 			tty_fd = shell->used_fd;
-		else if (shell->used_fd->fd == shell->fd_hf)
-			hf_fd = shell->used_fd;
 		else
 		{
+			ft_dprintf(2, ">>>%d<<<\n", shell->used_fd->fd);
 			close(shell->used_fd->fd);
 			free(shell->used_fd);
 		}
 		shell->used_fd = next;
 	}
-	add_tty_history_fd(shell, tty_fd, hf_fd);
+	if (tty_fd)
+	{
+		shell->used_fd = tty_fd;
+		tty_fd->next = NULL;
+	}
 }
 
 int			open_file(t_shell *shell, const char *file, int mode, int perm)

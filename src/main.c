@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/02 18:10:00 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/05 14:00:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 #include "ast.h"
 #include "libft.h"
 #include "fill_line.h"
+
+t_readline	g_functions[2] =\
+{
+	{0, &fill_line},
+	{1, &alt_fill_line}
+};
 
 void		print_prompt(t_parser *parser, t_shell *shell, int flag)
 {
@@ -39,7 +45,7 @@ void		print_prompt(t_parser *parser, t_shell *shell, int flag)
 		else
 			str = cwd;
 		shell->prompt_len = ft_strlen(str) + 7;
-		ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", 	YELLOW, "\xE2\x86\xAA"
+		ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
 				, EOC, !shell->ret_cmd ? GREEN : RED, str, EOC);
 	}
 	free(cwd);
@@ -69,13 +75,15 @@ int			main(int ac, char **av, char **environ)
 {
 	t_shell		shell;
 	t_token		*tokens;
+	int			ret;
 
 	(void)ac;
 	(void)av;
 	if (init_shell(&shell, environ))
 		return (1);
+	ret = check_validity(&shell);
 	print_prompt(&shell.parser, &shell, 0);
-	while (!fill_line(&shell))
+	while (!g_functions[ret].f(&shell))
 	{
 		disable_signal();
 		if (!(tokens = lex(&shell)))
@@ -86,6 +94,7 @@ int			main(int ac, char **av, char **environ)
 		else
 			exec_ast(&shell, tokens);
 		free_line(&shell.line);
+		raw_terminal_mode(&shell);
 	}
 	free_shell(&shell);
 	return (0);
