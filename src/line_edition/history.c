@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/27 18:17:22 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/05 10:43:25 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		ft_hisdown(t_shell *shell)
 	}
 	clear_cmd_line(shell);
 	free_line(&shell->line);
-	if (shell->his_pos > -1)
+	if (shell->his_pos > -1 && curr)
 		ft_addchar(shell, curr->content, 1);
 	return (0);
 }

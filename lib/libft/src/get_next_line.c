@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 11:00:48 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/19 16:59:07 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/04 19:39:43 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static int	free_all(char *line)
 {
 	if (line)
-		free(line);
+		ft_strdel(&line);
 	return (-1);
 }
 
@@ -29,7 +29,7 @@ static int	ft_check(char *cpy, char **line, char **buf)
 		return (free_all(*line));
 	if (!(tmp = ft_strdup(*line)))
 		return (free_all(*line));
-	free(*line);
+	ft_strdel(line);
 	if (!(*line = ft_strsub(tmp, 0, ft_strchr(tmp, '\n') - tmp)))
 	{
 		free(tmp);
@@ -51,7 +51,7 @@ static int	ft_read(int fd, char **line, char **buf, int *byt)
 		cpy[*byt] = '\0';
 		if (!(tmp = ft_strdup(*line)))
 			return (free_all(*line));
-		free(*line);
+		ft_strdel(line);
 		if (!(*line = ft_strjoin(tmp, cpy)))
 			return (free_all(*line));
 		free(tmp);
@@ -69,7 +69,7 @@ static int	ft_splitfun(char **line, char **buf)
 {
 	char		*tmp;
 
-	free(*line);
+	ft_strdel(line);
 	if (!(*line = ft_strsub(*buf, 0, ft_strchr(*buf, '\n') \
 					- *buf)))
 		return (free_all(*line));
@@ -93,14 +93,14 @@ int			get_next_line(const int fd, char **line)
 	static char	*buf[10240];
 	int			byt;
 
-	if (fd > 10239 || !line || fd < 0 || (!(*line = ft_strnew(0))))
+	if (fd > 10239 || !line || fd < 0 || read(fd, buf, 0) == -1 || (!(*line = ft_strnew(0))))
 		return (-1);
 	byt = 0;
 	if (buf[fd] && ft_strchr(buf[fd], '\n'))
 		return (ft_splitfun(line, &buf[fd]));
 	if (buf[fd])
 	{
-		free(*line);
+		ft_strdel(line);
 		if (!(*line = ft_strdup(buf[fd])))
 			return (-1);
 		free(buf[fd]);

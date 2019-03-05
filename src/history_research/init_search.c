@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:23:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/02 16:21:54 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/05 10:43:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,8 @@ static void	hs_backspace(t_shell *shell)
 int			hs_addchar(char *buf, t_shell *shell)
 {
 	int	i;
-	int	nb;
 
 	i = 0;
-	nb = 4;
 	while (buf[i])
 	{
 		if (buf[i] == 10 || buf[i] == 13)

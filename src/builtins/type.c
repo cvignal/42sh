@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 09:49:46 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/01 12:16:28 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/05 10:47:25 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int			builtin_type(t_shell *shell, char **args)
 	int		i;
 	char	flags[4];
 
-	i = 1;
 	ft_bzero(flags, 4);
 	if ((i = parse_flags(flags, args)) == -1)
 		return (1);

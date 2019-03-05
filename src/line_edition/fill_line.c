@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/02 18:09:32 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/05 11:41:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int		check_validity(t_shell *shell)
 	res = tgetent(NULL, name);
 	if (res <= 0)
 		return (1);
-	raw_terminal_mode(shell);
 	shell->ctrlc = 0;
 	return (0);
 }
@@ -81,8 +80,6 @@ int		fill_line(t_shell *shell)
 	int				ret;
 	int				res;
 
-	if (check_validity(shell))
-		return (alt_fill_line(shell));
 	res = 0;
 	while (!res && (ret = read(0, buf, 8)) > 0)
 	{

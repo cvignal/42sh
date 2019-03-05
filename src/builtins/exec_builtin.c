@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/18 14:02:20 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/03/05 16:24:35 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,18 @@ static int	prepare_pipeline(t_ast *instr, int *old)
 
 static void	reset_pipeline(int *old)
 {
-	dup2(old[STDIN_FILENO], STDIN_FILENO);
-	dup2(old[STDOUT_FILENO], STDOUT_FILENO);
-	dup2(old[STDERR_FILENO], STDERR_FILENO);
-	close(old[STDIN_FILENO]);
-	close(old[STDOUT_FILENO]);
-	close(old[STDERR_FILENO]);
+	if (dup2(old[STDIN_FILENO], STDIN_FILENO) == -1)
+		ft_dprintf(2, "Error on restoring stdin\n");
+	if (dup2(old[STDOUT_FILENO], STDOUT_FILENO) == -1)
+		ft_dprintf(2, "Error on restoring stdout\n");
+	if (dup2(old[STDERR_FILENO], STDERR_FILENO) == -1)
+		ft_dprintf(2, "Error on restoring stderr\n");
+	if (close(old[STDIN_FILENO]) == -1)
+		ft_dprintf(2, "Error closing old stdin\n");
+	if (close(old[STDOUT_FILENO]) == -1)
+		ft_dprintf(2, "Error closing old stdout\n");
+	if (close(old[STDERR_FILENO]) == -1)
+		ft_dprintf(2, "Error closing old stderr\n");
 }
 
 int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)

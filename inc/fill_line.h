@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/02 16:32:22 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/05 10:12:28 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ typedef struct	s_key
 	char	*value;
 	int		(*f)(t_shell *shell);
 }				t_key;
+
+typedef struct	s_readline
+{
+	int		value;
+	int		(*f)(t_shell *shell);
+}				t_readline;
 
 extern int		g_fd_output;
 
