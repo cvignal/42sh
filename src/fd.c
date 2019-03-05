@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:06:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/05 16:17:08 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/05 16:42:25 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void		close_everything(t_shell *shell)
 			tty_fd = shell->used_fd;
 		else
 		{
-			ft_dprintf(2, ">>>%d<<<\n", shell->used_fd->fd);
 			close(shell->used_fd->fd);
 			free(shell->used_fd);
 		}

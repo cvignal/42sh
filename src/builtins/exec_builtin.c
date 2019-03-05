@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/05 16:24:35 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/05 16:52:36 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 		return (-1);
 	if (apply_redirs(shell, instr))
 		return (-1);
+	if (prepare_redirs(shell, instr, instr))
+		return (-1);
 	instr->ret = builtin(shell, ((t_command *)instr->data)->args_value);
 	reset_pipeline(fd);
+	reset_redirs(shell, instr);
 	return (instr->ret);
 }
