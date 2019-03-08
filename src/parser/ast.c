@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:26:16 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/18 14:46:52 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/03/08 01:08:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	set_ast_fd(t_ast *new_node)
 		++i;
 	}
 	new_node->old_fds[STDIN_FILENO] = STDIN_FILENO;
-	new_node->old_fds[STDOUT_FILENO] = STDERR_FILENO;
+	new_node->old_fds[STDOUT_FILENO] = STDOUT_FILENO;
 	new_node->old_fds[STDERR_FILENO] = STDERR_FILENO;
 }
 
