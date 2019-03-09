@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:23:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/09 16:44:10 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 17:07:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,8 @@ int			ft_ctrlr(t_shell *shell)
 	ft_bzero(shell->line.search, SEARCH_MAX);
 	ft_strdel(&shell->pbpaste);
 	res = 0;
-	while (!res && (ret = read(0, buf, 8)) && shell->line.len_search < SEARCH_MAX)
+	while (!res && (ret = read(0, buf, 8))
+			&& shell->line.len_search < SEARCH_MAX)
 	{
 		buf[ret] = 0;
 		if (hs_specialkeys(buf))
