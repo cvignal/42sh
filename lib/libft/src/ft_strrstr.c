@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 17:06:07 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/20 17:08:00 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 14:51:03 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strrstr(const char *haystack, const char *needle)
 {
 	size_t	n;
 	char	*ret;
-	
+
 	ret = NULL;
 	n = ft_strlen(needle);
 	if (!ft_strlen(haystack) && !n)
