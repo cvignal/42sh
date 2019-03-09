@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/05 10:16:25 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 17:35:00 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,7 @@ void				print_loc_type(char **args, int i, char *flags
 		, t_shell *shell);
 int					builtin_hash(t_shell *shell, char **args);
 void				print_rec_tree(t_hbt *node);
+int					fc(t_shell *shell, char **args);
 
 /*
 ** signal.c

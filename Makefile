@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/03/02 11:52:52 by cvignal          ###   ########.fr        #
+#    Updated: 2019/03/09 17:35:18 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,6 +127,7 @@ SRC		=								\
 	builtins/tools_type.c				\
 	builtins/builtin_hash.c				\
 	builtins/tools_hash.c				\
+	builtins/fc.c						\
 	expr/expression.c					\
 	expr/desc.c							\
 	expr/a.c							\
