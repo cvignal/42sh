@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 15:50:57 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/18 14:00:30 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 15:02:05 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char				**ft_strsplit(char const *s, char *c)
 		while (is_a_separator(*s, c) && *s)
 			s++;
 		if (!(tab[i] = ft_strsub(s, 0, ft_lenword(s, c))))
-			return (NULL);
+			return (ft_deltab(&tab));
 		s += ft_lenword(s, c);
 		i++;
 	}

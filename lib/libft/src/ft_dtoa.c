@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 15:49:38 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/19 16:21:53 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 15:01:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ char						*ft_dtoa(long double nb, int precision)
 		str[i--] = '0' + ft_abs(nbr % 10);
 		nbr = ft_abs(nbr / 10);
 	}
-	i = ft_len(nb);
 	(nb < 0) ? str[0] = '-' : 0;
 	ft_roundup(str, nb, prec);
 	return (str);
