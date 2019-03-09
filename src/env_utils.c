@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 10:09:55 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 11:56:40 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 15:13:25 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ char	**copy_env(char **env)
 	while (i < size_env)
 	{
 		if (!(new_env[i] = ft_strdup(env[i])))
+		{
+			ft_deltab(&new_env);
 			return (NULL);
+		}
 		++i;
 	}
 	new_env[i] = NULL;
@@ -43,9 +46,9 @@ char	**split_env_arg(char *arg)
 	if (!(res = malloc(sizeof(*res) * 2)))
 		return (NULL);
 	i = 0;
-	res[0] = malloc(sizeof(*(res[0]) * (ft_strchr(arg, '=') - arg + 1)));
+	res[0] = malloc(sizeof(*(res[0])) * (ft_strchr(arg, '=') - arg + 1));
 	if (!res[0])
-		return (NULL);
+		return (ft_deltab(&res));
 	while (*arg && *arg != '=')
 		res[0][i++] = *arg++;
 	res[0][i] = 0;
@@ -53,8 +56,8 @@ char	**split_env_arg(char *arg)
 	{
 		++arg;
 		i = 0;
-		if (!(res[1] = malloc(sizeof(*(res[1]) * (ft_strlen(arg) + 1)))))
-			return (NULL);
+		if (!(res[1] = malloc(sizeof(*(res[1])) * (ft_strlen(arg) + 1))))
+			return (ft_deltab(&res));
 		while (*arg)
 			res[1][i++] = *arg++;
 		res[1][i] = 0;

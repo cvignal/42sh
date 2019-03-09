@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 19:07:30 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/31 11:38:52 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 15:01:38 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**ft_listtotab(t_list *lst, size_t len)
 	while (i < (int)len)
 	{
 		if (!(res[i] = ft_strdup(curr->content)))
-			return (NULL);
+			return (ft_deltab(&res));
 		i++;
 		curr = curr->next;
 	}

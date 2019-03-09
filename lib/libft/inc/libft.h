@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/20 17:02:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 15:03:02 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void				*ft_lstfold(t_list *lst, void *(*f)(void *, void *));
 size_t				ft_lstlen(t_list *lst);
 void				*ft_realloc(void *src, size_t old_len, size_t new_len);
 void				ft_list_sort(t_list **begin_list, int (*cmp)());
-void				ft_deltab(char ***table);
+char				**ft_deltab(char ***table);
 char				*ft_strjoin_free(char *s1, char *s2, int flag);
 int					ft_sqrt(int a);
 char				*ft_ltoa_base(long long nb, int base);

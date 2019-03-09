@@ -6,14 +6,14 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 16:03:41 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/19 16:20:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 15:02:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-void	ft_deltab(char ***table)
+char	**ft_deltab(char ***table)
 {
 	int	i;
 
@@ -25,4 +25,5 @@ void	ft_deltab(char ***table)
 	}
 	free(*table);
 	*table = NULL;
+	return (NULL);
 }
