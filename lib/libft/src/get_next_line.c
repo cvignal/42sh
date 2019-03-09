@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 11:00:48 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/04 19:39:43 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 14:50:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ int			get_next_line(const int fd, char **line)
 	static char	*buf[10240];
 	int			byt;
 
-	if (fd > 10239 || !line || fd < 0 || read(fd, buf, 0) == -1 || (!(*line = ft_strnew(0))))
+	if (fd > 10239 || !line || fd < 0 || read(fd, buf, 0) == -1
+			|| (!(*line = ft_strnew(0))))
 		return (-1);
 	byt = 0;
 	if (buf[fd] && ft_strchr(buf[fd], '\n'))

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:32:11 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 00:49:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/03/09 14:50:02 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int			rule_redir_r(t_parser *parser, t_ast_token *list)
 		redir->in = ft_atoi(list->data);
 		if (redir->in < 0 || redir->in > 9)
 		{
+			free(redir->target);
 			free(redir);
 			return (1);
 		}
