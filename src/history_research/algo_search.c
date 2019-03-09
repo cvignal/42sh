@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 10:11:35 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/20 17:09:53 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 16:38:44 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 
 static void	clean_curr_line(t_shell *shell)
 {
+	t_puts("rc");
 	t_puts("cr");
 	t_puts("cd");
 	ft_dprintf(shell->fd_op, "(reverse-i-search)`%.*s': "
-			, shell->line.len_search, shell->line.search);
+			, shell->line.len_search + 1, shell->line.search);
+	t_puts("sc");
 }
 
 int			hs_ctrlr(t_shell *shell)

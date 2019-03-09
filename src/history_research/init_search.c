@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:23:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/05 10:43:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 16:44:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,20 @@ static void	hs_backspace(t_shell *shell)
 	size_t	nb;
 	size_t	len;
 
-	nb = 5 + shell->line.curs_search;
+	nb = 5;
 	len = ft_strlen(shell->line.search);
 	if (!len)
 		return ;
 	shell->line.search[len - 1] = 0;
 	if (shell->line.len_search < len)
 		return ;
+	t_puts("rc");
 	while (--nb)
 		t_puts("le");
 	t_puts("dc");
-	while (++nb != 4 + shell->line.curs_search)
+	while (++nb != 4)
 		t_puts("nd");
+	t_puts("sc");
 	shell->line.len_search--;
 	shell->his_pos = -1;
 }
@@ -107,7 +109,6 @@ int			hs_addchar(char *buf, t_shell *shell)
 			shell->line.search[ft_strlen(shell->line.search)] = buf[i];
 			if (hs_search(shell, 0))
 				return (0);
-			display_char_in_research(shell, buf[i]);
 		}
 		else if (buf[i] == 127)
 			hs_backspace(shell);
@@ -125,10 +126,11 @@ int			ft_ctrlr(t_shell *shell)
 	t_puts("cr");
 	t_puts("dl");
 	ft_dprintf(shell->fd_op, "(reverse-i-search)`': ");
+	t_puts("sc");
 	ft_bzero(shell->line.search, SEARCH_MAX);
 	ft_strdel(&shell->pbpaste);
 	res = 0;
-	while (!res && (ret = read(0, buf, 8)))
+	while (!res && (ret = read(0, buf, 8)) && shell->line.len_search < SEARCH_MAX)
 	{
 		buf[ret] = 0;
 		if (hs_specialkeys(buf))
