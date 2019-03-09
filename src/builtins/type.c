@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 09:49:46 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/05 10:47:25 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 17:16:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	usage_type(void)
 	return (-1);
 }
 
-int			parse_flags(char *flags, char **args)
+static int	parse_flags(char *flags, char **args)
 {
 	int	j;
 	int	k;
