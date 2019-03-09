@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/05 14:00:07 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/09 16:28:50 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ void		print_prompt(t_parser *parser, t_shell *shell, int flag)
 		return ;
 	raw_terminal_mode(shell);
 	cwd = getcwd(NULL, MAX_PATH);
-	if ((parser && parser->pss->state != PS_NONE) || flag)
+	if ((parser && parser->pss->state != PS_NONE) || flag
+			|| shell->ret_cmd == -1)
 	{
 		shell->prompt_len = 2;
 		ft_dprintf(shell->fd_op, "%s ", INCOMPLETE_INPUT_PROMPT);
+		shell->ret_cmd = -1;
 	}
 	else
 	{
