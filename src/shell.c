@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/11 15:31:50 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 19:57:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,17 @@ static void	free_history(t_shell *shell)
 	int i;
 
 	i = 0;
+	if (!shell->history)
+		return ;
 	while (i < shell->history->length)
 	{
 		ft_strdel(&shell->history->data[i]);
 		i++;
 	}
-	free(shell->history->data);
-	free(shell->history);
+	if (shell->history->data)
+		free(shell->history->data);
+	if (shell->history)
+		free(shell->history);
 }
 
 static void	free_shell_aux(t_shell *shell)
