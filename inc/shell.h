@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/09 17:35:00 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 17:59:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@
 # define COMMAND_NOT_FOUND_MSG "command not found"
 # define ERR_CHAR_VAR "invalid characters in var name"
 # define ERR_LEN_VAR "variable too long"
+# define FC_0 "fc: usage:\n"
+# define FC_1 "\t(i)   fc [-r] [-e editor] [[first] [last]]\n"
+# define FC_2 "\t(ii)  fc -l [-nr] [first [last]]\n"
+# define FC_3 "\t(iii) fc -s [pat=rep] [command]"
+# define FC_USAGE_MESSAGE FC_0 FC_1 FC_2 FC_3
 
 # define ARGS_ALLOC_SIZE 8
 # define HEREDOC_ALLOC_SIZE 256
@@ -81,7 +86,7 @@ typedef struct		s_shell
 	t_exp_lexer		exp_lexer;
 	char			**env;
 	t_line			line;
-	t_list			*history;
+	t_array			*history;
 	int				his_pos;
 	t_hbt			**hash_table;
 	char			*pbpaste;
@@ -150,6 +155,17 @@ typedef struct		s_heredoc
 	size_t			alloc_size;
 	size_t			len;
 }					t_heredoc;
+
+typedef struct		s_fc
+{
+	char			*first;
+	char			*last;
+	char			*editor;
+	char			*pattern;
+	int				i_first;
+	int				i_last;
+	char			flags[4];
+}					t_fc;
 
 t_heredoc			*alloc_heredoc(void);
 int					add_to_heredoc(t_heredoc *heredoc, const char *line);
@@ -223,7 +239,15 @@ void				print_loc_type(char **args, int i, char *flags
 		, t_shell *shell);
 int					builtin_hash(t_shell *shell, char **args);
 void				print_rec_tree(t_hbt *node);
-int					fc(t_shell *shell, char **args);
+
+/*
+** fc
+*/
+int					builtin_fc(t_shell *shell, char **args);
+int					usage_fc(void);
+int					fc_init_args(t_fc *cmd, char **args, t_shell *shell);
+void				fc_index(t_fc *cmd, t_shell *shell);
+void				free_fc(t_fc *cmd);
 
 /*
 ** signal.c

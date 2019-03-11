@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/05 11:41:48 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 15:36:54 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int		fill_line(t_shell *shell)
 	int				res;
 
 	res = 0;
+	if (shell->history)
+		shell->his_pos = shell->history->length;
 	while (!res && (ret = read(0, buf, 8)) > 0)
 	{
 		buf[ret] = 0;
@@ -97,6 +99,5 @@ int		fill_line(t_shell *shell)
 	clean_under_line(shell);
 	if (!shell->end_heredoc)
 		ft_dprintf(shell->fd_op, "\n");
-	shell->his_pos = -1;
 	return (res == -1 || shell->line.data == NULL);
 }
