@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/09 15:03:02 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 17:39:15 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # define BUFF_SIZE 2048
+# define ARRAY_ALLOC_SIZE 128
 
 # include <stdarg.h>
 # include <sys/types.h>
@@ -25,6 +26,13 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct		s_array
+{
+	char			**data;
+	int				alloc_size;
+	int				length;
+}					t_array;
 
 int					ft_atoi(const char *str);
 int					ft_atoi_base(char *str, int base);
@@ -125,5 +133,7 @@ long long			ft_llabs(long long a);
 long long			ft_llmax(long long a, long long b);
 long long			ft_llmin(long long a, long long b);
 char				*ft_strrstr(const char *haystack, const char *needle);
+int					ft_arrayadd(t_array *table, char *str);
+void				ft_swap_int(int *a, int *b);
 
 #endif

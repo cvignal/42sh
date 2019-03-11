@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/26 17:39:59 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 15:39:39 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int		ft_addchar(t_shell *shell, char *buf, int flag)
 	int	i;
 
 	i = 0;
+	if (!buf)
+		return (0);
 	while (buf[i])
 	{
 		if ((buf[i] == 10 || buf[i] == 13) && !flag)

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/02 16:34:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 15:31:50 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,16 @@ static int	increment_shlvl(t_shell *shell)
 
 static void	free_history(t_shell *shell)
 {
-	t_list	*list;
-	t_list	*tmp;
+	int i;
 
-	list = shell->history;
-	while (list)
+	i = 0;
+	while (i < shell->history->length)
 	{
-		tmp = list->next;
-		free(list->content);
-		free(list);
-		list = tmp;
+		ft_strdel(&shell->history->data[i]);
+		i++;
 	}
+	free(shell->history->data);
+	free(shell->history);
 }
 
 static void	free_shell_aux(t_shell *shell)

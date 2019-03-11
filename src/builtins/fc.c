@@ -6,55 +6,57 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 17:11:37 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/09 17:20:35 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 17:45:25 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-static int	usage_type(void)
+void	free_fc(t_fc *cmd)
 {
-	ft_dprintf(2, "fc: usage: fc [-lnrs] [-e editor] [old=new] [first [last]]\n");
-	return (-1);
+	if (cmd->editor)
+		free(cmd->editor);
+	if (cmd->first)
+		free(cmd->first);
+	if (cmd->last)
+		free(cmd->last);
+	if (cmd->pattern)
+		free(cmd->pattern);
 }
 
-static int	parse_flags(char *flags, char **args)
+void	fc_exec_cmd(t_fc *cmd, t_shell *shell)
 {
-	int	j;
-	int	k;
+	(void)cmd;
+	(void)shell;
+}
 
-	j = 1;
-	while (args[j] && !ft_strequ(args[j], "--") && args[j][0] == '-')
+void	fc_display(t_fc *cmd, t_shell *shell)
+{
+	int	i;
+
+	i = cmd->i_first;
+	while (i < shell->history->length && i < cmd->i_last)
 	{
-		k = 1;
-		while (args[j][k])
-		{
-			if (args[j][k] == 'e' || args[j][k] == 'l' || args[j][k] == 'n'
-					|| args[j][k] == 's' || args[j][k] == 'r')
-			{
-				if (!ft_strchr(flags, args[j][k]))
-					flags[ft_strlen(flags)] = args[j][k];
-			}
-			else
-			{
-				ft_dprintf(2, "%s: fc: -%c: invalid option\n"
-						, EXEC_NAME, args[j][k]);
-				return (usage_type());
-			}
-			k++;
-		}
-		j++;
+		ft_printf("%d %s\n", i, shell->history->data[i]);
+		i++;
 	}
-	return (j + ft_strequ(args[j], "--"));
 }
 
-int	fc(t_shell *shell, char **args)
+int		builtin_fc(t_shell *shell, char **args)
 {
-	char	flags[6];
+	t_fc	cmd;
 
-	ft_bzero(flags, 6);
-	if ((i = parse_flags(flags, args)) == -1)
+	ft_bzero(&cmd, sizeof(cmd));
+	if (fc_init_args(&cmd, args, shell))
+	{
+		free_fc(&cmd);
 		return (1);
+	}
+	if (cmd.flags[0] == 's')
+		fc_exec_cmd(&cmd, shell);
+	else
+		fc_display(&cmd, shell);
+	free_fc(&cmd);
 	return (0);
 }
