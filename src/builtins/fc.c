@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 17:11:37 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/11 17:45:25 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 18:32:32 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ void	fc_display(t_fc *cmd, t_shell *shell)
 	i = cmd->i_first;
 	while (i < shell->history->length && i < cmd->i_last)
 	{
-		ft_printf("%d %s\n", i, shell->history->data[i]);
+		if (!ft_strchr(cmd->flags, 'n'))
+			ft_printf("%d", i);
+		ft_printf("\t%s\n", i, shell->history->data[i]);
 		i++;
 	}
 }

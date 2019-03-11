@@ -6,13 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/05 10:22:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 18:38:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <time.h>
 
 #include "shell.h"
 #include "fill_line.h"
@@ -62,9 +63,9 @@ int			builtin_exit(t_shell *shell, char **args)
 					| O_CREAT, 0644)) == -1)
 		return (1);
 	if (args[1])
-		ft_dprintf(fd_hf, "exit %s\n", args[1]);
+		ft_dprintf(fd_hf, "%10d:exit %s\n", time(NULL), args[1]);
 	else
-		ft_dprintf(fd_hf, "exit\n");
+		ft_dprintf(fd_hf, "%10d:exit\n", time(NULL));
 	if (close(fd_hf) == -1)
 		ft_dprintf(2, "Error on closing the history file\n");
 	if (close(shell->fd_op) == -1)
