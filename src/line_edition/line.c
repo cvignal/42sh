@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 08:40:13 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/18 16:13:24 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 21:00:45 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ static int	realloc_line(t_line *line)
 	return (0);
 }
 
-void		free_line(t_line *line)
+int			free_line(t_line *line)
 {
 	if (line->data)
 		free(line->data);
 	ft_bzero(line, sizeof(*line));
+	return (1);
 }
 
 int			add_to_line(t_line *line, char buf)

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/09 16:28:50 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 20:54:50 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 #include "libft.h"
 #include "fill_line.h"
 
-t_readline	g_functions[2] =\
+static const t_readline	g_functions[2] =\
 {
 	{0, &fill_line},
 	{1, &alt_fill_line}
 };
 
-void		print_prompt(t_parser *parser, t_shell *shell, int flag)
+void					print_prompt(t_parser *parser, t_shell *shell, int flag)
 {
 	char	*cwd;
 	char	*str;
@@ -53,7 +53,7 @@ void		print_prompt(t_parser *parser, t_shell *shell, int flag)
 	free(cwd);
 }
 
-static void	exec_ast(t_shell *shell, t_token *tokens)
+static void				exec_ast(t_shell *shell, t_token *tokens)
 {
 	t_ast	*ast;
 
@@ -73,7 +73,7 @@ static void	exec_ast(t_shell *shell, t_token *tokens)
 	print_prompt(&shell->parser, shell, 0);
 }
 
-int			main(int ac, char **av, char **environ)
+int						main(int ac, char **av, char **environ)
 {
 	t_shell		shell;
 	t_token		*tokens;

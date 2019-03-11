@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:31:14 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/28 16:20:00 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 21:06:21 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "shell.h"
 #include "fill_line.h"
 
-t_key		g_vm_keys[] =\
+static const t_key	g_vm_keys[] =\
 {
 	{LEFT_ARROW, &vm_leftkey},
 	{RIGHT_ARROW, &vm_rightkey},
@@ -25,7 +25,7 @@ t_key		g_vm_keys[] =\
 	{"d", &vm_cut}
 };
 
-static int	vm_special_keys(char *buf)
+static int			vm_special_keys(char *buf)
 {
 	size_t	i;
 	size_t	len;
@@ -43,7 +43,7 @@ static int	vm_special_keys(char *buf)
 	return (0);
 }
 
-static int	apply_vm_key(char *buf, t_shell *shell)
+static int			apply_vm_key(char *buf, t_shell *shell)
 {
 	size_t	i;
 	size_t	len;
@@ -61,7 +61,7 @@ static int	apply_vm_key(char *buf, t_shell *shell)
 	return (0);
 }
 
-int			visual_mode(t_shell *shell)
+int					visual_mode(t_shell *shell)
 {
 	char	buf[9];
 	int		res;
