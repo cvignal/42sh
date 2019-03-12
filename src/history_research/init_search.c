@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:23:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/11 21:07:31 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 09:41:33 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void			hs_backspace(t_shell *shell)
 		t_puts("nd");
 	t_puts("sc");
 	shell->line.len_search--;
-	shell->his_pos = -1;
+	shell->his_pos = shell->history->length - 1;
 }
 
 int					hs_addchar(char *buf, t_shell *shell)
