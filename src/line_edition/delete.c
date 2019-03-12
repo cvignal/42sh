@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 12:38:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/26 17:50:36 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 16:39:26 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,15 @@ int	ft_delete(t_shell *shell)
 	if (shell->line.cursor < shell->line.len)
 	{
 		shell->line.len--;
-		t_puts("dc");
+		if (nb_multi_lines(shell->line.cursor + 1, shell->prompt_len))
+		{
+			t_puts("sc");
+			t_puts("cd");
+			ft_dprintf(shell->fd_op, "%s", shell->line.data + shell->line.cursor + 1);
+			t_puts("rc");
+		}
+		else
+			t_puts("dc");
 		ft_del_char(shell->line.data, shell->line.cursor);
 	}
 	return (0);
