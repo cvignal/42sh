@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 12:07:42 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/11 18:18:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 13:38:45 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_builtin	is_builtin(char *cmd)
 	i = 0;
 	while (i < sizeof(g_builtin_desc) / sizeof(*g_builtin_desc))
 	{
-		if (!ft_strcmp(g_builtin_desc[i].desc, cmd))
+		if (ft_strequ(g_builtin_desc[i].desc, cmd))
 			return (g_builtin_desc[i].builtin);
 		++i;
 	}

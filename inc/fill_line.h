@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 11:02:49 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 13:43:21 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 # define RED "\e[1;31m"
 # define ARROW "\u2190"
 # define INV_COLOR "\e[7;m"
-# define HIST_SIZE_MAX 50000
+# define HIST_SIZE_MAX 32768
 # define NOT_A_TTY "Line edition disabled\n"
 
 typedef struct	s_key
