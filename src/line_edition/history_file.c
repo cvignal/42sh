@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 18:35:51 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 13:44:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 16:28:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,21 @@ static int	open_tty_fd(t_shell *shell)
 	shell->fd_op = new_fd;
 	g_fd_output = new_fd;
 	shell->pbpaste = NULL;
+	shell->output = NULL;
+	shell->current = NULL;
+	return (0);
+}
+
+static int	concat_cmd(t_array *history, char *str)
+{
+	char	*tmp;
+
+	tmp = history->data[history->length - 1];
+	if (!(tmp = ft_strjoin_free(tmp, "\n", 1)))
+		return (1);
+	if (!(tmp = ft_strjoin_free(tmp, str, 1)))
+		return (1);
+	history->data[history->length - 1] = tmp;
 	return (0);
 }
 
@@ -87,13 +102,16 @@ int			load_history(t_shell *shell)
 	if (!(shell->history = (t_array*)malloc(sizeof(t_array))))
 		return (1);
 	ft_bzero(shell->history, sizeof(t_array));
-	shell->output = NULL;
-	shell->current = NULL;
 	fd_hf = open_history_file(shell);
 	while (fd_hf != -1 && get_next_line(fd_hf, &line) == 1
 			&& shell->history->length < HIST_SIZE_MAX)
 	{
-		if (ft_arrayadd(shell->history, line + 13 * presence_of_date(line)))
+		if (!presence_of_date(line))
+		{
+			if (concat_cmd(shell->history, line))
+				return (1);
+		}
+		else if (presence_of_date(line) && ft_arrayadd(shell->history, line + 13))
 			return (1);
 		free(line);
 	}
