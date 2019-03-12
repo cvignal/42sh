@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 19:02:11 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/26 17:49:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 17:46:01 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,16 @@
 
 static void	down_one_line(t_line line, int width, int len_prompt, int flag)
 {
-	t_curs	*cursor;
+	t_curs	cursor;
 	int		i;
 	int		len_last_line;
 
-	if (!(cursor = get_cursor_pos()))
-		return ;
-	tputs(tgoto(tgetstr("cm", NULL), cursor->col - 1, cursor->line)
+	get_cursor_pos(&cursor);
+	tputs(tgoto(tgetstr("cm", NULL), cursor.col - 1, cursor.line)
 			, 0, ft_printchar);
 	len_last_line = (line.len + len_prompt) % width;
 	if (flag)
-		i = cursor->col - len_last_line - 1;
+		i = cursor.col - len_last_line - 1;
 	else
 		i = 0;
 	while (i > 0)
@@ -39,23 +38,20 @@ static void	down_one_line(t_line line, int width, int len_prompt, int flag)
 		t_puts("le");
 		i--;
 	}
-	free(cursor);
 }
 
 static void	back_to_startline(int len_prompt)
 {
-	t_curs		*cursor;
+	t_curs		cursor;
 	int			i;
 
-	if (!(cursor = get_cursor_pos()))
-		return ;
-	i = cursor->col - (len_prompt + 1);
+	get_cursor_pos(&cursor);
+	i = cursor.col - (len_prompt + 1);
 	while (i < 0)
 	{
 		t_puts("nd");
 		i++;
 	}
-	free(cursor);
 }
 
 int			nb_multi_lines(size_t len, int len_prompt)

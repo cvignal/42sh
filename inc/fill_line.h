@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 13:43:21 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 17:45:01 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int				is_a_command(t_line *line);
 */
 int				nb_multi_lines(size_t len, int len_prompt);
 void			clear_cmd_line(t_shell *shell);
-t_curs			*get_cursor_pos(void);
+void			get_cursor_pos(t_curs *cursor);
 size_t			length_curr_line(t_shell *shell);
 void			scroll_lines(t_shell *shell);
 void			print_line(t_shell *shell, char buf);

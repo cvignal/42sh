@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/19 12:37:12 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 17:44:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,17 +99,16 @@ void		display_list(t_list *list)
 {
 	int		table[4];
 	char	**array;
-	t_curs	*cursor;
+	t_curs	cursor;
 	int		nb;
 
 	t_puts("sc");
-	if (!(cursor = get_cursor_pos()))
-		return ;
+	get_cursor_pos(&cursor);
 	fill_table(table, list);
-	if (!ask_for_many_possibilities(table, cursor))
+	if (!ask_for_many_possibilities(table, &cursor))
 		return ;
-	if (table[3] + cursor->line > tgetnum("li"))
-		nb = table[3] + cursor->line - tgetnum("li") + 1;
+	if (table[3] + cursor.line > tgetnum("li"))
+		nb = table[3] + cursor.line - tgetnum("li") + 1;
 	else
 		nb = 0;
 	array = ft_listtotab(list, table[2]);
@@ -118,5 +117,4 @@ void		display_list(t_list *list)
 	t_puts("rc");
 	while (--nb > 0)
 		t_puts("up");
-	free(cursor);
 }

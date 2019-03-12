@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 11:28:55 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/21 14:09:38 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 17:43:45 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ size_t	length_curr_line(t_shell *shell)
 
 void	clean_under_line(t_shell *shell)
 {
-	t_curs			*curs;
+	t_curs			curs;
 	struct winsize	win;
 
 	ioctl(0, TIOCGWINSZ, &win);
@@ -75,12 +75,11 @@ void	clean_under_line(t_shell *shell)
 	}
 	else
 	{
-		if (!(curs = get_cursor_pos()))
-			return ;
-		if (curs->line != win.ws_row)
+		get_cursor_pos(&curs);
+		if (curs.line != win.ws_row)
 			t_puts("do");
-		free(curs);
 	}
 	t_puts("cd");
-	t_puts("rc");
+	if (!shell)
+		t_puts("rc");
 }

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:11:53 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/13 16:05:09 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 17:41:50 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,12 @@ void	read_cursor_pos(char *buf)
 	buf[i] = 0;
 }
 
-t_curs	*get_cursor_pos(void)
+void	get_cursor_pos(t_curs *cursor)
 {
 	char	buf[30];
-	t_curs	*res;
 
-	if (!(res = (t_curs*)malloc(sizeof(t_curs))))
-		return (NULL);
 	write(g_fd_output, CURS_POS, 4);
 	read_cursor_pos(buf);
-	res->line = ft_atoi(buf + 2);
-	res->col = ft_atoi(ft_strchr(buf, ';') + 1);
-	return (res);
+	cursor->line = ft_atoi(buf + 2);
+	cursor->col = ft_atoi(ft_strchr(buf, ';') + 1);
 }
