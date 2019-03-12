@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/03/12 12:40:24 by cvignal          ###   ########.fr        #
+#    Updated: 2019/03/12 12:40:52 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,6 @@ SRC		=								\
 	line_edition/tools_motion.c			\
 	line_edition/tools_history.c		\
 	line_edition/history_file.c			\
-	line_edition/open_history_file.c	\
 	line_edition/autocompletion.c		\
 	line_edition/display_auto.c			\
 	line_edition/history.c				\

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/12 12:40:05 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 13:06:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int			builtin_exit(t_shell *shell, char **args)
 	}
 	fd_hf = open_history_file(shell);
 	if (args[1] && fd_hf != -1)
-		ft_dprintf(fd_hf, "exit %s\n", args[1]);
+		ft_dprintf(fd_hf, "%.12d:exit %s\n", time(NULL), args[1]);
 	else if (fd_hf != -1)
-		ft_dprintf(fd_hf, "exit\n");
+		ft_dprintf(fd_hf, "%.12d:exit\n", time(NULL));
 	if (fd_hf != -1 && close(fd_hf) == -1)
 		ft_dprintf(2, "Error on closing the history file\n");
 	if (close(shell->fd_op) == -1)

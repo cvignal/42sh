@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 12:39:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 13:05:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static int	add_complete_command(char *str, t_shell *shell
 		if (!(shell->history->data[len] = ft_strdup(*multi_line)))
 			return (1);
 		if (fd_hf != -1)
-			ft_dprintf(fd_hf, "%s\n", *multi_line);
+			ft_dprintf(fd_hf, "%.12d%s\n", time(NULL), *multi_line);
 		ft_strdel(multi_line);
 		return (0);
 	}
 	if (ft_arrayadd(shell->history, str))
 		return (1);
 	if (fd_hf != -1)
-		ft_dprintf(fd_hf, "%s\n", str);
+		ft_dprintf(fd_hf, "%.12d:%s\n", time(NULL), str);
 	if (*multi_line && shell->prev_cmd_state)
 		ft_strdel(multi_line);
 	shell->prev_cmd_state = 0;

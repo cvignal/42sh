@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 18:35:51 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/11 19:22:53 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 13:06:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,35 @@
 #include "shell.h"
 #include "fill_line.h"
 
+int		open_history_file(t_shell *shell)
+{
+	char	*file;
+	char	*home_dir;
+	int		fd;
+	int		flag;
+
+	flag = 0;
+	if (!(home_dir = get_env_value(shell, "HOME")))
+	{
+		if (!(home_dir = ft_strjoin("/Users/", getlogin())))
+			return (-1);
+		flag = 1;
+	}
+	if (!(file = ft_strjoin(home_dir, "/.shperso_history")))
+		return (-1);
+	fd = open(file, O_RDWR | O_APPEND | O_CREAT, 0644);
+	ft_strdel(&file);
+	if (flag)
+		free(home_dir);
+	return (fd);
+}
+
 int			presence_of_date(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] && i < 10)
+	while (str[i] && i < 12)
 	{
 		if (!ft_isdigit(str[i]))
 			return (0);
@@ -66,16 +89,14 @@ int			load_history(t_shell *shell)
 	ft_bzero(shell->history, sizeof(t_array));
 	shell->output = NULL;
 	shell->current = NULL;
-	if ((fd_hf = open(".shperso_history", O_RDWR | O_APPEND
-					| O_CREAT, 0644)) == -1)
-		return (1);
-	while (get_next_line(fd_hf, &line) == 1)
+	fd_hf = open_history_file(shell);
+	while (fd_hf != -1 && get_next_line(fd_hf, &line) == 1)
 	{
-		if (ft_arrayadd(shell->history, line + 11 * presence_of_date(line)))
+		if (ft_arrayadd(shell->history, line + 13 * presence_of_date(line)))
 			return (1);
 		free(line);
 	}
-	if (close(fd_hf) == -1)
+	if (fd_hf != -1 && close(fd_hf) == -1)
 		return (1);
 	return (open_tty_fd(shell));
 }
