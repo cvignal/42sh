@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/05 10:12:28 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 11:02:49 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void			go_to_end_of_line(t_shell *shell);
 int				add_to_history(char *str, t_shell *shell, int flag);
 int				load_history(t_shell *shell);
 size_t			length_prev_line(t_shell *shell);
+int				open_history_file(t_shell *shell);
 
 /*
 ** General tools
