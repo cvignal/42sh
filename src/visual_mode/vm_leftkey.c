@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:54:44 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/05 10:45:05 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 17:46:59 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,15 @@ int			vm_homekey(t_shell *shell)
 
 static int	vm_left_multi(t_shell *shell)
 {
-	t_curs			*cursor;
+	t_curs			cursor;
 	struct winsize	win;
 	size_t			curs;
 
 	curs = shell->line.cursor;
-	if (!(cursor = get_cursor_pos()))
-		return (1);
+	get_cursor_pos(&cursor);
 	ioctl(0, TIOCGWINSZ, &win);
-	if (cursor->col == 1)
-		tputs(tgoto(tgetstr("cm", NULL), win.ws_col - 1, cursor->line - 2)
+	if (cursor.col == 1)
+		tputs(tgoto(tgetstr("cm", NULL), win.ws_col - 1, cursor.line - 2)
 				, 0, ft_printchar);
 	else
 		t_puts("le");
@@ -44,9 +43,8 @@ static int	vm_left_multi(t_shell *shell)
 			, shell->line.data[curs - 1], EOC);
 	else
 		ft_dprintf(shell->fd_op, "%c", shell->line.data[curs - 1]);
-	if (cursor->col != 1)
+	if (cursor.col != 1)
 		t_puts("le");
-	free(cursor);
 	shell->line.cursor--;
 	return (0);
 }

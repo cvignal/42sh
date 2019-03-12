@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:48:22 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/27 18:36:05 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 17:43:18 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,17 @@ void		go_to_end_of_line(t_shell *shell)
 
 static void	left_key_multi(t_shell *shell)
 {
-	t_curs			*cursor;
+	t_curs			cursor;
 	struct winsize	win;
 
 	(void)shell;
-	if (!(cursor = get_cursor_pos()))
-		return ;
+	get_cursor_pos(&cursor);
 	ioctl(0, TIOCGWINSZ, &win);
-	if (cursor->col == 1)
-		tputs(tgoto(tgetstr("cm", NULL), win.ws_col - 1, cursor->line - 2)
+	if (cursor.col == 1)
+		tputs(tgoto(tgetstr("cm", NULL), win.ws_col - 1, cursor.line - 2)
 				, 0, ft_printchar);
 	else
 		t_puts("le");
-	free(cursor);
 }
 
 int			ft_leftkey(t_shell *shell)
