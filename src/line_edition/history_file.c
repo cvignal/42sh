@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 18:35:51 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 16:28:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 16:56:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ static int	concat_cmd(t_array *history, char *str)
 {
 	char	*tmp;
 
+	if (!history->length)
+	{
+		free(str);
+		return (1);
+	}
 	tmp = history->data[history->length - 1];
 	if (!(tmp = ft_strjoin_free(tmp, "\n", 1)))
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/11 20:54:50 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 16:57:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ int						main(int ac, char **av, char **environ)
 	(void)ac;
 	(void)av;
 	if (init_shell(&shell, environ))
+	{
+		free_shell(&shell);
 		return (1);
+	}
 	ret = check_validity(&shell);
 	print_prompt(&shell.parser, &shell, 0);
 	while (!g_functions[ret].f(&shell))
