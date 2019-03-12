@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/11 16:23:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 11:12:46 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int			load_history(t_shell *shell)
 	ft_bzero(shell->history, sizeof(t_array));
 	shell->output = NULL;
 	shell->current = NULL;
-	if ((fd_hf = open(".shperso_history", O_RDWR | O_APPEND
-					| O_CREAT, 0644)) == -1)
+	if ((fd_hf = open_history_file(shell)) == -1)
 		return (1);
 	while (get_next_line(fd_hf, &line) == 1)
 	{
@@ -129,8 +128,7 @@ int			add_to_history(char *str, t_shell *shell, int flag)
 		return (add_incomplete_command(str, shell, &multi_line));
 	else if (!flag && ft_strlen(str) && !ft_strnequ(str, "\033[", 2))
 	{
-		if ((fd_hf = open(".shperso_history", O_RDWR | O_APPEND
-					| O_CREAT, 0644)) == -1)
+		if ((fd_hf = open_history_file(shell)) == -1)
 			return (1);
 		ret = add_complete_command(str, shell, &multi_line, fd_hf);
 		if (close(fd_hf) == -1)
