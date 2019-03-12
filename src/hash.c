@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 15:20:51 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/15 19:32:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/03/12 14:40:08 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		get_hash_index(const char *s)
 	int	index;
 
 	index = 0;
-	if (*s)
+	if (s && *s)
 	{
 		index += *s;
 		index <<= 8;
@@ -67,7 +67,7 @@ char			*get_hbt_elem(t_shell *shell, t_hbt **hbt, const char *elem)
 {
 	int		res;
 
-	if (*hbt)
+	if (*hbt && elem)
 	{
 		res = ft_strcmp((*hbt)->bin, elem);
 		if (!res)

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 18:35:51 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 13:06:12 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 13:44:29 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ int			load_history(t_shell *shell)
 	shell->output = NULL;
 	shell->current = NULL;
 	fd_hf = open_history_file(shell);
-	while (fd_hf != -1 && get_next_line(fd_hf, &line) == 1)
+	while (fd_hf != -1 && get_next_line(fd_hf, &line) == 1
+			&& shell->history->length < HIST_SIZE_MAX)
 	{
 		if (ft_arrayadd(shell->history, line + 13 * presence_of_date(line)))
 			return (1);

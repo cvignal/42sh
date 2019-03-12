@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/18 14:24:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/03/12 15:07:44 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int			expand_params(t_shell *shell, t_command *command)
 
 	i = 0;
 	j = 0;
+	error = 0;
 	while (command->args[i])
 	{
-		error = 0;
 		if (command->args_value[i - j])
 			free(command->args_value[i - j]);
 		command->args_value[i - j] = expand(shell, command->args[i], &error);
@@ -72,8 +72,8 @@ int			expand_params(t_shell *shell, t_command *command)
 			return (1);
 		}
 		if (!command->args_value[i - j])
-			++j;
-		++i;
+			j++;
+		i++;
 	}
 	command->args_value[i - j] = NULL;
 	return (0);
