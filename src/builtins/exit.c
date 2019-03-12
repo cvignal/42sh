@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/12 11:13:52 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 11:37:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,12 @@ int			builtin_exit(t_shell *shell, char **args)
 		ft_dprintf(2, "%s: exit: too many arguments\n", EXEC_NAME);
 		return (1);
 	}
-	if ((fd_hf = open_history_file(shell)) == -1)
-		return (1);
-	if (args[1])
+	fd_hf = open_history_file(shell);
+	if (args[1] && fd_hf != -1)
 		ft_dprintf(fd_hf, "exit %s\n", args[1]);
-	else
+	else if (fd_hf != -1)
 		ft_dprintf(fd_hf, "exit\n");
-	if (close(fd_hf) == -1)
+	if (fd_hf != -1 && close(fd_hf) == -1)
 		ft_dprintf(2, "Error on closing the history file\n");
 	if (close(shell->fd_op) == -1)
 		ft_dprintf(2, "Error on closing the tty fd\n");
