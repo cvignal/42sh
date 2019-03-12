@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/11 19:18:10 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 12:39:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ static int	add_complete_command(char *str, t_shell *shell
 		ft_strdel(&shell->history->data[len]);
 		if (!(shell->history->data[len] = ft_strdup(*multi_line)))
 			return (1);
-		ft_dprintf(fd_hf, "%10d:%s\n", time(NULL), *multi_line);
+		if (fd_hf != -1)
+			ft_dprintf(fd_hf, "%s\n", *multi_line);
 		ft_strdel(multi_line);
 		return (0);
 	}
 	if (ft_arrayadd(shell->history, str))
 		return (1);
-	ft_dprintf(fd_hf, "%10d:%s\n", time(NULL), str);
+	if (fd_hf != -1)
+		ft_dprintf(fd_hf, "%s\n", str);
 	if (*multi_line && shell->prev_cmd_state)
 		ft_strdel(multi_line);
 	shell->prev_cmd_state = 0;
@@ -82,11 +84,9 @@ int			add_to_history(char *str, t_shell *shell, int flag)
 		return (add_incomplete_command(str, shell, &multi_line));
 	else if (!flag && ft_strlen(str) && !ft_strnequ(str, "\033[", 2))
 	{
-		if ((fd_hf = open(".shperso_history", O_RDWR | O_APPEND
-					| O_CREAT, 0644)) == -1)
-			return (1);
+		fd_hf = open_history_file(shell);
 		ret = add_complete_command(str, shell, &multi_line, fd_hf);
-		if (close(fd_hf) == -1)
+		if (fd_hf != -1 && close(fd_hf) == -1)
 			return (1);
 		return (ret);
 	}

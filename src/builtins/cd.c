@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 15:41:44 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 10:24:31 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static int	change_dir(t_shell *shell, char *dir)
 
 	if (!dir)
 		return (1);
-	cwd = getcwd(NULL, MAX_PATH);
+	if (!(cwd = getcwd(NULL, MAX_PATH)))
+		return (1);
 	if (chdir(dir))
 	{
 		free(cwd);

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:23:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/09 17:07:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 09:41:33 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "shell.h"
 #include "fill_line.h"
 
-t_key		g_hs_keys[] =\
+static const t_key	g_hs_keys[] =\
 {
 	{LEFT_ARROW, &hs_leftkey},
 	{RIGHT_ARROW, &hs_rightkey},
@@ -40,7 +40,7 @@ t_key		g_hs_keys[] =\
 	{ALT_END, &hs_endkey}
 };
 
-int			hs_specialkeys(char *buf)
+int					hs_specialkeys(char *buf)
 {
 	size_t	i;
 	size_t	len;
@@ -56,7 +56,7 @@ int			hs_specialkeys(char *buf)
 	return (0);
 }
 
-int			hs_keyapply(char *buf, t_shell *shell)
+int					hs_keyapply(char *buf, t_shell *shell)
 {
 	size_t	i;
 	size_t	len;
@@ -72,7 +72,7 @@ int			hs_keyapply(char *buf, t_shell *shell)
 	return (0);
 }
 
-static void	hs_backspace(t_shell *shell)
+static void			hs_backspace(t_shell *shell)
 {
 	size_t	nb;
 	size_t	len;
@@ -92,10 +92,10 @@ static void	hs_backspace(t_shell *shell)
 		t_puts("nd");
 	t_puts("sc");
 	shell->line.len_search--;
-	shell->his_pos = -1;
+	shell->his_pos = shell->history->length - 1;
 }
 
-int			hs_addchar(char *buf, t_shell *shell)
+int					hs_addchar(char *buf, t_shell *shell)
 {
 	int	i;
 
@@ -117,7 +117,7 @@ int			hs_addchar(char *buf, t_shell *shell)
 	return (0);
 }
 
-int			ft_ctrlr(t_shell *shell)
+int					ft_ctrlr(t_shell *shell)
 {
 	int		ret;
 	char	buf[9];

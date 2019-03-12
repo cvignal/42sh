@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:01:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/16 11:24:31 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 21:01:06 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 #include "shell.h"
 #include "libft.h"
 #include "fill_line.h"
+
+static const t_readline	g_functions[2] =\
+{
+	{0, &fill_line},
+	{1, &alt_fill_line}
+};
 
 static int	realloc_heredoc(t_heredoc *heredoc, size_t len)
 {
@@ -72,12 +78,13 @@ int			add_to_heredoc(t_heredoc *heredoc, const char *line)
 int			read_heredoc(t_heredoc *heredoc, t_redir *redir)
 {
 	t_shell	tmp_shell;
+	int		ret;
 
 	ft_bzero(&tmp_shell, sizeof(tmp_shell));
 	tmp_shell.ctrld = 1;
-	tmp_shell.end_heredoc = 0;
+	ret = check_validity(&tmp_shell);
 	print_prompt(NULL, &tmp_shell, 1);
-	while (!fill_line(&tmp_shell))
+	while (!g_functions[ret].f(&tmp_shell))
 	{
 		if (tmp_shell.end_heredoc
 				|| !ft_strcmp(redir->target, tmp_shell.line.data))
@@ -88,10 +95,7 @@ int			read_heredoc(t_heredoc *heredoc, t_redir *redir)
 			break ;
 		}
 		else if (add_to_heredoc(heredoc, tmp_shell.line.data))
-		{
-			free_line(&tmp_shell.line);
-			return (1);
-		}
+			return (free_line(&tmp_shell.line));
 		print_prompt(NULL, &tmp_shell, 1);
 		free_line(&tmp_shell.line);
 	}

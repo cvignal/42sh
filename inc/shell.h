@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/11 17:59:48 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/11 21:01:53 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ int					init_shell(t_shell *shell, char **environ);
 ** line.c
 */
 int					add_to_line(t_line *line, char buf);
-void				free_line(t_line *line);
+int					free_line(t_line *line);
 
 /*
 ** env.c

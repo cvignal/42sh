@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/11 15:39:39 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/12 09:49:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "shell.h"
 #include "fill_line.h"
 
-t_key	g_special_keys[] =\
+static const t_key	g_special_keys[] =\
 {
 	{LEFT_ARROW, &ft_leftkey},
 	{RIGHT_ARROW, &ft_rightkey},
@@ -38,15 +38,15 @@ t_key	g_special_keys[] =\
 	{CTRL_D, &ft_ctrld},
 	{CTRL_C, &ft_ctrlc},
 	{CTRL_L, &ft_ctrll},
-	{CTRL_R, &ft_ctrlr},
 	{CTRL_A, &ft_homekey},
 	{CTRL_HOME, &ft_homekey},
 	{CTRL_END, &ft_endkey},
 	{ALT_HOME, &ft_homekey},
-	{ALT_END, &ft_endkey}
+	{ALT_END, &ft_endkey},
+	{CTRL_R, &ft_ctrlr}
 };
 
-int		is_a_special_key(char *buf)
+int					is_a_special_key(char *buf)
 {
 	size_t	i;
 	size_t	len;
@@ -64,12 +64,12 @@ int		is_a_special_key(char *buf)
 	return (0);
 }
 
-int		ft_printchar(int c)
+int					ft_printchar(int c)
 {
 	return (write(g_fd_output, &c, 1));
 }
 
-int		t_puts(char *id)
+int					t_puts(char *id)
 {
 	char	*str;
 
@@ -80,7 +80,7 @@ int		t_puts(char *id)
 	return (0);
 }
 
-int		ft_addchar(t_shell *shell, char *buf, int flag)
+int					ft_addchar(t_shell *shell, char *buf, int flag)
 {
 	int	i;
 
@@ -105,7 +105,7 @@ int		ft_addchar(t_shell *shell, char *buf, int flag)
 	return (0);
 }
 
-int		apply_key(char *buf, t_shell *shell)
+int					apply_key(char *buf, t_shell *shell)
 {
 	size_t	i;
 	size_t	len;
