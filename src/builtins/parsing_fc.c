@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:33:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/13 12:24:14 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/13 14:39:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ int			fc_init_args(t_fc *cmd, char **args, t_shell *shell)
 		i++;
 	}
 	fc_index(cmd, shell);
-	if (cmd->i_last < cmd->i_first && !ft_strchr(cmd->flags, 'r') && cmd->flags[0] != 's')
+	if (cmd->i_last < cmd->i_first && !ft_strchr(cmd->flags, 'r')
+			&& cmd->flags[0] != 's')
 	{
 		ft_swap_int(&cmd->i_last, &cmd->i_first);
 		cmd->flags[ft_strlen(cmd->flags)] = 'r';
