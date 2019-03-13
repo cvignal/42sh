@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:59:25 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/13 16:59:40 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/13 17:21:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,21 @@ int					fc_open_file(t_fc *cmd, t_shell *shell, t_tmpfile *file)
 	if (close(file->fd) == -1)
 		return (1);
 	return (0);
+}
+
+int				fc_open_editor(t_tmpfile *file, t_shell *shell)
+{
+	char	**cmd;
+	int		ret;
+
+	if (!(cmd = (char**)malloc(sizeof(char*) * 3)))
+		return (1);
+	if (!(cmd[0] = ft_strdup("vim")))
+		return (1);
+	if (!(cmd[1] = ft_strdup(file->name)))
+		return (1);
+	cmd[2] = NULL;
+	ret = exec_from_char(shell, cmd, shell);
+	ft_deltab(&cmd);
+	return (ret);
 }
