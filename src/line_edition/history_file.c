@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 18:35:51 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 16:56:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/13 11:09:46 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "shell.h"
 #include "fill_line.h"
 
-int		open_history_file(t_shell *shell)
+int			open_history_file(t_shell *shell)
 {
 	char	*file;
 	char	*home_dir;
@@ -116,7 +116,8 @@ int			load_history(t_shell *shell)
 			if (concat_cmd(shell->history, line))
 				return (1);
 		}
-		else if (presence_of_date(line) && ft_arrayadd(shell->history, line + 13))
+		else if (presence_of_date(line)
+				&& ft_arrayadd(shell->history, line + 13))
 			return (1);
 		free(line);
 	}

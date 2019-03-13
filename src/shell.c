@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/11 19:57:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/13 11:10:45 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	free_shell_aux(t_shell *shell)
 	free_history(shell);
 }
 
-void		free_shell(t_shell *shell)
+int			free_shell(t_shell *shell)
 {
 	int	i;
 
@@ -101,6 +101,7 @@ void		free_shell(t_shell *shell)
 	}
 	free_shell_aux(shell);
 	reset_terminal_mode(shell);
+	return (1);
 }
 
 int			init_shell(t_shell *shell, char **environ)

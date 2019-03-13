@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:32:22 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/11 17:58:39 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/13 10:08:42 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	realloc_array(t_array *table)
 
 int			ft_arrayadd(t_array *table, char *str)
 {
-	if (table->length + 1 > table->alloc_size)
+	if (table->length + 2 > table->alloc_size)
 	{
 		if (realloc_array(table))
 			return (1);
