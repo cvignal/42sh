@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 17:11:37 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/13 17:02:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/13 17:22:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ int		fc_edit(t_fc *cmd, t_shell *shell)
 
 	if (fc_open_file(cmd, shell, &file))
 		return (1);
+	if (fc_open_editor(&file, shell))
+		return (1);
+	free(file.name);
 	return (0);
 }
 
