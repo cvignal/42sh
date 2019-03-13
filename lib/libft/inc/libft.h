@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/11 17:39:15 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/13 11:57:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,6 @@ long long			ft_llmin(long long a, long long b);
 char				*ft_strrstr(const char *haystack, const char *needle);
 int					ft_arrayadd(t_array *table, char *str);
 void				ft_swap_int(int *a, int *b);
+void				ft_replace_str(char *dst, char *src, char *old_p, char *new_p);
 
 #endif

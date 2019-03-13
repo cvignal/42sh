@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/11 21:01:53 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/13 11:35:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,8 @@ typedef struct		s_fc
 	char			*first;
 	char			*last;
 	char			*editor;
-	char			*pattern;
+	char			*old_p;
+	char			*new_p;
 	int				i_first;
 	int				i_last;
 	char			flags[4];
@@ -195,7 +196,7 @@ char				*find_command(t_shell *shell, const char *command);
 /*
 ** shell.c
 */
-void				free_shell(t_shell *shell);
+int					free_shell(t_shell *shell);
 int					init_shell(t_shell *shell, char **environ);
 
 /*
@@ -248,6 +249,7 @@ int					usage_fc(void);
 int					fc_init_args(t_fc *cmd, char **args, t_shell *shell);
 void				fc_index(t_fc *cmd, t_shell *shell);
 void				free_fc(t_fc *cmd);
+int					fc_cut_pattern(t_fc *cmd, char *str);
 
 /*
 ** signal.c
