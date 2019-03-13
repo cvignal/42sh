@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/13 11:35:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/13 16:16:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,12 @@ typedef struct		s_fc
 	char			flags[4];
 }					t_fc;
 
+typedef struct		s_tmpfile
+{
+	char	*name;
+	int		fd;
+}					t_tmpfile;
+
 t_heredoc			*alloc_heredoc(void);
 int					add_to_heredoc(t_heredoc *heredoc, const char *line);
 int					heredoc_exit_error(t_heredoc *heredoc);
@@ -250,6 +256,7 @@ int					fc_init_args(t_fc *cmd, char **args, t_shell *shell);
 void				fc_index(t_fc *cmd, t_shell *shell);
 void				free_fc(t_fc *cmd);
 int					fc_cut_pattern(t_fc *cmd, char *str);
+int					fc_open_file(t_fc *cmd, t_shell *shell, t_tmpfile *file);
 
 /*
 ** signal.c
