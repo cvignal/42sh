@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/12 15:07:44 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/14 17:11:13 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char		*expand(t_shell *shell, char *arg, int *error)
 	ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
 	ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
 	i = 0;
-	while (arg[i])
+	while (arg[i] && (int)arg[i] != 127)
 	{
 		ret = shell->exp_lexer.methods[shell->exp_lexer.state->state]
 			[(int)arg[i]](shell, &shell->exp_lexer, arg[i]);
