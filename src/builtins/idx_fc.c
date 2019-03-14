@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:00:24 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/13 12:21:52 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/14 13:35:21 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	fc_find_cmd(char *str, t_array *history)
 	{
 		nb = ft_atoi(str);
 		if (nb < 0)
-			nb = history->length - 1 - nb;
+			nb = history->length - 1;
 		return (nb);
 	}
 	i = history->length - 1;

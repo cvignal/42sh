@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:59:25 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/13 17:21:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/14 13:59:59 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,27 @@ int					fc_open_file(t_fc *cmd, t_shell *shell, t_tmpfile *file)
 	return (0);
 }
 
-int				fc_open_editor(t_tmpfile *file, t_shell *shell)
+int					fc_open_editor(t_fc *cmd, t_tmpfile *file, t_shell *shell)
 {
-	char	**cmd;
+	char	**args;
 	int		ret;
 
-	if (!(cmd = (char**)malloc(sizeof(char*) * 3)))
+	if (!(args = (char**)malloc(sizeof(char*) * 3)))
 		return (1);
-	if (!(cmd[0] = ft_strdup("vim")))
+	if (cmd->editor)
+	{
+		if (!(args[0] = ft_strdup(cmd->editor)))
+			return (1);
+	}
+	else
+	{
+		if (!(args[0] = ft_strdup("vim")))
+			return (1);
+	}
+	if (!(args[1] = ft_strdup(file->name)))
 		return (1);
-	if (!(cmd[1] = ft_strdup(file->name)))
-		return (1);
-	cmd[2] = NULL;
-	ret = exec_from_char(shell, cmd, shell);
-	ft_deltab(&cmd);
+	args[2] = NULL;
+	ret = exec_from_char(shell, args, shell);
+	ft_deltab(&args);
 	return (ret);
 }
