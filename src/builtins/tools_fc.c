@@ -6,14 +6,72 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:34:34 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/13 11:46:15 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/14 15:18:44 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "libft.h"
+#include "fill_line.h"
 
-int	fc_cut_pattern(t_fc *cmd, char *str)
+void	fc_exec_ast(t_shell *shell, t_token *tokens)
+{
+	t_ast	*ast;
+
+	if (parse(shell, tokens) == PARSER_COMPLETE)
+	{
+		ast = shell->parser.ret;
+		ast->exec(shell, ast);
+		close_everything(shell);
+		wait_loop(ast);
+		shell->ret_cmd = ast->ret;
+		ast->del(ast);
+		shell->parser.ret = NULL;
+	}
+	reset_terminal_mode(shell);
+	raw_terminal_mode(shell);
+}
+
+void	fc_free_shell(t_shell *shell)
+{
+	t_fd	*fd;
+	t_fd	*next_fd;
+
+	free_line(&shell->line);
+	lss_pop(&shell->lexer);
+	pss_pop(&shell->parser);
+	fd = shell->used_fd;
+	while (fd)
+	{
+		next_fd = fd->next;
+		free(fd);
+		fd = next_fd;
+	}
+	free_token_list(shell->output);
+	free_token_list(shell->current);
+	if (shell->parser.ret)
+	{
+		shell->parser.ret->del(shell->parser.ret);
+		shell->parser.ret = NULL;
+	}
+	exp_ss_pop(&shell->exp_lexer);
+	reset_terminal_mode(shell);
+}
+
+int		fc_init_shell(t_shell *shell, t_shell *old_shell)
+{
+	ft_bzero(shell, sizeof(*shell));
+	if (init_lexer(&shell->lexer) || init_parser(&shell->parser)
+			|| init_exp_lexer(&shell->exp_lexer))
+		return (1);
+	shell->hash_table = old_shell->hash_table;
+	shell->used_fd = NULL;
+	ft_bzero(&shell->line, sizeof(shell->line));
+	shell->env = old_shell->env;
+	return (0);
+}
+
+int		fc_cut_pattern(t_fc *cmd, char *str)
 {
 	size_t	len_old;
 	size_t	len_new;
