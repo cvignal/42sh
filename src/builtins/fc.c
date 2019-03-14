@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 17:11:37 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/13 17:22:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/14 13:39:50 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		fc_exec_cmd(t_fc *cmd, t_shell *shell)
 {
 	size_t	len;
 	char	*cpy;
+	int		ret;
 
 	len = ft_strlen(shell->history->data[cmd->i_first]);
 	if (cmd->old_p && cmd->new_p)
@@ -43,8 +44,9 @@ int		fc_exec_cmd(t_fc *cmd, t_shell *shell)
 				cmd->old_p, cmd->new_p);
 	else
 		ft_strcpy(cpy, shell->history->data[cmd->i_first]);
+	ret = fc_exec_line(cpy, shell);
 	free(cpy);
-	return (0);
+	return (ret);
 }
 
 int		fc_display(t_fc *cmd, t_shell *shell)
@@ -80,8 +82,11 @@ int		fc_edit(t_fc *cmd, t_shell *shell)
 
 	if (fc_open_file(cmd, shell, &file))
 		return (1);
-	if (fc_open_editor(&file, shell))
+	if (fc_open_editor(cmd, &file, shell))
+	{
+		free(file.name);
 		return (1);
+	}
 	free(file.name);
 	return (0);
 }
@@ -89,6 +94,7 @@ int		fc_edit(t_fc *cmd, t_shell *shell)
 int		builtin_fc(t_shell *shell, char **args)
 {
 	t_fc	cmd;
+	int		ret;
 
 	ft_bzero(&cmd, sizeof(cmd));
 	if (fc_init_args(&cmd, args, shell))
@@ -97,11 +103,11 @@ int		builtin_fc(t_shell *shell, char **args)
 		return (1);
 	}
 	if (cmd.flags[0] == 's')
-		fc_exec_cmd(&cmd, shell);
+		ret = fc_exec_cmd(&cmd, shell);
 	else if (ft_strchr(cmd.flags, 'l'))
-		fc_display(&cmd, shell);
+		ret = fc_display(&cmd, shell);
 	else
-		fc_edit(&cmd, shell);
+		ret = fc_edit(&cmd, shell);
 	free_fc(&cmd);
-	return (0);
+	return (ret);
 }

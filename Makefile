@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/03/13 16:16:59 by cvignal          ###   ########.fr        #
+#    Updated: 2019/03/14 12:28:42 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -133,6 +133,7 @@ SRC		=								\
 	builtins/tools_fc.c					\
 	builtins/idx_fc.c					\
 	builtins/file_fc.c					\
+	builtins/fc_exec.c					\
 	expr/expression.c					\
 	expr/desc.c							\
 	expr/a.c							\
