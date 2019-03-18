@@ -8,3 +8,4 @@ Features :
 - type builtin
 - Autocompletion
 - History file
+- fc builtin
