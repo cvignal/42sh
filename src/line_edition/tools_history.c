@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 16:47:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 16:14:25 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/18 10:42:15 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,11 @@ int			add_to_history(char *str, t_shell *shell, int flag)
 	int			fd_hf;
 	int			ret;
 
-	if (check_validity(shell))
+	if (check_validity(shell) || shell->fc_cmd)
+	{
+		shell->fc_cmd = 0;
 		return (0);
+	}
 	if (flag)
 		return (add_incomplete_command(str, shell, &multi_line));
 	else if (!flag && ft_strlen(str) && !ft_strnequ(str, "\033[", 2))
