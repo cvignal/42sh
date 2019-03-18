@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:59:25 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/14 13:59:59 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/18 14:07:37 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int					fc_open_file(t_fc *cmd, t_shell *shell, t_tmpfile *file)
 
 	if (!(file->name = fc_generate_hash(cmd, shell->history)))
 		return (1);
-	if ((file->fd = open(file->name, O_RDWR | O_APPEND | O_CREAT, 0644)) == -1)
+	if ((file->fd = open(file->name, O_RDWR | O_APPEND | O_CREAT | O_EXCL, 0644)) == -1)
 		return (1);
 	i = cmd->i_first;
 	while (i < shell->history->length && i <= cmd->i_last)
