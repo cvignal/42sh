@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/14 14:27:42 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/18 10:41:06 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct		s_shell
 	t_token			*output;
 	t_token			*current;
 	int				prompt_len;
+	int				fc_cmd;
 }					t_shell;
 
 struct s_redir;
