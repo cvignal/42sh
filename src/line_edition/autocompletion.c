@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/26 17:49:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/19 13:05:30 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static void	ft_add_var(char *word, t_list **list, t_shell *shell)
 	int		i;
 	char	*name;
 
-	word++;
 	if (shell->env)
 	{
 		i = 0;
@@ -83,7 +82,7 @@ static void	ft_add_var(char *word, t_list **list, t_shell *shell)
 			if (!(name = ft_strdup(shell->env[i])))
 				return ;
 			name[ft_strlen(name) - ft_strlen(ft_strchr(name, '='))] = 0;
-			if (ft_comp(word, name))
+			if (ft_comp(ft_strchr(word, '$') + 1, name))
 			{
 				if (!(new = ft_lstnew(name, ft_strlen(name) + 1)))
 					return ;
@@ -93,7 +92,6 @@ static void	ft_add_var(char *word, t_list **list, t_shell *shell)
 			i++;
 		}
 	}
-	word--;
 }
 
 static void	ft_add_exec(char *word, t_list **list)
