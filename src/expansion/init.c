@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/14 17:10:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/19 16:42:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,21 @@ static void	set_exp_lexer_var_methods(t_exp_lexer *lexer)
 	}
 }
 
+static void	set_exp_lexer_hist_methods(t_exp_lexer *lexer)
+{
+	int	i;
+
+	i = 0;
+	while (i < CHAR_MAX)
+	{
+		if (ft_isalnum(i) || i == '!' || i == '-')
+			lexer->methods[EXP_STATE_HIST][i] = &exp_lexer_add_to_var;
+		else
+			lexer->methods[EXP_STATE_HIST][i] = &exp_lexer_cut_var;
+		++i;
+	}
+}
+
 int			init_exp_lexer(t_exp_lexer *lexer)
 {
 	int	i;
@@ -43,11 +58,14 @@ int			init_exp_lexer(t_exp_lexer *lexer)
 		lexer->methods[EXP_STATE_DQUOTE][i] = &exp_lexer_add_to_buff;
 		++i;
 	}
+	set_exp_lexer_hist_methods(lexer);
 	set_exp_lexer_var_methods(lexer);
 	lexer->methods[EXP_STATE_WORD]['\''] = &exp_lexer_push_squote;
 	lexer->methods[EXP_STATE_WORD]['"'] = &exp_lexer_push_dquote;
 	lexer->methods[EXP_STATE_WORD]['$'] = &exp_lexer_push_var;
+	lexer->methods[EXP_STATE_WORD]['!'] = &exp_lexer_push_hist;
 	lexer->methods[EXP_STATE_DQUOTE]['$'] = &exp_lexer_push_var;
+	lexer->methods[EXP_STATE_DQUOTE]['!'] = &exp_lexer_push_hist;
 	lexer->methods[EXP_STATE_DQUOTE]['"'] = &exp_lexer_pop_quote;
 	lexer->methods[EXP_STATE_SQUOTE]['\''] = &exp_lexer_pop_quote;
 	if (exp_ss_push(lexer, EXP_STATE_WORD))

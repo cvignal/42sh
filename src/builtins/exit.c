@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/18 16:22:33 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/19 16:49:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,24 @@
 static int	exit_value(t_shell *shell, char **args)
 {
 	int		ret;
-	char	*str;
 
-	if (args[1])
-		str = ft_strdup(args[1]);
-	else
-		str = NULL;
-	free_shell(shell);
-	if (str && !ft_isdigit(str[0]) && str[0] != '-'
-			&& str[0] != '+')
+	if (args[1] && !ft_isdigit(args[1][0]) && args[1][0] != '-'
+			&& args[1][0] != '+')
 	{
-		free(str);
+		free_shell(shell);
 		exit(255);
 	}
-	if (str)
+	if (args[1])
 	{
-		ret = ft_atoi(str);
-		free(str);
+		ret = ft_atoi(args[1]);
+		free_shell(shell);
 		exit(ret);
 	}
 	else
+	{
+		free_shell(shell);
 		exit(0);
+	}
 }
 
 int			builtin_exit(t_shell *shell, char **args)

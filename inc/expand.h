@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/18 14:25:17 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/03/19 16:33:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef enum		e_exp_state
 	EXP_STATE_SQUOTE,
 	EXP_STATE_DQUOTE,
 	EXP_STATE_VAR,
+	EXP_STATE_HIST,
 	NUMBER_EXP_STATE
 }					t_exp_state;
 
@@ -104,5 +105,13 @@ int					exp_lexer_pop_quote(struct s_shell *shell,
 */
 struct s_expr;
 int					expand_expr(struct s_shell *shell, struct s_expr *expr);
+
+/*
+** expansion/lexer_methods_hist.c
+*/
+int					exp_lexer_cut_hist(struct s_shell *shell,
+		t_exp_lexer *lexer, char c);
+int					exp_lexer_push_hist(struct s_shell *shell,
+		t_exp_lexer *lexer, char c);
 
 #endif

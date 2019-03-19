@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 18:35:51 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/13 11:09:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/19 14:47:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,15 @@ int			open_history_file(t_shell *shell)
 	char	*file;
 	char	*home_dir;
 	int		fd;
-	int		flag;
 
-	flag = 0;
-	if (!(home_dir = get_env_value(shell, "HOME")))
-	{
-		if (!(home_dir = ft_strjoin("/Users/", getlogin())))
-			return (-1);
-		flag = 1;
-	}
+	(void)shell;
+	if (!(home_dir = ft_strjoin("/Users/", getlogin())))
+		return (-1);
 	if (!(file = ft_strjoin(home_dir, "/.shperso_history")))
 		return (-1);
 	fd = open(file, O_RDWR | O_APPEND | O_CREAT, 0644);
 	ft_strdel(&file);
-	if (flag)
-		free(home_dir);
+	free(home_dir);
 	return (fd);
 }
 

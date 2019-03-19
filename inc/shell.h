@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/18 10:41:06 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/19 16:28:08 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,7 @@ int					fc_exec_file(char *name, t_shell *shell);
 void				fc_exec_ast(t_shell *shell, t_token *tokens);
 void				fc_free_shell(t_shell *shell);
 int					fc_init_shell(t_shell *shell, t_shell *old_shell);
+int					fc_find_cmd(char *str, t_array *history);
 
 /*
 ** signal.c
