@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:59:25 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/18 14:07:37 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/19 13:35:42 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int					fc_open_file(t_fc *cmd, t_shell *shell, t_tmpfile *file)
 
 	if (!(file->name = fc_generate_hash(cmd, shell->history)))
 		return (1);
-	if ((file->fd = open(file->name, O_RDWR | O_APPEND | O_CREAT | O_EXCL, 0644)) == -1)
+	if ((file->fd = open(file->name, O_RDWR | O_CREAT | O_EXCL, 0644)) == -1)
 		return (1);
 	i = cmd->i_first;
 	while (i < shell->history->length && i <= cmd->i_last)
@@ -60,13 +60,8 @@ int					fc_open_file(t_fc *cmd, t_shell *shell, t_tmpfile *file)
 	return (0);
 }
 
-int					fc_open_editor(t_fc *cmd, t_tmpfile *file, t_shell *shell)
+int					fc_find_editor(t_fc *cmd, char **args)
 {
-	char	**args;
-	int		ret;
-
-	if (!(args = (char**)malloc(sizeof(char*) * 3)))
-		return (1);
 	if (cmd->editor)
 	{
 		if (!(args[0] = ft_strdup(cmd->editor)))
@@ -77,8 +72,26 @@ int					fc_open_editor(t_fc *cmd, t_tmpfile *file, t_shell *shell)
 		if (!(args[0] = ft_strdup("vim")))
 			return (1);
 	}
-	if (!(args[1] = ft_strdup(file->name)))
+	return (0);
+}
+
+int					fc_open_editor(t_fc *cmd, t_tmpfile *file, t_shell *shell)
+{
+	char	**args;
+	int		ret;
+
+	if (!(args = (char**)malloc(sizeof(char*) * 3)))
 		return (1);
+	if (fc_find_editor(cmd, args))
+	{
+		ft_deltab(&args);
+		return (1);
+	}
+	if (!(args[1] = ft_strdup(file->name)))
+	{
+		ft_deltab(&args);
+		return (1);
+	}
 	args[2] = NULL;
 	ret = exec_from_char(shell, args, shell);
 	ft_deltab(&args);
