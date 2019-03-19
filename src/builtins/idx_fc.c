@@ -6,14 +6,14 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:00:24 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/14 13:35:21 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/19 16:29:45 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "libft.h"
 
-static int	fc_find_cmd(char *str, t_array *history)
+int		fc_find_cmd(char *str, t_array *history)
 {
 	int		i;
 	size_t	len;
@@ -22,8 +22,10 @@ static int	fc_find_cmd(char *str, t_array *history)
 	if (isdigit(str[0]) || str[0] == '-' || str[0] == '+')
 	{
 		nb = ft_atoi(str);
-		if (nb < 0)
-			nb = history->length - 1;
+		if (nb < 0 && history->length + nb >= 0)
+			nb += history->length;
+		else if (history->length + nb < 0)
+			nb = 0;
 		return (nb);
 	}
 	i = history->length - 1;
@@ -37,7 +39,7 @@ static int	fc_find_cmd(char *str, t_array *history)
 	return (i);
 }
 
-void		fc_index(t_fc *cmd, t_shell *shell)
+void	fc_index(t_fc *cmd, t_shell *shell)
 {
 	if (cmd->flags[0] == 's')
 	{
