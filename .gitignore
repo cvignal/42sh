@@ -10,6 +10,7 @@
 # Debug files
 .shperso_history
 .gdb_history
+*.log
 *.dSYM/
 
 ### Project ###
