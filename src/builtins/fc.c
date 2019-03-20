@@ -6,9 +6,11 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 17:11:37 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/20 15:50:15 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/20 16:43:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <unistd.h>
 
 #include "libft.h"
 #include "shell.h"
@@ -96,6 +98,7 @@ int		fc_edit(t_fc *cmd, t_shell *shell)
 		ret = fc_exec_file(file.name, shell);
 	else
 		ret = 0;
+	unlink(file.name);
 	free(file.name);
 	return (ret);
 }
