@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:34:34 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/14 15:18:44 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/20 15:27:00 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,14 @@ int		fc_init_shell(t_shell *shell, t_shell *old_shell)
 			|| init_exp_lexer(&shell->exp_lexer))
 		return (1);
 	shell->hash_table = old_shell->hash_table;
-	shell->used_fd = NULL;
+	if (!(shell->used_fd = (t_fd *)malloc(sizeof(t_fd))))
+		return (1);
+	shell->used_fd->fd = old_shell->fd_op;
+	shell->used_fd->is_pipe = 0;
+	shell->used_fd->next = NULL;
 	ft_bzero(&shell->line, sizeof(shell->line));
 	shell->env = old_shell->env;
+	shell->fd_op = old_shell->fd_op;
 	return (0);
 }
 
