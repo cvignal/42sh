@@ -6,12 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/18 11:13:27 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/20 15:25:58 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include "shell.h"
 
@@ -57,21 +58,15 @@ static int	prepare_pipeline(t_shell *shell, t_ast *instr, int *old)
 
 static void	reset_pipeline(t_shell *shell, int *old)
 {
-	if (dup2(old[STDIN_FILENO], STDIN_FILENO) == -1)
-		ft_dprintf(2, "Error on restoring stdin\n");
-	if (dup2(old[STDOUT_FILENO], STDOUT_FILENO) == -1)
-		ft_dprintf(2, "Error on restoring stdout\n");
-	if (dup2(old[STDERR_FILENO], STDERR_FILENO) == -1)
-		ft_dprintf(2, "Error on restoring stderr\n");
+	dup2(old[STDIN_FILENO], STDIN_FILENO);
+	dup2(old[STDOUT_FILENO], STDOUT_FILENO);
+	dup2(old[STDERR_FILENO], STDERR_FILENO);
 	remove_fd(shell, old[STDIN_FILENO]);
-	if (close(old[STDIN_FILENO]) == -1)
-		ft_dprintf(2, "Error closing old stdin\n");
+	close(old[STDIN_FILENO]);
 	remove_fd(shell, old[STDOUT_FILENO]);
-	if (close(old[STDOUT_FILENO]) == -1)
-		ft_dprintf(2, "Error closing old stdout\n");
+	close(old[STDOUT_FILENO]);
 	remove_fd(shell, old[STDERR_FILENO]);
-	if (close(old[STDERR_FILENO]) == -1)
-		ft_dprintf(2, "Error closing old stderr\n");
+	close(old[STDERR_FILENO]);
 }
 
 int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
