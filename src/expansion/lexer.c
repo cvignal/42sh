@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/19 16:54:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/20 14:22:49 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ char		*expand(t_shell *shell, char *arg, int *error)
 	int	i;
 	int	ret;
 
-	ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
-	ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
 	i = 0;
 	while (arg[i] && (int)arg[i] != 127)
 	{
@@ -69,6 +67,8 @@ int			expand_params(t_shell *shell, t_command *command)
 	{
 		if (command->args_value[i - j])
 			free(command->args_value[i - j]);
+		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
+		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
 		command->args_value[i - j] = expand(shell, command->args[i], &error);
 		if (error)
 		{
