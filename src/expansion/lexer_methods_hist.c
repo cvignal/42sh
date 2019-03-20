@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:18:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/19 16:54:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/20 11:16:08 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@ static char	*exp_find_cmd(t_array *history, char *buf)
 	return (history->data[idx]);
 }
 
+static int	exp_replace_history(t_line *line, t_exp_lexer *lexer, char *value)
+{
+	char	*pattern;
+
+	if (!(pattern = ft_strjoin("!", lexer->var.buffer)))
+		return (1);
+	if (!(line->data = ft_replace_all(line->data, pattern, value, 1)))
+		return (1);
+	free(pattern);
+	return (0);
+}
+
 int			exp_lexer_cut_hist(t_shell *shell, t_exp_lexer *lexer, char c)
 {
 	char	*value;
@@ -44,6 +56,8 @@ int			exp_lexer_cut_hist(t_shell *shell, t_exp_lexer *lexer, char c)
 				if (add_to_exp_buff(&lexer->buffer, value[i]))
 					return (EXP_LEXER_RET_ERROR);
 				++i;
+				if (exp_replace_history(&shell->line, lexer, value))
+					return (EXP_LEXER_RET_ERROR);
 			}
 		}
 		free(lexer->var.buffer);
