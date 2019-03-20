@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 13:34:20 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/19 11:18:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/20 17:18:34 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int			builtin_hash(t_shell *shell, char **args)
 	while (args[i])
 	{
 		if (is_builtin(args[i]) || ft_strchr(args[i], '/'))
-			continue ;
+			;
 		else if ((cmd = hbt_command(shell, args[i])))
 			;
 		else
