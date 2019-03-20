@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/19 16:49:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/20 17:08:30 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <time.h>
+#include <dirent.h>
 
 #include "shell.h"
 #include "fill_line.h"
@@ -42,6 +43,21 @@ static int	exit_value(t_shell *shell, char **args)
 	}
 }
 
+static void	delete_fc_folder(void)
+{
+	DIR				*dir;
+	struct dirent	*dirent;
+
+	if (!(dir = opendir("/tmp/folder_fc_builtin")))
+		return ;
+	while ((dirent = readdir(dir)))
+	{
+		if (!ft_strequ(dirent->d_name, ".") && !ft_strequ(dirent->d_name, ".."))
+			unlink(dirent->d_name);
+	}
+	rmdir("/tmp/folder_fc_builtin");
+}
+
 int			builtin_exit(t_shell *shell, char **args)
 {
 	size_t	arg_count;
@@ -55,6 +71,7 @@ int			builtin_exit(t_shell *shell, char **args)
 		return (1);
 	}
 	add_to_history(shell->line.data, shell, 0);
+	delete_fc_folder();
 	if (close(shell->fd_op) == -1)
 		ft_dprintf(2, "Error on closing the tty fd\n");
 	remove_env(shell);
