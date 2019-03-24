@@ -6,7 +6,7 @@
 /*   By: cvignal <cvignal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 13:50:27 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/24 06:29:43 by fstadelw         ###   ########.fr       */
+/*   Updated: 2019/03/24 08:58:23 by fstadelw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,27 @@
 ** 31	SIGUSR2		: Kill (Kill)
 */
 
-// TODO: Load disable_signal not from main but before or in
-// display prompt.
-// TODO: Only disable in interactive mode
-
 static t_shell	*g_shell = NULL;
 
-static void	newline_handler(int sig)
+void	prompt_signal_handler(int sig)
 {
 	(void)sig;
 	ft_putstr("\n");
 	print_prompt(&g_shell->parser, g_shell, 0);
 }
 
-void		disable_signal(t_shell *shell)
+void	disable_signal(t_shell *shell)
 {
 	g_shell = shell;
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, newline_handler);
+	signal(SIGINT, prompt_signal_handler);
 	signal(SIGTERM, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
 }
 
-void		enable_signal(void)
+void	enable_signal(void)
 {
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
