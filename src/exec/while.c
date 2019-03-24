@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   while.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 17:57:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/01 20:39:52 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/24 06:20:30 by fstadelw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		exec_while(t_shell *shell, t_ast *ast)
 		wait_loop(ast->data);
 	}
 	g_flag = 0;
-	disable_signal();
+	disable_signal(shell);
 	reset_redirs(shell, ast);
 	return (ast->left->ret);
 }
