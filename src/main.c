@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/14 17:04:38 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/24 06:19:50 by fstadelw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ int						main(int ac, char **av, char **environ)
 		return (free_shell(&shell));
 	ret = check_validity(&shell);
 	print_prompt(&shell.parser, &shell, 0);
+	disable_signal(&shell);
 	while (!g_functions[ret].f(&shell))
 	{
-		disable_signal();
 		if (!(tokens = lex(&shell)))
 		{
 			add_to_history(shell.line.data, &shell, 1);

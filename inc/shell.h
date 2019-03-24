@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/19 16:28:08 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/24 06:23:16 by fstadelw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,9 +364,8 @@ void				sanitize_hash(t_shell *shell);
 /*
 ** signal.c
 */
-void				disable_signal(void);
+void				disable_signal(t_shell *shell);
 void				enable_signal(void);
-void				ignore_signal(void);
 
 /*
 ** fd.c
