@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/24 06:23:16 by fstadelw         ###   ########.fr       */
+/*   Updated: 2019/03/24 08:58:49 by fstadelw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,6 +364,7 @@ void				sanitize_hash(t_shell *shell);
 /*
 ** signal.c
 */
+void				prompt_signal_handler(int sig);
 void				disable_signal(t_shell *shell);
 void				enable_signal(void);
 
