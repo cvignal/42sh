@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: cvignal <cvignal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/03/19 16:34:03 by cvignal          ###   ########.fr        #
+#    Updated: 2019/03/25 01:22:06 by fstadelw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,6 +125,7 @@ SRC		=								\
 	builtins/unsetenv.c					\
 	builtins/exit.c						\
 	builtins/type.c						\
+	builtins/test.c						\
 	builtins/tools_type.c				\
 	builtins/builtin_hash.c				\
 	builtins/tools_hash.c				\

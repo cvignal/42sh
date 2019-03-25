@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/24 08:58:49 by fstadelw         ###   ########.fr       */
+/*   Updated: 2019/03/25 01:21:19 by fstadelw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,7 @@ void				print_only_type(char **args, int i, char *flags
 void				print_loc_type(char **args, int i, char *flags
 		, t_shell *shell);
 int					builtin_hash(t_shell *shell, char **args);
+int					builtin_test(t_shell *shell, char **args);
 void				print_rec_tree(t_hbt *node);
 
 /*

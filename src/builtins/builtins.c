@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 12:07:42 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/12 13:38:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/25 01:17:21 by fstadelw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ static const t_builtin_desc	g_builtin_desc[] =\
 	{"cd", &builtin_cd},
 	{"type", &builtin_type},
 	{"hash", &builtin_hash},
-	{"fc", &builtin_fc}
+	{"fc", &builtin_fc},
+	{"[", &builtin_test},
+	{"test", &builtin_test}
 };
 
 t_builtin	is_builtin(char *cmd)
