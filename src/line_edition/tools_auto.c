@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/18 13:36:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/30 18:56:22 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,10 @@
 #include "libft.h"
 #include "fill_line.h"
 
-char	*g_builtins[] =\
+static const char	*g_builtins[] =\
 {
 	"unsetenv",
-	"setenv",
-	"exit",
-	"echo",
-	"env"
+	"setenv"
 };
 
 void		ft_add_builtins(char *word, t_list **list)

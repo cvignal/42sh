@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 14:16:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/12 14:30:35 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:58:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static int	expand_expr_two_args(t_shell *shell, t_expr *expr)
 
 int			expand_expr(t_shell *shell, t_expr *expr)
 {
+	ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
+	ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
 	if (!expr->args_value)
 	{
 		expr->args_value = malloc(sizeof(*expr->args_value) * expr->len);

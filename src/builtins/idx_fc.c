@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:00:24 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/20 15:49:14 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/30 18:58:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		fc_find_cmd(char *str, t_array *history)
 
 	if (!history)
 		return (0);
-	if (isdigit(str[0]) || str[0] == '-' || str[0] == '+')
+	if (ft_isdigit(str[0]) || str[0] == '-' || str[0] == '+')
 	{
 		nb = ft_atoi(str);
 		if (nb < 0 && history->length + nb >= 0)

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/20 14:22:49 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/30 18:59:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,27 @@ int			expand_params(t_shell *shell, t_command *command)
 		i++;
 	}
 	command->args_value[i - j] = NULL;
+	return (0);
+}
+
+int			expand_redirs(t_shell *shell, t_redir *list)
+{
+	t_redir	*curr;
+	int		error;
+
+	error = 0;
+	curr = list;
+	while (curr)
+	{
+		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
+		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
+		curr->target_value = expand(shell, curr->target, &error);
+		if (error)
+		{
+			ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
+			return (1);
+		}
+		curr = curr->next;
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/19 16:33:07 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:36:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct		s_exp_buff
 
 struct s_exp_lexer;
 struct s_shell;
+struct s_redir;
 
 typedef int			(*t_exp_lexer_f)(struct s_shell *, struct s_exp_lexer *
 		, char);
@@ -75,6 +76,8 @@ struct s_command;
 int					expand_params(struct s_shell *shell,
 		struct s_command *command);
 char				*expand(struct s_shell *shell, char *arg, int *error);
+int					expand_redirs(struct s_shell *shell,
+		struct s_redir *list);
 
 /*
 ** expansion/home.c
