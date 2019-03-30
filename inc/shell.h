@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/29 17:29:50 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/30 20:26:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "libft.h"
 # include "expand.h"
 
-# define EXEC_NAME "21sh"
+# define EXEC_NAME "42sh"
 # define PROMPT "$>"
 # define INCOMPLETE_INPUT_PROMPT ">"
 

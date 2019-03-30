@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:15:24 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/29 18:20:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/03/30 20:33:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char		*find_command(t_shell *shell, const char *command)
 	char		*bin_path;
 	size_t		size_path;
 
-	if (!*command)
+	if (!command || !*command)
 		return (NULL);
 	if (ft_strchr(command, '/'))
 		return (get_local_exec(command));
