@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/03/19 16:34:03 by cvignal          ###   ########.fr        #
+#    Updated: 2019/03/30 19:57:20 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ NAME	:=	42sh
 
 SRC		=								\
 	main.c								\
+	prompt.c							\
 	alt_shell.c							\
 	parser/token.c						\
 	parser/free_token.c					\
