@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/16 10:31:23 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/29 17:55:36 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int		exec_cmd(t_shell *shell, t_ast *ast)
 
 	if (shell->ctrlc)
 		return (0);
+	if (expand_redirs(shell, ast->redir_list))
+		return (1);
 	if (prepare_redirs(shell, ast, ast))
 	{
 		ast->ret = 127;
