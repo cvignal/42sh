@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/30 18:59:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/01 10:54:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ int			expand_redirs(t_shell *shell, t_redir *list)
 	{
 		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
 		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
-		curr->target_value = expand(shell, curr->target, &error);
+		if (curr->target)
+			curr->target_value = expand(shell, curr->target, &error);
+		else
+			curr->target_value = NULL;
 		if (error)
 		{
 			ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
