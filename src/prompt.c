@@ -6,11 +6,12 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 16:13:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/29 16:27:24 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/01 12:03:42 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <sys/ioctl.h>
 
 #include "shell.h"
 #include "libft.h"
@@ -19,7 +20,14 @@
 static void	print_special_prompt(t_shell *shell, char *str)
 {
 	t_curs	cursor;
+	int		n;
 
+	if (ioctl(0, FIONREAD, &n) == 0 && n > 0)
+	{
+		ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
+			, EOC, !shell->ret_cmd ? GREEN : RED, str, EOC);
+		return ;
+	}
 	get_cursor_pos(&cursor);
 	if (cursor.col != 1)
 		ft_dprintf(shell->fd_op, "%s%%%s\n", INV_COLOR, EOC);
@@ -34,7 +42,6 @@ void		print_prompt(t_parser *parser, t_shell *shell, int flag)
 
 	if (check_validity(shell))
 		return ;
-	raw_terminal_mode(shell);
 	cwd = getcwd(NULL, MAX_PATH);
 	if ((parser && parser->pss->state != PS_NONE) || flag
 			|| shell->ret_cmd == -1)

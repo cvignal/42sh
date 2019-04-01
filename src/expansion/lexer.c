@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/01 10:54:12 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/01 10:48:20 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,6 @@ char		*expand(t_shell *shell, char *arg, int *error)
 	}
 	if (shell->exp_lexer.state->state == EXP_STATE_VAR)
 		if (exp_lexer_cut_var(shell, &shell->exp_lexer, 0)
-				& EXP_LEXER_RET_ERROR)
-			return (clean_exit(&shell->exp_lexer, error));
-	if (shell->exp_lexer.state->state == EXP_STATE_HIST)
-		if (exp_lexer_cut_hist(shell, &shell->exp_lexer, 0)
 				& EXP_LEXER_RET_ERROR)
 			return (clean_exit(&shell->exp_lexer, error));
 	if (shell->exp_lexer.buffer.buffer)
