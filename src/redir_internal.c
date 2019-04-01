@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/29 17:44:21 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/01 16:14:58 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	redir_ll(t_shell *shell, t_ast *instr, t_redir *redir)
 	int			fd[2];
 	int			ret;
 
-	(void)shell;
 	(void)instr;
 	if (!(heredoc = alloc_heredoc()))
 		return (1);
@@ -89,7 +88,6 @@ int	redir_r(t_shell *shell, t_ast *instr, t_redir *redir)
 {
 	int	fd;
 
-	(void)shell;
 	(void)instr;
 	fd = open_file(shell, redir->target_value, O_WRONLY | O_CREAT | O_TRUNC,
 			S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
