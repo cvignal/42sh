@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/03/30 19:57:20 by cvignal          ###   ########.fr        #
+#    Updated: 2019/04/02 14:22:25 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,6 +115,7 @@ SRC		=								\
 	redir_r_both.c						\
 	redir_rw.c							\
 	redir_internal.c					\
+	tools_heredoc.c						\
 	pipeline.c							\
 	builtins/builtins.c					\
 	builtins/exec_builtin.c				\
