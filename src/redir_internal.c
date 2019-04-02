@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/01 16:14:58 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/02 14:20:27 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	redir_ll(t_shell *shell, t_ast *instr, t_redir *redir)
 	if (pipe(fd))
 		return (heredoc_exit_error(heredoc));
 	if (heredoc->data)
-		write(fd[1], heredoc->data, heredoc->len);
+		expand_heredoc(heredoc, shell, fd);
 	close(fd[1]);
 	redir->fd = fd[0];
 	if (heredoc->data)

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:15:24 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/30 20:33:10 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/01 09:44:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*get_path(char **env)
 	while (env[i])
 	{
 		if (!ft_strncmp(env[i], "PATH=", 5))
-			return (env[i]);
+			return (env[i] + 5);
 		++i;
 	}
 	return (NULL);
@@ -64,7 +64,6 @@ static char	*get_local_exec(const char *path)
 
 char		*find_command(t_shell *shell, const char *command)
 {
-	int			i;
 	const char	*path;
 	char		*bin_path;
 	size_t		size_path;
@@ -75,19 +74,18 @@ char		*find_command(t_shell *shell, const char *command)
 		return (get_local_exec(command));
 	if (shell->env && (path = get_path(shell->env)))
 	{
-		i = 5;
-		while (path[i])
+		while (*path)
 		{
 			size_path = 0;
-			while (path[i + size_path] && path[i + size_path] != ':')
+			while (path[size_path] && path[size_path] != ':')
 				++size_path;
-			bin_path = concat_path(path + i, command, size_path);
+			bin_path = concat_path(path, command, size_path);
 			if (!bin_path || !access(bin_path, X_OK))
 				return (bin_path);
 			free(bin_path);
-			i += size_path;
-			if (path[i] == ':')
-				++i;
+			path += size_path;
+			if (*path == ':')
+				++path;
 		}
 	}
 	return (NULL);

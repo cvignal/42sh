@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 14:16:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/29 17:58:37 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/02 14:28:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 #include "shell.h"
 #include "expand.h"
 #include "libft.h"
+
+static int	allocation_error(void)
+{
+	ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
+	return (1);
+}
 
 static int	expand_expr_three_args(t_shell *shell, t_expr *expr)
 {
@@ -73,18 +79,12 @@ int			expand_expr(t_shell *shell, t_expr *expr)
 	if (expr->len == 2)
 	{
 		if (expand_expr_two_args(shell, expr))
-		{
-			ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
-			return (1);
-		}
+			return (allocation_error());
 	}
 	else if (expr->len == 3)
 	{
 		if (expand_expr_three_args(shell, expr))
-		{
-			ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
-			return (1);
-		}
+			return (allocation_errror());
 	}
 	return (0);
 }
