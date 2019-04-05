@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/01 10:16:18 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/05 21:15:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <limits.h>
 
-# define META_CHARS ";|&<>"
+# define META_CHARS ";|&<>()"
 # define SPECIAL_CHARS ";|&<>$~"
 
 # define TOKEN_ALLOC_SIZE	128
