@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 16:24:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/02 16:36:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:15:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,10 @@ int	ft_ctrlc(t_shell *shell)
 	if (shell->ctrld)
 		shell->end_heredoc = 2;
 	else
+	{
+		clean_under_line(shell);
 		print_prompt(NULL, shell, 0);
+	}
 	shell->prev_cmd_state = 1;
 	return (shell->end_heredoc);
 }
