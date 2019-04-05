@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/05 21:18:26 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/05 23:23:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,17 @@ typedef enum			e_ttype
 	TT_OR,
 	TT_AND,
 	TT_BG,
+	TT_ARI_BEGIN,
+	TT_ARI_END,
+	TT_ARI_OP_PLUS,
+	TT_ARI_OP_SUB,
+	TT_ARI_OP_PROD,
+	TT_ARI_OP_DIV,
+	TT_ARI_OP_MOD,
+	TT_ARI_OP_EQ,
+	TT_ARI_ID,
 	TT_OPEN_PAR,
-	TT_OPEN_ARI,
 	TT_CLOSE_PAR,
-	TT_CLOSE_ARI,
 	TT_REDIR_L,
 	TT_REDIR_R_COMP,
 	TT_REDIR_R_CLOSE,
