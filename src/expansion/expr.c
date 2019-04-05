@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 14:16:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/02 14:28:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/02 15:50:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int			expand_expr(t_shell *shell, t_expr *expr)
 	else if (expr->len == 3)
 	{
 		if (expand_expr_three_args(shell, expr))
-			return (allocation_errror());
+			return (allocation_error());
 	}
 	return (0);
 }
