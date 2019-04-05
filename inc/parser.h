@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/05 21:15:05 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/06 00:03:27 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ typedef enum			e_lstate
 	LSTATE_META,
 	LSTATE_SQUOTE,
 	LSTATE_DQUOTE,
+	LSTATE_ARI_PAREN,
+	LSTATE_ARI_NONE,
+	LSTATE_ARI_ID,
+	LSTATE_ARI_OP,
 	NUMBER_LSTATE
 }						t_lstate;
 
@@ -160,7 +164,7 @@ void					free_token_list(t_token *list);
 /*
 ** parser/token_type.c
 */
-int						get_token_type(t_token *token);
+int						get_token_type(t_lexer *lexer, t_token *token);
 
 /*
 ** parser/lexer_act.c

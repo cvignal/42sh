@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/13 11:10:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/05 23:28:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "libft.h"
 #include "fill_line.h"
 #include "expand.h"
+#include "arithmetic.h"
 
 static int	increment_shlvl(t_shell *shell)
 {
@@ -108,7 +109,7 @@ int			init_shell(t_shell *shell, char **environ)
 {
 	ft_bzero(shell, sizeof(*shell));
 	if (init_lexer(&shell->lexer) || init_parser(&shell->parser)
-			|| init_exp_lexer(&shell->exp_lexer))
+			|| init_exp_lexer(&shell->exp_lexer) || init_arithmetic_lexer(&shell->lexer))
 		return (1);
 	shell->hash_table = malloc(sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
 	if (!shell->hash_table)

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:54:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/05 21:16:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/06 00:08:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "parser.h"
 #include "ast.h"
 #include "libft.h"
+#include "arithmetic.h"
 
 static const t_token_desc	g_token_desc[] =\
 {
@@ -24,9 +25,9 @@ static const t_token_desc	g_token_desc[] =\
 	{"&", TT_BG},
 	{"&&", TT_AND},
 	{"(", TT_OPEN_PAR},
-	{"((", TT_OPEN_ARI},
+	{"((", TT_ARI_BEGIN},
 	{")", TT_CLOSE_PAR},
-	{"))", TT_CLOSE_ARI},
+	{"))", TT_ARI_END},
 	{"d*<", TT_REDIR_L},
 	{"d*<<", TT_REDIR_LL},
 	{"d*>", TT_REDIR_R},
@@ -111,11 +112,19 @@ static int			match_pseudo_regex(const char *token, const char *desc)
 	return (token[pos_t] || desc[pos_d]);
 }
 
-int					get_token_type(t_token *token)
+int					get_token_type(t_lexer *lexer, t_token *token)
 {
 	unsigned int	i;
+	t_lss			*lss;
 
 	i = 0;
+	lss = lexer->lss;
+	while (lss)
+	{
+		if (lss->state == LSTATE_ARI_NONE)
+			return (token->type);
+		lss = lss->next;
+	}
 	while (i < sizeof(g_token_desc) / sizeof(*g_token_desc))
 	{
 		if (!match_pseudo_regex(token->data, g_token_desc[i].str))
