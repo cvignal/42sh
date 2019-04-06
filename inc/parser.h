@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/06 00:03:27 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/06 23:50:41 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define PS_WHILECD (1 << 5)
 # define PS_EXPR (1 << 6)
 # define PS_CMD (1 << 7)
+# define PS_ARI (1 << 8)
 # define PS_ALL (~0)
 
 struct s_shell;

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/06 03:35:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/07 00:50:27 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,18 @@ int						rule_while_close(t_parser *parser, t_ast_token *list);
 */
 int						rule_send_to_shunting_yard(t_parser *parser,
 		t_ast_token *list);
+
+/*
+** parser/rules_ari.c
+*/
+int						rule_create_ari(t_parser *parser, t_ast_token *list);
+int						rule_close_ari(t_parser *parser, t_ast_token *list);
+int						rule_create_ari_statement(t_parser *parser, t_ast_token *list);
+
+/*
+** parser/rules_ari_op.c
+*/
+int						rule_ari_op(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/ast.c

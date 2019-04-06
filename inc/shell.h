@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/05 23:25:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/07 00:40:45 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,6 +298,8 @@ int					exec_else(t_shell *shell, struct s_ast *ast);
 void				free_else(struct s_ast *ast);
 int					exec_while(t_shell *shell, struct s_ast *ast);
 void				free_while(struct s_ast *ast);
+int					stub_exec_ari(t_shell *shell, struct s_ast *ast);
+void				stub_del_ari(struct s_ast *ast);
 
 /*
 ** redir.c
