@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/29 14:53:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/07 01:13:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,13 @@ static const t_precedence	g_precedence[] =\
 	{TT_PIPE, 2},
 	{TT_END, 1},
 	{TT_OR, 0},
-	{TT_AND, 0}
+	{TT_AND, 0},
+	{TT_ARI_OP_PLUS, 0},
+	{TT_ARI_OP_SUB, 0},
+	{TT_ARI_OP_PROD, 1},
+	{TT_ARI_OP_DIV, 1},
+	{TT_ARI_OP_MOD, 1},
+	{TT_ARI_OP_EQ, 2}
 };
 
 static int		precedence(t_ttype type)

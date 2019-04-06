@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rules_shunting_yard.c                              :+:      :+:    :+:   */
+/*   stub.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/07 06:48:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 00:32:14 by gchainet         ###   ########.fr       */
+/*   Created: 2019/04/07 00:37:19 by gchainet          #+#    #+#             */
+/*   Updated: 2019/04/07 00:41:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-#include "ast.h"
+#include "arithmetic.h"
+#include "libft.h"
 
-int	rule_send_to_shunting_yard(t_parser *parser, t_ast_token *list)
+int		stub_exec_ari(t_shell *shell, t_ast *ast)
 {
-	if (list->type == TT_STATEMENT
-			&& (!list->data || !((t_ast *)list->data)->data))
-		return (1);
-	if (list->type == TT_STATEMENT && ((t_ast *)list->data)->type == TT_CMD
-			&& ((t_command *)((t_ast *)list->data)->data)->args_len == 0)
-		return (1);
-	shunting_yard(parser);
+	(void)shell;
+	(void)ast;
+	ft_printf("fixme: arithmetic execution stub\n");
 	return (0);
+}
+
+void	stub_del_ari(t_ast *ast)
+{
+	(void)ast;
+	ft_printf("fixme: arithmetic delete stub\n");
 }

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 22:31:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/06 03:41:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/07 00:46:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@
 
 static const t_ari_op_desc	g_op_desc[] =\
 {
-	{"+", TT_ARI_OP_PLUS},
-	{"-", TT_ARI_OP_SUB},
-	{"*", TT_ARI_OP_PROD},
-	{"/", TT_ARI_OP_DIV},
-	{"%", TT_ARI_OP_MOD},
-	{"=", TT_ARI_OP_EQ},
-	{"(", TT_OPEN_PAR},
-	{")", TT_CLOSE_PAR}
+	{"+", TT_ARI_OP_PLUS, &stub_exec_ari, &stub_del_ari},
+	{"-", TT_ARI_OP_SUB, &stub_exec_ari, &stub_del_ari},
+	{"*", TT_ARI_OP_PROD, &stub_exec_ari, &stub_del_ari},
+	{"/", TT_ARI_OP_DIV, &stub_exec_ari, &stub_del_ari},
+	{"%", TT_ARI_OP_MOD, &stub_exec_ari, &stub_del_ari},
+	{"=", TT_ARI_OP_EQ, &stub_exec_ari, &stub_del_ari},
+	{"(", TT_OPEN_PAR, &stub_exec_ari, &stub_del_ari},
+	{")", TT_CLOSE_PAR, &stub_exec_ari, &stub_del_ari}
 };
 
-int	is_operator_char(char c)
+int					is_operator_char(char c)
 {
 	unsigned int	i;
 
@@ -41,7 +41,7 @@ int	is_operator_char(char c)
 	return (0);
 }
 
-int	get_arithmetic_token_type(const char *s)
+int					get_arithmetic_token_type(const char *s)
 {
 	unsigned int	i;
 
@@ -53,4 +53,21 @@ int	get_arithmetic_token_type(const char *s)
 		++i;
 	}
 	return (TT_ARI_ID);
+}
+
+int		get_arithmetic_desc(int type, t_ari_op_desc *dest)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < sizeof(g_op_desc) / sizeof(*g_op_desc))
+	{
+		if (g_op_desc[i].type == type)
+		{
+			ft_memcpy(dest, g_op_desc + i, sizeof(*dest));
+			return (0);
+		}
+		++i;
+	}
+	return (1);
 }

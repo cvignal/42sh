@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/06 03:34:02 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/07 00:39:25 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ SRC		=									\
 	parser/parser_rules.c					\
 	parser/keyword.c						\
 	parser/rules.c							\
+	parser/rules_ari.c						\
+	parser/rules_ari_op.c					\
 	parser/rules_expr.c						\
 	parser/rules_shift.c					\
 	parser/rules_logic.c					\
@@ -96,6 +98,7 @@ SRC		=									\
 	exec/if.c								\
 	exec/else.c								\
 	exec/while.c							\
+	exec/arithmetic/stub.c					\
 	shell.c									\
 	command.c								\
 	exec.c									\
