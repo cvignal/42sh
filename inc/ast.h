@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/05 23:23:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/06 03:35:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef enum			e_ttype
 	TT_BG,
 	TT_ARI_BEGIN,
 	TT_ARI_END,
+	TT_ARI_OP_UPLUS,
+	TT_ARI_OP_USUB,
 	TT_ARI_OP_PLUS,
 	TT_ARI_OP_SUB,
 	TT_ARI_OP_PROD,

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/06 00:15:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/06 03:44:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 #include "libft.h"
 #include "ast.h"
 #include "libft.h"
+#include "arithmetic.h"
+
+static void		debug(t_token *token)
+{
+	while (token)
+	{
+		ft_printf("%d %s\n", token->type, token->data);
+		token = token->next;
+	}
+}
 
 int				clean_exit_lexer(t_lexer *lexer, t_token **list
 		, t_token **current, const char *msg)
@@ -82,6 +92,7 @@ static t_token	*get_return(t_token **output, int *pos)
 	over->type = TT_OVER;
 	add_to_token_list(output, over);
 	ret = *output;
+	set_unary_operator(ret);
 	*output = NULL;
 	*pos = 0;
 	return (ret);
@@ -112,5 +123,6 @@ t_token			*lex(t_shell *shell)
 			return (NULL);
 		}
 	}
+	debug(shell->output);
 	return (get_return(&shell->output, &pos));
 }

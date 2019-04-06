@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:48:09 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/06 00:12:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/06 04:00:54 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	alexer_create(t_shell *shell, t_token *current, char c)
 	(void)current;
 	if (ft_isalnum(c) || c == '$'  || c == '_')
 		state = LSTATE_ARI_ID;
-	else if (is_operator_char(c))
+	else
 		state = LSTATE_ARI_OP;
 	if (lss_push(&shell->lexer, state))
 		return (1 << LEXER_RET_ERROR);
@@ -60,8 +60,8 @@ int	alexer_try_op(t_shell *shell, t_token *current, char c)
 
 	(void)shell;
 	if (add_to_token(current, c))
-		return (1 << LEXER_RET_CONT);
-	if ((type = get_arithmetic_token_type(current->data)) >= 0)
+		return (1 << LEXER_RET_ERROR);
+	if ((type = get_arithmetic_token_type(current->data)) != TT_ARI_ID)
 	{
 		current->type = type;
 		return (1 << LEXER_RET_CONT);
