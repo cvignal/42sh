@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 22:31:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/06 00:13:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/06 03:41:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ static const t_ari_op_desc	g_op_desc[] =\
 	{"*", TT_ARI_OP_PROD},
 	{"/", TT_ARI_OP_DIV},
 	{"%", TT_ARI_OP_MOD},
-	{"=", TT_ARI_OP_EQ}
+	{"=", TT_ARI_OP_EQ},
+	{"(", TT_OPEN_PAR},
+	{")", TT_CLOSE_PAR}
 };
 
 int	is_operator_char(char c)
