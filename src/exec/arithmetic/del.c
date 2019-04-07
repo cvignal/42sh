@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rules_ari_op.c                                     :+:      :+:    :+:   */
+/*   del.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/07 00:02:02 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 03:10:37 by gchainet         ###   ########.fr       */
+/*   Created: 2019/04/07 01:47:27 by gchainet          #+#    #+#             */
+/*   Updated: 2019/04/07 01:48:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "arithmetic.h"
 
-int	rule_ari_op(t_parser *parser, t_ast_token *list)
+void	free_ari(t_ast *ast)
 {
-	t_ast			*node;
-	t_ari_op_desc	desc;
-
-	(void)parser;
-	if (get_arithmetic_desc(list->type, &desc))
-		return (1);
-	if (!(node = alloc_ast(list->data, list->type, desc.exec, desc.del)))
-		return (1);
-	list->data = node;
-	list->type = TT_OP;
-	return (0);
+	if (ast)
+	{
+		if (ast->data)
+			free(ast->data);
+		free_ari(ast->left);
+		free_ari(ast->right);
+		free(ast);
+	}
 }

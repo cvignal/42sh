@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 22:31:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 00:46:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/07 03:04:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 
 static const t_ari_op_desc	g_op_desc[] =\
 {
-	{"+", TT_ARI_OP_PLUS, &stub_exec_ari, &stub_del_ari},
-	{"-", TT_ARI_OP_SUB, &stub_exec_ari, &stub_del_ari},
-	{"*", TT_ARI_OP_PROD, &stub_exec_ari, &stub_del_ari},
-	{"/", TT_ARI_OP_DIV, &stub_exec_ari, &stub_del_ari},
-	{"%", TT_ARI_OP_MOD, &stub_exec_ari, &stub_del_ari},
-	{"=", TT_ARI_OP_EQ, &stub_exec_ari, &stub_del_ari},
-	{"(", TT_OPEN_PAR, &stub_exec_ari, &stub_del_ari},
-	{")", TT_CLOSE_PAR, &stub_exec_ari, &stub_del_ari}
+	{"+", TT_ARI_OP_PLUS, &exec_ari_plus, &free_ari},
+	{"-", TT_ARI_OP_SUB, &exec_ari_sub, &free_ari},
+	{"*", TT_ARI_OP_PROD, &exec_ari_prod, &free_ari},
+	{"/", TT_ARI_OP_DIV, &exec_ari_div, &free_ari},
+	{"%", TT_ARI_OP_MOD, &exec_ari_mod, &free_ari},
+	{"=", TT_ARI_OP_EQ, &exec_ari_eq, &free_ari},
+	{"(", TT_OPEN_PAR, NULL, &free_ari},
+	{")", TT_CLOSE_PAR, NULL, &free_ari}
 };
 
 int					is_operator_char(char c)

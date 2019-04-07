@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stub.c                                             :+:      :+:    :+:   */
+/*   prod.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/07 00:37:19 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 00:41:24 by gchainet         ###   ########.fr       */
+/*   Created: 2019/04/07 01:41:10 by gchainet          #+#    #+#             */
+/*   Updated: 2019/04/07 03:08:44 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,20 @@
 #include "arithmetic.h"
 #include "libft.h"
 
-int		stub_exec_ari(t_shell *shell, t_ast *ast)
+int	exec_ari_prod(t_shell *shell, t_ast *ast)
 {
-	(void)shell;
-	(void)ast;
-	ft_printf("fixme: arithmetic execution stub\n");
-	return (0);
-}
+	int	a;
+	int	b;
+	int	res;
 
-void	stub_del_ari(t_ast *ast)
-{
-	(void)ast;
-	ft_printf("fixme: arithmetic delete stub\n");
+	(void)shell;
+	if (!ast->left->data || !ast->right->data)
+		return (1);
+	a = ft_atoi(ast->left->data);
+	b = ft_atoi(ast->right->data);
+	free(ast->data);
+	res = a * b;
+	ast->data = ft_itoa(res);
+	ast->ret = !res;
+	return (!res);
 }
