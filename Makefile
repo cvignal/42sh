@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/07 00:39:25 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/07 03:04:16 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,7 +98,14 @@ SRC		=									\
 	exec/if.c								\
 	exec/else.c								\
 	exec/while.c							\
-	exec/arithmetic/stub.c					\
+	exec/arithmetic/del.c					\
+	exec/arithmetic/plus.c					\
+	exec/arithmetic/sub.c					\
+	exec/arithmetic/prod.c					\
+	exec/arithmetic/div.c					\
+	exec/arithmetic/mod.c					\
+	exec/arithmetic/eq.c					\
+	exec/arithmetic/value.c					\
 	shell.c									\
 	command.c								\
 	exec.c									\

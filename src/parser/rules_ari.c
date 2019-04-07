@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 23:51:03 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 01:24:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/07 01:52:58 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	rule_create_ari_statement(t_parser *parser, t_ast_token *list)
 	t_ast	*ast;
 
 	(void)parser;
-	if (!(ast = alloc_ast(list->data, list->type, &stub_exec_ari,
-					&stub_del_ari)))
+	if (!(ast = alloc_ast(list->data, list->type, &exec_ari_value,
+					&free_ari)))
 		return (1);
 	list->data = ast;
 	list->type = TT_STATEMENT;

@@ -1,29 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rules_ari_op.c                                     :+:      :+:    :+:   */
+/*   mod.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/07 00:02:02 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 03:10:37 by gchainet         ###   ########.fr       */
+/*   Created: 2019/04/07 01:43:37 by gchainet          #+#    #+#             */
+/*   Updated: 2019/04/07 03:08:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+
 #include "shell.h"
 #include "arithmetic.h"
+#include "libft.h"
 
-int	rule_ari_op(t_parser *parser, t_ast_token *list)
+int	exec_ari_mod(t_shell *shell, t_ast *ast)
 {
-	t_ast			*node;
-	t_ari_op_desc	desc;
+	int	a;
+	int	b;
+	int	res;
 
-	(void)parser;
-	if (get_arithmetic_desc(list->type, &desc))
+	(void)shell;
+	if (!ast->left->data || !ast->right->data)
 		return (1);
-	if (!(node = alloc_ast(list->data, list->type, desc.exec, desc.del)))
+	a = ft_atoi(ast->left->data);
+	b = ft_atoi(ast->right->data);
+	free(ast->data);
+	if (b == 0)
+	{
+		ft_dprintf(STDERR_FILENO, "%s: division by zero\n", EXEC_NAME);
+		free(ast->data);
+		ast->data = NULL;
 		return (1);
-	list->data = node;
-	list->type = TT_OP;
-	return (0);
+	}
+	res = a % b;
+	ast->data = ft_itoa(res);
+	ast->ret = !res;
+	return (!res);
 }
