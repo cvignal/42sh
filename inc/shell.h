@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 03:04:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/09 01:34:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,20 @@ typedef struct		s_fd
 	struct s_fd		*next;
 }					t_fd;
 
+typedef struct		s_var
+{
+	char			*name;
+	char			*value;
+	struct s_var	*left;
+	struct s_var	*right;
+}					t_var;
+
 typedef struct		s_shell
 {
 	t_lexer			lexer;
 	t_parser		parser;
 	t_exp_lexer		exp_lexer;
+	t_var			*vars;
 	char			**env;
 	t_line			line;
 	t_array			*history;
@@ -399,5 +408,12 @@ void				add_tty_history_fd(t_shell *shell, t_fd *tty_fd
 ** alt_shell.c
 */
 int					alt_init_shell(t_shell *shell);
+
+/*
+**	vars.c
+*/
+t_var				*get_var(t_var *vars, const char *name);
+int					add_shell_var(t_shell *shell, const char *name,
+		const char *value);
 
 #endif
