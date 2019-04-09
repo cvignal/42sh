@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 01:34:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/09 04:49:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -415,5 +415,10 @@ int					alt_init_shell(t_shell *shell);
 t_var				*get_var(t_var *vars, const char *name);
 int					add_shell_var(t_shell *shell, const char *name,
 		const char *value);
+
+/*
+**	exec/arithmetic/utils.c
+*/
+int					arithmetic_is_var(const char *value);
 
 #endif
