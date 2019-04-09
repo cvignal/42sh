@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 04:49:33 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/09 09:34:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,11 @@ typedef struct		s_fd
 
 typedef struct		s_var
 {
-	char			*name;
-	char			*value;
-	struct s_var	*left;
-	struct s_var	*right;
+	char			var[VAR_MAX * 2 + 2];
+	size_t			len_name;
+	size_t			len_value;
+	int				exported;
+	struct s_var	*next;
 }					t_var;
 
 typedef struct		s_shell
@@ -92,8 +93,7 @@ typedef struct		s_shell
 	t_lexer			lexer;
 	t_parser		parser;
 	t_exp_lexer		exp_lexer;
-	t_var			*vars;
-	char			**env;
+	t_var			*vars;;
 	t_line			line;
 	t_array			*history;
 	int				his_pos;
@@ -214,28 +214,13 @@ char				*find_command(t_shell *shell, const char *command);
 ** shell.c
 */
 int					free_shell(t_shell *shell);
-int					init_shell(t_shell *shell, char **environ);
+int					init_shell(t_shell *shell, const char **environ);
 
 /*
 ** line.c
 */
 int					add_to_line(t_line *line, char buf);
 int					free_line(t_line *line);
-
-/*
-** env.c
-*/
-int					set_env_var(t_shell *shell, const char *var,
-					const char *value);
-void				remove_env(t_shell *shell);
-
-/*
-** env_utils.c
-*/
-char				**copy_env(char **env);
-char				**split_env_arg(char *arg);
-char				*get_env_value(t_shell *shell, char *name);
-int					remove_env_value(t_shell *shell, char *name);
 
 /*
 ** builtins/
@@ -410,15 +395,32 @@ void				add_tty_history_fd(t_shell *shell, t_fd *tty_fd
 int					alt_init_shell(t_shell *shell);
 
 /*
-**	vars.c
-*/
-t_var				*get_var(t_var *vars, const char *name);
-int					add_shell_var(t_shell *shell, const char *name,
-		const char *value);
-
-/*
 **	exec/arithmetic/utils.c
 */
 int					arithmetic_is_var(const char *value);
+
+/*
+** var_utils.c
+*/
+char				**build_env(t_shell *shell);
+t_var				*alloc_var(const char *name, const char *value,
+		int exported);
+t_var				*create_var(const char *value, int exported);
+int					check_var(const char *name, const char *value);
+void				concat_var(char *dst, const char *name, const char *value);
+
+/*
+** var.c
+*/
+int					set_var(t_shell *shell, const char *name,
+		const char *value, int exported);
+t_var				*get_var(t_shell *shell, const char *name);
+void				remove_var(t_shell *shell, const char *name);
+
+/*
+** env.c
+*/
+t_var				*copy_env(const char **env);
+void				free_vars(t_shell *shell);
 
 #endif

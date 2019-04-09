@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:15:24 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/01 09:44:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/09 09:18:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,12 @@ static char	*concat_path(const char *path, const char *bin, size_t size_path)
 	return (ret);
 }
 
-static char	*get_path(char **env)
+static char	*get_path(t_shell *shell)
 {
-	int		i;
+	t_var	*path;
 
-	i = 0;
-	while (env[i])
-	{
-		if (!ft_strncmp(env[i], "PATH=", 5))
-			return (env[i] + 5);
-		++i;
-	}
+	if ((path = get_var(shell, "PATH")) && path->exported)
+		return (path->var + 5);
 	return (NULL);
 }
 
@@ -72,7 +67,7 @@ char		*find_command(t_shell *shell, const char *command)
 		return (NULL);
 	if (ft_strchr(command, '/'))
 		return (get_local_exec(command));
-	if (shell->env && (path = get_path(shell->env)))
+	if (shell->vars && (path = get_path(shell)))
 	{
 		while (*path)
 		{
