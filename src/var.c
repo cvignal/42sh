@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/09 01:21:02 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 01:33:22 by gchainet         ###   ########.fr       */
+/*   Created: 2019/04/09 06:58:54 by gchainet          #+#    #+#             */
+/*   Updated: 2019/04/09 08:54:45 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,78 +14,79 @@
 
 #include "shell.h"
 
-static t_var	*alloc_var(const char *name, const char *value)
+static void	remove_var_first(t_var **var)
 {
-	t_var	*var;
+	t_var	*tmp;
 
-	var = malloc(sizeof(*var));
-	if (!var)
-		return (NULL);
-	if (!(var->name = ft_strdup(name)))
-	{
-		free(var);
-		return (NULL);
-	}
-	if (!(var->value = ft_strdup(value)))
-	{
-		free(var->value);
-		free(var);
-		return (NULL);
-	}
-	var->left = NULL;
-	var->right = NULL;
-	return (var);
+	tmp = (*var)->next;
+	free(*var);
+	*var = tmp;
 }
 
-static t_var	**find_var_position(t_var **current, const char *name)
+static void	remove_var_middle(t_var *vars, const char *name)
 {
-	int			ret;
+	t_var	*prev;
 
-	if (!*current)
-		return (current);
-	ret = ft_strcmp((*current)->name, name);
-	if (!ret)
-		return (current);
-	if (ret < 0)
-		return (find_var_position(&(*current)->left, name));
-	else
-		return (find_var_position(&(*current)->right, name));
+	prev = NULL;
+	while (vars)
+	{
+		if (!ft_strncmp(vars->var, name, size_name) && vars->var[size_name] == '=')
+		{
+			if (prev)
+				prev->next = vars->next;
+			free(vars);
+			return ;
+		}
+		prev = vars;
+		vars = vars->next;
+	}
 }
 
-int				add_shell_var(t_shell *shell, const char *name,
-		const char *value)
+int				set_var(t_shell *shell, const char *name, const char *value,
+		int exported)
 {
-	t_var	**position;
+	t_var		*var;
+	int			new_var;
 
-	position = find_var_position(&shell->vars, name);
-	if (!*position)
+	if (check_var(name, value))
+		return (1);
+	new_var = 0;
+	if (!(var = get_var(shell, name)))
 	{
-		if (!(*position = alloc_var(name, value)))
+		if (!(var = alloc_var(name, value, exported)))
 			return (1);
+		new_var = 1;
+		var->next = shell->vars;
+		shell->vars = var;
 	}
-	else
-	{
-		if ((*position)->value)
-			free((*position)->value);
-		if (!((*position)->value = ft_strdup(value)))
-			return (1);
-	}
+	concat_var(var, name, value);
 	return (0);
 }
 
-t_var			*get_var(t_var *vars, const char *name)
+t_var			*get_var(t_shell *shell, const char *name)
 {
-	int			ret;
+	t_var		*iter;
+	size_t		len_name;
 
-	if (vars)
+	len_name = ft_strlen(name);
+	iter = shell->vars;
+	while (iter)
 	{
-		ret = ft_strcmp(vars->name, name);
-		if (!ret)
-			return (vars);
-		else if (ret < 0)
-			return (get_var(vars->left, name));
-		else
-			return (get_var(vars->right, name));
+		if (!ft_strncmp(iter->var, name, len_name) && iter->var[len_name] == '=')
+			return (iter);
+		iter = iter->next;
 	}
 	return (NULL);
+}
+
+void		remove_var(t_shell *shell, const char *name)
+{
+	size_t	size_name;
+
+	size_name = ft_strlen(name);
+	if (shell->vars && !ft_strncmp(shell->vars->var, name, size_name)
+			&& shell->vars->var[size_name] == '=')
+		remove_var_first(&shell->env_vars);
+	else
+		remove_var_middle(shell->vars, name);
 }

@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/09 04:50:02 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/09 09:07:34 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,8 +110,6 @@ SRC		=									\
 	command.c								\
 	exec.c									\
 	path.c									\
-	env.c									\
-	env_utils.c								\
 	hash.c									\
 	hash_sanitize.c							\
 	heredoc.c								\
@@ -203,7 +201,9 @@ SRC		=									\
 	parser/arithmetic/type.c				\
 	parser/arithmetic/unary.c				\
 	exec/arithmetic/utils.c					\
-	var.c
+	var.c									\
+	var_utils.c								\
+	env.c
 
 
 SRCDIR	:=	src

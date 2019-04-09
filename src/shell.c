@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/05 23:28:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/09 09:10:59 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@
 static int	increment_shlvl(t_shell *shell)
 {
 	char	*new_value;
-	char	*shlvl;
+	t_var	*shlvl;
 	int		old_value;
 
-	if ((shlvl = get_env_value(shell, "SHLVL")))
-		old_value = ft_atoi(shlvl);
+	if ((shlvl = get_var(shell, "SHLVL")) && shlvl->exported)
+		old_value = ft_atoi(shlvl->var + shlvl->len_name + 1);
 	else
 		old_value = 0;
 	if (!(new_value = ft_ltoa_base(old_value + 1, 10)))
 		return (1);
-	set_env_var(shell, "SHLVL", new_value);
+	set_var(shell, "SHLVL", new_value, 1);
 	free(new_value);
 	return (0);
 }
@@ -82,14 +82,16 @@ static void	free_shell_aux(t_shell *shell)
 
 int			free_shell(t_shell *shell)
 {
-	int	i;
+	int		i;
+	t_var	*iter;
+	t_var	*next;
 
-	i = 0;
-	if (shell->env)
+	iter = shell->vars;
+	while (iter)
 	{
-		while (shell->env[i])
-			free(shell->env[i++]);
-		free(shell->env);
+		next = iter->next;
+		free(iter);
+		iter = next;
 	}
 	free_line(&shell->line);
 	i = -1;
@@ -105,7 +107,7 @@ int			free_shell(t_shell *shell)
 	return (1);
 }
 
-int			init_shell(t_shell *shell, char **environ)
+int			init_shell(t_shell *shell, const char **environ)
 {
 	ft_bzero(shell, sizeof(*shell));
 	if (init_lexer(&shell->lexer) || init_parser(&shell->parser)
@@ -117,7 +119,7 @@ int			init_shell(t_shell *shell, char **environ)
 	shell->used_fd = NULL;
 	ft_bzero(shell->hash_table, sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
 	ft_bzero(&shell->line, sizeof(shell->line));
-	if (!(shell->env = copy_env(environ)))
+	if (!(shell->vars = copy_env(environ)))
 	{
 		ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
 		return (1);
@@ -125,7 +127,7 @@ int			init_shell(t_shell *shell, char **environ)
 	if (increment_shlvl(shell))
 	{
 		ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-		remove_env(shell);
+		free_vars(shell);
 		return (1);
 	}
 	if (!check_validity(shell))

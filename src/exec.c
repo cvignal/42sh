@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/09 15:12:59 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/09 09:15:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ static int	ft_wait(int *status)
 
 static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 {
+	char	**env;
+
+	env = build_env(shell);
+	if (!env)
+		exit(1);
 	set_pipeline(shell, instr);
 	if (apply_redirs(shell, instr))
 	{
@@ -45,7 +50,7 @@ static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 		exit(1);
 	}
 	enable_signal();
-	execve(bin_path, ((t_command *)instr->data)->args_value, shell->env);
+	execve(bin_path, ((t_command *)instr->data)->args_value, env);
 	exit(1);
 }
 
@@ -54,8 +59,9 @@ int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
 	pid_t		pid;
 	int			status;
 	char		*bin_path;
+	char		**env;
 
-	if (get_env_value(tmp_shell, "PATH"))
+	if (get_var(tmp_shell, "PATH"))
 		bin_path = find_command(tmp_shell, args[0]);
 	else
 		bin_path = find_command(shell, args[0]);
@@ -64,7 +70,10 @@ int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
 	else
 		return (bin_not_found(args[0]));
 	if (!pid)
-		execve(bin_path, args, tmp_shell->env);
+	{
+		env = build_env(tmp_shell);
+		execve(bin_path, args, env);
+	}
 	else
 	{
 		free(bin_path);
