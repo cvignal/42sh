@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 01:51:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 05:05:49 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/09 05:06:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ static int	exec_ari_eq_var(t_shell *shell, t_ast *ast)
 			ft_dprintf(STDERR_FILENO,
 					"%s: unable to allocate memory for variable assignement\n",
 					EXEC_NAME);
-			break ;
 		}
-		ast->ret = !ret;
-		return (ret);
+		else
+		{
+			ast->ret = !ret;
+			return (ret);
+		}
 	}
 	ast->ret = 1;
 	free(ast->data);
