@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 01:42:03 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 03:09:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/09 04:13:54 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ int	exec_ari_div(t_shell *shell, t_ast *ast)
 	res = a / b;
 	ast->data = ft_itoa(a / b);
 	ast->ret = !res;
-	return (!res);
+	return (res);
 }

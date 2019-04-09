@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 01:37:53 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 03:08:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/09 04:14:08 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ int	exec_ari_plus(t_shell *shell, t_ast *ast)
 	res = a + b;
 	ast->data = ft_itoa(res);
 	ast->ret = !res;
-	return (!res);
+	return (res);
 }
