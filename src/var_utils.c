@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 08:16:59 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 08:55:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 08:59:01 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,12 @@ void		concat_var(t_var *var, const char *name, const char *value)
 
 int			check_var(const char *name, const char *value)
 {
-	size_t	size_name;
-	size_t	size_value;
-
-	if ((size_name = ft_strlen(name)) > VAR_MAX)
+	if (ft_strlen(name) > VAR_MAX)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: variable name too long\n", EXEC_NAME);
 		return (1);
 	}
-	else if ((size_value = ft_strlen(value)) > VAR_MAX)
+	else if (ft_strlen(value) > VAR_MAX)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: variable content too long\n", EXEC_NAME);
 		return (1);
