@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 05:57:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 06:12:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,20 @@ static void	add_to_vars(t_shell *shell, t_var *vars)
 	}
 }
 
+static void	remove_from_vars(t_shell *shell, t_var *vars, t_var *old)
+{
+	while (shell->vars && shell->vars != old)
+	{
+		shell->vars = shell->vars->next;
+		free(vars);
+		vars = shell->vars;
+	}
+}
+
 int		exec_cmd(t_shell *shell, t_ast *ast)
 {
 	int		ret;
+	t_var	*old_vars;
 
 	if (shell->ctrlc)
 		return (0);
@@ -45,10 +56,13 @@ int		exec_cmd(t_shell *shell, t_ast *ast)
 		ast->ret = 127;
 		return (1);
 	}
-	if (((t_command *)ast->data)->args_len == 0)
-		add_to_vars(shell, ast->assignements);
-	else
+	old_vars = shell->vars;
+	add_to_vars(shell, ast->assignements);
+	if (((t_command *)ast->data)->args_len)
+	{
 		ret = exec(shell, ast);
+		remove_from_vars(shell, ast->assignements, old_vars);
+	}
 	reset_redirs(shell, ast);
 	return (ret);
 }
