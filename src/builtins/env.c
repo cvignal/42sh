@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 07:44:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 03:41:37 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 04:49:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,22 @@ static int	create_tmp_env_var(t_var **vars, char *name, char *value,
 	char	*pos_eq;
 
 	pos_eq = ft_strchr(arg, '=');
-	len = pos_eq - arg - 1;
+	len = pos_eq - arg;
 	if (len > VAR_MAX)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: variable name too long\n", EXEC_NAME);
 		return (1);
 	}
-	ft_strncat(name, arg, len);
+	ft_strncpy(name, arg, len);
+	name[len] = 0;
 	len = ft_strlen(pos_eq + 1);
 	if (len > VAR_MAX)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: variable content too long\n", EXEC_NAME);
 		return (1);
 	}
-	ft_strncat(value, pos_eq + 1, len);
+	ft_strncpy(value, pos_eq + 1, len);
+	value[len] = 0;
 	if (set_var(vars, name, value, 1))
 		return (1);
 	return (0);
