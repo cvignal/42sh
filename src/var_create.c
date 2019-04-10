@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 02:02:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 09:12:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 09:48:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int		separate_name_value(const char *full, char *name, char *value)
 	++pos;
 	while (full[pos])
 	{
-		if (pos > VAR_MAX)
+		if (pos - shift - 1 > VAR_MAX)
 			return (1);
 		value[pos - shift - 1] = full[pos];
 		++pos;
