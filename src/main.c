@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/24 06:19:50 by fstadelw         ###   ########.fr       */
+/*   Updated: 2019/03/30 20:19:13 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,35 +23,6 @@ static const t_readline	g_functions[2] =\
 	{0, &fill_line},
 	{1, &alt_fill_line}
 };
-
-void					print_prompt(t_parser *parser, t_shell *shell, int flag)
-{
-	char	*cwd;
-	char	*str;
-
-	if (check_validity(shell))
-		return ;
-	raw_terminal_mode(shell);
-	cwd = getcwd(NULL, MAX_PATH);
-	if ((parser && parser->pss->state != PS_NONE) || flag
-			|| shell->ret_cmd == -1)
-	{
-		shell->prompt_len = 2;
-		ft_dprintf(shell->fd_op, "%s ", INCOMPLETE_INPUT_PROMPT);
-		shell->ret_cmd = -1;
-	}
-	else
-	{
-		if (ft_strrchr(cwd, '/') && ft_strchr(cwd, '/') != ft_strrchr(cwd, '/'))
-			str = ft_strrchr(cwd, '/') + 1;
-		else
-			str = cwd;
-		shell->prompt_len = ft_strlen(str) + 7;
-		ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
-				, EOC, !shell->ret_cmd ? GREEN : RED, str, EOC);
-	}
-	free(cwd);
-}
 
 static void				exec_ast(t_shell *shell, t_token *tokens)
 {
@@ -98,6 +69,5 @@ int						main(int ac, char **av, char **environ)
 		free_line(&shell.line);
 		raw_terminal_mode(&shell);
 	}
-	free_shell(&shell);
-	return (0);
+	builtin_exit(&shell, NULL);
 }

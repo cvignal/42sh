@@ -6,7 +6,7 @@
 #    By: cvignal <cvignal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/03/25 01:22:06 by fstadelw         ###   ########.fr        #
+#    Updated: 2019/04/10 19:17:44 by fstadelw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ NAME	:=	42sh
 
 SRC		=								\
 	main.c								\
+	prompt.c							\
 	alt_shell.c							\
 	parser/token.c						\
 	parser/free_token.c					\
@@ -114,6 +115,7 @@ SRC		=								\
 	redir_r_both.c						\
 	redir_rw.c							\
 	redir_internal.c					\
+	tools_heredoc.c						\
 	pipeline.c							\
 	builtins/builtins.c					\
 	builtins/exec_builtin.c				\
@@ -214,7 +216,7 @@ include $(LIBFT_PATH)/include.mk
 CC		?=	cc
 
 INCFLAG	:= -I $(INCDIR) $(LIB_INC)
-WFLAGS	?=	-Wall -Wextra -Werror 
+WFLAGS	?=	-Wall -Wextra -Werror
 CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG)
 
 DEPGEN	:=	$(CC)

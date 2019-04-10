@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/19 13:05:30 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:27:49 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,6 @@ int			ft_tab(t_shell *shell)
 	{
 		if (!(word = word_to_complete(&shell->line)))
 			word = ft_strdup(shell->line.data);
-		if (!*word)
-			return (0);
 		ft_add_exec(word, &list);
 	}
 	else

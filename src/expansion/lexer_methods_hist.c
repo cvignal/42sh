@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:18:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/20 11:16:08 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/03/30 20:32:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static char	*exp_find_cmd(t_array *history, char *buf)
 {
 	int	idx;
 
+	if (!history)
+		return (NULL);
 	if (ft_strequ(buf, "!"))
 		idx = history->length - 1;
 	else

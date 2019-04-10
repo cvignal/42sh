@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/18 13:36:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:08:40 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,11 @@
 #include "libft.h"
 #include "fill_line.h"
 
-char	*g_builtins[] =\
+static char	*g_builtins[] =\
 {
 	"unsetenv",
 	"setenv",
-	"exit",
-	"echo",
-	"env"
+	"exit"
 };
 
 void		ft_add_builtins(char *word, t_list **list)
@@ -33,7 +31,7 @@ void		ft_add_builtins(char *word, t_list **list)
 	t_list	*new;
 
 	i = 0;
-	while (i < 5)
+	while (i < 3)
 	{
 		if (ft_strnequ(word, g_builtins[i], ft_strlen(word)))
 		{
@@ -110,6 +108,8 @@ char		*word_to_complete(t_line *line)
 	}
 	if (ret)
 		ret = ft_strdup(ret + 1);
+	else
+		ret = ft_strdup(buf);
 	ft_strdel(&buf);
 	return (ret);
 }

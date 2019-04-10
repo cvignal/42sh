@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/25 01:21:19 by fstadelw         ###   ########.fr       */
+/*   Updated: 2019/04/10 19:17:43 by fstadelw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct		s_redir
 {
 	t_ttype			type;
 	char			*target;
+	char			*target_value;
 	int				in;
 	int				out;
 	int				fd;
@@ -313,6 +314,8 @@ int					redir_l(t_shell *shell, t_ast *ast, t_redir *redir);
 int					redir_ll(t_shell *shell, t_ast *ast, t_redir *redir);
 int					redir_r(t_shell *shell, t_ast *ast, t_redir *redir);
 int					redir_rr(t_shell *shell, t_ast *ast, t_redir *redir);
+int					expand_heredoc(t_heredoc *heredoc, t_shell *shell
+		, int fd[2]);
 
 /*
 ** apply_redirs.c

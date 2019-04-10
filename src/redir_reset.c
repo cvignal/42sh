@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 10:26:43 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/20 14:08:16 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/01 10:46:52 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	reset_redirs(t_shell *shell, t_ast *instr)
 	redir = instr->redir_list;
 	while (redir)
 	{
-		if (redir->fd != STDOUT_FILENO && redir->fd != STDIN_FILENO
-				&& redir->fd != STDERR_FILENO)
+		if (redir->fd && redir->fd != STDOUT_FILENO
+				&& redir->fd != STDIN_FILENO && redir->fd != STDERR_FILENO)
 			close(redir->fd);
 		redir = redir->next;
 	}

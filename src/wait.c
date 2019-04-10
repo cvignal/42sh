@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:49:17 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/24 09:04:49 by fstadelw         ###   ########.fr       */
+/*   Updated: 2019/03/30 20:20:36 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 static const t_sig_msg	g_signal_msg[] = {
 	{.sig = SIGHUP, .rtn = 129, .msg = "Hangup: 1"},
-	{.sig = SIGINT, .rtn = 1, .msg = ""},
+	{.sig = SIGINT, .rtn = 130, .msg = ""},
 	{.sig = SIGQUIT, .rtn = 131, .msg = "Quit: 3"},
 	{.sig = SIGILL, .rtn = 132, .msg = "Illegal instruction: 4"},
 	{.sig = SIGTRAP, .rtn = 133, .msg = "Trace/BPT trap: 5"},

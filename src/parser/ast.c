@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:26:16 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/08 01:08:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/01 15:36:06 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void		free_ast(t_ast *ast)
 		node = node->next;
 		if (tmp->target)
 			free(tmp->target);
+		if (tmp->target_value)
+			free(tmp->target_value);
 		free(tmp);
 	}
 	free(ast);

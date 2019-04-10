@@ -6,12 +6,10 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:11:53 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 17:41:50 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/01 11:33:50 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <term.h>
-#include <curses.h>
 #include <unistd.h>
 #include <fcntl.h>
 
@@ -37,10 +35,13 @@ void	read_cursor_pos(char *buf)
 
 void	get_cursor_pos(t_curs *cursor)
 {
-	char	buf[30];
+	char	buf[25];
 
 	write(g_fd_output, CURS_POS, 4);
 	read_cursor_pos(buf);
 	cursor->line = ft_atoi(buf + 2);
-	cursor->col = ft_atoi(ft_strchr(buf, ';') + 1);
+	if (ft_strchr(buf, ';'))
+		cursor->col = ft_atoi(ft_strchr(buf, ';') + 1);
+	else
+		cursor->col = 1;
 }

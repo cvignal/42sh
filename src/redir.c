@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:36:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/23 14:03:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/03/29 17:51:46 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_redir						*create_redir(t_ttype type, char *arg,
 		free(new_redir);
 		return (NULL);
 	}
+	new_redir->target_value = NULL;
 	if (!arg)
 		new_redir->target = NULL;
 	new_redir->type = type;

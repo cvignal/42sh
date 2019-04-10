@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/20 14:22:49 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/01 10:48:20 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,6 @@ char		*expand(t_shell *shell, char *arg, int *error)
 		if (exp_lexer_cut_var(shell, &shell->exp_lexer, 0)
 				& EXP_LEXER_RET_ERROR)
 			return (clean_exit(&shell->exp_lexer, error));
-	if (shell->exp_lexer.state->state == EXP_STATE_HIST)
-		if (exp_lexer_cut_hist(shell, &shell->exp_lexer, 0)
-				& EXP_LEXER_RET_ERROR)
-			return (clean_exit(&shell->exp_lexer, error));
 	if (shell->exp_lexer.buffer.buffer)
 		expand_home(shell, error);
 	return (shell->exp_lexer.buffer.buffer);
@@ -80,5 +76,30 @@ int			expand_params(t_shell *shell, t_command *command)
 		i++;
 	}
 	command->args_value[i - j] = NULL;
+	return (0);
+}
+
+int			expand_redirs(t_shell *shell, t_redir *list)
+{
+	t_redir	*curr;
+	int		error;
+
+	error = 0;
+	curr = list;
+	while (curr)
+	{
+		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
+		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
+		if (curr->target)
+			curr->target_value = expand(shell, curr->target, &error);
+		else
+			curr->target_value = NULL;
+		if (error)
+		{
+			ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
+			return (1);
+		}
+		curr = curr->next;
+	}
 	return (0);
 }
