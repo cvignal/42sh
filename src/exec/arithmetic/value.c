@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 01:53:07 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 08:37:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 02:41:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	exec_ari_value(t_shell *shell, t_ast *ast)
 	ast->ret = 0;
 	if (arithmetic_is_var(ast->data))
 	{
-		var = get_var(shell, ast->data);
+		var = get_var(shell->vars, ast->data);
 		if (var)
 			ret = ft_atoi(var->var);
 		else

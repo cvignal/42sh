@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:14:44 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/01 16:19:09 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/10 03:44:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,15 @@ static int	exit_error(const char *msg)
 
 static int	print_env(t_shell *shell)
 {
-	int		i;
+	t_var	*vars;
 
-	i = 0;
-	while (shell->env[i])
-		ft_dprintf(shell->fd_op, "%s\n", shell->env[i++]);
+	vars = shell->vars;
+	while (vars)
+	{
+		if (vars->exported)
+			ft_dprintf(shell->fd_op, "%s\n", vars->var);
+		vars = vars->next;
+	}
 	return (0);
 }
 
@@ -66,7 +70,7 @@ int			builtin_setenv(t_shell *shell, char **args)
 			return (setenv_error_display(ERR_LEN_VAR));
 		else if (valid_value(args[1]) || ft_strchr(args[2], '='))
 			return (setenv_error_display(ERR_CHAR_VAR));
-		if (set_env_var(shell, args[1], args[2]))
+		if (set_var(&shell->vars, args[1], args[2], 1))
 			return (1);
 		if (!ft_strcmp(args[1], "PATH"))
 			sanitize_hash(shell);

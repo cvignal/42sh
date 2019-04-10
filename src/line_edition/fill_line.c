@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/09 08:29:42 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 02:41:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		check_validity(t_shell *shell)
 	{
 		default_term[0] = "TERM";
 		default_term[1] = "xterm-256color";
-		set_var(shell, default_term[0], default_term[1], 1);
+		set_var(&shell->vars, default_term[0], default_term[1], 1);
 		name = default_term[1];
 	}
 	res = tgetent(NULL, name);

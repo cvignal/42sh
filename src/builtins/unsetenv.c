@@ -6,26 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:22:56 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/24 13:32:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 03:46:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "libft.h"
-
-static int	is_target(char *s, char *target)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && target[i] && s[i] != '=')
-	{
-		if (s[i] != target[i])
-			return (0);
-		++i;
-	}
-	return (!target[i] && s[i] == '=');
-}
 
 static int	exit_error(const char *msg)
 {
@@ -33,35 +19,8 @@ static int	exit_error(const char *msg)
 	return (1);
 }
 
-static int	replace_env(t_shell *shell, char **new_env, int env_size,
-		char *target)
-{
-	int	step;
-	int	i;
-
-	i = 0;
-	step = 0;
-	while (i < env_size)
-	{
-		if (!is_target(shell->env[i], target))
-			new_env[i - step] = shell->env[i];
-		else
-		{
-			free(shell->env[i]);
-			step = 1;
-		}
-		++i;
-	}
-	new_env[i - step] = NULL;
-	free(shell->env);
-	shell->env = new_env;
-	return (0);
-}
-
 int			builtin_unsetenv(t_shell *shell, char **args)
 {
-	int		env_size;
-	char	**new_env;
 	size_t	arg_count;
 
 	arg_count = 0;
@@ -71,12 +30,7 @@ int			builtin_unsetenv(t_shell *shell, char **args)
 		return (exit_error("too many arguments"));
 	else if (arg_count < 2)
 		return (exit_error("usage: unsetenv var"));
-	env_size = 0;
-	while (shell->env[env_size])
-		++env_size;
-	if (!(new_env = malloc(sizeof(*new_env) * (env_size + 1))))
-		return (1);
-	replace_env(shell, new_env, env_size, args[1]);
+	remove_var(&shell->vars, args[1]);
 	if (!ft_strcmp(args[1], "PATH"))
 		sanitize_hash(shell);
 	return (0);

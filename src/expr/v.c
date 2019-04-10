@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 11:40:24 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/28 11:42:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 03:54:49 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	expr_v(t_shell *shell, char **args)
 {
-	if (get_env_value(shell, args[1]))
+	if (get_var(shell->vars, args[1]))
 		return (0);
 	return (1);
 }
