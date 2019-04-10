@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:33:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/14 13:40:03 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/10 07:35:28 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int			usage_fc(void)
 {
-	ft_dprintf(2, "%s\n", FC_USAGE_MESSAGE);
+	ft_dprintf(2, "%s%s%s%s\n", FC_0, FC_1, FC_2, FC_3);
 	return (-1);
 }
 

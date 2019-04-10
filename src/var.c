@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 06:58:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 04:15:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:27:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static void	remove_var_middle(t_var *vars, const char *name, size_t size_name)
 	prev = NULL;
 	while (vars)
 	{
-		if (!ft_strncmp(vars->var, name, size_name) && vars->var[size_name] == '=')
+		if (!ft_strncmp(vars->var, name, size_name)
+				&& vars->var[size_name] == '=')
 		{
 			if (prev)
 				prev->next = vars->next;
@@ -42,14 +43,15 @@ static void	remove_var_middle(t_var *vars, const char *name, size_t size_name)
 	}
 }
 
-t_var			*get_var(t_var *vars, const char *name)
+t_var		*get_var(t_var *vars, const char *name)
 {
 	size_t		len_name;
 
 	len_name = ft_strlen(name);
 	while (vars)
 	{
-		if (!ft_strncmp(vars->var, name, len_name) && vars->var[len_name] == '=')
+		if (!ft_strncmp(vars->var, name, len_name)
+				&& vars->var[len_name] == '=')
 			return (vars);
 		vars = vars->next;
 	}

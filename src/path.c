@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:15:24 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 03:23:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:30:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 #include "shell.h"
 #include "libft.h"
 
-static char	*concat_path(const char *path, const char *bin, size_t size_path)
+static char			*concat_path(const char *path, const char *bin,
+		size_t size_path)
 {
 	size_t		size_bin;
 	char		*ret;
@@ -37,7 +38,7 @@ static char	*concat_path(const char *path, const char *bin, size_t size_path)
 	return (ret);
 }
 
-static char	*get_local_exec(const char *path)
+static char			*get_local_exec(const char *path)
 {
 	struct stat	st;
 
@@ -48,10 +49,19 @@ static char	*get_local_exec(const char *path)
 	return (ft_strdup(path));
 }
 
-char		*find_command(t_var *vars, const char *command)
+static const char	*get_path(t_var *vars)
+{
+	t_var	*path;
+
+	path = get_var(vars, "PATH");
+	if (path)
+		return (path->var + 5);
+	return (NULL);
+}
+
+char				*find_command(t_var *vars, const char *command)
 {
 	const char	*path;
-	t_var		*path_var;
 	char		*bin_path;
 	size_t		size_path;
 
@@ -59,9 +69,8 @@ char		*find_command(t_var *vars, const char *command)
 		return (NULL);
 	if (ft_strchr(command, '/'))
 		return (get_local_exec(command));
-	if (vars && (path_var = get_var(vars, "PATH")) && path_var->exported)
+	if ((path = get_path(vars)))
 	{
-		path = path_var->var + 5;
 		while (*path)
 		{
 			size_path = 0;

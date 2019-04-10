@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 09:04:48 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 04:14:35 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:19:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "shell.h"
 
-t_var	*copy_env(const char **env)
+t_var			*copy_env(const char **env)
 {
 	t_var	*res;
 	t_var	*var;
@@ -49,17 +49,12 @@ static t_var	*copy_var(t_var *var)
 	if (!copy)
 		return (NULL);
 	ft_strcpy(copy->var, var->var);
-	if (!copy->var)
-	{
-		free(copy);
-		return (NULL);
-	}
 	copy->exported = var->exported;
 	copy->next = NULL;
 	return (copy);
 }
 
-t_var	*copy_env_from_vars(t_var *vars)
+t_var			*copy_env_from_vars(t_var *vars)
 {
 	t_var	*res;
 	t_var	*current;
@@ -71,7 +66,8 @@ t_var	*copy_env_from_vars(t_var *vars)
 		{
 			if (!(current = copy_var(vars)))
 			{
-				ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
+				ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME,
+						MEMORY_ERROR_MSG);
 				free_vars(&res);
 				return (NULL);
 			}
@@ -83,7 +79,7 @@ t_var	*copy_env_from_vars(t_var *vars)
 	return (res);
 }
 
-void	free_vars(t_var **vars)
+void			free_vars(t_var **vars)
 {
 	t_var	*i;
 	t_var	*next;

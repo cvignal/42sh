@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 11:32:04 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/10 03:48:58 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:17:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	print_loc_type(char **args, int i, char *flags, t_shell *shell)
 	{
 		if (is_builtin(args[i]))
 		{
-			if (ft_strchr(flags, 'a') && (cmd = find_command(shell->vars, args[i])))
+			if (ft_strchr(flags, 'a') && (cmd = find_command(shell->vars,
+							args[i])))
 				ft_printf("%s\n", cmd);
 			if (cmd)
 				ft_strdel(&cmd);

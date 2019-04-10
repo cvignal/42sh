@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 06:12:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:18:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	remove_from_vars(t_shell *shell, t_var *vars, t_var *old)
 	}
 }
 
-int		exec_cmd(t_shell *shell, t_ast *ast)
+int			exec_cmd(t_shell *shell, t_ast *ast)
 {
 	int		ret;
 	t_var	*old_vars;
@@ -58,6 +58,7 @@ int		exec_cmd(t_shell *shell, t_ast *ast)
 	}
 	old_vars = shell->vars;
 	add_to_vars(shell, ast->assignements);
+	ret = 0;
 	if (((t_command *)ast->data)->args_len)
 	{
 		ret = exec(shell, ast);
@@ -67,7 +68,7 @@ int		exec_cmd(t_shell *shell, t_ast *ast)
 	return (ret);
 }
 
-void	free_cmd(t_ast *ast)
+void		free_cmd(t_ast *ast)
 {
 	free_command(ast->data);
 	free_ast(ast);

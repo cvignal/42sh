@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 05:24:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:36:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # define FC_1 "\t(i)   fc [-r] [-e editor] [[first] [last]]\n"
 # define FC_2 "\t(ii)  fc -l [-nr] [first [last]]\n"
 # define FC_3 "\t(iii) fc -s [pat=rep] [command]"
-# define FC_USAGE_MESSAGE FC_0 FC_1 FC_2 FC_3
 
 # define ARGS_ALLOC_SIZE 8
 # define HEREDOC_ALLOC_SIZE 256
@@ -42,7 +41,7 @@
 # define CHAR_TILDE	'~'
 # define CHAR_VAR '$'
 
-# define MAX_PATH	1024
+# define MAX_PATH 1024
 # define VAR_MAX 1024
 # define SEARCH_MAX 128
 
@@ -93,7 +92,7 @@ typedef struct		s_shell
 	t_lexer			lexer;
 	t_parser		parser;
 	t_exp_lexer		exp_lexer;
-	t_var			*vars;;
+	t_var			*vars;
 	t_line			line;
 	t_array			*history;
 	int				his_pos;

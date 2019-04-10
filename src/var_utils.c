@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 08:16:59 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 04:31:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:26:06 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	**clean_exit(char **env, int i)
 	return (NULL);
 }
 
-void	concat_var(t_var *var, const char *name, const char *value)
+void		concat_var(t_var *var, const char *name, const char *value)
 {
 	int		i;
 
@@ -66,7 +66,7 @@ void	concat_var(t_var *var, const char *name, const char *value)
 	var->len_value = i;
 }
 
-int		check_var(const char *name, const char *value)
+int			check_var(const char *name, const char *value)
 {
 	size_t	size_name;
 	size_t	size_value;
@@ -84,7 +84,7 @@ int		check_var(const char *name, const char *value)
 	return (0);
 }
 
-char	**build_env(t_var *vars, int copy)
+char		**build_env(t_var *vars, int copy)
 {
 	char	**env;
 	int		i;
