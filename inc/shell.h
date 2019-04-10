@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 07:36:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 08:42:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -407,17 +407,15 @@ void				concat_var(t_var *var, const char *name, const char *value);
 /*
 **	var_create.c
 */
-t_var				*alloc_var(const char *name, const char *value,
-		int exported);
-t_var				*create_var(const char *value, int exported);
-
-/*
-** var.c
-*/
+void				add_to_vars(t_var **to, t_var *from);
 int					set_var(t_var **vars, const char *name,
 		const char *value, int exported);
 int					set_var_full(t_var **vars, const char *value,
 		int exported);
+
+/*
+** var.c
+*/
 t_var				*get_var(t_var *var, const char *name);
 void				remove_var(t_var **vars, const char *name);
 
@@ -426,6 +424,7 @@ void				remove_var(t_var **vars, const char *name);
 */
 t_var				*copy_env(const char **env);
 t_var				*copy_env_from_vars(t_var *vars);
+t_var				*copy_vars(t_var *vars);
 void				free_vars(t_var **vars);
 
 #endif
