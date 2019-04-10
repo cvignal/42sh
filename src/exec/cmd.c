@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/29 17:55:36 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/10 05:57:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,26 @@
 #include "shell.h"
 #include "ast.h"
 
+static void	add_to_vars(t_shell *shell, t_var *vars)
+{
+	t_var	*iter;
+
+	if (vars)
+	{
+		iter = vars;
+		while (iter->next)
+		{
+			iter->exported = 0;
+			iter = iter->next;
+		}
+		iter->next = shell->vars;
+		shell->vars = vars;
+	}
+}
+
 int		exec_cmd(t_shell *shell, t_ast *ast)
 {
-	int	ret;
+	int		ret;
 
 	if (shell->ctrlc)
 		return (0);
@@ -28,7 +45,10 @@ int		exec_cmd(t_shell *shell, t_ast *ast)
 		ast->ret = 127;
 		return (1);
 	}
-	ret = exec(shell, ast);
+	if (((t_command *)ast->data)->args_len == 0)
+		add_to_vars(shell, ast->assignements);
+	else
+		ret = exec(shell, ast);
 	reset_redirs(shell, ast);
 	return (ret);
 }

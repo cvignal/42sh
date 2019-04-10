@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 00:50:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 05:42:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static const t_ast_rule g_rules[] =\
 	{PS_EXPR, {TT_WORD, 0, 0}, 1, &rule_make_expr},
 	{PS_EXPR, {TT_EXPR, TT_WORD, 0}, 2, &rule_add_to_expr},
 	{PS_EXPR, {TT_EXPR_CLOSE, 0, 0}, 1, &rule_close_expr},
-	{PS_NONE, {TT_OVER, 0, 0}, 1, &rule_shift_first},
-	{PS_NONE, {TT_WORD, 0, 0}, 1, &rule_first_word},
 	{PS_CMD, {TT_WORD, 0}, 1, &rule_add_to_cmd},
 	{PS_CMD, {TT_REDIR_R, TT_WORD, 0}, 2, &rule_redir_r},
 	{PS_CMD, {TT_REDIR_R_BOTH, TT_WORD, 0}, 2, &rule_redir_r_both},
@@ -53,8 +51,9 @@ static const t_ast_rule g_rules[] =\
 	{PS_ARI, {TT_ARI_END, 0, 0}, 1, &rule_close_ari},
 	{PS_ARI, {TT_STATEMENT, 0, 0}, 1, &rule_send_to_shunting_yard},
 	{PS_ARI, {TT_OP, 0, 0}, 1, &rule_send_to_shunting_yard},
+	{PS_NONE, {TT_OVER, 0, 0}, 1, &rule_shift_first},
+	{PS_NONE, {TT_WORD, 0, 0}, 1, &rule_first_word},
 	{PS_NONE, {TT_ARI_BEGIN, 0, 0}, 1, &rule_create_ari},
-	{PS_NONE, {TT_WORD, 0}, 1, &rule_push_cmd},
 	{PS_NONE, {TT_REDIR_R, TT_WORD, 0}, 2, &rule_push_cmd},
 	{PS_NONE, {TT_REDIR_R_BOTH, TT_WORD, 0}, 2, &rule_push_cmd},
 	{PS_NONE, {TT_REDIR_RR, TT_WORD, 0}, 2, &rule_push_cmd},
