@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 07:18:19 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 08:23:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,27 @@
 #include "shell.h"
 #include "ast.h"
 
-static void	add_to_vars(t_shell *shell, t_var *vars)
+static int	exec_cmd_internal(t_shell *shell, t_ast *ast)
 {
-	t_var	*iter;
+	t_var	*tmp_vars;
+	t_var	*backup;
+	int		ret;
 
-	if (vars)
-	{
-		iter = vars;
-		while (iter->next)
-		{
-			iter->exported = 0;
-			iter = iter->next;
-		}
-		iter->next = shell->vars;
-		shell->vars = vars;
-	}
-}
-
-static void	remove_from_vars(t_shell *shell, t_var *vars, t_var *old)
-{
-	while (shell->vars && shell->vars != old)
-	{
-		shell->vars = shell->vars->next;
-		free(vars);
-		vars = shell->vars;
-	}
+	tmp_vars = copy_vars(shell->vars);
+	if (!tmp_vars)
+		return (127);
+	add_to_vars(&tmp_vars, ast->assignements);
+	backup = shell->vars;
+	shell->vars = tmp_vars;
+	ret = exec(shell, ast);
+	shell->vars = backup;
+	free_vars(&tmp_vars);
+	return (ret);
 }
 
 int			exec_cmd(t_shell *shell, t_ast *ast)
 {
 	int		ret;
-	t_var	*old_vars;
 
 	if (shell->ctrlc)
 		return (0);
@@ -56,14 +46,11 @@ int			exec_cmd(t_shell *shell, t_ast *ast)
 		ast->ret = 127;
 		return (1);
 	}
-	old_vars = shell->vars;
-	add_to_vars(shell, ast->assignements);
 	ret = 0;
-	if (((t_command *)ast->data)->args_len)
-	{
-		ret = exec(shell, ast);
-		remove_from_vars(shell, ast->assignements, old_vars);
-	}
+	if (((t_command *)ast->data)->args_len == 0)
+		add_to_vars(&shell->vars, ast->assignements);
+	else
+		ret = exec_cmd_internal(shell, ast);
 	reset_redirs(shell, ast);
 	return (ret);
 }

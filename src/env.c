@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 09:04:48 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 07:19:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 08:37:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,20 @@
 t_var			*copy_env(const char **env)
 {
 	t_var	*res;
-	t_var	*var;
 	int		i;
 
 	res = NULL;
 	i = 0;
 	while (env[i])
 	{
-		if (!(var = create_var(env[i], 1)))
+		if (set_var_full(&res, env[i], 1))
 		{
-			while (res)
-			{
-				free(res);
-				res = res->next;
-			}
+			free_vars(&res);
 			return (NULL);
 		}
-		var->next = res;
-		res = var;
 		++i;
 	}
-	return (var);
+	return (res);
 }
 
 static t_var	*copy_var(t_var *var)
@@ -49,6 +42,8 @@ static t_var	*copy_var(t_var *var)
 	if (!copy)
 		return (NULL);
 	ft_strcpy(copy->var, var->var);
+	copy->len_name = var->len_name;
+	copy->len_value = var->len_value;
 	copy->exported = var->exported;
 	copy->next = NULL;
 	return (copy);
@@ -77,6 +72,23 @@ t_var			*copy_env_from_vars(t_var *vars)
 		vars = vars->next;
 	}
 	return (res);
+}
+
+t_var			*copy_vars(t_var *vars)
+{
+	t_var	*copy;
+
+	copy = NULL;
+	while (vars)
+	{
+		if (set_var_full(&copy, vars->var, vars->exported))
+		{
+			free_vars(&copy);
+			return (NULL);
+		}
+		vars = vars->next;
+	}
+	return (copy);
 }
 
 void			free_vars(t_var **vars)

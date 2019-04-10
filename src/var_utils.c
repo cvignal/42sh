@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 08:16:59 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 07:26:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 08:44:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void		concat_var(t_var *var, const char *name, const char *value)
 		++i;
 	}
 	var->len_name = i;
-	var->var[i++] = '=';
+	var->var[i] = '=';
 	i = 0;
 	while (value[i])
 	{
