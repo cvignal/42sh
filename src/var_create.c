@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 02:02:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 09:06:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 09:10:20 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ static t_var	*alloc_var(const char *name, const char *value, int exported)
 {
 	t_var	*var;
 
-	if (check_var(name, value))
-		return (NULL);
-	else if (!(var = malloc(sizeof(*var))))
+	if (!(var = malloc(sizeof(*var))))
 	{
 		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
 		return (NULL);
