@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 22:31:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 03:04:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:21:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static const t_ari_op_desc	g_op_desc[] =\
 	{")", TT_CLOSE_PAR, NULL, &free_ari}
 };
 
-int					is_operator_char(char c)
+int		is_operator_char(char c)
 {
 	unsigned int	i;
 
@@ -41,7 +41,7 @@ int					is_operator_char(char c)
 	return (0);
 }
 
-int					get_arithmetic_token_type(const char *s)
+int		get_arithmetic_token_type(const char *s)
 {
 	unsigned int	i;
 

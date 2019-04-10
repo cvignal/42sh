@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:48:09 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/06 04:00:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:20:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	alexer_create(t_shell *shell, t_token *current, char c)
 	int	state;
 
 	(void)current;
-	if (ft_isalnum(c) || c == '$'  || c == '_')
+	if (ft_isalnum(c) || c == '$' || c == '_')
 		state = LSTATE_ARI_ID;
 	else
 		state = LSTATE_ARI_OP;

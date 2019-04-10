@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 02:43:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:25:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ int			init_shell(t_shell *shell, const char **environ)
 {
 	ft_bzero(shell, sizeof(*shell));
 	if (init_lexer(&shell->lexer) || init_parser(&shell->parser)
-			|| init_exp_lexer(&shell->exp_lexer) || init_arithmetic_lexer(&shell->lexer))
+			|| init_exp_lexer(&shell->exp_lexer)
+			|| init_arithmetic_lexer(&shell->lexer))
 		return (1);
 	shell->hash_table = malloc(sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
 	if (!shell->hash_table)

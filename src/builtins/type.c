@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 09:49:46 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/10 03:48:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:17:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void		print_norm_type(char **args, int i, char *flags, t_shell *shell)
 		if (is_builtin(args[i]))
 		{
 			ft_printf("%s is a shell builtin\n", args[i]);
-			if (ft_strchr(flags, 'a') && (cmd = find_command(shell->vars, args[i])))
+			if (ft_strchr(flags, 'a') && (cmd = find_command(shell->vars,
+							args[i])))
 				ft_printf("%s is %s\n", args[i], cmd);
 			if (cmd)
 				ft_strdel(&cmd);

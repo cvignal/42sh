@@ -6,14 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:32:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 00:47:07 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:15:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ARITHMETIC_H
 # define ARITHMETIC_H
 
-#include "ast.h"
+# include "ast.h"
 
 typedef struct	s_ari_op_desc
 {
@@ -37,7 +37,6 @@ int				alexer_create(struct s_shell *shell, t_token *current, char c);
 int				alexer_cut(struct s_shell *shell, t_token *current, char c);
 int				alexer_add(struct s_shell *shell, t_token *current, char c);
 int				alexer_try_op(struct s_shell *shell, t_token *current, char c);
-
 
 int				alexer_pop_paren(struct s_shell *shell, t_token *current,
 		char c);

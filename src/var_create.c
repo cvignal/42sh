@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 02:02:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 04:21:44 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:28:12 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "shell.h"
 
-t_var	*create_var(const char *value, int exported)
+t_var		*create_var(const char *value, int exported)
 {
 	t_var	*var;
 	size_t	len_value;
@@ -38,7 +38,7 @@ t_var	*create_var(const char *value, int exported)
 	return (var);
 }
 
-t_var	*alloc_var(const char *name, const char *value, int exported)
+t_var		*alloc_var(const char *name, const char *value, int exported)
 {
 	t_var	*var;
 
@@ -54,7 +54,7 @@ t_var	*alloc_var(const char *name, const char *value, int exported)
 	return (var);
 }
 
-int				set_var(t_var **vars, const char *name, const char *value,
+int			set_var(t_var **vars, const char *name, const char *value,
 		int exported)
 {
 	t_var		*var;
@@ -72,7 +72,7 @@ int				set_var(t_var **vars, const char *name, const char *value,
 	return (0);
 }
 
-static int		separate_name_value(const char *full, char *name, char *value)
+static int	separate_name_value(const char *full, char *name, char *value)
 {
 	int		pos;
 	int		shift;
@@ -101,7 +101,7 @@ static int		separate_name_value(const char *full, char *name, char *value)
 	return (0);
 }
 
-int				set_var_full(t_var **vars, const char *value, int exported)
+int			set_var_full(t_var **vars, const char *value, int exported)
 {
 	t_var		*var;
 	char		var_name[VAR_MAX + 1];
@@ -123,4 +123,3 @@ int				set_var_full(t_var **vars, const char *value, int exported)
 		concat_var(var, var_name, var_value);
 	return (0);
 }
-

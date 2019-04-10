@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 02:49:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 03:00:27 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 07:16:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char		*ft_itoa(int value)
 		return (NULL);
 	if (value < 0)
 	{
-		sign = - 1;
+		sign = -1;
 		++size;
 	}
 	else
