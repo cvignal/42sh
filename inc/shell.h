@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 08:53:42 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 09:02:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct		s_fd
 
 typedef struct		s_var
 {
-	char			var[VAR_MAX * 2 + 2];
+	char			var[(VAR_MAX + 1) * 2 + 1];
 	size_t			len_name;
 	size_t			len_value;
 	int				exported;
