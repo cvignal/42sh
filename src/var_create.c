@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 02:02:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 08:42:44 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 08:57:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ static t_var	*alloc_var(const char *name, const char *value, int exported)
 	}
 	concat_var(var, name, value);
 	var->exported = exported;
-	var->len_name = ft_strlen(name);
-	var->len_value = ft_strlen(value);
 	var->next = NULL;
 	return (var);
 }
