@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 02:02:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 08:57:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 09:06:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int				set_var(t_var **vars, const char *name, const char *value,
 	}
 	else
 		concat_var(var, name, value);
+	var->exported = exported;
 	return (0);
 }
 
@@ -101,7 +102,7 @@ int				set_var_full(t_var **vars, const char *value, int exported)
 
 	if (separate_name_value(value, var_name, var_value))
 	{
-		ft_dprintf(STDERR_FILENO, "%s: invalid variable\n", EXEC_NAME);
+		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, ERR_LEN_VAR);
 		return (1);
 	}
 	return (set_var(vars, var_name, var_value, exported));
