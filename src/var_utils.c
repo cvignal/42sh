@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 08:16:59 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 08:44:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 08:55:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,8 @@ static char	**alloc_env(t_var *vars)
 		vars = vars->next;
 	}
 	if (!(env = malloc(sizeof(*env) * (size_env + 1))))
-	{
 		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-		return (NULL);
-	}
 	return (env);
-}
-
-static char	**clean_exit(char **env, int i)
-{
-	ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-	while (i >= 0)
-		free(env[i--]);
-	free(env);
-	return (NULL);
 }
 
 void		concat_var(t_var *var, const char *name, const char *value)
@@ -84,7 +72,7 @@ int			check_var(const char *name, const char *value)
 	return (0);
 }
 
-char		**build_env(t_var *vars, int copy)
+char		**build_env(t_var *vars)
 {
 	char	**env;
 	int		i;
@@ -95,15 +83,7 @@ char		**build_env(t_var *vars, int copy)
 	while (vars)
 	{
 		if (vars->exported)
-		{
-			if (copy)
-			{
-				if (!(env[i++] = ft_strdup(vars->var)))
-					return (clean_exit(env, i - 1));
-			}
-			else
-				env[i++] = vars->var;
-		}
+			env[i++] = vars->var;
 		vars = vars->next;
 	}
 	env[i] = NULL;
