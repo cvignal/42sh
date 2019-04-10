@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 08:42:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 08:53:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -400,7 +400,7 @@ int					arithmetic_is_var(const char *value);
 /*
 ** var_utils.c
 */
-char				**build_env(t_var *vars, int copy);
+char				**build_env(t_var *vars);
 int					check_var(const char *name, const char *value);
 void				concat_var(t_var *var, const char *name, const char *value);
 
