@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/07 00:50:27 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 05:37:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef enum			e_ttype
 	TT_DONE,
 	TT_STATEMENT,
 	TT_OP,
+	TT_ASSIGNEMENT,
 	TT_OVER
 }						t_ttype;
 
@@ -97,6 +98,7 @@ void					clean_last_end_token(t_parser *parser);
 struct s_ast;
 struct s_shell;
 struct s_redir;
+struct s_var;
 typedef int				(*t_exec)(struct s_shell *, struct s_ast *);
 typedef void			(*t_free)(struct s_ast *);
 
@@ -105,6 +107,7 @@ typedef struct			s_ast
 	t_ttype				type;
 	t_exec				exec;
 	t_free				del;
+	struct s_var		*assignements;
 	int					pipes_in[2][2];
 	int					pipes_out[2][2];
 	int					old_fds[10];

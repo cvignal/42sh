@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:26:16 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/01 15:36:06 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/10 05:22:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_ast		*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 	new_node->redir_list = NULL;
 	new_node->right = NULL;
 	new_node->left = NULL;
+	new_node->assignements = NULL;
 	set_ast_fd(new_node);
 	set_pipes(new_node);
 	return (new_node);

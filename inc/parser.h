@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/06 23:50:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 05:37:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,5 +236,10 @@ int						ccmp(char a, char b);
 */
 int						keyword_type(const char *s);
 int						is_a_keyword(const char *s);
+
+/*
+**	parser/assignement.c
+*/
+int						token_is_assignement(const char *value);
 
 #endif

@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rules_shunting_yard.c                              :+:      :+:    :+:   */
+/*   assignement.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/07 06:48:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 05:54:07 by gchainet         ###   ########.fr       */
+/*   Created: 2019/04/10 05:31:34 by gchainet          #+#    #+#             */
+/*   Updated: 2019/04/10 05:36:13 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-#include "ast.h"
+#include "libft.h"
 
-int	rule_send_to_shunting_yard(t_parser *parser, t_ast_token *list)
+int	token_is_assignement(const char *value)
 {
-	if (list->type == TT_STATEMENT
-			&& (!list->data || !((t_ast *)list->data)->data))
-		return (1);
-	shunting_yard(parser);
-	return (0);
+	int	i;
+	int	found_eq;
+
+	if (!ft_isalpha(value[0]) && value[0] != '_')
+		return (0);
+	i = 1;
+	found_eq = 0;
+	while (value[i])
+	{
+		if (!ft_isalnum(value[i]) && value[i] != '_')
+		{
+			if (value[i] == '=')
+				found_eq = 1;
+			else
+				return (0);
+		}
+		++i;
+	}
+	return (found_eq);
 }

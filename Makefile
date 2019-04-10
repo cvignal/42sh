@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/10 02:02:38 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/10 05:36:36 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -204,7 +204,8 @@ SRC		=									\
 	var.c									\
 	var_create.c							\
 	var_utils.c								\
-	env.c
+	env.c									\
+	parser/assignement.c
 
 
 SRCDIR	:=	src
