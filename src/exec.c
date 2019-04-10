@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 09:15:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 03:13:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 {
 	char	**env;
 
-	env = build_env(shell);
+	env = build_env(shell->vars, 0);
 	if (!env)
 		exit(1);
 	set_pipeline(shell, instr);
@@ -54,24 +54,25 @@ static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 	exit(1);
 }
 
-int			exec_from_char(t_shell *shell, char **args, t_shell *tmp_shell)
+int			exec_from_char(t_shell *shell, t_var *tmp_env, char **args)
 {
 	pid_t		pid;
 	int			status;
 	char		*bin_path;
 	char		**env;
 
-	if (get_var(tmp_shell, "PATH"))
-		bin_path = find_command(tmp_shell, args[0]);
+	if (get_var(tmp_env, "PATH"))
+		bin_path = find_command(tmp_env, args[0]);
 	else
-		bin_path = find_command(shell, args[0]);
+		bin_path = find_command(shell->vars, args[0]);
 	if (bin_path)
 		pid = fork();
 	else
 		return (bin_not_found(args[0]));
 	if (!pid)
 	{
-		env = build_env(tmp_shell);
+		if (!(env = build_env(tmp_env, 0)))
+			exit(1);
 		execve(bin_path, args, env);
 	}
 	else

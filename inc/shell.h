@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 09:34:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 04:08:49 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,14 +201,13 @@ int					add_to_command(t_command *command, char *word);
 ** exec.c
 */
 pid_t				exec(t_shell *shell, t_ast *instr);
-int					exec_from_char(t_shell *shell, char **arg,
-					t_shell *tmp_shell);
+int					exec_from_char(t_shell *shell, t_var *tmp_env, char **arg);
 int					wait_loop(t_ast *ast);
 
 /*
 ** path.c
 */
-char				*find_command(t_shell *shell, const char *command);
+char				*find_command(t_var *vars, const char *command);
 
 /*
 ** shell.c
@@ -228,7 +227,7 @@ int					free_line(t_line *line);
 t_builtin			is_builtin(char *cmd);
 int					builtin_cd(t_shell *shell, char **args);
 int					builtin_env(t_shell *shell, char **args);
-int					builtin_env_get_opts(char **args, t_shell *tmp_shell);
+int					builtin_env_get_opts(char **args, t_var **tmp_env);
 int					builtin_setenv(t_shell *shell, char **args);
 int					builtin_unsetenv(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
@@ -402,25 +401,30 @@ int					arithmetic_is_var(const char *value);
 /*
 ** var_utils.c
 */
-char				**build_env(t_shell *shell);
+char				**build_env(t_var *vars, int copy);
+int					check_var(const char *name, const char *value);
+void				concat_var(t_var *var, const char *name, const char *value);
+
+/*
+**	var_create.c
+*/
 t_var				*alloc_var(const char *name, const char *value,
 		int exported);
 t_var				*create_var(const char *value, int exported);
-int					check_var(const char *name, const char *value);
-void				concat_var(char *dst, const char *name, const char *value);
 
 /*
 ** var.c
 */
-int					set_var(t_shell *shell, const char *name,
+int					set_var(t_var **vars, const char *name,
 		const char *value, int exported);
-t_var				*get_var(t_shell *shell, const char *name);
-void				remove_var(t_shell *shell, const char *name);
+t_var				*get_var(t_var *var, const char *name);
+void				remove_var(t_var **vars, const char *name);
 
 /*
 ** env.c
 */
 t_var				*copy_env(const char **env);
-void				free_vars(t_shell *shell);
+t_var				*copy_env_from_vars(t_var *vars);
+void				free_vars(t_var **vars);
 
 #endif

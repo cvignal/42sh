@@ -6,11 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 09:04:48 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 09:10:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 04:14:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "shell.h"
 
@@ -24,7 +25,7 @@ t_var	*copy_env(const char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (!(var = create_var(env[i])))
+		if (!(var = create_var(env[i], 1)))
 		{
 			while (res)
 			{
@@ -40,17 +41,59 @@ t_var	*copy_env(const char **env)
 	return (var);
 }
 
-void	free_vars(t_shell *shell)
+static t_var	*copy_var(t_var *var)
+{
+	t_var	*copy;
+
+	copy = malloc(sizeof(*copy));
+	if (!copy)
+		return (NULL);
+	ft_strcpy(copy->var, var->var);
+	if (!copy->var)
+	{
+		free(copy);
+		return (NULL);
+	}
+	copy->exported = var->exported;
+	copy->next = NULL;
+	return (copy);
+}
+
+t_var	*copy_env_from_vars(t_var *vars)
+{
+	t_var	*res;
+	t_var	*current;
+
+	res = NULL;
+	while (vars)
+	{
+		if (vars->exported)
+		{
+			if (!(current = copy_var(vars)))
+			{
+				ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
+				free_vars(&res);
+				return (NULL);
+			}
+			current->next = res;
+			res = current;
+		}
+		vars = vars->next;
+	}
+	return (res);
+}
+
+void	free_vars(t_var **vars)
 {
 	t_var	*i;
 	t_var	*next;
 
-	i = shell->vars;
+	i = *vars;
 	while (i)
 	{
 		next = i->next;
 		free(i);
 		i = next;
 	}
-	shell->vars = NULL;
+	*vars = NULL;
 }

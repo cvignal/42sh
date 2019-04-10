@@ -6,68 +6,82 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 07:44:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 09:23:26 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 03:41:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <unistd.h>
 
 #include "shell.h"
 #include "libft.h"
 
-static void	print_env(t_shell *shell)
+static void	print_env(t_var *vars)
 {
-	int	i;
-
-	i = 0;
-	while (shell->env[i])
-		ft_printf("%s\n", shell->env[i++]);
+	while (vars)
+	{
+		if (vars->exported)
+			ft_printf("%s\n", vars->var);
+		vars = vars->next;
+	}
 }
 
-static int	exit_error(const char *msg)
+static int	create_tmp_env_var(t_var **vars, char *name, char *value,
+		const char *arg)
 {
-	ft_dprintf(2, "%s: env: %s\n", EXEC_NAME, msg);
-	return (-1);
+	size_t	len;
+	char	*pos_eq;
+
+	pos_eq = ft_strchr(arg, '=');
+	len = pos_eq - arg - 1;
+	if (len > VAR_MAX)
+	{
+		ft_dprintf(STDERR_FILENO, "%s: variable name too long\n", EXEC_NAME);
+		return (1);
+	}
+	ft_strncat(name, arg, len);
+	len = ft_strlen(pos_eq + 1);
+	if (len > VAR_MAX)
+	{
+		ft_dprintf(STDERR_FILENO, "%s: variable content too long\n", EXEC_NAME);
+		return (1);
+	}
+	ft_strncat(value, pos_eq + 1, len);
+	if (set_var(vars, name, value, 1))
+		return (1);
+	return (0);
 }
 
-static int	set_vars(t_shell *tmp_shell, int *i, char **args)
+static int	set_tmp_env_vars(t_var **vars, int *i, char **args)
 {
-	char	**word_split;
-	int		error;
+	char	var_name[VAR_MAX + 1];
+	char	var_value[VAR_MAX + 1];
 
-	error = 0;
 	while (args[*i] && ft_strchr(args[*i], '='))
 	{
-		if ((word_split = split_env_arg(args[*i])))
-		{
-			if (set_env_var(tmp_shell, word_split[0], word_split[1]))
-			{
-				error = 1;
-				break ;
-			}
-			free(word_split[0]);
-			free(word_split[1]);
-			free(word_split);
-		}
-		else
-			return (exit_error(MEMORY_ERROR_MSG));
+		var_name[0] = 0;
+		var_value[0] = 0;
+		if (create_tmp_env_var(vars, var_name, var_value, args[*i]))
+			return (1);
 		++(*i);
 	}
-	return (error ? exit_error(MEMORY_ERROR_MSG) : 0);
+	return (0);
 }
 
 int			builtin_env(t_shell *shell, char **args)
 {
-	t_shell	tmp_shell;
 	int		i;
+	t_var	*tmp_env;
 
-	tmp_shell.vars = copy_env(shell->env);
-	i = builtin_env_get_opts(args, &tmp_shell);
-	if (i == -1)
+	if (!(tmp_env = copy_env_from_vars(shell->vars)))
 		return (1);
-	set_vars(&tmp_shell, &i, args);
+	if ((i = builtin_env_get_opts(args, &tmp_env)) == -1)
+		return (1);
+	if (set_tmp_env_vars(&tmp_env, &i, args))
+		return (1);
 	if (args[i])
-		exec_from_char(shell, args + i, &tmp_shell);
-	else if (tmp_shell.env)
-		print_env(&tmp_shell);
-	remove_env(&tmp_shell);
+		exec_from_char(shell, tmp_env, args + i);
+	else if (tmp_env)
+		print_env(tmp_env);
+	free_vars(&tmp_env);
 	return (0);
 }

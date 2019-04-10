@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 06:58:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 08:54:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 04:15:13 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	remove_var_first(t_var **var)
 	*var = tmp;
 }
 
-static void	remove_var_middle(t_var *vars, const char *name)
+static void	remove_var_middle(t_var *vars, const char *name, size_t size_name)
 {
 	t_var	*prev;
 
@@ -42,51 +42,28 @@ static void	remove_var_middle(t_var *vars, const char *name)
 	}
 }
 
-int				set_var(t_shell *shell, const char *name, const char *value,
-		int exported)
+t_var			*get_var(t_var *vars, const char *name)
 {
-	t_var		*var;
-	int			new_var;
-
-	if (check_var(name, value))
-		return (1);
-	new_var = 0;
-	if (!(var = get_var(shell, name)))
-	{
-		if (!(var = alloc_var(name, value, exported)))
-			return (1);
-		new_var = 1;
-		var->next = shell->vars;
-		shell->vars = var;
-	}
-	concat_var(var, name, value);
-	return (0);
-}
-
-t_var			*get_var(t_shell *shell, const char *name)
-{
-	t_var		*iter;
 	size_t		len_name;
 
 	len_name = ft_strlen(name);
-	iter = shell->vars;
-	while (iter)
+	while (vars)
 	{
-		if (!ft_strncmp(iter->var, name, len_name) && iter->var[len_name] == '=')
-			return (iter);
-		iter = iter->next;
+		if (!ft_strncmp(vars->var, name, len_name) && vars->var[len_name] == '=')
+			return (vars);
+		vars = vars->next;
 	}
 	return (NULL);
 }
 
-void		remove_var(t_shell *shell, const char *name)
+void		remove_var(t_var **vars, const char *name)
 {
 	size_t	size_name;
 
 	size_name = ft_strlen(name);
-	if (shell->vars && !ft_strncmp(shell->vars->var, name, size_name)
-			&& shell->vars->var[size_name] == '=')
-		remove_var_first(&shell->env_vars);
+	if (*vars && !ft_strncmp((*vars)->var, name, size_name)
+			&& (*vars)->var[size_name] == '=')
+		remove_var_first(vars);
 	else
-		remove_var_middle(shell->vars, name);
+		remove_var_middle(*vars, name, size_name);
 }

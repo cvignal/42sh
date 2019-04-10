@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:29:44 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 16:42:35 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/10 03:24:06 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		sanitize_hash_entry(t_shell *shell, t_hbt *node)
 
 	if (node)
 	{
-		cmd = find_command(shell, node->bin);
+		cmd = find_command(shell->vars, node->bin);
 		if (node->path)
 		{
 			if (!cmd)

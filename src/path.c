@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:15:24 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 09:18:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/10 03:23:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,6 @@ static char	*concat_path(const char *path, const char *bin, size_t size_path)
 	return (ret);
 }
 
-static char	*get_path(t_shell *shell)
-{
-	t_var	*path;
-
-	if ((path = get_var(shell, "PATH")) && path->exported)
-		return (path->var + 5);
-	return (NULL);
-}
-
 static char	*get_local_exec(const char *path)
 {
 	struct stat	st;
@@ -57,9 +48,10 @@ static char	*get_local_exec(const char *path)
 	return (ft_strdup(path));
 }
 
-char		*find_command(t_shell *shell, const char *command)
+char		*find_command(t_var *vars, const char *command)
 {
 	const char	*path;
+	t_var		*path_var;
 	char		*bin_path;
 	size_t		size_path;
 
@@ -67,8 +59,9 @@ char		*find_command(t_shell *shell, const char *command)
 		return (NULL);
 	if (ft_strchr(command, '/'))
 		return (get_local_exec(command));
-	if (shell->vars && (path = get_path(shell)))
+	if (vars && (path_var = get_var(vars, "PATH")) && path_var->exported)
 	{
+		path = path_var->var + 5;
 		while (*path)
 		{
 			size_path = 0;

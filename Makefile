@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/09 09:07:34 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/10 02:02:38 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -202,6 +202,7 @@ SRC		=									\
 	parser/arithmetic/unary.c				\
 	exec/arithmetic/utils.c					\
 	var.c									\
+	var_create.c							\
 	var_utils.c								\
 	env.c
 
