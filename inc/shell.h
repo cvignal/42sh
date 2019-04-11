@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 02:35:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 03:42:49 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define COMMAND_NOT_FOUND_MSG "command not found"
 # define ERR_CHAR_VAR "invalid characters in var name"
 # define ERR_LEN_VAR "variable too long"
+# define ERR_BUILTIN_UNSET_ARG "invalid argument"
 # define FC_0 "fc: usage:\n"
 # define FC_1 "\t(i)   fc [-r] [-e editor] [[first] [last]]\n"
 # define FC_2 "\t(ii)  fc -l [-nr] [first [last]]\n"
@@ -96,6 +97,7 @@ typedef struct		s_shell
 	t_parser		parser;
 	t_exp_lexer		exp_lexer;
 	t_var			*vars;
+	t_var			*exec_vars;
 	t_line			line;
 	t_array			*history;
 	int				his_pos;
@@ -226,22 +228,23 @@ int					free_line(t_line *line);
 /*
 ** builtins/
 */
-t_builtin			is_builtin(char *cmd);
 int					builtin_cd(t_shell *shell, char **args);
-int					builtin_env(t_shell *shell, char **args);
-int					builtin_env_get_opts(char **args, t_var **tmp_env);
-int					builtin_setenv(t_shell *shell, char **args);
-int					builtin_unsetenv(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
+int					builtin_env_get_opts(char **args, t_var **tmp_env);
+int					builtin_env(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
+int					builtin_hash(t_shell *shell, char **args);
+int					builtin_setenv(t_shell *shell, char **args);
+int					builtin_type(t_shell *shell, char **args);
+int					builtin_unset(t_shell *shell, char **args);
+int					builtin_unsetenv(t_shell *shell, char **args);
 int					exec_builtin(t_shell *shell, t_builtin builtin,
 		t_ast *instr);
-int					builtin_type(t_shell *shell, char **args);
-void				print_only_type(char **args, int i, char *flags
-		, t_shell *shell);
-void				print_loc_type(char **args, int i, char *flags
-		, t_shell *shell);
-int					builtin_hash(t_shell *shell, char **args);
+t_builtin			is_builtin(char *cmd);
+void				print_loc_type(char **args, int i, char *flags,
+		t_shell *shell);
+void				print_only_type(char **args, int i, char *flags ,
+		t_shell *shell);
 void				print_rec_tree(t_hbt *node);
 
 /*
@@ -426,8 +429,7 @@ void				remove_var(t_var **vars, const char *name, int options);
 ** env.c
 */
 t_var				*copy_env(const char **env);
-t_var				*copy_env_from_vars(t_var *vars);
-t_var				*copy_vars(t_var *vars);
+t_var				*copy_vars(t_var *vars, int only_exported);
 void				free_vars(t_var **vars);
 
 #endif
