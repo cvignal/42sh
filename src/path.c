@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:15:24 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 07:30:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 08:04:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,6 @@ static char			*get_local_exec(const char *path)
 	return (ft_strdup(path));
 }
 
-static const char	*get_path(t_var *vars)
-{
-	t_var	*path;
-
-	path = get_var(vars, "PATH");
-	if (path)
-		return (path->var + 5);
-	return (NULL);
-}
-
 char				*find_command(t_var *vars, const char *command)
 {
 	const char	*path;
@@ -69,7 +59,7 @@ char				*find_command(t_var *vars, const char *command)
 		return (NULL);
 	if (ft_strchr(command, '/'))
 		return (get_local_exec(command));
-	if ((path = get_path(vars)))
+	if ((path = get_var_value(get_var(vars, "PATH"))))
 	{
 		while (*path)
 		{

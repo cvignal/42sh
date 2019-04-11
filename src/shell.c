@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 04:15:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 08:06:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	increment_shlvl(t_shell *shell)
 	int		old_value;
 
 	if ((shlvl = get_var(shell->vars, "SHLVL")) && shlvl->exported)
-		old_value = ft_atoi(shlvl->var + shlvl->len_name + 1);
+		old_value = ft_atoi(get_var_value(shlvl));
 	else
 		old_value = 0;
 	if (!(new_value = ft_ltoa_base(old_value + 1, 10)))
