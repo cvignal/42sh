@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 02:02:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 08:21:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 08:52:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 
 #include "shell.h"
 
-static int		separate_name_value(const char *full, char *name, char *value)
+static int		separate_name_value(const char *full, char *name, const char **value)
 {
 	int		pos;
-	int		shift;
 
 	pos = 0;
 	while (full[pos] && full[pos] != '=')
@@ -29,18 +28,9 @@ static int		separate_name_value(const char *full, char *name, char *value)
 		++pos;
 	}
 	name[pos] = 0;
-	shift = pos;
 	if (full[pos] != '=')
 		return (1);
-	++pos;
-	while (full[pos])
-	{
-		if (pos - shift - 1 > VAR_MAX)
-			return (1);
-		value[pos - shift - 1] = full[pos];
-		++pos;
-	}
-	value[pos - shift - 1] = 0;
+	*value = full + pos + 1;
 	return (0);
 }
 
@@ -102,9 +92,9 @@ int				set_var(t_var **vars, const char *name, const char *value,
 int				set_var_full(t_var **vars, const char *value, int exported)
 {
 	char		var_name[VAR_MAX + 1];
-	char		var_value[VAR_MAX + 1];
+	const char	*var_value;
 
-	if (separate_name_value(value, var_name, var_value))
+	if (separate_name_value(value, var_name, &var_value))
 	{
 		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, ERR_LEN_VAR);
 		return (1);

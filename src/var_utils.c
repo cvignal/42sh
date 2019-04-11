@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 08:16:59 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 08:21:19 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 08:38:58 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int			concat_var(t_var *var, const char *name, const char *value)
 	if (var->alloc_size < var->len_name + var->len_value + 2)
 	{
 		var->alloc_size = var->len_name + var->len_value + 2;
+		if (var->var)
+			free(var->var);
 		if (!(var->var = malloc(sizeof(*var->var) * var->alloc_size)))
 		{
 			ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
