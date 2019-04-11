@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 03:47:15 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 04:04:54 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,5 @@ int			builtin_exit(t_shell *shell, char **args)
 	add_to_history(shell->line.data, shell, 0);
 	if (close(shell->fd_op) == -1)
 		ft_dprintf(2, "Error on closing the tty fd\n");
-	free_vars(&shell->vars);
 	return (exit_value(shell, args));
 }
