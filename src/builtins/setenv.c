@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:14:44 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 03:44:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 05:07:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	print_env(t_shell *shell)
 {
 	t_var	*vars;
 
-	vars = shell->vars;
+	vars = shell->exec_vars;
 	while (vars)
 	{
 		if (vars->exported)

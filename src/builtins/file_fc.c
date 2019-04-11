@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:59:25 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/10 03:54:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 05:06:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int					fc_open_editor(t_fc *cmd, t_tmpfile *file, t_shell *shell)
 		return (1);
 	}
 	args[2] = NULL;
-	ret = exec_from_char(shell, shell->vars, args);
+	ret = exec_from_char(shell, shell->exec_vars, args);
 	ft_deltab(&args);
 	return (ret);
 }
