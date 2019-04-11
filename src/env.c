@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 09:04:48 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 03:45:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 07:24:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "shell.h"
 
-t_var			*copy_env(const char **env)
+t_var	*copy_env(const char **env)
 {
 	t_var	*res;
 	int		i;
@@ -34,7 +34,7 @@ t_var			*copy_env(const char **env)
 	return (res);
 }
 
-t_var			*copy_vars(t_var *vars, int only_exported)
+t_var	*copy_vars(t_var *vars, int only_exported)
 {
 	t_var	*copy;
 
@@ -54,7 +54,7 @@ t_var			*copy_vars(t_var *vars, int only_exported)
 	return (copy);
 }
 
-void				free_vars(t_var **vars)
+void	free_vars(t_var **vars)
 {
 	t_var			*next;
 	t_var			*iter;

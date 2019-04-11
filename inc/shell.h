@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 05:24:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 07:27:00 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ int					exec_builtin(t_shell *shell, t_builtin builtin,
 t_builtin			is_builtin(char *cmd);
 void				print_loc_type(char **args, int i, char *flags,
 		t_shell *shell);
-void				print_only_type(char **args, int i, char *flags ,
+void				print_only_type(char **args, int i, char *flags,
 		t_shell *shell);
 void				print_rec_tree(t_hbt *node);
 
