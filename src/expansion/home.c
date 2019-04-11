@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:35:26 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 03:56:47 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 08:02:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,15 @@ static int	replace_home(t_exp_buff *buffer, const char *home)
 
 int			expand_home(t_shell *shell, int *error)
 {
-	t_var	*home;
+	const char	*home;
 
 	if (shell->exp_lexer.buffer.buffer[0] == '~'
 			&& (!shell->exp_lexer.buffer.buffer[1]
 				|| shell->exp_lexer.buffer.buffer[1] == '/'))
 	{
-		home = get_var(shell->vars, "HOME");
-		if (home && home->exported)
+		if ((home = get_var_value(get_var(shell->vars, "HOME"))))
 		{
-			if (replace_home(&shell->exp_lexer.buffer, home->var))
+			if (replace_home(&shell->exp_lexer.buffer, home))
 			{
 				*error = 1;
 				return (1);
