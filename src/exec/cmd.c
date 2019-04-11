@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 08:23:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 03:43:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,29 @@
 
 static int	exec_cmd_internal(t_shell *shell, t_ast *ast)
 {
-	t_var	*tmp_vars;
-	t_var	*backup;
 	int		ret;
+	t_var	*iter;
 
-	tmp_vars = copy_vars(shell->vars);
-	if (!tmp_vars)
-		return (127);
-	add_to_vars(&tmp_vars, ast->assignements);
-	backup = shell->vars;
-	shell->vars = tmp_vars;
-	ret = exec(shell, ast);
-	shell->vars = backup;
-	free_vars(&tmp_vars);
+	if (ast->assignements)
+	{
+		if (!(shell->exec_vars = copy_vars(shell->vars, 0)))
+			return (127);
+		iter = ast->assignements;
+		while (iter)
+		{
+			if (set_var_full(&shell->exec_vars, iter->var, iter->exported))
+				return (127);
+			iter = iter->next;
+		}
+		ret = exec(shell, ast);
+		free_vars(&shell->exec_vars);
+	}
+	else
+	{
+		shell->exec_vars = shell->vars;
+		ret = exec(shell, ast);
+		shell->exec_vars = NULL;
+	}
 	return (ret);
 }
 

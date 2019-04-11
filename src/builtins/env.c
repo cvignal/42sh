@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 07:44:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 04:49:05 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 03:42:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int			builtin_env(t_shell *shell, char **args)
 	int		i;
 	t_var	*tmp_env;
 
-	if (!(tmp_env = copy_env_from_vars(shell->vars)))
+	if (!(tmp_env = copy_vars(shell->vars, 1)))
 		return (1);
 	if ((i = builtin_env_get_opts(args, &tmp_env)) == -1)
 		return (1);

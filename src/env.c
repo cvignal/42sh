@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 09:04:48 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 08:37:47 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 03:45:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,74 +34,37 @@ t_var			*copy_env(const char **env)
 	return (res);
 }
 
-static t_var	*copy_var(t_var *var)
-{
-	t_var	*copy;
-
-	copy = malloc(sizeof(*copy));
-	if (!copy)
-		return (NULL);
-	ft_strcpy(copy->var, var->var);
-	copy->len_name = var->len_name;
-	copy->len_value = var->len_value;
-	copy->exported = var->exported;
-	copy->next = NULL;
-	return (copy);
-}
-
-t_var			*copy_env_from_vars(t_var *vars)
-{
-	t_var	*res;
-	t_var	*current;
-
-	res = NULL;
-	while (vars)
-	{
-		if (vars->exported)
-		{
-			if (!(current = copy_var(vars)))
-			{
-				ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME,
-						MEMORY_ERROR_MSG);
-				free_vars(&res);
-				return (NULL);
-			}
-			current->next = res;
-			res = current;
-		}
-		vars = vars->next;
-	}
-	return (res);
-}
-
-t_var			*copy_vars(t_var *vars)
+t_var			*copy_vars(t_var *vars, int only_exported)
 {
 	t_var	*copy;
 
 	copy = NULL;
 	while (vars)
 	{
-		if (set_var_full(&copy, vars->var, vars->exported))
+		if ((only_exported && vars->exported) || !only_exported)
 		{
-			free_vars(&copy);
-			return (NULL);
+			if (set_var_full(&copy, vars->var, vars->exported))
+			{
+				free_vars(&copy);
+				return (NULL);
+			}
 		}
 		vars = vars->next;
 	}
 	return (copy);
 }
 
-void			free_vars(t_var **vars)
+void				free_vars(t_var **vars)
 {
-	t_var	*i;
-	t_var	*next;
+	t_var			*next;
+	t_var			*iter;
 
-	i = *vars;
-	while (i)
+	iter = *vars;
+	while (iter)
 	{
-		next = i->next;
-		free(i);
-		i = next;
+		next = iter->next;
+		free(iter);
+		iter = next;
 	}
 	*vars = NULL;
 }

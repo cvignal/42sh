@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 08:54:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 03:29:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 {
 	char	**env;
 
-	env = build_env(shell->vars);
+	env = build_env(shell->exec_vars);
 	if (!env)
 		exit(1);
 	set_pipeline(shell, instr);

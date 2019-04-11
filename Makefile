@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/11 02:43:40 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/11 03:05:46 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC		=									\
 	builtins/tools_hash.c					\
 	builtins/tools_type.c					\
 	builtins/type.c							\
+	builtins/unset.c						\
 	builtins/unsetenv.c						\
 	command.c								\
 	env.c									\
