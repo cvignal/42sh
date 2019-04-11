@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 02:02:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 09:48:07 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 05:24:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_var	*alloc_var(const char *name, const char *value, int exported)
 	return (var);
 }
 
-void			add_to_vars(t_var **to, t_var *from)
+static void		add_to_vars(t_var **to, t_var *from)
 {
 	t_var	*iter;
 
