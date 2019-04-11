@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:22:56 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 07:58:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 02:33:59 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			builtin_unsetenv(t_shell *shell, char **args)
 		return (exit_error("too many arguments"));
 	else if (arg_count < 2)
 		return (exit_error("usage: unsetenv var"));
-	remove_var(&shell->vars, args[1]);
+	remove_var(&shell->vars, args[1], REMOVE_VAR_ENV);
 	if (!ft_strcmp(args[1], "PATH"))
 		sanitize_hash(shell);
 	return (0);

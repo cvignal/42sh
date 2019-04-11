@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 06:58:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 07:27:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 02:36:13 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,21 @@
 
 #include "shell.h"
 
-static void	remove_var_first(t_var **var)
+static void	remove_var_first(t_var **var, int options)
 {
 	t_var	*tmp;
 
-	tmp = (*var)->next;
-	free(*var);
-	*var = tmp;
+	if (((*var)->exported && (options & REMOVE_VAR_ENV))
+			|| (!(*var)->exported && (options & REMOVE_VAR_LOCAL)))
+	{
+		tmp = (*var)->next;
+		free(*var);
+		*var = tmp;
+	}
 }
 
-static void	remove_var_middle(t_var *vars, const char *name, size_t size_name)
+static void	remove_var_middle(t_var *vars, const char *name, size_t size_name,
+		int options)
 {
 	t_var	*prev;
 
@@ -33,9 +38,13 @@ static void	remove_var_middle(t_var *vars, const char *name, size_t size_name)
 		if (!ft_strncmp(vars->var, name, size_name)
 				&& vars->var[size_name] == '=')
 		{
-			if (prev)
-				prev->next = vars->next;
-			free(vars);
+			if ((vars->exported && (options & REMOVE_VAR_ENV))
+					|| (!vars->exported && (options & REMOVE_VAR_LOCAL)))
+			{
+				if (prev)
+					prev->next = vars->next;
+				free(vars);
+			}
 			return ;
 		}
 		prev = vars;
@@ -58,14 +67,14 @@ t_var		*get_var(t_var *vars, const char *name)
 	return (NULL);
 }
 
-void		remove_var(t_var **vars, const char *name)
+void		remove_var(t_var **vars, const char *name, int options)
 {
 	size_t	size_name;
 
 	size_name = ft_strlen(name);
 	if (*vars && !ft_strncmp((*vars)->var, name, size_name)
 			&& (*vars)->var[size_name] == '=')
-		remove_var_first(vars);
+		remove_var_first(vars, options);
 	else
-		remove_var_middle(*vars, name, size_name);
+		remove_var_middle(*vars, name, size_name, options);
 }
