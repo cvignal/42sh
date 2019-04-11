@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:26:16 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 05:22:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 04:03:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ void		free_ast(t_ast *ast)
 			free(tmp->target_value);
 		free(tmp);
 	}
+	free_vars(&ast->assignements);
 	free(ast);
 }

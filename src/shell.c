@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 07:25:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 04:15:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,8 @@ static void	free_shell_aux(t_shell *shell)
 int			free_shell(t_shell *shell)
 {
 	int		i;
-	t_var	*iter;
-	t_var	*next;
 
-	iter = shell->vars;
-	while (iter)
-	{
-		next = iter->next;
-		free(iter);
-		iter = next;
-	}
+	free_vars(&shell->vars);
 	free_line(&shell->line);
 	i = -1;
 	if (shell->hash_table)

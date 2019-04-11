@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 03:43:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 04:24:00 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ static int	exec_cmd_internal(t_shell *shell, t_ast *ast)
 		while (iter)
 		{
 			if (set_var_full(&shell->exec_vars, iter->var, iter->exported))
+			{
+				free_vars(&shell->exec_vars);
 				return (127);
+			}
 			iter = iter->next;
 		}
 		ret = exec(shell, ast);
@@ -46,19 +49,24 @@ static int	exec_cmd_internal(t_shell *shell, t_ast *ast)
 int			exec_cmd(t_shell *shell, t_ast *ast)
 {
 	int		ret;
+	t_var	*iter;
 
 	if (shell->ctrlc)
 		return (0);
 	if (expand_redirs(shell, ast->redir_list))
 		return (1);
 	if (prepare_redirs(shell, ast, ast))
-	{
-		ast->ret = 127;
-		return (1);
-	}
+		return ((ast->ret = 127));
 	ret = 0;
 	if (((t_command *)ast->data)->args_len == 0)
-		add_to_vars(&shell->vars, ast->assignements);
+	{
+		iter = ast->assignements;
+		while (iter)
+		{
+			set_var_full(&shell->vars, iter->var, iter->exported);
+			iter = iter->next;
+		}
+	}
 	else
 		ret = exec_cmd_internal(shell, ast);
 	reset_redirs(shell, ast);
