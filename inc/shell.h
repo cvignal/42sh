@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 07:55:19 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 08:22:13 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,10 @@ typedef struct		s_fd
 
 typedef struct		s_var
 {
-	char			var[(VAR_MAX + 1) * 2 + 2];
+	char			*var;
 	size_t			len_name;
 	size_t			len_value;
+	size_t			alloc_size;
 	int				exported;
 	struct s_var	*next;
 }					t_var;
@@ -408,7 +409,7 @@ int					arithmetic_is_var(const char *value);
 */
 char				**build_env(t_var *vars);
 int					check_var(const char *name, const char *value);
-void				concat_var(t_var *var, const char *name, const char *value);
+int					concat_var(t_var *var, const char *name, const char *value);
 
 /*
 **	var_create.c

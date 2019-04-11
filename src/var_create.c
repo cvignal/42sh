@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 02:02:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 05:24:17 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 08:21:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,13 @@ static t_var	*alloc_var(const char *name, const char *value, int exported)
 		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
 		return (NULL);
 	}
-	concat_var(var, name, value);
+	ft_bzero(var, sizeof(*var));
+	if (concat_var(var, name, value))
+	{
+		free(var);
+		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
+		return (NULL);
+	}
 	var->exported = exported;
 	var->next = NULL;
 	return (var);
