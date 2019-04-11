@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 04:24:00 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 04:51:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	exec_cmd_internal(t_shell *shell, t_ast *ast)
 		iter = ast->assignements;
 		while (iter)
 		{
-			if (set_var_full(&shell->exec_vars, iter->var, iter->exported))
+			if (set_var_full(&shell->exec_vars, iter->var, 1))
 			{
 				free_vars(&shell->exec_vars);
 				return (127);
