@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/10 05:36:36 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/11 02:43:40 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,195 +17,195 @@
 NAME	:=	42sh
 
 SRC		=									\
-	main.c									\
-	prompt.c								\
 	alt_shell.c								\
-	parser/token.c							\
-	parser/free_token.c						\
-	parser/token_type.c						\
-	parser/token_type_desc.c				\
-	parser/parser.c							\
-	parser/input_queue.c					\
-	parser/lexer_act.c						\
-	parser/lexer_act_meta.c					\
-	parser/lexer_act_quote.c				\
-	parser/lexer_act_over.c					\
-	parser/lss.c							\
-	parser/pss.c							\
-	parser/init_lexer.c						\
-	parser/init_parser.c					\
-	parser/lexer.c							\
-	parser/parser_rules.c					\
-	parser/keyword.c						\
-	parser/rules.c							\
-	parser/rules_ari.c						\
-	parser/rules_ari_op.c					\
-	parser/rules_expr.c						\
-	parser/rules_shift.c					\
-	parser/rules_logic.c					\
-	parser/rules_redir.c					\
-	parser/rules_redir_r_comp.c				\
-	parser/rules_redir_r_close.c			\
-	parser/rules_redir_r_both.c				\
-	parser/rules_redir_read_write.c			\
-	parser/rules_pipe.c						\
-	parser/rules_statement.c				\
-	parser/rules_if.c						\
-	parser/rules_if_nocd.c					\
-	parser/rules_while.c					\
-	parser/rules_shunting_yard.c			\
-	parser/shunting_yard.c					\
-	parser/ast.c							\
-	parser/ast_token.c						\
-	parser/utils.c							\
-	line_edition/line.c						\
-	line_edition/fill_line.c				\
-	line_edition/leftkey.c					\
-	line_edition/rightkey.c					\
-	line_edition/backspace.c				\
-	line_edition/other_keys.c				\
-	line_edition/tools_keys.c				\
-	line_edition/tools_auto.c				\
-	line_edition/tools_motion.c				\
-	line_edition/tools_history.c			\
-	line_edition/history_file.c				\
-	line_edition/autocompletion.c			\
-	line_edition/display_auto.c				\
-	line_edition/history.c					\
-	line_edition/cursor.c					\
-	line_edition/fn_keys.c					\
-	line_edition/line_keys.c				\
-	line_edition/tools_insertion.c			\
-	line_edition/delete.c					\
-	line_edition/switch_mode.c				\
-	history_research/init_search.c			\
-	history_research/move_keys.c			\
-	history_research/other_movekeys.c		\
-	history_research/ctrl_keys.c			\
-	history_research/algo_search.c			\
-	history_research/tools_hs.c				\
-	visual_mode/visual_mode.c				\
-	visual_mode/vm_rightkey.c				\
-	visual_mode/vm_leftkey.c				\
-	visual_mode/vm_cut.c					\
-	visual_mode/vm_copy.c					\
-	exec/cmd.c								\
-	exec/pipeline.c							\
-	exec/end.c								\
-	exec/or.c								\
-	exec/and.c								\
-	exec/expr.c								\
-	exec/if.c								\
-	exec/else.c								\
-	exec/while.c							\
-	exec/arithmetic/del.c					\
-	exec/arithmetic/plus.c					\
-	exec/arithmetic/sub.c					\
-	exec/arithmetic/prod.c					\
-	exec/arithmetic/div.c					\
-	exec/arithmetic/mod.c					\
-	exec/arithmetic/eq.c					\
-	exec/arithmetic/value.c					\
-	shell.c									\
-	command.c								\
-	exec.c									\
-	path.c									\
-	hash.c									\
-	hash_sanitize.c							\
-	heredoc.c								\
-	propagate_pipe.c						\
-	redir.c									\
-	redir_reset.c							\
-	apply_redirs.c							\
 	apply_redir_rw.c						\
-	redir_r_comp.c							\
-	redir_r_close.c							\
-	redir_r_both.c							\
-	redir_rw.c								\
-	redir_internal.c						\
-	tools_heredoc.c							\
-	pipeline.c								\
+	apply_redirs.c							\
+	builtins/builtin_hash.c					\
 	builtins/builtins.c						\
-	builtins/exec_builtin.c					\
 	builtins/cd.c							\
 	builtins/echo.c							\
 	builtins/env.c							\
 	builtins/env_options.c					\
-	builtins/setenv.c						\
-	builtins/unsetenv.c						\
+	builtins/exec_builtin.c					\
 	builtins/exit.c							\
-	builtins/type.c							\
-	builtins/tools_type.c					\
-	builtins/builtin_hash.c					\
-	builtins/tools_hash.c					\
 	builtins/fc.c							\
-	builtins/parsing_fc.c					\
-	builtins/tools_fc.c						\
-	builtins/idx_fc.c						\
-	builtins/file_fc.c						\
 	builtins/fc_exec.c						\
-	expr/expression.c						\
-	expr/desc.c								\
+	builtins/file_fc.c						\
+	builtins/idx_fc.c						\
+	builtins/parsing_fc.c					\
+	builtins/setenv.c						\
+	builtins/tools_fc.c						\
+	builtins/tools_hash.c					\
+	builtins/tools_type.c					\
+	builtins/type.c							\
+	builtins/unsetenv.c						\
+	command.c								\
+	env.c									\
+	exec/and.c								\
+	exec/arithmetic/del.c					\
+	exec/arithmetic/div.c					\
+	exec/arithmetic/eq.c					\
+	exec/arithmetic/mod.c					\
+	exec/arithmetic/plus.c					\
+	exec/arithmetic/prod.c					\
+	exec/arithmetic/sub.c					\
+	exec/arithmetic/utils.c					\
+	exec/arithmetic/value.c					\
+	exec.c									\
+	exec/cmd.c								\
+	exec/else.c								\
+	exec/end.c								\
+	exec/expr.c								\
+	exec/if.c								\
+	exec/or.c								\
+	exec/pipeline.c							\
+	exec/while.c							\
+	expansion/buffer.c						\
+	expansion/expr.c						\
+	expansion/exp_ss.c						\
+	expansion/home.c						\
+	expansion/init.c						\
+	expansion/lexer.c						\
+	expansion/lexer_methods.c				\
+	expansion/lexer_methods_hist.c			\
+	expansion/lexer_methods_quotes.c		\
 	expr/a.c								\
 	expr/b.c								\
 	expr/c.c								\
 	expr/d.c								\
+	expr/desc.c								\
 	expr/e.c								\
+	expr/ef.c								\
+	expr/eq.c								\
+	expr/equal.c							\
+	expr/expression.c						\
 	expr/f.c								\
 	expr/g.c								\
+	expr/g_cap.c							\
+	expr/ge.c								\
+	expr/gt.c								\
 	expr/h.c								\
 	expr/k.c								\
+	expr/l_cap.c							\
+	expr/le.c								\
+	expr/lower.c							\
+	expr/lt.c								\
+	expr/n.c								\
+	expr/n_cap.c							\
+	expr/ne.c								\
+	expr/not_equal.c						\
+	expr/nt.c								\
+	expr/o_cap.c							\
+	expr/ot.c								\
 	expr/p.c								\
 	expr/r.c								\
 	expr/s.c								\
+	expr/s_cap.c							\
+	expr/sup.c								\
 	expr/t.c								\
 	expr/u.c								\
+	expr/v.c								\
 	expr/w.c								\
 	expr/x.c								\
-	expr/g_cap.c							\
-	expr/l_cap.c							\
-	expr/n_cap.c							\
-	expr/o_cap.c							\
-	expr/s_cap.c							\
-	expr/ef.c								\
-	expr/nt.c								\
-	expr/ot.c								\
-	expr/v.c								\
-	expr/n.c								\
-	expr/equal.c							\
-	expr/not_equal.c						\
-	expr/lower.c							\
-	expr/sup.c								\
-	expr/eq.c								\
-	expr/ne.c								\
-	expr/lt.c								\
-	expr/le.c								\
-	expr/gt.c								\
-	expr/ge.c								\
-	signal.c								\
-	tools_fd.c								\
 	fd.c									\
-	wait.c									\
-	expansion/buffer.c						\
-	expansion/exp_ss.c						\
-	expansion/init.c						\
-	expansion/lexer.c						\
-	expansion/lexer_methods.c				\
-	expansion/lexer_methods_quotes.c		\
-	expansion/lexer_methods_hist.c			\
-	expansion/home.c						\
-	expansion/expr.c						\
+	hash.c									\
+	hash_sanitize.c							\
+	heredoc.c								\
+	history_research/algo_search.c			\
+	history_research/ctrl_keys.c			\
+	history_research/init_search.c			\
+	history_research/move_keys.c			\
+	history_research/other_movekeys.c		\
+	history_research/tools_hs.c				\
+	line_edition/autocompletion.c			\
+	line_edition/backspace.c				\
+	line_edition/cursor.c					\
+	line_edition/delete.c					\
+	line_edition/display_auto.c				\
+	line_edition/fill_line.c				\
+	line_edition/fn_keys.c					\
+	line_edition/history.c					\
+	line_edition/history_file.c				\
+	line_edition/leftkey.c					\
+	line_edition/line.c						\
+	line_edition/line_keys.c				\
+	line_edition/other_keys.c				\
+	line_edition/rightkey.c					\
+	line_edition/switch_mode.c				\
+	line_edition/tools_auto.c				\
+	line_edition/tools_history.c			\
+	line_edition/tools_insertion.c			\
+	line_edition/tools_keys.c				\
+	line_edition/tools_motion.c				\
+	main.c									\
 	parser/arithmetic/init.c				\
 	parser/arithmetic/lexer_actions.c		\
 	parser/arithmetic/lexer_actions_paren.c	\
 	parser/arithmetic/type.c				\
 	parser/arithmetic/unary.c				\
-	exec/arithmetic/utils.c					\
+	parser/assignement.c					\
+	parser/ast.c							\
+	parser/ast_token.c						\
+	parser/free_token.c						\
+	parser/init_lexer.c						\
+	parser/init_parser.c					\
+	parser/input_queue.c					\
+	parser/keyword.c						\
+	parser/lexer_act.c						\
+	parser/lexer_act_meta.c					\
+	parser/lexer_act_over.c					\
+	parser/lexer_act_quote.c				\
+	parser/lexer.c							\
+	parser/lss.c							\
+	parser/parser.c							\
+	parser/parser_rules.c					\
+	parser/pss.c							\
+	parser/rules_ari.c						\
+	parser/rules_ari_op.c					\
+	parser/rules.c							\
+	parser/rules_expr.c						\
+	parser/rules_if.c						\
+	parser/rules_if_nocd.c					\
+	parser/rules_logic.c					\
+	parser/rules_pipe.c						\
+	parser/rules_redir.c					\
+	parser/rules_redir_r_both.c				\
+	parser/rules_redir_r_close.c			\
+	parser/rules_redir_r_comp.c				\
+	parser/rules_redir_read_write.c			\
+	parser/rules_shift.c					\
+	parser/rules_shunting_yard.c			\
+	parser/rules_statement.c				\
+	parser/rules_while.c					\
+	parser/shunting_yard.c					\
+	parser/token.c							\
+	parser/token_type.c						\
+	parser/token_type_desc.c				\
+	parser/utils.c							\
+	path.c									\
+	pipeline.c								\
+	prompt.c								\
+	propagate_pipe.c						\
+	redir.c									\
+	redir_internal.c						\
+	redir_r_both.c							\
+	redir_r_close.c							\
+	redir_r_comp.c							\
+	redir_reset.c							\
+	redir_rw.c								\
+	shell.c									\
+	signal.c								\
+	tools_fd.c								\
+	tools_heredoc.c							\
 	var.c									\
 	var_create.c							\
 	var_utils.c								\
-	env.c									\
-	parser/assignement.c
+	visual_mode/visual_mode.c				\
+	visual_mode/vm_copy.c					\
+	visual_mode/vm_cut.c					\
+	visual_mode/vm_leftkey.c				\
+	visual_mode/vm_rightkey.c				\
+	wait.c
 
 
 SRCDIR	:=	src
