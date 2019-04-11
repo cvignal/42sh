@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 08:16:59 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 09:01:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 08:21:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,24 @@ static char	**alloc_env(t_var *vars)
 	return (env);
 }
 
-void		concat_var(t_var *var, const char *name, const char *value)
+int			concat_var(t_var *var, const char *name, const char *value)
 {
-	int		i;
-
-	i = 0;
-	while (name[i])
+	var->len_name = ft_strlen(name);
+	var->len_value = ft_strlen(value);
+	if (var->alloc_size < var->len_name + var->len_value + 2)
 	{
-		var->var[i] = name[i];
-		++i;
+		var->alloc_size = var->len_name + var->len_value + 2;
+		if (!(var->var = malloc(sizeof(*var->var) * var->alloc_size)))
+		{
+			ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
+			return (1);
+		}
 	}
-	var->len_name = i;
-	var->var[i] = '=';
-	i = 0;
-	while (value[i])
-	{
-		var->var[var->len_name + i + 1] = value[i];
-		++i;
-	}
-	var->var[var->len_name + i + 1] = 0;
-	var->len_value = i;
+	ft_strncpy(var->var, name, var->len_name);
+	var->var[var->len_name] = '=';
+	ft_strncpy(var->var + var->len_name + 1, value, var->len_value);
+	var->var[var->len_name + var->len_value + 1] = 0;
+	return (0);
 }
 
 int			check_var(const char *name, const char *value)

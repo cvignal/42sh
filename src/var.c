@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 06:58:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 07:55:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 08:26:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	remove_var_first(t_var **var, int options)
 			|| (!(*var)->exported && (options & REMOVE_VAR_LOCAL)))
 	{
 		tmp = (*var)->next;
+		free((*var)->var);
 		free(*var);
 		*var = tmp;
 	}
@@ -43,6 +44,7 @@ static void	remove_var_middle(t_var *vars, const char *name, size_t size_name,
 			{
 				if (prev)
 					prev->next = vars->next;
+				free(vars->var);
 				free(vars);
 			}
 			return ;

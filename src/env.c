@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 09:04:48 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 07:24:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 08:23:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	free_vars(t_var **vars)
 	while (iter)
 	{
 		next = iter->next;
+		free(iter->var);
 		free(iter);
 		iter = next;
 	}

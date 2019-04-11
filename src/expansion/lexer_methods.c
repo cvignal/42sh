@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 20:59:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 08:03:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 08:26:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	exp_lexer_cut_var(t_shell *shell, t_exp_lexer *lexer, char c)
 	(void)c;
 	if (lexer->var.pos)
 	{
-		if (!(value = get_var_value(get_var(shell->vars, lexer->var.buffer))))
+		if ((value = get_var_value(get_var(shell->vars, lexer->var.buffer))))
 		{
 			while (*value)
 			{
