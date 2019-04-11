@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 09:49:46 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/10 07:17:47 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 05:09:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		print_norm_type(char **args, int i, char *flags, t_shell *shell)
 		if (is_builtin(args[i]))
 		{
 			ft_printf("%s is a shell builtin\n", args[i]);
-			if (ft_strchr(flags, 'a') && (cmd = find_command(shell->vars,
+			if (ft_strchr(flags, 'a') && (cmd = find_command(shell->exec_vars,
 							args[i])))
 				ft_printf("%s is %s\n", args[i], cmd);
 			if (cmd)
@@ -66,7 +66,7 @@ void		print_norm_type(char **args, int i, char *flags, t_shell *shell)
 		}
 		else if (is_a_keyword(args[i]))
 			ft_printf("%s is a shell keyword\n", args[i]);
-		else if ((cmd = find_command(shell->vars, args[i])))
+		else if ((cmd = find_command(shell->exec_vars, args[i])))
 			ft_printf("%s is %s\n", args[i], cmd);
 		else
 			ft_dprintf(2, "%s: type: %s: not found\n", EXEC_NAME, args[i]);

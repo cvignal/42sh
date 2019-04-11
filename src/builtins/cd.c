@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 03:25:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 05:05:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int			builtin_cd(t_shell *shell, char **args)
 	{
 		if (!ft_strcmp(args[i], "-"))
 		{
-			if (!(var = get_var(shell->vars, "OLDPWD")) || !var->len_value)
+			if (!(var = get_var(shell->exec_vars, "OLDPWD")) || !var->len_value)
 				return (exit_error(NULL, "OLDPWD not set"));
 			ft_dprintf(g_fd_output, "%s\n", var->var + var->len_name + 1);
 			return (change_dir(shell, var->var + var->len_name + 1));
@@ -85,7 +85,7 @@ int			builtin_cd(t_shell *shell, char **args)
 		else
 			return (change_dir(shell, args[i]));
 	}
-	if (!(var = get_var(shell->vars, "HOME")) || !var->len_value)
+	if (!(var = get_var(shell->exec_vars, "HOME")) || !var->len_value)
 		return (exit_error(NULL, "HOME not set"));
 	return (change_dir(shell, var->var + var->len_name + 1));
 }
