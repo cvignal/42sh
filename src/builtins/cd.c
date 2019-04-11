@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 05:05:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 07:57:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	exit_error_cd(const char *file)
 	return (1);
 }
 
-static int	change_dir(t_shell *shell, char *dir)
+static int	change_dir(t_shell *shell, const char *dir)
 {
 	char	*cwd;
 
@@ -65,7 +65,7 @@ int			builtin_cd(t_shell *shell, char **args)
 {
 	size_t			arg_len;
 	unsigned int	i;
-	t_var			*var;
+	const char		*value;
 
 	arg_len = 0;
 	while (args[arg_len])
@@ -77,15 +77,15 @@ int			builtin_cd(t_shell *shell, char **args)
 	{
 		if (!ft_strcmp(args[i], "-"))
 		{
-			if (!(var = get_var(shell->exec_vars, "OLDPWD")) || !var->len_value)
+			if (!(value = get_var_value(get_var(shell->exec_vars, "OLDPWD"))))
 				return (exit_error(NULL, "OLDPWD not set"));
-			ft_dprintf(g_fd_output, "%s\n", var->var + var->len_name + 1);
-			return (change_dir(shell, var->var + var->len_name + 1));
+			ft_dprintf(g_fd_output, "%s\n", value);
+			return (change_dir(shell, value));
 		}
 		else
 			return (change_dir(shell, args[i]));
 	}
-	if (!(var = get_var(shell->exec_vars, "HOME")) || !var->len_value)
+	if (!(value = get_var_value(get_var(shell->exec_vars, "HOME"))))
 		return (exit_error(NULL, "HOME not set"));
-	return (change_dir(shell, var->var + var->len_name + 1));
+	return (change_dir(shell, value));
 }
