@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 09:02:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 02:35:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@
 # define MAX_PATH 1024
 # define VAR_MAX 1024
 # define SEARCH_MAX 128
+
+# define REMOVE_VAR_ENV (1 << 0)
+# define REMOVE_VAR_LOCAL (1 << 1)
 
 typedef struct		s_curs
 {
@@ -417,7 +420,7 @@ int					set_var_full(t_var **vars, const char *value,
 ** var.c
 */
 t_var				*get_var(t_var *var, const char *name);
-void				remove_var(t_var **vars, const char *name);
+void				remove_var(t_var **vars, const char *name, int options);
 
 /*
 ** env.c

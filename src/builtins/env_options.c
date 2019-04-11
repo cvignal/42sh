@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 11:41:34 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 04:29:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 02:35:23 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	option_u(char **args, int *i, t_var **vars)
 		++(*i);
 		if (!args[*i])
 			return (exit_error("option requires an argument -- u"));
-		remove_var(vars, args[*i]);
+		remove_var(vars, args[*i], REMOVE_VAR_ENV | REMOVE_VAR_LOCAL);
 	}
 	return (0);
 }
