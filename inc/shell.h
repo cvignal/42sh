@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 07:44:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 07:55:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -422,6 +422,7 @@ int					set_var_full(t_var **vars, const char *value,
 ** var.c
 */
 t_var				*get_var(t_var *var, const char *name);
+const char			*get_var_value(t_var *var);
 void				remove_var(t_var **vars, const char *name, int options);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 06:58:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 02:36:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/11 07:55:13 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,11 @@ void		remove_var(t_var **vars, const char *name, int options)
 		remove_var_first(vars, options);
 	else
 		remove_var_middle(*vars, name, size_name, options);
+}
+
+const char	*get_var_value(t_var *var)
+{
+	if (!var || !var->len_name)
+		return (NULL);
+	return (var->var + var->len_name + 1);
 }
