@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 01:51:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/12 22:22:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/12 22:38:13 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int	exec_ari_eq_var(t_shell *shell, t_ast *ast)
 	char	*new_value;
 
 	ret = ast->right->exec(shell, ast->right);
+	free(ast->data);
 	if (ast->right->data)
 	{
 		if (!(new_value = ft_itoa(ret))
@@ -30,11 +31,11 @@ static int	exec_ari_eq_var(t_shell *shell, t_ast *ast)
 		else
 		{
 			ast->ret = !ret;
+			ast->data = new_value;
 			return (ret);
 		}
 	}
 	ast->ret = 1;
-	free(ast->data);
 	ast->data = NULL;
 	return (1);
 }
