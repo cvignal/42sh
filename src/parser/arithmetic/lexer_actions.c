@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:48:09 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 07:20:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/12 22:44:49 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ int	alexer_try_op(t_shell *shell, t_token *current, char c)
 		return (1 << LEXER_RET_CONT);
 	}
 	current->data[--current->len] = 0;
+	lss_pop(&shell->lexer);
 	return (1 << LEXER_RET_CUT);
 }
