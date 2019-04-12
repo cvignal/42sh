@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/12 21:32:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/12 21:47:01 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	char		*bin_path;
 	t_builtin	builtin;
 
-	if (expand_params(shell, instr->data, EXP_LEXER_MASK_ALL))
-		return (1);
 	if ((builtin = is_builtin(((t_command *)instr->data)->args_value[0])))
 		return (exec_builtin(shell, builtin, instr));
 	bin_path = hbt_command(shell, ((t_command *)instr->data)->args_value[0]);
