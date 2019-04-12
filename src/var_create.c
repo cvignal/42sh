@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 02:02:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 08:52:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/12 10:22:23 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 #include "shell.h"
 
-static int		separate_name_value(const char *full, char *name, const char **value)
+static int		separate_name_value(const char *full, char *name,
+		const char **value)
 {
 	int		pos;
 
