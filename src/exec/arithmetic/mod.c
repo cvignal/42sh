@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 01:43:37 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 04:14:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/12 22:29:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,22 @@ int	exec_ari_mod(t_shell *shell, t_ast *ast)
 	int	b;
 	int	res;
 
-	(void)shell;
-	if (!ast->left->data || !ast->right->data)
-		return (1);
-	a = ft_atoi(ast->left->data);
-	b = ft_atoi(ast->right->data);
+	a = ast->left->exec(shell, ast->left);
+	b = ast->right->exec(shell, ast->right);
 	free(ast->data);
-	if (b == 0)
+	if (!ast->left->data || !ast->right->data)
+	{
+		ast->data = NULL;
+		return (1);
+	}
+	if (!b)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: division by zero\n", EXEC_NAME);
-		free(ast->data);
 		ast->data = NULL;
 		return (1);
 	}
 	res = a % b;
-	ast->data = ft_itoa(res);
 	ast->ret = !res;
+	ast->data = ft_itoa(a / b);
 	return (res);
 }

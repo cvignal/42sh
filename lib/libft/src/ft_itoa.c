@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 02:49:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 07:16:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/12 22:17:01 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char		*ft_itoa(int value)
 	}
 	else
 		sign = 1;
+	res[size] = 0;
 	while (size)
 	{
 		res[--size] = value % 10 * sign + '0';
