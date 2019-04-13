@@ -6,13 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 23:58:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 04:10:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 06:34:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
 #include "shell.h"
+#include "arithmetic.h"
 
 int		exec_ari_statement(t_shell *shell, t_ast *ast)
 {
@@ -26,6 +27,7 @@ int		exec_ari_statement(t_shell *shell, t_ast *ast)
 	expanded = expand(shell, ast->data, &error);
 	if (error || !expanded || !(tokens = lex(shell, expanded)))
 		return (1);
+	set_unary(tokens);
 	free(expanded);
 	lss_pop(&shell->lexer);
 	shell->parser.ret = NULL;

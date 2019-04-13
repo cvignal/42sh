@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 06:00:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 06:28:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ static const t_ast_rule g_rules[] =\
 	{PS_ARI, {TT_ARI_ID, TT_ARI_OP_PLUS_PLUS, 0}, 2, &rule_ari_post_plus_plus},
 	{PS_ARI, {TT_ARI_OP_SUB_SUB, TT_ARI_ID, 0}, 2, &rule_ari_pre_sub_sub},
 	{PS_ARI, {TT_ARI_ID, TT_ARI_OP_SUB_SUB, 0}, 2, &rule_ari_post_sub_sub},
+	{PS_ARI, {TT_ARI_OP_PLUS_PLUS, TT_ARI_NUMBER, 0}, 2, &rule_ari_pre_mangle},
+	{PS_ARI, {TT_ARI_NUMBER, TT_ARI_OP_PLUS_PLUS, 0}, 2, &rule_ari_post_mangle},
+	{PS_ARI, {TT_ARI_OP_SUB_SUB, TT_ARI_NUMBER, 0}, 2, &rule_ari_pre_mangle},
+	{PS_ARI, {TT_ARI_NUMBER, TT_ARI_OP_SUB_SUB, 0}, 2, &rule_ari_post_mangle},
+	{PS_ARI, {TT_ARI_OP_UPLUS, 0, 0}, 1, &rule_shift_first},
+	{PS_ARI, {TT_ARI_OP_USUB, 0, 0}, 1, &rule_ari_create_usub},
 	{PS_ARI, {TT_ARI_ID, 0, 0}, 1, &rule_create_ari_id},
 	{PS_ARI, {TT_ARI_NUMBER, 0, 0}, 1, &rule_create_ari_id},
 	{PS_ARI, {TT_ARI_OP_PLUS, 0, 0}, 1, &rule_ari_op},
