@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 05:00:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 05:59:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,6 +303,8 @@ int					exec_ari_pre_plus_plus(t_shell *shell, struct s_ast *ast);
 int					exec_ari_post_plus_plus(t_shell *shell, struct s_ast *ast);
 int					exec_ari_mod(t_shell *shell, struct s_ast *ast);
 int					exec_ari_sub(t_shell *shell, struct s_ast *ast);
+int					exec_ari_pre_sub_sub(t_shell *shell, struct s_ast *ast);
+int					exec_ari_post_sub_sub(t_shell *shell, struct s_ast *ast);
 int					exec_ari_div(t_shell *shell, struct s_ast *ast);
 int					exec_ari_prod(t_shell *shell, struct s_ast *ast);
 int					exec_ari_eq(t_shell *shell, struct s_ast *ast);

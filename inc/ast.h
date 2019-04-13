@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 05:48:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 05:58:41 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,14 @@ int						rule_ari_paren(t_parser *parser, t_ast_token *list);
 int						rule_ari_pre_plus_plus(t_parser *parser,
 		t_ast_token *list);
 int						rule_ari_post_plus_plus(t_parser *parser,
+		t_ast_token *list);
+
+/*
+** parser/rules_ari_decrementation.c
+*/
+int						rule_ari_pre_sub_sub(t_parser *parser,
+		t_ast_token *list);
+int						rule_ari_post_sub_sub(t_parser *parser,
 		t_ast_token *list);
 
 /*
