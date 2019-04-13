@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/13 05:58:12 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/13 06:36:26 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRC		=									\
 	exec/arithmetic/statement.c				\
 	exec/arithmetic/sub.c					\
 	exec/arithmetic/sub_sub.c				\
+	exec/arithmetic/usub.c					\
 	exec/arithmetic/utils.c					\
 	exec/arithmetic/value.c					\
 	exec.c									\
@@ -145,6 +146,7 @@ SRC		=									\
 	parser/arithmetic/init.c				\
 	parser/arithmetic/lexer_actions.c		\
 	parser/arithmetic/lexer_actions_paren.c	\
+	parser/arithmetic/set_unary.c			\
 	parser/arithmetic/type.c				\
 	parser/assignement.c					\
 	parser/ast.c							\
@@ -167,7 +169,9 @@ SRC		=									\
 	parser/rules_ari.c						\
 	parser/rules_ari_decrementation.c		\
 	parser/rules_ari_incrementation.c		\
+	parser/rules_ari_mangle.c				\
 	parser/rules_ari_op.c					\
+	parser/rules_ari_usub.c					\
 	parser/rules.c							\
 	parser/rules_expr.c						\
 	parser/rules_if.c						\

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:32:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/12 23:51:05 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 06:35:20 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ int				get_arithmetic_token_type(const char *s);
 int				get_arithmetic_desc(int type, t_ari_op_desc *dest);
 
 int				init_arithmetic_lexer(t_lexer *lexer);
+
+void			set_unary(t_token *list);
 
 #endif
