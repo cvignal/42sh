@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:33:40 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 04:14:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 08:29:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ int					init_arithmetic_lexer(t_lexer *lexer)
 		++i;
 	}
 	lexer->lexer_actions[LSTATE_ARI_NONE][0] = &lexer_over;
+	lexer->lexer_actions[LSTATE_ARI_NONE][(int)' '] = &lexer_pass;
+	lexer->lexer_actions[LSTATE_ARI_NONE][(int)'\t'] = &lexer_pass;
+	lexer->lexer_actions[LSTATE_ARI_FIRST_PASS][(int)' '] = &alexer_add;
+	lexer->lexer_actions[LSTATE_ARI_FIRST_PASS][(int)'\t'] = &alexer_add;
 	lexer->lexer_actions[LSTATE_ARI_FIRST_PASS][(int)')'] = &alexer_count_paren;
 	lexer->lexer_actions[LSTATE_ARI_FIRST_PASS][0] = &alexer_cut;
 	return (0);
