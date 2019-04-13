@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 03:45:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 05:48:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,15 @@ typedef enum			e_ttype
 	TT_ARI_OP_UPLUS,
 	TT_ARI_OP_USUB,
 	TT_ARI_OP_PLUS,
+	TT_ARI_OP_PLUS_PLUS,
 	TT_ARI_OP_SUB,
+	TT_ARI_OP_SUB_SUB,
 	TT_ARI_OP_PROD,
 	TT_ARI_OP_DIV,
 	TT_ARI_OP_MOD,
 	TT_ARI_OP_EQ,
 	TT_ARI_ID,
+	TT_ARI_NUMBER,
 	TT_OPEN_PAR,
 	TT_CLOSE_PAR,
 	TT_REDIR_L,
@@ -86,6 +89,7 @@ void					add_to_ast_token_list(t_ast_token **list,
 		t_ast_token *node);
 void					push_ast_token(t_ast_token **list, t_ast_token *node);
 t_ast_token				*pop_ast_token(t_ast_token **list);
+void					free_ast_token(t_ast_token *token);
 
 /*
 ** parser/utils.c
@@ -235,7 +239,6 @@ int						rule_send_to_shunting_yard(t_parser *parser,
 */
 int						rule_create_ari_statement(t_parser *parser,
 		t_ast_token *list);
-int						rule_ari_word(t_parser *parser, t_ast_token *list);
 int						rule_ari_over(t_parser *parser, t_ast_token *list);
 int						rule_create_ari_id(t_parser *parser, t_ast_token *list);
 
@@ -244,6 +247,14 @@ int						rule_create_ari_id(t_parser *parser, t_ast_token *list);
 */
 int						rule_ari_op(t_parser *parser, t_ast_token *list);
 int						rule_ari_paren(t_parser *parser, t_ast_token *list);
+
+/*
+** parser/rules_ari_incrementation.c
+*/
+int						rule_ari_pre_plus_plus(t_parser *parser,
+		t_ast_token *list);
+int						rule_ari_post_plus_plus(t_parser *parser,
+		t_ast_token *list);
 
 /*
 ** parser/ast.c

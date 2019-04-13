@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 02:02:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/12 10:22:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 04:39:49 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int				set_var(t_var **vars, const char *name, const char *value,
 {
 	t_var		*var;
 
-	if (check_var(name, value))
+	if (check_var(name))
 		return (1);
 	if (!(var = get_var(*vars, name)))
 	{

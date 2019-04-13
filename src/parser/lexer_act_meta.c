@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:50:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 01:07:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 05:10:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	lexer_add_meta(t_shell *shell, t_token *token, char c)
 
 	if (add_to_token(token, c))
 		return (1 << LEXER_RET_ERROR);
-	type = get_token_type(token);
+	type = get_token_type(token, shell->lexer.lss->state);
 	if (type == TT_ARI)
 	{
 		lss_pop(&shell->lexer);
@@ -28,7 +28,7 @@ int	lexer_add_meta(t_shell *shell, t_token *token, char c)
 		if (lss_push(&shell->lexer, LSTATE_ARI_FIRST_PASS))
 			return (1 << LEXER_RET_ERROR);
 	}
-	if (type == TT_WORD)
+	else if (type == TT_WORD)
 	{
 		token->len--;
 		token->data[token->len] = 0;
@@ -53,7 +53,7 @@ int	lexer_try_meta(t_shell *shell, t_token *token, char c)
 
 	if (add_to_token(token, c))
 		return (1 << LEXER_RET_ERROR);
-	if ((type = get_token_type(token)) != TT_WORD)
+	if ((type = get_token_type(token, shell->lexer.lss->state)) != TT_WORD)
 	{
 		shell->lexer.lss->state = LSTATE_META;
 		token->type = type;

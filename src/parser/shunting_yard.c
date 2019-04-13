@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 03:46:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 05:49:58 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ static void		shunting_yard_parenthesis(t_parser *parser)
 {
 	if (parser->input_queue->type == TT_CLOSE_PAR)
 	{
-		pop_ast_token(&parser->input_queue);
+		free_ast_token(pop_ast_token(&parser->input_queue));
 		while (parser->pss->op_stack
 				&& parser->pss->op_stack->type != TT_OPEN_PAR)
 			add_to_ast_token_list(&parser->pss->output_queue,
 					pop_ast_token(&parser->pss->op_stack));
 		if (parser->pss->op_stack)
-			pop_ast_token(&parser->pss->op_stack);
+			free_ast_token(pop_ast_token(&parser->pss->op_stack));
 		else
 			clean_exit(parser->pss, NULL);
 	}

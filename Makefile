@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/13 03:44:16 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/13 05:01:59 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SRC		=									\
 	exec/arithmetic/eq.c					\
 	exec/arithmetic/mod.c					\
 	exec/arithmetic/plus.c					\
+	exec/arithmetic/plus_plus.c				\
 	exec/arithmetic/prod.c					\
 	exec/arithmetic/statement.c				\
 	exec/arithmetic/sub.c					\
@@ -163,6 +164,7 @@ SRC		=									\
 	parser/precedence.c						\
 	parser/pss.c							\
 	parser/rules_ari.c						\
+	parser/rules_ari_incrementation.c		\
 	parser/rules_ari_op.c					\
 	parser/rules.c							\
 	parser/rules_expr.c						\

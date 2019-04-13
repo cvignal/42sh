@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 03:49:59 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 05:00:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,6 +299,8 @@ void				free_else(struct s_ast *ast);
 int					exec_while(t_shell *shell, struct s_ast *ast);
 void				free_while(struct s_ast *ast);
 int					exec_ari_plus(t_shell *shell, struct s_ast *ast);
+int					exec_ari_pre_plus_plus(t_shell *shell, struct s_ast *ast);
+int					exec_ari_post_plus_plus(t_shell *shell, struct s_ast *ast);
 int					exec_ari_mod(t_shell *shell, struct s_ast *ast);
 int					exec_ari_sub(t_shell *shell, struct s_ast *ast);
 int					exec_ari_div(t_shell *shell, struct s_ast *ast);
@@ -411,7 +413,7 @@ int					arithmetic_is_var(const char *value);
 ** var_utils.c
 */
 char				**build_env(t_var *vars);
-int					check_var(const char *name, const char *value);
+int					check_var(const char *name);
 int					concat_var(t_var *var, const char *name, const char *value);
 
 /*
