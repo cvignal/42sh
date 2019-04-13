@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 23:51:03 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 05:51:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 08:38:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,12 @@ int	rule_create_ari_id(t_parser *parser, t_ast_token *list)
 
 int	rule_ari_over(t_parser *parser, t_ast_token *list)
 {
-	t_ast		*ret;
-
 	while (parser->pss->op_stack)
 		add_to_ast_token_list(&parser->pss->output_queue,
 				pop_ast_token(&parser->pss->op_stack));
-	if (!(ret = queue_to_ast(parser->pss)))
-		return (1);
-	pss_pop(parser);
 	free(list->data);
-	list->data = ret;
+	list->data = queue_to_ast(parser->pss);
 	list->type = TT_STATEMENT;
+	pss_pop(parser);
 	return (0);
 }
