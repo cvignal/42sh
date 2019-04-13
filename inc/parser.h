@@ -163,7 +163,7 @@ void					free_token_list(t_token *list);
 /*
 ** parser/token_type.c
 */
-int						get_token_type(t_token *token);
+int						get_token_type(t_token *token, int state);
 
 /*
 ** parser/lexer_act.c

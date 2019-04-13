@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 01:51:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/12 22:38:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 05:42:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,16 @@
 
 static int	exec_ari_eq_var(t_shell *shell, t_ast *ast)
 {
-	int		ret;
-	char	*new_value;
-
-	ret = ast->right->exec(shell, ast->right);
+	ast->right->exec(shell, ast->right);
 	free(ast->data);
 	if (ast->right->data)
 	{
-		if (!(new_value = ft_itoa(ret))
-				|| set_var(&shell->vars, ast->left->data, new_value, 0))
+		ast->ret = !ft_atoi(ast->right->data);
+		if (set_var(&shell->vars, ast->left->data, ast->right->data, 0))
 			ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-		else
-		{
-			ast->ret = !ret;
-			ast->data = new_value;
-			return (ret);
-		}
+		if (!(ast->data = ft_strdup(ast->right->data)))
+			ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
+		return (ast->ret);
 	}
 	ast->ret = 1;
 	ast->data = NULL;

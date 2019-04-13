@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:48:09 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 04:11:37 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 04:51:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	alexer_try_op(t_shell *shell, t_token *current, char c)
 	(void)shell;
 	if (add_to_token(current, c))
 		return (1 << LEXER_RET_ERROR);
-	if ((type = get_arithmetic_token_type(current->data)) != TT_ARI_ID)
+	type = get_arithmetic_token_type(current->data);
+	if (type != TT_ARI_ID && type != TT_ARI_NUMBER)
 	{
 		current->type = type;
 		return (1 << LEXER_RET_CONT);

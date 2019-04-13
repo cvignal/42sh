@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 08:16:59 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 08:38:58 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 04:45:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,18 @@ int			concat_var(t_var *var, const char *name, const char *value)
 	return (0);
 }
 
-int			check_var(const char *name, const char *value)
+int			check_var(const char *name)
 {
-	if (ft_strlen(name) > VAR_MAX || ft_strlen(value) > VAR_MAX)
+	size_t	len;
+
+	len = 0;
+	while (name[len])
 	{
-		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, ERR_LEN_VAR);
-		return (1);
+		if (len > VAR_MAX)
+			return (1);
+		if (!ft_isalpha(name[len]) && name[len] != '_')
+			return (1);
+		++len;
 	}
 	return (0);
 }
