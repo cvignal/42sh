@@ -1,12 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 05:37:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 00:01:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +70,7 @@ typedef enum			e_lstate
 	LSTATE_META,
 	LSTATE_SQUOTE,
 	LSTATE_DQUOTE,
-	LSTATE_ARI_PAREN,
+	LSTATE_ARI_FIRST_PASS,
 	LSTATE_ARI_NONE,
 	LSTATE_ARI_ID,
 	LSTATE_ARI_OP,
@@ -165,7 +163,7 @@ void					free_token_list(t_token *list);
 /*
 ** parser/token_type.c
 */
-int						get_token_type(t_lexer *lexer, t_token *token);
+int						get_token_type(t_token *token);
 
 /*
 ** parser/lexer_act.c
@@ -220,7 +218,7 @@ int						lexer_more_input(struct s_shell *shell, t_token *token,
 /*
 ** parser/lexer.c
 */
-t_token					*lex(struct s_shell *shell);
+t_token					*lex(struct s_shell *shell, const char *input);
 int						init_lexer(t_lexer *lexer);
 int						clean_exit_lexer(t_lexer *lexer, t_token **list
 		, t_token **current, const char *msg);
@@ -229,6 +227,7 @@ int						clean_exit_lexer(t_lexer *lexer, t_token **list
 ** parser/token_type_desc.c
 */
 int						ccmp_digit(char a, char b);
+int						ccmp_all(char a, char b);
 int						ccmp(char a, char b);
 
 /*

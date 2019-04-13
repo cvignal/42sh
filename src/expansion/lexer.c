@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/01 10:48:20 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/13 04:05:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char		*expand(t_shell *shell, char *arg, int *error)
 	int	ret;
 
 	i = 0;
+	ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
+	ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
 	while (arg[i] && (int)arg[i] != 127)
 	{
 		ret = shell->exp_lexer.methods[shell->exp_lexer.state->state]
@@ -63,8 +65,6 @@ int			expand_params(t_shell *shell, t_command *command)
 	{
 		if (command->args_value[i - j])
 			free(command->args_value[i - j]);
-		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
-		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
 		command->args_value[i - j] = expand(shell, command->args[i], &error);
 		if (error)
 		{
@@ -88,8 +88,6 @@ int			expand_redirs(t_shell *shell, t_redir *list)
 	curr = list;
 	while (curr)
 	{
-		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
-		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
 		if (curr->target)
 			curr->target_value = expand(shell, curr->target, &error);
 		else

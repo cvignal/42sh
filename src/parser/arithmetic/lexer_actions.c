@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:48:09 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/12 22:44:49 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 04:11:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	alexer_cut(t_shell *shell, t_token *current, char c)
 {
 	(void)current;
 	(void)c;
-	lss_pop(&shell->lexer);
-	current->type = get_arithmetic_token_type(current->data);
+	if (lss_pop(&shell->lexer) != LSTATE_ARI_FIRST_PASS)
+		current->type = get_arithmetic_token_type(current->data);
 	return (1 << LEXER_RET_CUT);
 }
 

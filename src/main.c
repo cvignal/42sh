@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 09:08:49 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 01:11:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int						main(int ac, char **av, const char **environ)
 	disable_signal(&shell);
 	while (!g_functions[ret].f(&shell))
 	{
-		if (!(tokens = lex(&shell)))
+		if (!(tokens = lex(&shell, shell.line.data)))
 		{
 			add_to_history(shell.line.data, &shell, 1);
 			print_prompt(&shell.parser, &shell, 1);

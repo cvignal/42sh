@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/09 06:55:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 04:01:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,7 @@ static int		handle_ret(t_lexer *lexer, int ret, t_token **current,
 	}
 	if (ret & (1 << LEXER_RET_CUT))
 	{
-		(*current)->type = get_token_type(lexer, *current);
-		if ((*current)->type == TT_ARI_BEGIN)
-		{
-			if (lss_push(lexer, LSTATE_ARI_NONE))
-				return (clean_exit_lexer(lexer, output, current,
-							MEMORY_ERROR_MSG));
-		}
+		(*current)->type = get_token_type(*current);
 		add_to_token_list(output, *current);
 		*current = NULL;
 	}
@@ -73,7 +67,7 @@ static int		handle_ret(t_lexer *lexer, int ret, t_token **current,
 	return (0);
 }
 
-static t_token	*get_return(t_token **output, int *pos)
+static t_token	*get_return(t_token **output)
 {
 	t_token		*over;
 	t_token		*ret;
@@ -83,13 +77,11 @@ static t_token	*get_return(t_token **output, int *pos)
 	over->type = TT_OVER;
 	add_to_token_list(output, over);
 	ret = *output;
-	set_unary_operator(ret);
 	*output = NULL;
-	*pos = 0;
 	return (ret);
 }
 
-t_token			*lex(t_shell *shell)
+t_token			*lex(t_shell *shell, const char *input)
 {
 	int				pos;
 	int				ret;
@@ -98,11 +90,10 @@ t_token			*lex(t_shell *shell)
 	pos = 0;
 	while (!(ret & (1 << LEXER_RET_OVER)))
 	{
-		if (shell->line.data[pos] >= 0)
+		if (input[pos] >= 0)
 		{
 			ret = shell->lexer.lexer_actions[shell->lexer.lss->state]
-				[(int)shell->line.data[pos]](shell, shell->current,
-						shell->line.data[pos]);
+				[(int)input[pos]](shell, shell->current, input[pos]);
 			if (handle_ret(&shell->lexer, ret, &shell->current, &shell->output))
 				return (NULL);
 			pos += !!(ret & (1 << LEXER_RET_CONT));
@@ -114,5 +105,5 @@ t_token			*lex(t_shell *shell)
 			return (NULL);
 		}
 	}
-	return (get_return(&shell->output, &pos));
+	return (get_return(&shell->output));
 }

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:32:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 07:15:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/12 23:51:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int				alexer_pop_paren(struct s_shell *shell, t_token *current,
 		char c);
 int				alexer_push_paren(struct s_shell *shell, t_token *current,
 		char c);
-int				alexer_check_end(struct s_shell *shell, t_token *current,
+int				alexer_count_paren(struct s_shell *shell, t_token *current,
 		char c);
 
 int				is_operator_char(char c);
@@ -50,7 +50,5 @@ int				get_arithmetic_token_type(const char *s);
 int				get_arithmetic_desc(int type, t_ari_op_desc *dest);
 
 int				init_arithmetic_lexer(t_lexer *lexer);
-
-void			set_unary_operator(t_token *token);
 
 #endif

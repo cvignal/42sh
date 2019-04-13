@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 07:16:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 03:45:28 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ typedef enum			e_ttype
 	TT_OR,
 	TT_AND,
 	TT_BG,
-	TT_ARI_BEGIN,
-	TT_ARI_END,
+	TT_ARI,
 	TT_ARI_OP_UPLUS,
 	TT_ARI_OP_USUB,
 	TT_ARI_OP_PLUS,
@@ -234,15 +233,17 @@ int						rule_send_to_shunting_yard(t_parser *parser,
 /*
 ** parser/rules_ari.c
 */
-int						rule_create_ari(t_parser *parser, t_ast_token *list);
-int						rule_close_ari(t_parser *parser, t_ast_token *list);
 int						rule_create_ari_statement(t_parser *parser,
 		t_ast_token *list);
+int						rule_ari_word(t_parser *parser, t_ast_token *list);
+int						rule_ari_over(t_parser *parser, t_ast_token *list);
+int						rule_create_ari_id(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/rules_ari_op.c
 */
 int						rule_ari_op(t_parser *parser, t_ast_token *list);
+int						rule_ari_paren(t_parser *parser, t_ast_token *list);
 
 /*
 ** parser/ast.c
@@ -265,5 +266,10 @@ t_ast_act				get_rule(t_ast_token *tokens, int state);
 ** parser/input_queue.c
 */
 void					free_input_queue(t_ast_token *input);
+
+/*
+**	parser/precedence.c
+*/
+int						precedence(t_ttype type);
 
 #endif
