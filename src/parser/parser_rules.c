@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 05:42:17 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 03:40:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,22 @@ static const t_ast_rule g_rules[] =\
 	{PS_CMD, {TT_REDIR_R_CLOSE, 0, 0}, 1, &rule_redir_r_close},
 	{PS_CMD, {TT_REDIR_RW, TT_WORD, 0}, 2, &rule_redir_rw},
 	{PS_CMD, {0, 0, 0}, 0, &rule_pop_cmd_statement},
-	{PS_ARI, {TT_ARI_ID, 0, 0}, 1, &rule_create_ari_statement},
+	{PS_ARI, {TT_WORD, 0, 0}, 1, &rule_ari_word},
+	{PS_ARI, {TT_ARI_ID, 0, 0}, 1, &rule_create_ari_id},
 	{PS_ARI, {TT_ARI_OP_PLUS, 0, 0}, 1, &rule_ari_op},
 	{PS_ARI, {TT_ARI_OP_SUB, 0, 0}, 1, &rule_ari_op},
 	{PS_ARI, {TT_ARI_OP_PROD, 0, 0}, 1, &rule_ari_op},
 	{PS_ARI, {TT_ARI_OP_DIV, 0, 0}, 1, &rule_ari_op},
 	{PS_ARI, {TT_ARI_OP_MOD, 0, 0}, 1, &rule_ari_op},
 	{PS_ARI, {TT_ARI_OP_EQ, 0, 0}, 1, &rule_ari_op},
-	{PS_ARI, {TT_ARI_END, 0, 0}, 1, &rule_close_ari},
+	{PS_ARI, {TT_OPEN_PAR, 0, 0}, 1, &rule_send_to_shunting_yard},
+	{PS_ARI, {TT_CLOSE_PAR, 0, 0}, 1, &rule_send_to_shunting_yard},
 	{PS_ARI, {TT_STATEMENT, 0, 0}, 1, &rule_send_to_shunting_yard},
 	{PS_ARI, {TT_OP, 0, 0}, 1, &rule_send_to_shunting_yard},
+	{PS_ARI, {TT_OVER, 0, 0}, 1, &rule_ari_over},
 	{PS_NONE, {TT_OVER, 0, 0}, 1, &rule_shift_first},
 	{PS_NONE, {TT_WORD, 0, 0}, 1, &rule_first_word},
-	{PS_NONE, {TT_ARI_BEGIN, 0, 0}, 1, &rule_create_ari},
+	{PS_NONE, {TT_ARI, 0, 0}, 1, &rule_create_ari_statement},
 	{PS_NONE, {TT_REDIR_R, TT_WORD, 0}, 2, &rule_push_cmd},
 	{PS_NONE, {TT_REDIR_R_BOTH, TT_WORD, 0}, 2, &rule_push_cmd},
 	{PS_NONE, {TT_REDIR_RR, TT_WORD, 0}, 2, &rule_push_cmd},

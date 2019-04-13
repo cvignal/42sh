@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/12 22:34:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 03:46:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,6 @@
 
 #include "ast.h"
 #include "libft.h"
-
-static const t_precedence	g_precedence[] =\
-{
-	{TT_PIPE, 2},
-	{TT_END, 1},
-	{TT_OR, 0},
-	{TT_AND, 0},
-	{TT_ARI_OP_EQ, 0},
-	{TT_ARI_OP_PLUS, 1},
-	{TT_ARI_OP_SUB, 1},
-	{TT_ARI_OP_PROD, 2},
-	{TT_ARI_OP_DIV, 2},
-	{TT_ARI_OP_MOD, 2}
-};
-
-static int		precedence(t_ttype type)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < sizeof(g_precedence) / sizeof(*g_precedence))
-	{
-		if ((t_ttype)g_precedence[i].type == type)
-			return (g_precedence[i].prec);
-		++i;
-	}
-	return (-1);
-}
 
 static int		set_leaves(t_ast *node, t_ast_token **stack)
 {
@@ -72,6 +44,25 @@ static t_ast	*clean_exit(t_pss *pss, t_ast_token *stack)
 	return (NULL);
 }
 
+static void		shunting_yard_parenthesis(t_parser *parser)
+{
+	if (parser->input_queue->type == TT_CLOSE_PAR)
+	{
+		pop_ast_token(&parser->input_queue);
+		while (parser->pss->op_stack
+				&& parser->pss->op_stack->type != TT_OPEN_PAR)
+			add_to_ast_token_list(&parser->pss->output_queue,
+					pop_ast_token(&parser->pss->op_stack));
+		if (parser->pss->op_stack)
+			pop_ast_token(&parser->pss->op_stack);
+		else
+			clean_exit(parser->pss, NULL);
+	}
+	else if (parser->input_queue->type == TT_OPEN_PAR)
+		push_ast_token(&parser->pss->op_stack,
+				pop_ast_token(&parser->input_queue));
+}
+
 void			shunting_yard(t_parser *parser)
 {
 	if (parser->input_queue->type == TT_OP)
@@ -87,6 +78,8 @@ void			shunting_yard(t_parser *parser)
 	else if (parser->input_queue->type == TT_STATEMENT)
 		add_to_ast_token_list(&parser->pss->output_queue,
 				pop_ast_token(&parser->input_queue));
+	else
+		shunting_yard_parenthesis(parser);
 }
 
 t_ast			*queue_to_ast(t_pss *pss)

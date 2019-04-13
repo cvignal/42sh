@@ -6,12 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:46:05 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 13:52:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/12 23:57:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "libft.h"
+#include "arithmetic.h"
 
 static void	init_lexer_meta(t_lexer *lexer, t_lstate state, t_lexer_act act)
 {
@@ -70,6 +71,7 @@ int			init_lexer(t_lexer *lexer)
 	i = 0;
 	while (i <= CHAR_MAX)
 	{
+		lexer->lexer_actions[LSTATE_ARI_FIRST_PASS][i] = &lexer_add;
 		lexer->lexer_actions[LSTATE_NONE][i] = &lexer_create;
 		lexer->lexer_actions[LSTATE_WORD][i] = &lexer_add;
 		lexer->lexer_actions[LSTATE_META][i] = &lexer_try_meta;
@@ -81,5 +83,5 @@ int			init_lexer(t_lexer *lexer)
 	init_lexer_meta(lexer, LSTATE_NONE, &lexer_create_meta);
 	init_lexer_meta(lexer, LSTATE_META, &lexer_add_meta);
 	init_lexer_meta(lexer, LSTATE_WORD, &lexer_try_meta);
-	return (0);
+	return (init_arithmetic_lexer(lexer));
 }

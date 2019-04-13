@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 08:22:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 03:49:59 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@
 # define VAR_MAX 1024
 # define SEARCH_MAX 128
 
-# define REMOVE_VAR_ENV (1 << 0)
-# define REMOVE_VAR_LOCAL (1 << 1)
+# define REMOVE_VAR_ENV 0
+# define REMOVE_VAR_LOCAL 1
 
 typedef struct		s_curs
 {
@@ -95,6 +95,7 @@ typedef struct		s_var
 typedef struct		s_shell
 {
 	t_lexer			lexer;
+	t_lexer			ari_lexer;
 	t_parser		parser;
 	t_exp_lexer		exp_lexer;
 	t_var			*vars;
@@ -305,6 +306,8 @@ int					exec_ari_prod(t_shell *shell, struct s_ast *ast);
 int					exec_ari_eq(t_shell *shell, struct s_ast *ast);
 int					exec_ari_value(t_shell *shell, struct s_ast *ast);
 void				free_ari(struct s_ast *ast);
+int					exec_ari_statement(t_shell *shell, struct s_ast *ast);
+void				free_ari_statement(struct s_ast *ast);
 
 /*
 ** redir.c

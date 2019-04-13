@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:50:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/06 00:07:19 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/13 01:07:29 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,19 @@
 
 int	lexer_add_meta(t_shell *shell, t_token *token, char c)
 {
+	int	type;
+
 	if (add_to_token(token, c))
 		return (1 << LEXER_RET_ERROR);
-	if (get_token_type(&shell->lexer, token) == TT_WORD)
+	type = get_token_type(token);
+	if (type == TT_ARI)
+	{
+		lss_pop(&shell->lexer);
+		token->type = TT_ARI;
+		if (lss_push(&shell->lexer, LSTATE_ARI_FIRST_PASS))
+			return (1 << LEXER_RET_ERROR);
+	}
+	if (type == TT_WORD)
 	{
 		token->len--;
 		token->data[token->len] = 0;
@@ -39,11 +49,11 @@ int	lexer_create_meta(t_shell *shell, t_token *token, char c)
 
 int	lexer_try_meta(t_shell *shell, t_token *token, char c)
 {
-	t_ttype	type;
+	int	type;
 
 	if (add_to_token(token, c))
 		return (1 << LEXER_RET_ERROR);
-	if ((type = get_token_type(&shell->lexer, token) != TT_WORD))
+	if ((type = get_token_type(token)) != TT_WORD)
 	{
 		shell->lexer.lss->state = LSTATE_META;
 		token->type = type;
