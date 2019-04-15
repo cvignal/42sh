@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 16:13:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/01 12:03:42 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/08 14:54:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void		print_prompt(t_parser *parser, t_shell *shell, int flag)
 
 	if (check_validity(shell))
 		return ;
+	raw_terminal_mode(shell);
 	cwd = getcwd(NULL, MAX_PATH);
 	if ((parser && parser->pss->state != PS_NONE) || flag
 			|| shell->ret_cmd == -1)
