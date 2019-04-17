@@ -26,7 +26,7 @@ static char	*clean_exit(t_exp_lexer *lexer, int *error)
 	return (NULL);
 }
 
-char		*expand(t_shell *shell, char *arg, int *error)
+char		*expand(t_shell *shell, char *arg, int *error, int mask)
 {
 	int	i;
 	int	ret;
@@ -35,22 +35,22 @@ char		*expand(t_shell *shell, char *arg, int *error)
 	while (arg[i] && (int)arg[i] != 127)
 	{
 		ret = shell->exp_lexer.methods[shell->exp_lexer.state->state]
-			[(int)arg[i]](shell, &shell->exp_lexer, arg[i]);
+			[(int)arg[i]](shell, arg[i], mask);
 		if (ret & EXP_LEXER_RET_ERROR)
 			return (clean_exit(&shell->exp_lexer, error));
 		if (ret & EXP_LEXER_RET_CONT)
 			++i;
 	}
 	if (shell->exp_lexer.state->state == EXP_STATE_VAR)
-		if (exp_lexer_cut_var(shell, &shell->exp_lexer, 0)
+		if (exp_lexer_cut_var(shell, 0, mask)
 				& EXP_LEXER_RET_ERROR)
 			return (clean_exit(&shell->exp_lexer, error));
 	if (shell->exp_lexer.buffer.buffer)
-		expand_home(shell, error);
+		expand_home(shell, error, mask);
 	return (shell->exp_lexer.buffer.buffer);
 }
 
-int			expand_params(t_shell *shell, t_command *command)
+int			expand_params(t_shell *shell, t_command *command, int mask)
 {
 	int		i;
 	int		j;
@@ -65,7 +65,7 @@ int			expand_params(t_shell *shell, t_command *command)
 			free(command->args_value[i - j]);
 		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
 		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
-		command->args_value[i - j] = expand(shell, command->args[i], &error);
+		command->args_value[i - j] = expand(shell, command->args[i], &error, mask);
 		if (error)
 		{
 			ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
@@ -79,7 +79,7 @@ int			expand_params(t_shell *shell, t_command *command)
 	return (0);
 }
 
-int			expand_redirs(t_shell *shell, t_redir *list)
+int			expand_redirs(t_shell *shell, t_redir *list, int mask)
 {
 	t_redir	*curr;
 	int		error;
@@ -91,7 +91,7 @@ int			expand_redirs(t_shell *shell, t_redir *list)
 		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
 		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
 		if (curr->target)
-			curr->target_value = expand(shell, curr->target, &error);
+			curr->target_value = expand(shell, curr->target, &error, mask);
 		else
 			curr->target_value = NULL;
 		if (error)
