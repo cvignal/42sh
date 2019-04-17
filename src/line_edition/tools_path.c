@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 12:18:42 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/17 12:24:05 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/17 14:48:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "libft.h"
 #include "fill_line.h"
 
-static int	*expand_tilde(char *word, char *ret)
+static char	*expand_tilde(char *word, char *ret)
 {
 	ft_strdel(&ret);
 	if (!(ret = ft_strjoin("/Users/", getlogin())))
