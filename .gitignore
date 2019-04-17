@@ -53,3 +53,6 @@ obj/
 ### macOS ###
 # General
 .DS_Store
+
+### Ctags ###
+tags

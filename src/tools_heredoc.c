@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 14:17:25 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/02 14:26:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/12 21:32:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	expand_heredoc(t_heredoc *heredoc, t_shell *shell, int fd[2])
 	error = 0;
 	ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
 	ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
-	ret = expand(shell, heredoc->data, &error);
+	ret = expand(shell, heredoc->data, &error, EXP_LEXER_MASK_VARIABLE);
 	if (error)
 	{
 		ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
