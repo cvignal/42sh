@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 05:56:45 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 05:57:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/17 10:02:06 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	exec_ari_pre_sub_sub(t_shell *shell, t_ast *ast)
 	else
 		value = 0;
 	ast->data = ft_itoa(--value);
+	ast->ret = !value;
 	if (!ast->data)
 		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
 	res = ft_itoa(value);
@@ -49,6 +50,7 @@ int	exec_ari_post_sub_sub(t_shell *shell, t_ast *ast)
 		value = ft_atoi(get_var_value(var));
 	else
 		value = 0;
+	ast->ret = !value;
 	ast->data = ft_itoa(value--);
 	if (!ast->data)
 		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
