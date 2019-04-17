@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 14:16:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/02 15:50:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/12 21:38:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ static int	expand_expr_three_args(t_shell *shell, t_expr *expr)
 	}
 	if (expr->args_value[0])
 		free(expr->args_value[0]);
-	expr->args_value[0] = expand(shell, expr->args[0], &error);
+	expr->args_value[0] = expand(shell, expr->args[0], &error,
+			EXP_LEXER_MASK_ALL);
 	if (error)
 		return (1);
 	if (expr->args_value[2])
 		free(expr->args_value[2]);
-	expr->args_value[2] = expand(shell, expr->args[2], &error);
+	expr->args_value[2] = expand(shell, expr->args[2], &error,
+			EXP_LEXER_MASK_ALL);
 	if (error)
 		return (1);
 	return (0);
@@ -59,7 +61,8 @@ static int	expand_expr_two_args(t_shell *shell, t_expr *expr)
 	}
 	if (expr->args_value[1])
 		free(expr->args_value[1]);
-	expr->args_value[1] = expand(shell, expr->args[1], &error);
+	expr->args_value[1] = expand(shell, expr->args[1], &error,
+			EXP_LEXER_MASK_ALL);
 	if (error)
 		return (1);
 	return (0);
