@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:48:05 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 09:49:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/17 11:09:00 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static const t_key	g_special_keys[] =\
 	{CTRL_END, &ft_endkey},
 	{ALT_HOME, &ft_homekey},
 	{ALT_END, &ft_endkey},
-	{CTRL_R, &ft_ctrlr}
+	{CTRL_K, &ft_clearline}
 };
 
 int					is_a_special_key(char *buf)
