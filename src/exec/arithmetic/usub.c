@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 06:24:13 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 06:50:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/17 09:36:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	exec_ari_usub(t_shell *shell, t_ast *ast)
 	int	value;
 
 	ast->right->exec(shell, ast->right);
+	value = 0;
 	if (ast->right->data)
 	{
 		value = ft_atoi(ast->right->data);
