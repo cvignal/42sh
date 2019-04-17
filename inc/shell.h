@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/02 14:25:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/09 12:00:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct		s_shell
 	t_token			*output;
 	t_token			*current;
 	int				prompt_len;
+	int				prompt_height;
 	int				fc_cmd;
 }					t_shell;
 

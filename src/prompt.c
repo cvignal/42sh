@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 16:13:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/08 14:54:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/09 11:58:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 
 static void	print_special_prompt(t_shell *shell, char *str)
 {
-	t_curs	cursor;
-	int		n;
+	t_curs			cursor;
+	int				n;
+	struct winsize	win;
 
 	if (ioctl(0, FIONREAD, &n) == 0 && n > 0)
 	{
@@ -33,6 +34,14 @@ static void	print_special_prompt(t_shell *shell, char *str)
 		ft_dprintf(shell->fd_op, "%s%%%s\n", INV_COLOR, EOC);
 	ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
 		, EOC, !shell->ret_cmd ? GREEN : RED, str, EOC);
+	ioctl(0, TIOCGWINSZ, &win);
+	if (win.ws_col == 0)
+		return ;
+	else
+	{
+		shell->prompt_len = (ft_strlen(str) + 7) % win.ws_col;
+		shell->prompt_height = (ft_strlen(str) + 7) / win.ws_col;
+	}
 }
 
 void		print_prompt(t_parser *parser, t_shell *shell, int flag)
@@ -57,7 +66,6 @@ void		print_prompt(t_parser *parser, t_shell *shell, int flag)
 			str = ft_strrchr(cwd, '/') + 1;
 		else
 			str = cwd;
-		shell->prompt_len = ft_strlen(str) + 7;
 		print_special_prompt(shell, str);
 	}
 	free(cwd);
