@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/17 12:19:10 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/18 17:56:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char		*word_to_complete(t_line *line)
 	while (buf[i])
 	{
 		if (buf[i] == ' ' || buf[i] == ';' || buf[i] == '>' || buf[i] == '<'
-			|| buf[i] == '&' || buf[i] == '|')
+			|| buf[i] == 38 || buf[i] == 124 || buf[i] == 39 || buf[i] == 34)
 			ret = buf + i;
 		i++;
 	}
