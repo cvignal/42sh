@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:00:24 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/30 18:58:12 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/18 16:54:09 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	fc_index(t_fc *cmd, t_shell *shell)
 		if (cmd->last)
 			cmd->i_last = fc_find_cmd(cmd->last, shell->history);
 		else
-			cmd->i_last = ft_strchr(cmd->flags, 'l') ?
-				shell->history->length - 1 : cmd->i_first;
+			cmd->i_last = ft_strchr(cmd->flags
+					, 'l') ? shell->history->length - 1 : cmd->i_first;
 	}
 }
