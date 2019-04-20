@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/02 14:22:25 by cvignal          ###   ########.fr        #
+#    Updated: 2019/04/18 21:39:29 by marin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -216,7 +216,7 @@ CC		?=	cc
 
 INCFLAG	:= -I $(INCDIR) $(LIB_INC)
 WFLAGS	?=	-Wall -Wextra -Werror 
-CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG)
+CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG) -g
 
 DEPGEN	:=	$(CC)
 DEPFLAG	:=	-MM $(INCFLAG)
