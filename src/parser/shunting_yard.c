@@ -6,13 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/21 17:39:43 by marin            ###   ########.fr       */
+/*   Updated: 2019/04/21 18:08:32 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
 #include "ast.h"
+#include "parser.h"
 #include "libft.h"
 
 static const t_precedence	g_precedence[] =\
@@ -110,7 +111,11 @@ t_ast			*queue_to_ast(t_pss *pss)
 		if (pss->output_queue->type == TT_OP)
 		{
 			if (!check_enough_tokens(&pss->stack) && ((t_ast *)pss->output_queue->data)->type == TT_PIPE)
+			{
+
+				pss->state = PS_CMD;
 				return (NULL);
+			}
 			if (set_leaves(pss->output_queue->data, &pss->stack))
 				return (clean_exit(pss, pss->stack));
 		}

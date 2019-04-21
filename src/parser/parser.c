@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/21 17:40:57 by marin            ###   ########.fr       */
+/*   Updated: 2019/04/21 18:09:39 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,11 @@ static int			get_return(t_parser *parser)
 		if (parser->pss->error)
 			return (clean_exit(parser));
 		if (!ret)
+		{
+			parser->pss->state = PS_CMD;
 			return (PARSER_MORE_INPUT);
+
+		}
 	}
 	if ((parser->ret = ret))
 		return (PARSER_COMPLETE);
