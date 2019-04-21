@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/21 18:08:32 by marin            ###   ########.fr       */
+/*   Updated: 2019/04/21 19:51:06 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,9 @@ t_ast			*queue_to_ast(t_pss *pss)
 	{
 		if (pss->output_queue->type == TT_OP)
 		{
-			if (!check_enough_tokens(&pss->stack) && ((t_ast *)pss->output_queue->data)->type == TT_PIPE)
+			if (!check_enough_tokens(&pss->stack))
 			{
-
-				pss->state = PS_CMD;
+				push_ast_token(&pss->op_stack, pop_ast_token(&pss->output_queue));
 				return (NULL);
 			}
 			if (set_leaves(pss->output_queue->data, &pss->stack))
