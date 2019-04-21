@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/20 11:24:22 by marin            ###   ########.fr       */
+/*   Updated: 2019/04/21 17:39:43 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,23 @@ void			shunting_yard(t_parser *parser)
 				pop_ast_token(&parser->input_queue));
 }
 
+
+int check_enough_tokens(t_ast_token **stack)
+{
+	t_ast_token	*first;
+	t_ast_token	*second;
+
+	second = NULL;
+	first = pop_ast_token(stack);
+	if (first)
+		second = pop_ast_token(stack);
+	if (second)
+		push_ast_token(stack, second);
+	if (first)
+		push_ast_token(stack, first);
+	return (first && second);
+}
+
 t_ast			*queue_to_ast(t_pss *pss)
 {
 	t_ast		*ret;
@@ -92,6 +109,8 @@ t_ast			*queue_to_ast(t_pss *pss)
 	{
 		if (pss->output_queue->type == TT_OP)
 		{
+			if (!check_enough_tokens(&pss->stack) && ((t_ast *)pss->output_queue->data)->type == TT_PIPE)
+				return (NULL);
 			if (set_leaves(pss->output_queue->data, &pss->stack))
 				return (clean_exit(pss, pss->stack));
 		}
