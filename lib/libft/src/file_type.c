@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 18:51:24 by cvignal           #+#    #+#             */
-/*   Updated: 2018/12/24 16:27:08 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/19 17:41:49 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-char	file_type(char *path)
+char	file_type(const char *path)
 {
 	struct stat info;
 

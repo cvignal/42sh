@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/12 21:37:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/18 15:19:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,30 +88,40 @@ int						expand_redirs(struct s_shell *shell,
 /*
 ** expansion/home.c
 */
-int						expand_home(struct s_shell *shell, int *error, int mask);
+int						expand_home(struct s_shell *shell, int *error
+		, int mask);
 
 /*
 ** expansion/buffer.c
 */
 int						add_to_exp_buff(t_exp_buff *buffer, char c);
-int						exp_lexer_add_to_buff(struct s_shell *shell, char c, int mask);
-int						exp_lexer_add_to_var(struct s_shell *shell, char c, int mask);
-int						exp_lexer_cut_var(struct s_shell *shell, char c, int mask);
-int						exp_lexer_push_var(struct s_shell *shell, char c, int mask);
-int						exp_lexer_push_squote(struct s_shell *shell, char c, int mask);
-int						exp_lexer_push_dquote(struct s_shell *shell, char c, int mask);
-int						exp_lexer_pop_quote(struct s_shell *shell, char c, int mask);
+int						exp_lexer_add_to_buff(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_add_to_var(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_cut_var(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_push_var(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_push_squote(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_push_dquote(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_pop_quote(struct s_shell *shell, char c
+		, int mask);
 
 /*
 ** expansion/expr.c
 */
 struct s_expr;
-int					expand_expr(struct s_shell *shell, struct s_expr *expr);
+int						expand_expr(struct s_shell *shell, struct s_expr *expr);
 
 /*
 ** expansion/lexer_methods_hist.c
 */
-int						exp_lexer_cut_hist(struct s_shell *shell, char c, int mask);
-int						exp_lexer_push_hist(struct s_shell *shell, char c, int mask);
+int						exp_lexer_cut_hist(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_push_hist(struct s_shell *shell, char c
+		, int mask);
 
 #endif

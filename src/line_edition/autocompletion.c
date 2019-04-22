@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/05 16:27:49 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/18 17:30:29 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	add_and_display(t_list *list, char *word, t_shell *shell)
 		to_add = str + ft_strlen(ft_strrchr(word, '/') + 1);
 	else
 		to_add = str + ft_strlen(word) - (ft_strchr(word, '$') != NULL);
-	ft_addchar(shell, to_add, 0);
+	ft_addchar(shell, to_add, 1);
 	ft_strdel(&word);
 }
 
