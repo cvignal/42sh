@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 07:48:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/22 19:00:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ static int		set_leaves(t_ast *node, t_ast_token **stack)
 	if (node->type != TT_ARI_OP_USUB)
 	{
 		if (!(left = pop_ast_token(stack)))
+		{
+			if (node->type == TT_END)
+				return (0);
 			return (1);
+		}
 		node->left = left->data;
 		free(left);
 	}
