@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/30 20:19:13 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/22 14:22:06 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ static const t_readline	g_functions[2] =\
 static void				exec_ast(t_shell *shell, t_token *tokens)
 {
 	t_ast	*ast;
+	int ret;
 
-	if (parse(shell, tokens) == PARSER_COMPLETE)
+	ret = parse(shell, tokens);
+	if (ret == PARSER_COMPLETE)
 	{
 		ast = shell->parser.ret;
 		ast->exec(shell, ast);
@@ -41,7 +43,7 @@ static void				exec_ast(t_shell *shell, t_token *tokens)
 	add_to_history(shell->line.data, shell, 0);
 	reset_terminal_mode(shell);
 	raw_terminal_mode(shell);
-	print_prompt(&shell->parser, shell, 0);
+	print_prompt(&shell->parser, shell, ret == PARSER_MORE_INPUT);
 }
 
 int						main(int ac, char **av, char **environ)
