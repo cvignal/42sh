@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/01 10:16:18 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/22 11:17:56 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct			s_pss
 	int					error;
 	struct s_ast_token	*output_queue;
 	struct s_ast_token	*op_stack;
+	struct s_ast_token	*stack;
 	struct s_ast		*ret;
 	struct s_pss		*next;
 }						t_pss;

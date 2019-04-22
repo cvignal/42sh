@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sig_msg.h                                          :+:      :+:    :+:   */
+/*   tools_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstadelw <fstadelw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/18 04:20:06 by fstadelw          #+#    #+#             */
-/*   Updated: 2019/04/18 19:59:09 by marin            ###   ########.fr       */
+/*   Created: 2019/04/22 19:06:59 by cvignal           #+#    #+#             */
+/*   Updated: 2019/04/22 19:14:58 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIG_MSG_H
-# define SIG_MSG_H
+#include <unistd.h>
+#include <stdlib.h>
 
-# include <signal.h>
+#include "shell.h"
+#include "libft.h"
+#include "fill_line.h"
 
-/*
-** used to match an Error message to it's value
-*/
-typedef struct	s_sig_msg
-{
-	pid_t		sig;
-	const char	*msg;
-	unsigned char		rtn;
-}				t_sig_msg;
 
-#endif

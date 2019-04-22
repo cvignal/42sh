@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 17:40:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/05 15:05:48 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/22 15:13:28 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	expr_nt(t_shell *shell, char **args)
 		return (1);
 	if (lstat(args[2], &f2))
 		return (0);
-	if (f1.st_mtimespec.tv_sec > f2.st_mtimespec.tv_sec)
+	if (f1.st_mtime > f2.st_mtime)
 		return (0);
 	return (1);
 }
