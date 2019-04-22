@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 18:06:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/07 09:00:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/20 11:24:07 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int			pss_push(t_parser *parser, int state)
 		return (1);
 	ft_bzero(new_state, sizeof(*new_state));
 	new_state->state = state;
+	new_state->stack = NULL;
 	new_state->next = parser->pss;
 	parser->pss = new_state;
 	return (0);
