@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/21 16:50:46 by marin            ###   ########.fr        #
+#    Updated: 2019/04/22 18:52:17 by agrouard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,8 +121,6 @@ SRC		=								\
 	builtins/exec_builtin.c				\
 	builtins/cd.c						\
 	builtins/echo.c						\
-	builtins/env.c						\
-	builtins/env_options.c				\
 	builtins/setenv.c					\
 	builtins/unsetenv.c					\
 	builtins/exit.c						\
