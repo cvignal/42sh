@@ -6,13 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/29 14:53:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/22 14:07:17 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-
 #include "ast.h"
+#include "parser.h"
 #include "libft.h"
 
 static const t_precedence	g_precedence[] =\
@@ -63,6 +63,7 @@ static t_ast	*clean_exit(t_pss *pss, t_ast_token *stack)
 {
 	pss->error = 1;
 	free_input_queue(stack);
+	stack = NULL;
 	return (NULL);
 }
 
@@ -83,27 +84,48 @@ void			shunting_yard(t_parser *parser)
 				pop_ast_token(&parser->input_queue));
 }
 
+
+int check_enough_tokens(t_ast_token **stack)
+{
+	t_ast_token	*first;
+	t_ast_token	*second;
+
+	second = NULL;
+	first = pop_ast_token(stack);
+	if (first)
+		second = pop_ast_token(stack);
+	if (second)
+		push_ast_token(stack, second);
+	if (first)
+		push_ast_token(stack, first);
+	return (first && second);
+}
+
 t_ast			*queue_to_ast(t_pss *pss)
 {
 	t_ast		*ret;
-	t_ast_token	*stack;
-
-	stack = NULL;
+	
 	while (pss->output_queue)
 	{
 		if (pss->output_queue->type == TT_OP)
 		{
-			if (set_leaves(pss->output_queue->data, &stack))
-				return (clean_exit(pss, stack));
+			if (!check_enough_tokens(&pss->stack))
+			{
+				push_ast_token(&pss->op_stack, pop_ast_token(&pss->output_queue));
+				return (NULL);
+			}
+			if (set_leaves(pss->output_queue->data, &pss->stack))
+				return (clean_exit(pss, pss->stack));
 		}
-		push_ast_token(&stack, pop_ast_token(&pss->output_queue));
+		push_ast_token(&pss->stack, pop_ast_token(&pss->output_queue));
 	}
-	if (stack)
+	if (pss->stack)
 	{
-		if (stack->next)
-			return (clean_exit(pss, stack));
-		ret = stack->data;
-		free(stack);
+		if (pss->stack->next)
+			return (clean_exit(pss, pss->stack));
+		ret = pss->stack->data;
+		free(pss->stack);
+		pss->stack = NULL;
 	}
 	else
 		return (NULL);
