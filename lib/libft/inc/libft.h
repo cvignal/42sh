@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/20 10:41:12 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/19 17:41:36 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char				*ft_insert_free(char *str, char *to_insert,
 					size_t index, int flag);
 void				ft_del_char(char *str, size_t index);
 void				ft_delelt(void *content, size_t index);
-char				file_type(char *path);
+char				file_type(const char *path);
 char				**ft_listtotab(t_list *lst, size_t size);
 long double			ft_ldpow(long double ndr, unsigned long int pow);
 unsigned long long	ft_ullpow(unsigned long long nbr, unsigned long int pow);

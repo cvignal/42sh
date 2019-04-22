@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:49:17 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/30 20:20:36 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/22 15:09:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ static int	print_crash_signal(int status)
 		{
 			if (g_signal_msg[i].sig == WTERMSIG(status))
 			{
-				ft_putstr(g_signal_msg[i].msg);
-				ft_putendl(WCOREDUMP(status) ? " (core dumped)" : "");
+				ft_dprintf(2, "%s%s\n", g_signal_msg[i].msg
+						, WCOREDUMP(status) ? " (core dumped" : "");
 				return (g_signal_msg[i].rtn);
 			}
 			i++;

@@ -6,7 +6,8 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/17 14:44:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/22 19:16:01 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/18 15:21:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +16,12 @@
 #include "shell.h"
 #include "expand.h"
 #include "libft.h"
+
+static int	error_message(void)
+{
+	ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
+	return (1);
+}
 
 static char	*clean_exit(t_exp_lexer *lexer, int *error)
 {
@@ -69,12 +76,10 @@ int			expand_params(t_shell *shell, t_command *command, int mask)
 			free(command->args_value[i - j]);
 		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
 		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
-		command->args_value[i - j] = expand(shell, command->args[i], &error, mask);
+		command->args_value[i - j] = expand(shell, command->args[i], &error
+				, mask);
 		if (error)
-		{
-			ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
-			return (1);
-		}
+			return (error_message());
 		if (!command->args_value[i - j])
 			j++;
 		i++;
