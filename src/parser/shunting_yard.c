@@ -6,12 +6,11 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/21 19:51:06 by marin            ###   ########.fr       */
+/*   Updated: 2019/04/22 14:07:17 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-
 #include "ast.h"
 #include "parser.h"
 #include "libft.h"
@@ -105,7 +104,7 @@ int check_enough_tokens(t_ast_token **stack)
 t_ast			*queue_to_ast(t_pss *pss)
 {
 	t_ast		*ret;
-
+	
 	while (pss->output_queue)
 	{
 		if (pss->output_queue->type == TT_OP)
