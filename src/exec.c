@@ -59,23 +59,37 @@ static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 	exit(1);
 }
 
-pid_t		do_exec(t_shell *shell, t_ast *instr)
+pid_t		do_exec(t_shell *shell, char **argv)
 {
+	int		status;
+	pid_t		pid;
+	char		*bin_path;
+	t_builtin	builtin;
+
+	if (!(bin_path = find_command(shell, argv[0])))
+		return (do_error_handling(argv[0]));
+	if (!(pid = fork()))
+		exit(execve(bin_path, argv, shell->env));
+	free(bin_path);
+	wait(&status);
+	if (WIFEXITED(status) || WIFSIGNALED(status))
+		return (0);
+	return (WEXITSTATUS(status));
 }
 
 pid_t		exec(t_shell *shell, t_ast *instr)
 {
 	pid_t		pid;
+	char		*prgm;
 	char		*bin_path;
 	t_builtin	builtin;
 
-	if ((builtin = is_builtin(((t_command *)instr->data)->args_value[0])))
+	prgm = ((t_command *)instr->data)->args_value[0];
+	if ((builtin = is_builtin(prgm)))
 		return (exec_builtin(shell, builtin, instr));
-	bin_path = hbt_command(shell, ((t_command *)instr->data)->args_value[0]);
-	if (!bin_path)
+	if (!(bin_path = hbt_command(shell, prgm)))
 	{
-		bin_path = ((t_command *)instr->data)->args_value[0];
-		instr->ret = do_error_handling(bin_path);
+		instr->ret = do_error_handling(prgm);
 		return (-1);
 	}
 	if (!(pid  = fork()))

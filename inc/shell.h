@@ -193,6 +193,7 @@ int					add_to_command(t_command *command, char *word);
 ** exec.c
 */
 pid_t				exec(t_shell *shell, t_ast *instr);
+pid_t				do_exec(t_shell *shell, char **argv);
 int					wait_loop(t_ast *ast);
 
 /*
