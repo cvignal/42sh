@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/22 19:16:11 by cvignal          ###   ########.fr        #
+#    Updated: 2019/04/22 18:52:17 by agrouard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -122,8 +122,6 @@ SRC		=								\
 	builtins/exec_builtin.c				\
 	builtins/cd.c						\
 	builtins/echo.c						\
-	builtins/env.c						\
-	builtins/env_options.c				\
 	builtins/setenv.c					\
 	builtins/unsetenv.c					\
 	builtins/exit.c						\
@@ -216,7 +214,7 @@ include $(LIBFT_PATH)/include.mk
 CC		?=	cc
 
 INCFLAG	:= -I $(INCDIR) $(LIB_INC)
-WFLAGS	?=	-Wall -Wextra -Werror 
+WFLAGS	?=	-Wall -Wextra -Werror
 CFLAGS	=	$(INCFLAG) $(STDFLAG) -g
 
 DEPGEN	:=	$(CC)

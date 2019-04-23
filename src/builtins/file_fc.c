@@ -97,7 +97,7 @@ int					fc_open_editor(t_fc *cmd, t_tmpfile *file, t_shell *shell)
 		return (1);
 	}
 	args[2] = NULL;
-	ret = exec_from_char(shell, args, shell);
+	ret = do_exec(shell, args);
 	ft_deltab(&args);
 	return (ret);
 }
