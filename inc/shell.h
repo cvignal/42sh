@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 06:24:01 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/23 22:59:59 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct		s_shell
 	t_token			*output;
 	t_token			*current;
 	int				prompt_len;
+	int				prompt_height;
 	int				fc_cmd;
 }					t_shell;
 
@@ -207,7 +208,7 @@ int					add_to_command(t_command *command, char *word);
 ** exec.c
 */
 pid_t				exec(t_shell *shell, t_ast *instr);
-int					exec_from_char(t_shell *shell, t_var *tmp_env, char **arg);
+pid_t				do_exec(t_shell *shell, char **argv);
 int					wait_loop(t_ast *ast);
 
 /*

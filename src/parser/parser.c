@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 02:22:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/23 22:51:58 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int			clean_exit(t_parser *parser)
 	parser->pss->output_queue = NULL;
 	free_input_queue(parser->pss->op_stack);
 	parser->pss->op_stack = NULL;
-	return (PARSER_EMPTY);
+	return (PARSER_ERROR);
 }
 
 static int			get_return(t_parser *parser)
@@ -86,8 +86,10 @@ static int			get_return(t_parser *parser)
 		if (parser->input_queue)
 			return (clean_exit(parser));
 		ret = queue_to_ast(parser->pss);
-		if (parser->pss->error)
+		if (parser->pss->status == PARSER_ERROR)
 			return (clean_exit(parser));
+		else if (parser->pss->status == PARSER_MORE_INPUT)
+			return (PARSER_MORE_INPUT);
 	}
 	if ((parser->ret = ret))
 		return (PARSER_COMPLETE);
@@ -99,17 +101,19 @@ int					parse(t_shell *shell, t_token *tokens)
 {
 	int				ret;
 
-	shell->parser.pss->error = 0;
+	shell->parser.pss->status = PARSER_EMPTY;
 	add_to_ast_token_list(&shell->parser.input_queue, lookup(&tokens));
 	while (shell->parser.input_queue)
 	{
 		if ((ret = reduce(&shell->parser)) == 1)
-			return (clean_exit(&shell->parser));
+			return ((shell->parser.ret_status = clean_exit(&shell->parser)));
 		else if (!ret)
-			return (clean_exit(&shell->parser));
+			return ((shell->parser.ret_status = clean_exit(&shell->parser)));
 	}
+	if (shell->parser.pss->state != PS_NONE)
+		return ((shell->parser.ret_status = get_return(&shell->parser)));
 	while (shell->parser.pss->op_stack)
 		add_to_ast_token_list(&shell->parser.pss->output_queue,
 				pop_ast_token(&shell->parser.pss->op_stack));
-	return (get_return(&shell->parser));
+	return ((shell->parser.ret_status = get_return(&shell->parser)));
 }

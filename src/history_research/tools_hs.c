@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 16:11:46 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/11 16:20:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/23 12:44:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	fill_line_hs(t_shell *shell, char *buf)
 	t_puts("rc");
 	t_puts("cr");
 	t_puts("cd");
-	print_prompt(NULL, shell, 0);
+	print_prompt(shell, 0);
 	if (shell->his_pos == shell->history->length)
 		return ;
 	if (shell->his_pos < 0)

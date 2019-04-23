@@ -54,5 +54,15 @@ obj/
 # General
 .DS_Store
 
-### ctags ###
+### Ctags ###
 tags
+
+42sh.srctrlprj
+compile_commands.json
+42sh.srctrlbm
+42sh.srctrldb
+
+.clang
+
+### Adrien ###
+.vimsession

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 12:23:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/13 01:10:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/23 23:05:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 #include "shell.h"
 #include "libft.h"
 #include "fill_line.h"
+
+int		fc_switch_env(t_shell *new_shell, t_shell *shell)
+{
+	free_vars(&shell->vars);
+	shell->vars = copy_vars(new_shell->vars, 0);
+	return (0);
+}
 
 int		fc_exec_line(char *str, t_shell *shell)
 {
@@ -34,6 +41,7 @@ int		fc_exec_line(char *str, t_shell *shell)
 	}
 	fc_exec_ast(&tmp_shell, tokens);
 	fc_free_shell(&tmp_shell);
+	fc_switch_env(&tmp_shell, shell);
 	return (0);
 }
 
@@ -60,5 +68,6 @@ int		fc_exec_file(char *name, t_shell *shell)
 	fc_free_shell(&tmp_shell);
 	if (close(fd) == -1)
 		return (1);
+	fc_switch_env(&tmp_shell, shell);
 	return (0);
 }

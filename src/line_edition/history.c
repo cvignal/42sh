@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/11 15:37:43 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/23 13:32:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 void	clear_cmd_line(t_shell *shell)
 {
+	int	nb;
+
 	while (nb_multi_lines(shell->line.cursor, shell->prompt_len) > 0)
 		ft_lineup(shell);
 	if (ft_strchr(shell->line.data, '\n'))
@@ -25,12 +27,18 @@ void	clear_cmd_line(t_shell *shell)
 		while (shell->line.cursor > 0)
 			ft_leftkey(shell);
 	}
+	nb = shell->prompt_height;
+	while (nb != 0)
+	{
+		t_puts("up");
+		nb--;
+	}
 	t_puts("cr");
 	t_puts("cd");
 	if (!shell->ctrld)
-		print_prompt(NULL, shell, 0);
+		print_prompt(shell, shell->output ? 1 : 0);
 	else
-		print_prompt(NULL, shell, 1);
+		print_prompt(shell, 1);
 }
 
 int		ft_hisdown(t_shell *shell)

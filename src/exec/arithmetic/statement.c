@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 23:58:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 06:34:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/23 23:11:44 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		exec_ari_statement(t_shell *shell, t_ast *ast)
 	if (lss_push(&shell->lexer, LSTATE_ARI_NONE))
 		return (1);
 	error = 0;
-	expanded = expand(shell, ast->data, &error);
+	expanded = expand(shell, ast->data, &error, EXP_LEXER_MASK_ALL);
 	if (error || !expanded || !(tokens = lex(shell, expanded)))
 		return (1);
 	set_unary(tokens);

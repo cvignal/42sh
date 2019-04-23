@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:34:34 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/11 05:08:35 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/23 23:04:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int		fc_init_shell(t_shell *shell, t_shell *old_shell)
 	shell->used_fd->is_pipe = 0;
 	shell->used_fd->next = NULL;
 	ft_bzero(&shell->line, sizeof(shell->line));
-	shell->vars = old_shell->vars;
-	shell->exec_vars = old_shell->exec_vars;
+	shell->vars = copy_vars(old_shell->vars, 0);
+	shell->exec_vars = NULL;
 	shell->fd_op = old_shell->fd_op;
 	return (0);
 }

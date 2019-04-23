@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 05:01:09 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/21 18:12:09 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/15 17:02:09 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_printf_buffer	*create_buffer(void)
 	buffer = malloc(sizeof(*buffer));
 	if (!buffer)
 		return (NULL);
-	buffer->data = malloc(sizeof(*buffer->data) * PRINTF_ALLOC_SIZE);
+	buffer->data = malloc(sizeof(*buffer->data) * PRINTF_ALLOC_SIZE + 1);
 	if (!buffer->data)
 	{
 		free(buffer);
@@ -42,7 +42,7 @@ int				add_to_buffer(t_printf_buffer *buffer, char c)
 	if (buffer->pos % PRINTF_ALLOC_SIZE == 0)
 	{
 		buffer->data = ft_realloc(buffer->data, buffer->alloc_size,
-				buffer->alloc_size + PRINTF_ALLOC_SIZE);
+				buffer->alloc_size + PRINTF_ALLOC_SIZE + 1);
 		if (!buffer->data)
 		{
 			buffer->error = 1;
@@ -65,7 +65,7 @@ int				add_to_buffer_nstring(t_printf_buffer *buffer,
 	len = ft_strlen(s);
 	if (buffer->pos + len >= buffer->alloc_size)
 	{
-		realloc_size = (len / PRINTF_ALLOC_SIZE) * PRINTF_ALLOC_SIZE;
+		realloc_size = (len / PRINTF_ALLOC_SIZE) * PRINTF_ALLOC_SIZE + 1;
 		buffer->data = ft_realloc(buffer->data, buffer->alloc_size,
 				buffer->alloc_size + realloc_size);
 		if (!buffer->data)

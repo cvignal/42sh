@@ -6,13 +6,15 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 03:29:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/23 23:15:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 
 #include "shell.h"
@@ -20,20 +22,28 @@
 #include "libft.h"
 #include "expand.h"
 
-static int	bin_not_found(const char *bin)
+int		fail(char *proc, char *err, char *message, int ret)
 {
-	ft_dprintf(2, "%s: %s: %s\n", EXEC_NAME, COMMAND_NOT_FOUND_MSG, bin);
-	return (-1);
+	ft_dprintf(2, "%s: %s: %s\n", proc, err, message);
+	return (ret);
 }
 
-static int	ft_wait(int *status)
+static int	do_error_handling(char *name)
 {
-	while (1)
+	struct stat info;
+
+	if (access(name, F_OK) == 0)
 	{
-		wait(status);
-		if (WIFEXITED(*status) || WIFSIGNALED(*status))
-			return (0);
+		if (stat(name, &info) != -1 && S_ISDIR(info.st_mode))
+			return (fail(EXEC_NAME, name, "Is a directory", 126));
+		else if (access(name, X_OK) == -1)
+			return (fail(EXEC_NAME, name, "Permission denied", 126));
+		else
+			return (fail(EXEC_NAME, name, "Unexpected error", 127));
 	}
+	if (ft_strchr(name, '/') != NULL)
+		return (fail(EXEC_NAME, name, "No such file or directory", 127));
+	return (fail(EXEC_NAME, name, "Command not found", 127));
 }
 
 static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
@@ -54,56 +64,44 @@ static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 	exit(1);
 }
 
-int			exec_from_char(t_shell *shell, t_var *tmp_env, char **args)
+pid_t		do_exec(t_shell *shell, char **argv)
 {
+	int		status;
 	pid_t		pid;
-	int			status;
 	char		*bin_path;
 	char		**env;
 
-	if (get_var(tmp_env, "PATH"))
-		bin_path = find_command(tmp_env, args[0]);
-	else
-		bin_path = find_command(shell->vars, args[0]);
-	if (bin_path)
-		pid = fork();
-	else
-		return (bin_not_found(args[0]));
-	if (!pid)
+	if (!(bin_path = find_command(shell->vars, argv[0])))
+		return (do_error_handling(argv[0]));
+	if (!(pid = fork()))
 	{
-		if (!(env = build_env(tmp_env)))
-			exit(1);
-		execve(bin_path, args, env);
+		env = build_env(shell->exec_vars);
+		exit(execve(bin_path, argv, env));
 	}
-	else
-	{
-		free(bin_path);
-		ft_wait(&status);
-	}
+	free(bin_path);
+	wait(&status);
+	if (WIFEXITED(status) || WIFSIGNALED(status))
+		return (0);
 	return (WEXITSTATUS(status));
 }
 
 pid_t		exec(t_shell *shell, t_ast *instr)
 {
 	pid_t		pid;
+	char		*prgm;
 	char		*bin_path;
 	t_builtin	builtin;
 
-	if (expand_params(shell, instr->data))
-		return (1);
-	if ((builtin = is_builtin(((t_command *)instr->data)->args_value[0])))
+	prgm = ((t_command *)instr->data)->args_value[0];
+	if ((builtin = is_builtin(prgm)))
 		return (exec_builtin(shell, builtin, instr));
-	bin_path = hbt_command(shell, ((t_command *)instr->data)->args_value[0]);
-	if (bin_path)
-		pid = fork();
-	else
+	if (!(bin_path = hbt_command(shell, prgm)))
 	{
-		instr->ret = 1;
-		return (bin_not_found(((t_command *)instr->data)->args_value[0]));
+		instr->ret = do_error_handling(prgm);
+		return (-1);
 	}
-	if (!pid)
+	if (!(pid  = fork()))
 		exec_internal(shell, instr, bin_path);
-	else
-		instr->pid = pid;
+	instr->pid = pid;
 	return (0);
 }

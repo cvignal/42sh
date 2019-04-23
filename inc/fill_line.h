@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 17:45:01 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/23 12:42:13 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define CTRL_R "\x12\0\0\0\0\0"
 # define CTRL_A	"\x1\0\0\0\0\0"
 # define CTRL_P "\20"
+# define CTRL_K "\v"
 # define RETURN "\n"
 # define BACKSPACE "\b"
 # define DEL_KEY "\033[3~"
@@ -109,6 +110,7 @@ int				ft_hisup(t_shell *shell);
 int				ft_ctrll(t_shell *shell);
 int				ft_ctrlr(t_shell *shell);
 int				ft_delete(t_shell *shell);
+int				ft_clearline(t_shell *shell);
 
 /*
 ** Tools for autocompletion
@@ -145,7 +147,7 @@ int				open_history_file(t_shell *shell);
 */
 int				t_puts(char *id);
 int				pos_cursor_col(t_shell *shell, int width, int len);
-void			print_prompt(t_parser *parser, t_shell *shell, int flag);
+void			print_prompt(t_shell *shell, int flag);
 
 /*
 ** History research mode
