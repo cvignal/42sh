@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/12 12:11:35 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/23 23:15:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	set_assignements(t_shell *shell, t_ast *ast, t_var **vars)
 		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
 		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
 		error = 0;
-		expanded = expand(shell, iter->var, &error);
+		expanded = expand(shell, iter->var, &error, EXP_LEXER_MASK_ALL);
 		if (error || set_var_full(vars, expanded, export))
 			return (1);
 		if (shell->exp_lexer.buffer.buffer)
@@ -67,7 +67,9 @@ int			exec_cmd(t_shell *shell, t_ast *ast)
 
 	if (shell->ctrlc)
 		return (0);
-	if (expand_redirs(shell, ast->redir_list))
+	if (expand_params(shell, ast->data, EXP_LEXER_MASK_ALL))
+		return (1);
+	if (expand_redirs(shell, ast->redir_list, EXP_LEXER_MASK_ALL))
 		return (1);
 	if (prepare_redirs(shell, ast, ast))
 		return ((ast->ret = 127));

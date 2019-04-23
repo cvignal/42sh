@@ -6,13 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/22 19:00:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/23 23:17:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-
 #include "ast.h"
+#include "parser.h"
 #include "libft.h"
 
 static int		set_leaves(t_ast *node, t_ast_token **stack)
@@ -22,28 +22,32 @@ static int		set_leaves(t_ast *node, t_ast_token **stack)
 
 	if (!node)
 		return (1);
-	if (!(right = pop_ast_token(stack)))
-		return (1);
+	right = pop_ast_token(stack);
 	node->right = right->data;
 	free(right);
-	if (node->type != TT_ARI_OP_USUB)
+	node->left = NULL;
+	if (!(left = pop_ast_token(stack)))
 	{
-		if (!(left = pop_ast_token(stack)))
-		{
-			if (node->type == TT_END)
-				return (0);
-			return (1);
-		}
-		node->left = left->data;
-		free(left);
+		if (node->type == TT_END)
+			return (0);
+		((t_ast *)right->data)->del(right->data);
+		free(right);
+		return (1);
 	}
+	node->left = left->data;
+	free(left);
 	return (0);
 }
 
-static t_ast	*clean_exit(t_pss *pss, t_ast_token *stack)
+static t_ast	*clean_exit(t_pss *pss)
 {
-	pss->error = 1;
-	free_input_queue(stack);
+	pss->status = PARSER_ERROR;
+	free_input_queue(pss->stack);
+	pss->stack = NULL;
+	free_input_queue(pss->output_queue);
+	pss->output_queue = NULL;
+	free_input_queue(pss->op_stack);
+	pss->op_stack = NULL;
 	return (NULL);
 }
 
@@ -59,7 +63,7 @@ static void		shunting_yard_parenthesis(t_parser *parser)
 		if (parser->pss->op_stack)
 			free_ast_token(pop_ast_token(&parser->pss->op_stack));
 		else
-			clean_exit(parser->pss, NULL);
+			clean_exit(parser->pss);
 	}
 	else if (parser->input_queue->type == TT_OPEN_PAR)
 		push_ast_token(&parser->pss->op_stack,
@@ -85,29 +89,47 @@ void			shunting_yard(t_parser *parser)
 		shunting_yard_parenthesis(parser);
 }
 
+
+int check_enough_tokens(t_pss *pss)
+{
+	if (!pss->stack)
+		return (0);
+	if (!pss->stack->next && ((t_ast *)pss->output_queue->data)->type != TT_END)
+		return (0);
+	return (1);
+}
+
 t_ast			*queue_to_ast(t_pss *pss)
 {
 	t_ast		*ret;
-	t_ast_token	*stack;
-
-	stack = NULL;
+	
 	while (pss->output_queue)
 	{
 		if (pss->output_queue->type == TT_OP)
 		{
-			if (set_leaves(pss->output_queue->data, &stack))
-				return (clean_exit(pss, stack));
+			if (!check_enough_tokens(pss))
+			{
+				if (!pss->stack || pss->output_queue->next)
+					return (clean_exit(pss));
+				push_ast_token(&pss->op_stack, pop_ast_token(&pss->output_queue));
+				pss->status = PARSER_MORE_INPUT;
+				return (NULL);
+			}
+			if (set_leaves(pss->output_queue->data, &pss->stack))
+				return (clean_exit(pss));
 		}
-		push_ast_token(&stack, pop_ast_token(&pss->output_queue));
+		push_ast_token(&pss->stack, pop_ast_token(&pss->output_queue));
 	}
-	if (stack)
+	if (pss->stack)
 	{
-		if (stack->next)
-			return (clean_exit(pss, stack));
-		ret = stack->data;
-		free(stack);
+		if (pss->stack->next)
+			return (clean_exit(pss));
+		ret = pss->stack->data;
+		free(pss->stack);
+		pss->stack = NULL;
 	}
 	else
 		return (NULL);
+	pss->status = PARSER_COMPLETE;
 	return (ret);
 }

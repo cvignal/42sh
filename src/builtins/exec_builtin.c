@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/20 15:25:58 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/12 21:33:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 {
 	int		fd[3];
 
-	if (expand_params(shell, instr->data))
+	if (expand_params(shell, instr->data, EXP_LEXER_MASK_ALL))
 		return (-1);
 	if (prepare_pipeline(shell, instr, fd))
 		return (-1);

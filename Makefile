@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/13 06:36:26 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/23 23:25:26 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,6 @@ SRC		=									\
 	builtins/builtins.c						\
 	builtins/cd.c							\
 	builtins/echo.c							\
-	builtins/env.c							\
-	builtins/env_options.c					\
 	builtins/exec_builtin.c					\
 	builtins/exit.c							\
 	builtins/fc.c							\
@@ -142,6 +140,7 @@ SRC		=									\
 	line_edition/tools_insertion.c			\
 	line_edition/tools_keys.c				\
 	line_edition/tools_motion.c				\
+	line_edition/tools_path.c				\
 	main.c									\
 	parser/arithmetic/init.c				\
 	parser/arithmetic/lexer_actions.c		\
@@ -186,6 +185,7 @@ SRC		=									\
 	parser/rules_shift.c					\
 	parser/rules_shunting_yard.c			\
 	parser/rules_statement.c				\
+	parser/rules_syntax_error.c				\
 	parser/rules_while.c					\
 	parser/shunting_yard.c					\
 	parser/token.c							\

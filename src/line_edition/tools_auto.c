@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/05 16:08:40 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/18 17:56:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,6 @@ void		ft_add_builtins(char *word, t_list **list)
 		}
 		i++;
 	}
-}
-
-char		*find_path(char *word)
-{
-	char	pwd[BUFF_SIZE];
-	char	*ret;
-
-	getcwd(pwd, BUFF_SIZE);
-	ret = ft_strjoin(pwd, "/");
-	if (!word)
-		return (ret);
-	if (*word != '/')
-		ret = ft_strjoin_free(ret, word, 1);
-	else
-	{
-		ft_strdel(&ret);
-		if (!(ret = ft_strdup(word)))
-			return (NULL);
-	}
-	if (ft_strchr(word, '/'))
-		*(ft_strrchr(ret, '/') + 1) = 0;
-	else
-		*(ret + ft_strlen(pwd)) = 0;
-	return (ret);
 }
 
 int			ft_comp(char *word, char *name)
@@ -102,7 +78,7 @@ char		*word_to_complete(t_line *line)
 	while (buf[i])
 	{
 		if (buf[i] == ' ' || buf[i] == ';' || buf[i] == '>' || buf[i] == '<'
-			|| buf[i] == '&' || buf[i] == '|')
+			|| buf[i] == 38 || buf[i] == 124 || buf[i] == 39 || buf[i] == 34)
 			ret = buf + i;
 		i++;
 	}
