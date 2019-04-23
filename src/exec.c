@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/22 19:39:29 by agrouard         ###   ########.fr       */
+/*   Updated: 2019/04/23 22:40:41 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ pid_t		do_exec(t_shell *shell, char **argv)
 	int		status;
 	pid_t		pid;
 	char		*bin_path;
-	t_builtin	builtin;
 
 	if (!(bin_path = find_command(shell, argv[0])))
 		return (do_error_handling(argv[0]));

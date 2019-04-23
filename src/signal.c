@@ -6,7 +6,7 @@
 /*   By: cvignal <cvignal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 13:50:27 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/24 08:58:23 by fstadelw         ###   ########.fr       */
+/*   Updated: 2019/04/23 12:46:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	prompt_signal_handler(int sig)
 {
 	(void)sig;
 	ft_putstr("\n");
-	print_prompt(&g_shell->parser, g_shell, 0);
+	print_prompt(g_shell, 0);
 }
 
 void	disable_signal(t_shell *shell)

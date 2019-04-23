@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 10:29:40 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/09 11:54:07 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/23 13:32:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	clear_cmd_line(t_shell *shell)
 	t_puts("cr");
 	t_puts("cd");
 	if (!shell->ctrld)
-		print_prompt(NULL, shell, 0);
+		print_prompt(shell, shell->output ? 1 : 0);
 	else
-		print_prompt(NULL, shell, 1);
+		print_prompt(shell, 1);
 }
 
 int		ft_hisdown(t_shell *shell)

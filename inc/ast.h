@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 02:37:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/23 11:51:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,12 @@ int						rule_while_close(t_parser *parser, t_ast_token *list);
 ** parser/rules_shunting_yard.c
 */
 int						rule_send_to_shunting_yard(t_parser *parser,
+		t_ast_token *list);
+
+/*
+** parser/rules_syntax_error.c
+*/
+int						rule_syntax_error(t_parser *parser,
 		t_ast_token *list);
 
 /*

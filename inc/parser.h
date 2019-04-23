@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/22 11:17:56 by marin            ###   ########.fr       */
+/*   Updated: 2019/04/23 13:05:18 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ enum
 {
 	PARSER_MORE_INPUT,
 	PARSER_EMPTY,
-	PARSER_COMPLETE
+	PARSER_COMPLETE,
+	PARSER_ERROR
 };
 
 typedef struct			s_lss
@@ -108,7 +109,7 @@ typedef struct			s_lss
 typedef struct			s_pss
 {
 	int					state;
-	int					error;
+	int					status;
 	struct s_ast_token	*output_queue;
 	struct s_ast_token	*op_stack;
 	struct s_ast_token	*stack;
@@ -127,6 +128,7 @@ typedef struct			s_lexer
 typedef struct			s_parser
 {
 	t_pss				*pss;
+	int					ret_status;
 	struct s_ast		*ret;
 	struct s_ast_token	*input_queue;
 }						t_parser;
