@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/22 18:52:17 by agrouard         ###   ########.fr        #
+#    Updated: 2019/04/23 22:37:00 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SRC		=								\
 	parser/rules_redir_read_write.c		\
 	parser/rules_pipe.c					\
 	parser/rules_statement.c			\
+	parser/rules_syntax_error.c			\
 	parser/rules_if.c					\
 	parser/rules_if_nocd.c				\
 	parser/rules_while.c				\
@@ -214,8 +215,8 @@ include $(LIBFT_PATH)/include.mk
 CC		?=	cc
 
 INCFLAG	:= -I $(INCDIR) $(LIB_INC)
-WFLAGS	?=	-Wall -Wextra -Werror
-CFLAGS	=	$(INCFLAG) $(STDFLAG) -g
+WFLAGS	?=	-Wall -Wextra -Werror 
+CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG)
 
 DEPGEN	:=	$(CC)
 DEPFLAG	:=	-MM $(INCFLAG)
