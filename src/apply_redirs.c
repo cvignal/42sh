@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/06 20:01:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 11:42:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 12:09:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int		apply_redir_generic(t_redir *redir)
 		ft_dprintf(2, "%s: unable to create redirection\n", EXEC_NAME);
 		return (1);
 	}
+	close(redir->fd);
+	redir->fd = redir->in;
 	return (0);
 }
 
