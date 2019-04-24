@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/06 20:01:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/05 11:11:38 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/24 11:19:12 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ static t_redir_apply_desc	g_redir_apply_desc[] =\
 	{TT_REDIR_R, &apply_redir_generic},
 	{TT_REDIR_RR, &apply_redir_generic},
 	{TT_REDIR_L, &apply_redir_generic},
+	{TT_REDIR_L_COMP, &apply_redir_comp},
 	{TT_REDIR_LL, &apply_redir_generic},
 	{TT_REDIR_R_CLOSE, &apply_redir_r_close},
-	{TT_REDIR_R_COMP, &apply_redir_r_comp},
+	{TT_REDIR_R_COMP, &apply_redir_comp},
 	{TT_REDIR_R_BOTH, &apply_redir_r_both},
 	{TT_REDIR_RW, &apply_redir_rw}
 };
@@ -78,7 +79,7 @@ int		apply_redir_r_both(t_redir *redir)
 	return (0);
 }
 
-int		apply_redir_r_comp(t_redir *redir)
+int		apply_redir_comp(t_redir *redir)
 {
 	if (dup2(redir->out, redir->in) == -1)
 	{
