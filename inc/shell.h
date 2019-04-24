@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 12:43:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/25 00:56:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -457,6 +457,7 @@ void				free_vars(t_var **vars);
 int					set_special_var(t_var **vars, const char *name,
 		const char *value);
 int					is_special_var(char name);
+void				set_ret(t_shell *shell, t_ast *current, int ret);
 
 /*
 **	parser/rules_redir_comp_generic.c
