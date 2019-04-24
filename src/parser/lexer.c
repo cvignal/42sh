@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 05:09:33 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 09:49:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int		handle_ret(t_lexer *lexer, int ret, t_token **current,
 	{
 		if (!(*current = alloc_token()))
 			return (clean_exit_lexer(lexer, output, current, MEMORY_ERROR_MSG));
+		(*current)->type = TT_WORD;
 	}
 	if (ret & (1 << LEXER_RET_CUT))
 	{

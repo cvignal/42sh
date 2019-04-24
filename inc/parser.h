@@ -69,10 +69,10 @@ typedef enum			e_lstate
 	LSTATE_META,
 	LSTATE_SQUOTE,
 	LSTATE_DQUOTE,
-	LSTATE_ARI_FIRST_PASS,
 	LSTATE_ARI_NONE,
 	LSTATE_ARI_ID,
 	LSTATE_ARI_OP,
+	LSTATE_PAREN,
 	LSTATE_ESCAPED,
 	NUMBER_LSTATE
 }						t_lstate;
@@ -190,6 +190,10 @@ int						lexer_create_meta(struct s_shell *shell,
 int						lexer_add_meta(struct s_shell *shell,
 		t_token *token, char c);
 int						lexer_try_meta(struct s_shell *shell,
+		t_token *token, char c);
+int						lexer_push_paren(struct s_shell *shell,
+		t_token *token, char c);
+int						lexer_pop_paren(struct s_shell *shell,
 		t_token *token, char c);
 
 /*
