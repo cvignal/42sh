@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:36:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/29 17:51:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/24 12:48:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static const t_redir_desc g_redir_desc[] =\
 	{TT_REDIR_R, &redir_r},
 	{TT_REDIR_RR, &redir_rr},
 	{TT_REDIR_R_COMP, &redir_r_comp},
-	{TT_REDIR_R_CLOSE, &redir_r_close},
+	{TT_REDIR_R_CLOSE, &redir_close},
+	{TT_REDIR_L_CLOSE, &redir_close},
 	{TT_REDIR_R_BOTH, &redir_r_both}
 };
 

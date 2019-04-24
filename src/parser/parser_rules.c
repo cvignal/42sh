@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 11:21:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 12:48:14 by gchainet         ###   ########.fr       */
 /*   Updated: 2019/04/23 11:49:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -41,6 +41,7 @@ static const t_ast_rule g_rules[] =\
 	{PS_CMD, {TT_REDIR_R_COMP, 0, 0}, 1, &rule_redir_r_comp},
 	{PS_CMD, {TT_REDIR_L_COMP, 0, 0}, 1, &rule_redir_l_comp},
 	{PS_CMD, {TT_REDIR_R_CLOSE, 0, 0}, 1, &rule_redir_r_close},
+	{PS_CMD, {TT_REDIR_L_CLOSE, 0, 0}, 1, &rule_redir_l_close},
 	{PS_CMD, {TT_REDIR_RW, TT_WORD, 0}, 2, &rule_redir_rw},
 	{PS_CMD, {0, 0, 0}, 0, &rule_pop_cmd_statement},
 	{PS_ARI, {TT_ARI_OP_PLUS_PLUS, TT_ARI_ID, 0}, 2, &rule_ari_pre_plus_plus},
@@ -78,6 +79,7 @@ static const t_ast_rule g_rules[] =\
 	{PS_NONE, {TT_REDIR_R_COMP, 0, 0}, 1, &rule_push_cmd},
 	{PS_NONE, {TT_REDIR_L_COMP, 0, 0}, 1, &rule_push_cmd},
 	{PS_NONE, {TT_REDIR_R_CLOSE, 0, 0}, 1, &rule_push_cmd},
+	{PS_NONE, {TT_REDIR_L_CLOSE, 0, 0}, 1, &rule_push_cmd},
 	{PS_NONE, {TT_REDIR_RW, TT_WORD, 0}, 2, &rule_push_cmd},
 	{PS_NONE | PS_EXPR, {TT_STATEMENT, 0, 0}, 1, &rule_send_to_shunting_yard},
 	{PS_NONE | PS_EXPR, {TT_OP, 0, 0}, 1, &rule_send_to_shunting_yard},

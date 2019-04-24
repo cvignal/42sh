@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/24 11:36:22 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/24 12:44:04 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -182,7 +182,7 @@ SRC		=									\
 	parser/rules_redir.c					\
 	parser/rules_redir_l_comp.c				\
 	parser/rules_redir_r_both.c				\
-	parser/rules_redir_r_close.c			\
+	parser/rules_redir_close.c				\
 	parser/rules_redir_r_comp.c				\
 	parser/rules_redir_read_write.c			\
 	parser/rules_shift.c					\
@@ -203,7 +203,7 @@ SRC		=									\
 	redir_internal.c						\
 	redir_l_comp.c							\
 	redir_r_both.c							\
-	redir_r_close.c							\
+	redir_close.c							\
 	redir_r_comp.c							\
 	redir_reset.c							\
 	redir_rw.c								\
