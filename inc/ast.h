@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 18:12:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 19:10:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef enum			e_ttype
 	TT_REDIR_RW,
 	TT_EXPR_OPEN,
 	TT_EXPR_CLOSE,
-	TT_EXPR_INCOMPLETE,
 	TT_EXPR,
 	TT_PIPE,
 	TT_IF,
