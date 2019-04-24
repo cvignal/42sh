@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:46:05 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/12 23:57:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 08:46:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ static void	init_lexer_zero(t_lexer *lexer)
 {
 	lexer->lexer_actions[LSTATE_WORD][0] = &lexer_cut;
 	lexer->lexer_actions[LSTATE_NONE][0] = &lexer_over;
-	lexer->lexer_actions[LSTATE_DQUOTE][0] = &lexer_more_input;
-	lexer->lexer_actions[LSTATE_SQUOTE][0] = &lexer_more_input;
+	lexer->lexer_actions[LSTATE_DQUOTE][0] = &lexer_more_input_nl;
+	lexer->lexer_actions[LSTATE_SQUOTE][0] = &lexer_more_input_nl;
+	lexer->lexer_actions[LSTATE_ESCAPED][0] = &lexer_more_input;
 	lexer->lexer_actions[LSTATE_META][0] = &lexer_cut;
 }
 
@@ -60,6 +61,9 @@ static void	init_lexer_basics(t_lexer *lexer)
 	lexer->lexer_actions[LSTATE_WORD]['\t'] = &lexer_cut;
 	lexer->lexer_actions[LSTATE_NONE][' '] = &lexer_pass;
 	lexer->lexer_actions[LSTATE_NONE]['\t'] = &lexer_pass;
+	lexer->lexer_actions[LSTATE_NONE]['\\'] = &lexer_create;
+	lexer->lexer_actions[LSTATE_WORD]['\\'] = &lexer_push_escaped;
+	lexer->lexer_actions[LSTATE_META]['\\'] = &lexer_cut;
 }
 
 int			init_lexer(t_lexer *lexer)
@@ -75,6 +79,7 @@ int			init_lexer(t_lexer *lexer)
 		lexer->lexer_actions[LSTATE_NONE][i] = &lexer_create;
 		lexer->lexer_actions[LSTATE_WORD][i] = &lexer_add;
 		lexer->lexer_actions[LSTATE_META][i] = &lexer_try_meta;
+		lexer->lexer_actions[LSTATE_ESCAPED][i] = &lexer_add_pop_escaped;
 		++i;
 	}
 	init_lexer_quote(lexer);

@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_act_over.c                                   :+:      :+:    :+:   */
+/*   lexer_act_escaped.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/22 10:08:55 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 08:47:15 by gchainet         ###   ########.fr       */
+/*   Created: 2019/04/24 08:40:27 by gchainet          #+#    #+#             */
+/*   Updated: 2019/04/24 08:42:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+#include <stdlib.h>
+
 #include "shell.h"
-#include "parser.h"
+#include "libft.h"
 
-int	lexer_over(struct s_shell *shell, t_token *token, char c)
+int		lexer_push_escaped(t_shell *shell, t_token *token, char c)
 {
-	(void)c;
-	(void)shell;
 	(void)token;
-	return (1 << LEXER_RET_OVER);
-}
-
-int	lexer_more_input_nl(t_shell *shell, t_token *token, char c)
-{
-	(void)shell;
 	(void)c;
-	if (add_to_token(token, '\n'))
+	if (lss_push(&shell->lexer, LSTATE_ESCAPED))
 		return (1 << LEXER_RET_ERROR);
-	return (1 << LEXER_RET_MORE_INPUT);
+	return (1 << LEXER_RET_CONT);
 }
 
-int	lexer_more_input(t_shell *shell, t_token *token, char c)
+int		lexer_add_pop_escaped(t_shell *shell, t_token *token, char c)
 {
 	(void)shell;
-	(void)c;
-	(void)token;
-	return (1 << LEXER_RET_MORE_INPUT);
+	token->type = TT_WORD;
+	if (add_to_token(token, c))
+		return (1 << LEXER_RET_ERROR);
+	lss_pop(&shell->lexer);
+	return (1 << LEXER_RET_CONT);
 }
