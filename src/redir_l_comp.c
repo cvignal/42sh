@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rules_redir_r_comp.c                               :+:      :+:    :+:   */
+/*   redir_l_comp.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/23 12:43:13 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 11:17:45 by gchainet         ###   ########.fr       */
+/*   Created: 2019/04/24 11:16:49 by gchainet          #+#    #+#             */
+/*   Updated: 2019/04/24 11:16:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
 
-#include "ast.h"
 #include "shell.h"
-#include "libft.h"
 
-int				rule_redir_r_comp(t_parser *parser, t_token *list)
+int	redir_l_comp(t_shell *shell, t_ast *instr, t_redir *redir)
 {
-	(void)list;
-	if (create_redir_comp_generic(parser, TT_REDIR_R_COMP, &redir_r_comp))
-		return (1);
+	(void)shell;
+	(void)instr;
+	redir->fd = redir->out;
 	return (0);
 }
+

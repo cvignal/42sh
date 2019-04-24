@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 07:45:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 11:19:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,13 +340,18 @@ int					apply_redirs(t_shell *shell, t_ast *instr);
 int					apply_redir_generic(t_redir *redir);
 int					apply_redir_r_close(t_redir *redir);
 int					apply_redir_r_both(t_redir *redir);
-int					apply_redir_r_comp(t_redir *redir);
+int					apply_redir_comp(t_redir *redir);
 int					apply_redir_rw(t_redir *redir);
 
 /*
 ** redir_r_comp.c
 */
 int					redir_r_comp(t_shell *shell, t_ast *ast, t_redir *redir);
+
+/*
+** redir_l_comp.c
+*/
+int					redir_l_comp(t_shell *shell, t_ast *ast, t_redir *redir);
 
 /*
 ** redir_r_close.c
@@ -452,5 +457,11 @@ void				free_vars(t_var **vars);
 int					set_special_var(t_var **vars, const char *name,
 		const char *value);
 int					is_special_var(char name);
+
+/*
+**	parser/rules_redir_comp_generic.c
+*/
+int						create_redir_comp_generic(t_parser *parser,
+		t_ttype type, t_redir_act act);
 
 #endif
