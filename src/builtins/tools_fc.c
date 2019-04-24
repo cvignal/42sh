@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:34:34 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/23 23:04:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 07:42:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	fc_exec_ast(t_shell *shell, t_token *tokens)
 		ast = shell->parser.ret;
 		ast->exec(shell, ast);
 		close_everything(shell);
-		wait_loop(ast);
+		wait_loop(shell, ast);
 		shell->ret_cmd = ast->ret;
 		ast->del(ast);
 		shell->parser.ret = NULL;

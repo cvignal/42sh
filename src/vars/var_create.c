@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 02:02:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 04:39:49 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 07:09:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int		separate_name_value(const char *full, char *name,
 	return (0);
 }
 
-static t_var	*alloc_var(const char *name, const char *value, int exported)
+t_var			*alloc_var(const char *name, const char *value, int exported)
 {
 	t_var	*var;
 
@@ -56,7 +56,7 @@ static t_var	*alloc_var(const char *name, const char *value, int exported)
 	return (var);
 }
 
-static void		add_to_vars(t_var **to, t_var *from)
+void			add_to_vars(t_var **to, t_var *from)
 {
 	t_var	*iter;
 

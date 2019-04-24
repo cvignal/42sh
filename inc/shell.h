@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 22:59:59 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 07:45:45 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 # define MAX_PATH 1024
 # define VAR_MAX 1024
 # define SEARCH_MAX 128
+# define SPECIAL_VAR_RET "?"
 
 # define REMOVE_VAR_ENV 0
 # define REMOVE_VAR_LOCAL 1
@@ -209,7 +210,7 @@ int					add_to_command(t_command *command, char *word);
 */
 pid_t				exec(t_shell *shell, t_ast *instr);
 pid_t				do_exec(t_shell *shell, char **argv);
-int					wait_loop(t_ast *ast);
+int					wait_loop(t_shell *shell, t_ast *ast);
 
 /*
 ** path.c
@@ -427,6 +428,9 @@ int					set_var(t_var **vars, const char *name,
 		const char *value, int exported);
 int					set_var_full(t_var **vars, const char *value,
 		int exported);
+t_var				*alloc_var(const char *name, const char *value,
+		int exported);
+void				add_to_vars(t_var **to, t_var *from);
 
 /*
 ** var.c
@@ -441,5 +445,12 @@ void				remove_var(t_var **vars, const char *name, int options);
 t_var				*copy_env(const char **env);
 t_var				*copy_vars(t_var *vars, int only_exported);
 void				free_vars(t_var **vars);
+
+/*
+**	var/special_vars.c
+*/
+int					set_special_var(t_var **vars, const char *name,
+		const char *value);
+int					is_special_var(char name);
 
 #endif
