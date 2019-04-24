@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 06:48:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 19:21:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 22:17:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,14 @@ int	rule_send_to_shunting_yard(t_parser *parser, t_token *list)
 			|| ((t_ast *)list->data)->type == TT_END_UNARY)
 		parser->pss->status = PARSER_COMPLETE;
 	else if (list->type == TT_OP)
+	{
+		if (parser->pss->status == PARSER_MORE_INPUT)
+		{
+			parser->pss->status = PARSER_ERROR;
+			return (1);
+		}
 		parser->pss->status = PARSER_MORE_INPUT;
+	}
 	shunting_yard(parser);
 	return (0);
 }
