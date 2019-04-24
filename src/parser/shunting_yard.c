@@ -6,11 +6,12 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 13:06:17 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:27:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+
 #include "ast.h"
 #include "parser.h"
 #include "libft.h"
@@ -35,30 +36,6 @@ static int		precedence(t_ttype type)
 		++i;
 	}
 	return (-1);
-}
-
-static int		set_leaves(t_ast *node, t_ast_token **stack)
-{
-	t_ast_token	*right;
-	t_ast_token	*left;
-
-	if (!node)
-		return (1);
-	right = pop_ast_token(stack);
-	node->right = right->data;
-	free(right);
-	node->left = NULL;
-	if (!(left = pop_ast_token(stack)))
-	{
-		if (node->type == TT_END)
-			return (0);
-		((t_ast *)right->data)->del(right->data);
-		free(right);
-		return (1);
-	}
-	node->left = left->data;
-	free(left);
-	return (0);
 }
 
 static t_ast	*clean_exit(t_pss *pss)
@@ -90,8 +67,7 @@ void			shunting_yard(t_parser *parser)
 				pop_ast_token(&parser->input_queue));
 }
 
-
-int check_enough_tokens(t_pss *pss)
+int				check_enough_tokens(t_pss *pss)
 {
 	if (!pss->stack)
 		return (0);
@@ -102,8 +78,6 @@ int check_enough_tokens(t_pss *pss)
 
 t_ast			*queue_to_ast(t_pss *pss)
 {
-	t_ast		*ret;
-	
 	while (pss->output_queue)
 	{
 		if (pss->output_queue->type == TT_OP)
@@ -112,7 +86,8 @@ t_ast			*queue_to_ast(t_pss *pss)
 			{
 				if (!pss->stack || pss->output_queue->next)
 					return (clean_exit(pss));
-				push_ast_token(&pss->op_stack, pop_ast_token(&pss->output_queue));
+				push_ast_token(&pss->op_stack
+						, pop_ast_token(&pss->output_queue));
 				pss->status = PARSER_MORE_INPUT;
 				return (NULL);
 			}
@@ -121,16 +96,5 @@ t_ast			*queue_to_ast(t_pss *pss)
 		}
 		push_ast_token(&pss->stack, pop_ast_token(&pss->output_queue));
 	}
-	if (pss->stack)
-	{
-		if (pss->stack->next)
-			return (clean_exit(pss));
-		ret = pss->stack->data;
-		free(pss->stack);
-		pss->stack = NULL;
-	}
-	else
-		return (NULL);
-	pss->status = PARSER_COMPLETE;
-	return (ret);
+	return (end_queue_to_ast(pss));
 }

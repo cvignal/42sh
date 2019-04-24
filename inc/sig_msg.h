@@ -6,7 +6,7 @@
 /*   By: fstadelw <fstadelw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 04:20:06 by fstadelw          #+#    #+#             */
-/*   Updated: 2019/04/18 19:59:09 by marin            ###   ########.fr       */
+/*   Updated: 2019/04/24 16:57:16 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 */
 typedef struct	s_sig_msg
 {
-	pid_t		sig;
-	const char	*msg;
-	unsigned char		rtn;
+	pid_t			sig;
+	const char		*msg;
+	unsigned char	rtn;
 }				t_sig_msg;
 
 #endif

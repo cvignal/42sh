@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 22:40:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 16:58:15 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include "libft.h"
 #include "expand.h"
 
-int		fail(char *proc, char *err, char *message, int ret)
+int			fail(char *proc, char *err, char *message, int ret)
 {
 	ft_dprintf(2, "%s: %s: %s\n", proc, err, message);
 	return (ret);
@@ -62,8 +62,8 @@ static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 pid_t		do_exec(t_shell *shell, char **argv)
 {
 	int		status;
-	pid_t		pid;
-	char		*bin_path;
+	pid_t	pid;
+	char	*bin_path;
 
 	if (!(bin_path = find_command(shell, argv[0])))
 		return (do_error_handling(argv[0]));
@@ -91,7 +91,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 		instr->ret = do_error_handling(prgm);
 		return (-1);
 	}
-	if (!(pid  = fork()))
+	if (!(pid = fork()))
 		exec_internal(shell, instr, bin_path);
 	instr->pid = pid;
 	return (0);

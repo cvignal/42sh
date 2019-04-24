@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/23 22:37:00 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/24 17:03:16 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRC		=								\
 	parser/rules_while.c				\
 	parser/rules_shunting_yard.c		\
 	parser/shunting_yard.c				\
+	parser/tools_shunting_yard.c		\
 	parser/ast.c						\
 	parser/ast_token.c					\
 	parser/utils.c						\

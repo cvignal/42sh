@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 13:05:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:29:43 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,5 +234,12 @@ int						ccmp(char a, char b);
 */
 int						keyword_type(const char *s);
 int						is_a_keyword(const char *s);
+
+/*
+** parser/tools_shunting_yard.c
+*/
+int						set_leaves(struct s_ast *node
+		, struct s_ast_token **stack);
+struct s_ast			*end_queue_to_ast(t_pss *pss);
 
 #endif
