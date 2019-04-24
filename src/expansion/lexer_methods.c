@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 20:59:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 07:28:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 19:57:54 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@ int	exp_lexer_add_to_buff(t_shell *shell, char c, int mask)
 	(void)mask;
 	if (add_to_exp_buff(&shell->exp_lexer.buffer, c))
 		return (EXP_LEXER_RET_ERROR);
+	return (EXP_LEXER_RET_CONT);
+}
+
+int	exp_lexer_pop_add_to_buff(t_shell *shell, char c, int mask)
+{
+	(void)mask;
+	if (add_to_exp_buff(&shell->exp_lexer.buffer, c))
+		return (EXP_LEXER_RET_ERROR);
+	exp_ss_pop(&shell->exp_lexer);
 	return (EXP_LEXER_RET_CONT);
 }
 

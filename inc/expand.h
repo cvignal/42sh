@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 22:57:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 19:52:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef enum			e_exp_state
 	EXP_STATE_DQUOTE,
 	EXP_STATE_VAR,
 	EXP_STATE_HIST,
+	EXP_STATE_ESCAPED,
 	NUMBER_EXP_STATE
 }						t_exp_state;
 
@@ -97,6 +98,8 @@ int						expand_home(struct s_shell *shell, int *error
 int						add_to_exp_buff(t_exp_buff *buffer, char c);
 int						exp_lexer_add_to_buff(struct s_shell *shell, char c
 		, int mask);
+int						exp_lexer_pop_add_to_buff(struct s_shell *shell, char c
+		, int mask);
 int						exp_lexer_add_to_var(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_cut_var(struct s_shell *shell, char c
@@ -108,6 +111,8 @@ int						exp_lexer_push_squote(struct s_shell *shell, char c
 int						exp_lexer_push_dquote(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_pop_quote(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_push_escaped(struct s_shell *shell, char c
 		, int mask);
 
 /*
