@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 22:51:58 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 02:05:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,6 @@ static int			reduce(t_parser *parser)
 		did_reduce = 1;
 	}
 	return (did_reduce ? 2 : 0);
-}
-
-static t_ast_token	*lookup(t_token **tokens)
-{
-	t_ast_token	*input_queue;
-	t_ast_token	*new_token;
-	t_token		*tmp;
-
-	input_queue = NULL;
-	while ((tmp = *tokens))
-	{
-		if (!(new_token = alloc_ast_token(tmp->data, tmp->type)))
-			return (NULL);
-		add_to_ast_token_list(&input_queue, new_token);
-		*tokens = (*tokens)->next;
-		free(tmp);
-	}
-	return (input_queue);
 }
 
 static int			clean_exit(t_parser *parser)
@@ -102,7 +84,7 @@ int					parse(t_shell *shell, t_token *tokens)
 	int				ret;
 
 	shell->parser.pss->status = PARSER_EMPTY;
-	add_to_ast_token_list(&shell->parser.input_queue, lookup(&tokens));
+	shell->parser.input_queue = tokens;
 	while (shell->parser.input_queue)
 	{
 		if ((ret = reduce(&shell->parser)) == 1)

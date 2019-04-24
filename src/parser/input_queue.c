@@ -13,9 +13,9 @@
 #include "ast.h"
 #include "parser.h"
 
-void	free_input_queue(t_ast_token *input)
+void	free_input_queue(t_token *input)
 {
-	t_ast_token	*tmp;
+	t_token	*tmp;
 
 	while (input)
 	{

@@ -31,7 +31,7 @@ static int	pop_if(t_parser *parser)
 	return (0);
 }
 
-int			rule_elif(t_parser *parser, t_ast_token *list)
+int			rule_elif(t_parser *parser, t_token *list)
 {
 	t_ast	*node;
 
@@ -39,11 +39,11 @@ int			rule_elif(t_parser *parser, t_ast_token *list)
 	if (!node || pss_push(parser, PS_IFNOCD | PS_NONE))
 		return (1);
 	parser->pss->ret = node;
-	shift_ast_token(parser, list, 1);
+	shift_token(parser, list, 1);
 	return (0);
 }
 
-int			rule_close_if(t_parser *parser, t_ast_token *list)
+int			rule_close_if(t_parser *parser, t_token *list)
 {
 	free(list->data);
 	if (parser->pss->ret->type == TT_ELSE && pop_if(parser))
@@ -56,7 +56,7 @@ int			rule_close_if(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int			rule_else(t_parser *parser, t_ast_token *list)
+int			rule_else(t_parser *parser, t_token *list)
 {
 	t_ast	*node;
 
@@ -64,6 +64,6 @@ int			rule_else(t_parser *parser, t_ast_token *list)
 	if (!node || pss_push(parser, PS_IFCD | PS_NONE))
 		return (1);
 	parser->pss->ret = node;
-	shift_ast_token(parser, list, 1);
+	shift_token(parser, list, 1);
 	return (0);
 }

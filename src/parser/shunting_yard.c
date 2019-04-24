@@ -15,10 +15,10 @@
 #include "parser.h"
 #include "libft.h"
 
-static int		set_leaves(t_ast *node, t_ast_token **stack)
+static int		set_leaves(t_ast *node, t_token **stack)
 {
-	t_ast_token	*right;
-	t_ast_token	*left;
+	t_token	*right;
+	t_token	*left;
 
 	if (!node)
 		return (1);

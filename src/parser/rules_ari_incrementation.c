@@ -15,7 +15,7 @@
 #include "shell.h"
 #include "arithmetic.h"
 
-int	rule_ari_post_plus_plus(t_parser *parser, t_ast_token *list)
+int	rule_ari_post_plus_plus(t_parser *parser, t_token *list)
 {
 	t_ast	*ast_plus;
 	t_ast	*ast_value;
@@ -35,11 +35,11 @@ int	rule_ari_post_plus_plus(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_ari_pre_plus_plus(t_parser *parser, t_ast_token *list)
+int	rule_ari_pre_plus_plus(t_parser *parser, t_token *list)
 {
 	t_ast		*ast_plus;
 	t_ast		*ast_value;
-	t_ast_token	*tmp;
+	t_token	*tmp;
 
 	(void)parser;
 	if (!(ast_plus = alloc_ast(list->data, TT_STATEMENT,

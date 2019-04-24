@@ -13,7 +13,7 @@
 #include "shell.h"
 #include "arithmetic.h"
 
-int	rule_ari_op(t_parser *parser, t_ast_token *list)
+int	rule_ari_op(t_parser *parser, t_token *list)
 {
 	t_ast			*node;
 	t_ari_op_desc	desc;

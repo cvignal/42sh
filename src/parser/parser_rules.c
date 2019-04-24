@@ -90,7 +90,7 @@ static const t_ast_rule g_rules[] =\
 	{PS_NONE, {TT_WHILE, 0, 0}, 1, &rule_create_while}
 };
 
-static size_t	count_tokens(t_ast_token *tokens)
+static size_t	count_tokens(t_token *tokens)
 {
 	size_t		size;
 
@@ -103,7 +103,7 @@ static size_t	count_tokens(t_ast_token *tokens)
 	return (size);
 }
 
-static int		is_target_rule(t_ast_token *token, unsigned int rule_id,
+static int		is_target_rule(t_token *token, unsigned int rule_id,
 		size_t len_tokens, int state)
 {
 	unsigned int	i;
@@ -123,7 +123,7 @@ static int		is_target_rule(t_ast_token *token, unsigned int rule_id,
 	return (0);
 }
 
-t_ast_act		get_rule(t_ast_token *tokens, int state)
+t_ast_act		get_rule(t_token *tokens, int state)
 {
 	size_t			len_tokens;
 	unsigned int	rule;

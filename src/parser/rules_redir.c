@@ -17,7 +17,7 @@
 #include "parser.h"
 #include "shell.h"
 
-int			rule_redir_l(t_parser *parser, t_ast_token *list)
+int			rule_redir_l(t_parser *parser, t_token *list)
 {
 	t_redir		*redir;
 
@@ -43,7 +43,7 @@ int			rule_redir_l(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int			rule_redir_ll(t_parser *parser, t_ast_token *list)
+int			rule_redir_ll(t_parser *parser, t_token *list)
 {
 	t_redir		*redir;
 
@@ -69,7 +69,7 @@ int			rule_redir_ll(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int			rule_redir_r(t_parser *parser, t_ast_token *list)
+int			rule_redir_r(t_parser *parser, t_token *list)
 {
 	t_redir		*redir;
 
@@ -96,7 +96,7 @@ int			rule_redir_r(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int			rule_redir_rr(t_parser *parser, t_ast_token *list)
+int			rule_redir_rr(t_parser *parser, t_token *list)
 {
 	t_redir		*redir;
 

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:02 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 00:34:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 01:58:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int				add_to_token(t_token *token, char c)
 		if (realloc_token(token))
 			return (1);
 	}
-	token->data[token->len++] = c;
+	((char *)token->data)[token->len++] = c;
 	return (0);
 }
 

@@ -14,16 +14,16 @@
 #include "shell.h"
 #include "libft.h"
 
-int	rule_create_statement(t_parser *parser, t_ast_token *list)
+int	rule_create_statement(t_parser *parser, t_token *list)
 {
 	(void)parser;
 	list->type = TT_STATEMENT;
 	return (0);
 }
 
-int	rule_pop_cmd_statement(t_parser *parser, t_ast_token *list)
+int	rule_pop_cmd_statement(t_parser *parser, t_token *list)
 {
-	t_ast_token		*new_token;
+	t_token		*new_token;
 	t_command		*command;
 
 	(void)list;

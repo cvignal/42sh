@@ -25,8 +25,8 @@ typedef struct	s_ari_op_desc
 
 typedef struct	s_ari_parser
 {
-	t_ast_token	*output;
-	t_ast_token	*input_queue;
+	t_token	*output;
+	t_token	*input_queue;
 }				t_ari_parser;
 
 struct s_shell;

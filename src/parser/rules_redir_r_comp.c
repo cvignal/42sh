@@ -44,7 +44,7 @@ static t_redir	*create_redir_comp(char *data)
 	return (new_redir);
 }
 
-int				rule_redir_r_comp(t_parser *parser, t_ast_token *list)
+int				rule_redir_r_comp(t_parser *parser, t_token *list)
 {
 	t_ast		*instr;
 	t_redir		*redir;

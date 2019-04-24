@@ -13,7 +13,7 @@
 #include "shell.h"
 #include "ast.h"
 
-int	rule_send_to_shunting_yard(t_parser *parser, t_ast_token *list)
+int	rule_send_to_shunting_yard(t_parser *parser, t_token *list)
 {
 	(void)list;
 	shunting_yard(parser);

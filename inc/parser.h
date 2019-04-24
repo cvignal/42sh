@@ -32,14 +32,13 @@
 
 struct s_shell;
 struct s_ast;
-struct s_ast_token;
 
 typedef struct			s_token
 {
-	char				*data;
+	void				*data;
 	size_t				alloc_size;
 	size_t				len;
-	int					type;
+	unsigned int		type;
 	struct s_token		*next;
 }						t_token;
 
@@ -113,9 +112,9 @@ typedef struct			s_pss
 {
 	int					state;
 	int					status;
-	struct s_ast_token	*output_queue;
-	struct s_ast_token	*op_stack;
-	struct s_ast_token	*stack;
+	t_token				*output_queue;
+	t_token				*op_stack;
+	t_token				*stack;
 	struct s_ast		*ret;
 	struct s_pss		*next;
 }						t_pss;
@@ -133,7 +132,7 @@ typedef struct			s_parser
 	t_pss				*pss;
 	int					ret_status;
 	struct s_ast		*ret;
-	struct s_ast_token	*input_queue;
+	t_token				*input_queue;
 }						t_parser;
 
 /*

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 23:05:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 01:42:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 02:00:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	alexer_count_paren(t_shell *shell, t_token *current, char c)
 	i = 0;
 	while (i < current->len)
 	{
-		if (current->data[i] == '(')
+		if (((char *)current->data)[i] == '(')
 			++count;
-		else if (current->data[i] == ')')
+		else if (((char *)current->data)[i] == ')')
 			--count;
 		++i;
 	}

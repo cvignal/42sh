@@ -15,9 +15,9 @@
 #include "shell.h"
 #include "arithmetic.h"
 
-int	rule_ari_pre_mangle(t_parser *parser, t_ast_token *list)
+int	rule_ari_pre_mangle(t_parser *parser, t_token *list)
 {
-	t_ast_token	*new_token;
+	t_token	*new_token;
 	int			type;
 
 	if (list->type == TT_ARI_OP_PLUS_PLUS)
@@ -32,9 +32,9 @@ int	rule_ari_pre_mangle(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_ari_post_mangle(t_parser *parser, t_ast_token *list)
+int	rule_ari_post_mangle(t_parser *parser, t_token *list)
 {
-	t_ast_token	*new_token;
+	t_token	*new_token;
 	int			type;
 
 	if (list->next->type == TT_ARI_OP_PLUS_PLUS)
