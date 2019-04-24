@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 15:38:03 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/24 16:08:00 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,35 @@ static int	exit_error_cd(const char *file)
 	return (1);
 }
 
-static int	change_dir(t_shell *shell, char *curpath, char *dir, int option)
+int			change_dir(t_shell *shell, char *curpath, char *dir, int option)
 {
+	char	*pwd;
+
+	if (!(pwd = ft_strdup(get_env_value(shell, "PWD"))))
+		pwd = getcwd(NULL, MAX_PATH);
+	if (chdir(curpath))
+	{
+		free(pwd);
+		return (exit_error_cd(curpath));
+	}
+	set_env_var(shell, "OLDPWD", pwd);
+	free(pwd);
+	if (option)
+	{
+		pwd = getcwd(NULL, MAX_PATH);
+		set_env_var(shell, "PWD", pwd);
+		free(pwd);
+	}
+	else
+		set_env_var(shell, "PWD", curpath);
+	free(curpath);
 	return (0);
 }
 
 static int	cd_find_path(t_shell *shell, char *dir, int option)
 {
 	char	*curpath;
-	char 	*pwd;
+	char	*pwd;
 
 	if (!dir)
 		return (1);
@@ -60,16 +80,15 @@ static int	cd_find_path(t_shell *shell, char *dir, int option)
 		curpath = cd_parse_path(shell, dir);
 	if (option)
 		return (change_dir(shell, curpath, dir, option));
-	else
+	else if (*curpath != '/')
 	{
 		if (!(pwd = ft_strdup(get_env_value(shell, "PWD"))))
 			pwd = getcwd(NULL, MAX_PATH);
 		if (pwd[ft_strlen(pwd) - 1] != '/')
-			pwd = ft_strjoin_free(pwd, "/");
+			pwd = ft_strjoin_free(pwd, "/", 1);
 		curpath = ft_strjoin_free(pwd, curpath, 3);
-		return (canonic_path(shell, curpath, dir, option));
 	}
-	return (0);
+	return (canonic_path(shell, curpath, dir, option));
 }
 
 int			builtin_cd(t_shell *shell, char **args)

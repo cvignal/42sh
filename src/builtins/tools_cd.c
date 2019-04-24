@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 19:06:59 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/23 16:25:48 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/24 16:09:31 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ unsigned int	cd_parse_options(char **args, int *option)
 		j = 1;
 		while (args[i][j])
 		{
-			if (args[i][j] != 'P' || args[i][j] != 'L')
+			if (args[i][j] != 'P' && args[i][j] != 'L')
 				return (usage_cd(args[i][j]));
 			else if (args[i][j] == 'L')
 				*option = 0;
@@ -48,11 +48,6 @@ unsigned int	cd_parse_options(char **args, int *option)
 		i++;
 	}
 	return (i + ft_strequ(args[i], "--"));
-}
-
-int				*canonic_path(t_shell *shell, char *curpath, char *dir, int option)
-{
-	return (0);
 }
 
 static char		*concat_path(const char *path, const char *bin
@@ -90,7 +85,7 @@ char			*cd_parse_path(t_shell *shell, char *dir)
 				++size_path;
 			bin_path = concat_path(path, dir, size_path);
 			if (!bin_path || (!access(bin_path, F_OK) && (file_type(bin_path)
-					== 'd' || file_type(bin_path) == 'l')))
+							== 'd' || file_type(bin_path) == 'l')))
 				return (bin_path);
 			free(bin_path);
 			path += size_path;
