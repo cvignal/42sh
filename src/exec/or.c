@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 20:38:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 07:40:59 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/25 01:00:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ int		exec_or(t_shell *shell, t_ast *ast)
 		return (0);
 	ast->left->exec(shell, ast->left);
 	wait_loop(shell, ast->left);
+	set_ret(shell, ast, ast->left->ret);
 	if (ast->left->ret != 0)
 	{
 		ast->right->exec(shell, ast->right);
 		wait_loop(shell, ast->right);
-		return ((ast->ret = ast->right->ret));
+		set_ret(shell, ast, ast->right->ret);
 	}
-	return ((ast->ret = 0));
+	return (ast->ret);
 }
 
 void	free_or(t_ast *ast)

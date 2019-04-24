@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 07:03:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 07:45:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/25 00:58:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@ int			is_special_var(char name)
 	}
 	return (0);
 }
+
+void		set_ret(t_shell *shell, t_ast *ast, int ret)
+{
+	char	*ret_str;
+
+	ast->ret = ret;
+	if ((ret_str = ft_itoa(ret)))
+	{
+		set_special_var(&shell->vars, SPECIAL_VAR_RET, ret_str);
+		free(ret_str);
+	}
+}
+
 
 int			set_special_var(t_var **vars, const char *name, const char *value)
 {
