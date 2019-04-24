@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:49:17 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 19:02:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 19:53:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ static void	do_wait(t_ast *ast)
 
 int			wait_loop(t_shell *shell, t_ast *ast)
 {
+	(void)shell;
 	signal(SIGINT, SIG_IGN);
 	reset_terminal_mode(NULL);
 	while (!is_over(ast))

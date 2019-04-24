@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 07:25:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 19:55:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,18 @@ int			init_exp_lexer(t_exp_lexer *lexer)
 
 	ft_bzero(lexer, sizeof(*lexer));
 	i = 0;
-	while (i < CHAR_MAX)
+	while (i <= CHAR_MAX)
 	{
 		lexer->methods[EXP_STATE_WORD][i] = &exp_lexer_add_to_buff;
 		lexer->methods[EXP_STATE_SQUOTE][i] = &exp_lexer_add_to_buff;
 		lexer->methods[EXP_STATE_DQUOTE][i] = &exp_lexer_add_to_buff;
+		lexer->methods[EXP_STATE_ESCAPED][i] = &exp_lexer_pop_add_to_buff;
 		++i;
 	}
 	set_exp_lexer_hist_methods(lexer);
 	set_exp_lexer_var_methods(lexer);
+	lexer->methods[EXP_STATE_WORD]['\\'] = &exp_lexer_push_escaped;
+	lexer->methods[EXP_STATE_DQUOTE]['\\'] = &exp_lexer_push_escaped;
 	lexer->methods[EXP_STATE_WORD]['\''] = &exp_lexer_push_squote;
 	lexer->methods[EXP_STATE_WORD]['"'] = &exp_lexer_push_dquote;
 	lexer->methods[EXP_STATE_WORD]['$'] = &exp_lexer_push_var;
