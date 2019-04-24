@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/24 19:51:51 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/24 20:14:59 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -222,7 +222,6 @@ SRC		=									\
 	visual_mode/vm_leftkey.c				\
 	visual_mode/vm_rightkey.c				\
 	wait.c
-
 
 SRCDIR	:=	src
 OBJDIR	:=	obj
