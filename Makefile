@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/24 11:17:15 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/24 11:36:22 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -180,7 +180,6 @@ SRC		=									\
 	parser/rules_parenthesis.c				\
 	parser/rules_pipe.c						\
 	parser/rules_redir.c					\
-	parser/rules_redir_comp_generic.c		\
 	parser/rules_redir_l_comp.c				\
 	parser/rules_redir_r_both.c				\
 	parser/rules_redir_r_close.c			\
