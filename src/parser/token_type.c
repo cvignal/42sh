@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:54:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 05:16:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 09:43:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ static const t_token_desc	g_token_desc[] =\
 	{"&&", TT_AND},
 	{"(", TT_OPEN_PAR},
 	{")", TT_CLOSE_PAR},
-	{"((", TT_ARI},
-	{"((.*", TT_ARI},
 	{"d*<", TT_REDIR_L},
 	{"d*<<", TT_REDIR_LL},
 	{"d*>", TT_REDIR_R},
@@ -113,7 +111,7 @@ static int			match_pseudo_regex(const char *token, const char *desc)
 	return (!match || token[pos_t] || desc[pos_d]);
 }
 
-int					get_token_type( t_token *token, int state)
+int					get_token_type(t_token *token, int state)
 {
 	unsigned int	i;
 
@@ -121,6 +119,8 @@ int					get_token_type( t_token *token, int state)
 	if (state == LSTATE_ARI_NONE || state == LSTATE_ARI_OP
 			|| state == LSTATE_ARI_ID)
 		return (get_arithmetic_token_type(token->data));
+	if (token->type == TT_PAR)
+		return (TT_PAR);
 	while (i < sizeof(g_token_desc) / sizeof(*g_token_desc))
 	{
 		if (!match_pseudo_regex(token->data, g_token_desc[i].str))

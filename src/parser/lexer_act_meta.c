@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:50:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 02:00:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 09:49:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,7 @@ int	lexer_add_meta(t_shell *shell, t_token *token, char c)
 	if (add_to_token(token, c))
 		return (1 << LEXER_RET_ERROR);
 	type = get_token_type(token, shell->lexer.lss->state);
-	if (type == TT_ARI)
-	{
-		lss_pop(&shell->lexer);
-		token->type = TT_ARI;
-		if (lss_push(&shell->lexer, LSTATE_ARI_FIRST_PASS))
-			return (1 << LEXER_RET_ERROR);
-	}
-	else if (type == TT_WORD)
+	if (type == TT_WORD)
 	{
 		token->len--;
 		((char *)token->data)[token->len] = 0;
@@ -45,6 +38,29 @@ int	lexer_create_meta(t_shell *shell, t_token *token, char c)
 	if (lss_push(&shell->lexer, LSTATE_META))
 		return (1 << LEXER_RET_ERROR);
 	return (1 << LEXER_RET_CREATE);
+}
+
+int	lexer_push_paren(t_shell *shell, t_token *token, char c)
+{
+	if (add_to_token(token, c))
+		return (1 << LEXER_RET_ERROR);
+	token->type = TT_PAR;
+	if (lss_push(&shell->lexer, LSTATE_PAREN))
+		return (1 << LEXER_RET_ERROR);
+	return (1 << LEXER_RET_CONT);
+}
+
+int	lexer_pop_paren(t_shell *shell, t_token *token, char c)
+{
+	if (add_to_token(token, c))
+		return (1 << LEXER_RET_ERROR);
+	lss_pop(&shell->lexer);
+	if (shell->lexer.lss->state == LSTATE_NONE)
+	{
+		lss_pop(&shell->lexer);
+		return ((1 << LEXER_RET_CUT) | (1 << LEXER_RET_CONT));
+	}
+	return (1 << LEXER_RET_CONT);
 }
 
 int	lexer_try_meta(t_shell *shell, t_token *token, char c)

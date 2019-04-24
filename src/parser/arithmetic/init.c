@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:33:40 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 08:29:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 09:28:29 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static inline void	init_arithmetic_other(t_lexer *lexer, int i)
 		lexer->lexer_actions[LSTATE_ARI_NONE][i] = &alexer_input_error;
 		lexer->lexer_actions[LSTATE_ARI_ID][i] = &alexer_cut;
 		lexer->lexer_actions[LSTATE_ARI_OP][i] = &alexer_cut;
-		lexer->lexer_actions[LSTATE_ARI_FIRST_PASS][i] = &alexer_input_error;
 	}
 }
 
@@ -65,9 +64,5 @@ int					init_arithmetic_lexer(t_lexer *lexer)
 	lexer->lexer_actions[LSTATE_ARI_NONE][0] = &lexer_over;
 	lexer->lexer_actions[LSTATE_ARI_NONE][(int)' '] = &lexer_pass;
 	lexer->lexer_actions[LSTATE_ARI_NONE][(int)'\t'] = &lexer_pass;
-	lexer->lexer_actions[LSTATE_ARI_FIRST_PASS][(int)' '] = &alexer_add;
-	lexer->lexer_actions[LSTATE_ARI_FIRST_PASS][(int)'\t'] = &alexer_add;
-	lexer->lexer_actions[LSTATE_ARI_FIRST_PASS][(int)')'] = &alexer_count_paren;
-	lexer->lexer_actions[LSTATE_ARI_FIRST_PASS][0] = &alexer_cut;
 	return (0);
 }

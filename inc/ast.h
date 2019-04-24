@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 01:58:35 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 09:24:58 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef enum			e_ttype
 	TT_ARI_NUMBER,
 	TT_OPEN_PAR,
 	TT_CLOSE_PAR,
+	TT_PAR,
 	TT_REDIR_L,
 	TT_REDIR_R_COMP,
 	TT_REDIR_R_CLOSE,
@@ -278,6 +279,11 @@ int						rule_ari_create_usub(t_parser *parser,
 */
 int						rule_syntax_error(t_parser *parser,
 		t_token *list);
+
+/*
+** parser/rules_parenthesis.c
+*/
+int						rule_parenthesis(t_parser *parser, t_token *list);
 
 /*
 ** parser/ast.c

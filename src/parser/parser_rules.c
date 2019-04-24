@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 22:51:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 09:23:50 by gchainet         ###   ########.fr       */
 /*   Updated: 2019/04/23 11:49:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -67,6 +67,7 @@ static const t_ast_rule g_rules[] =\
 	{PS_ARI, {TT_OVER, 0, 0}, 1, &rule_ari_over},
 	{PS_NONE, {TT_OVER, 0, 0}, 1, &rule_shift_first},
 	{PS_NONE, {TT_WORD, 0, 0}, 1, &rule_first_word},
+	{PS_NONE, {TT_PAR, 0, 0}, 1, &rule_parenthesis},
 	{PS_NONE, {TT_ARI, 0, 0}, 1, &rule_create_ari_statement},
 	{PS_NONE, {TT_REDIR_R, TT_WORD, 0}, 2, &rule_push_cmd},
 	{PS_NONE, {TT_REDIR_R_BOTH, TT_WORD, 0}, 2, &rule_push_cmd},
