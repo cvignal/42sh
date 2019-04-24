@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 23:17:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 18:28:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@ static int		set_leaves(t_ast *node, t_token **stack)
 
 	if (!node)
 		return (1);
-	right = pop_ast_token(stack);
+	if (!(right = pop_ast_token(stack)))
+		return (1);
 	node->right = right->data;
 	free(right);
 	node->left = NULL;
 	if (!(left = pop_ast_token(stack)))
 	{
-		if (node->type == TT_END)
+		if (node->type == TT_END_UNARY || node->type == TT_ARI_OP_USUB)
 			return (0);
-		((t_ast *)right->data)->del(right->data);
-		free(right);
+		node->right->del(node->right);
+		node->right = NULL;
 		return (1);
 	}
 	node->left = left->data;
@@ -90,15 +91,6 @@ void			shunting_yard(t_parser *parser)
 }
 
 
-int check_enough_tokens(t_pss *pss)
-{
-	if (!pss->stack)
-		return (0);
-	if (!pss->stack->next && ((t_ast *)pss->output_queue->data)->type != TT_END)
-		return (0);
-	return (1);
-}
-
 t_ast			*queue_to_ast(t_pss *pss)
 {
 	t_ast		*ret;
@@ -107,14 +99,6 @@ t_ast			*queue_to_ast(t_pss *pss)
 	{
 		if (pss->output_queue->type == TT_OP)
 		{
-			if (!check_enough_tokens(pss))
-			{
-				if (!pss->stack || pss->output_queue->next)
-					return (clean_exit(pss));
-				push_ast_token(&pss->op_stack, pop_ast_token(&pss->output_queue));
-				pss->status = PARSER_MORE_INPUT;
-				return (NULL);
-			}
 			if (set_leaves(pss->output_queue->data, &pss->stack))
 				return (clean_exit(pss));
 		}

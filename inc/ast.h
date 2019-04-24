@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 12:47:49 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 18:12:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef enum			e_ttype
 	TT_CMD,
 	TT_PIPELINE,
 	TT_END,
+	TT_END_UNARY,
 	TT_OR,
 	TT_AND,
 	TT_BG,
