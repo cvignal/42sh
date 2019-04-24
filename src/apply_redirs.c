@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/06 20:01:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 11:19:12 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 11:42:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,16 @@ int		apply_redir_r_both(t_redir *redir)
 
 int		apply_redir_comp(t_redir *redir)
 {
-	if (dup2(redir->out, redir->in) == -1)
+	if (redir->out == -1)
+	{
+		if (dup2(STDERR_FILENO, redir->in) == -1
+				|| dup2(STDOUT_FILENO, redir->in) == -1)
+		{
+			ft_dprintf(2, "%s: unable to create redirection\n", EXEC_NAME);
+			return (1);
+		}
+	}
+	else if (dup2(redir->out, redir->in) == -1)
 	{
 		ft_dprintf(2, "%s: unable to create redirection\n", EXEC_NAME);
 		return (1);
