@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/23 23:25:26 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/24 07:02:57 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -207,9 +207,10 @@ SRC		=									\
 	signal.c								\
 	tools_fd.c								\
 	tools_heredoc.c							\
-	var.c									\
-	var_create.c							\
-	var_utils.c								\
+	vars/var.c								\
+	vars/var_create.c						\
+	vars/var_utils.c						\
+	vars/special_vars.c						\
 	visual_mode/visual_mode.c				\
 	visual_mode/vm_copy.c					\
 	visual_mode/vm_cut.c					\

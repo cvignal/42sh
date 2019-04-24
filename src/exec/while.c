@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 17:57:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/24 06:20:30 by fstadelw         ###   ########.fr       */
+/*   Updated: 2019/04/24 07:41:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ int		exec_while(t_shell *shell, t_ast *ast)
 	if (shell->ctrlc)
 		return (0);
 	((t_ast *)ast->data)->exec(shell, ast->data);
-	wait_loop(ast->data);
+	wait_loop(shell, ast->data);
 	signal(SIGINT, local_signal);
 	while (((t_ast *)ast->data)->ret == 0 && !g_flag)
 	{
 		ast->left->exec(shell, ast->left);
-		wait_loop(ast->left);
+		wait_loop(shell, ast->left);
 		((t_ast *)ast->data)->exec(shell, ast->data);
-		wait_loop(ast->data);
+		wait_loop(shell, ast->data);
 	}
 	g_flag = 0;
 	disable_signal(shell);

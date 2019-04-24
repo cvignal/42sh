@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:49:17 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/22 15:09:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/24 07:39:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,19 @@ static void	do_wait(t_ast *ast)
 	}
 }
 
-int			wait_loop(t_ast *ast)
+int			wait_loop(t_shell *shell, t_ast *ast)
 {
+	char	*ret_str;
+
 	signal(SIGINT, SIG_IGN);
 	reset_terminal_mode(NULL);
 	while (!is_over(ast))
 		do_wait(ast);
+	if ((ret_str = ft_itoa(ast->ret)))
+	{
+		set_special_var(&shell->vars, SPECIAL_VAR_RET, ret_str);
+		free(ret_str);
+	}
 	signal(SIGINT, prompt_signal_handler);
 	return (0);
 }

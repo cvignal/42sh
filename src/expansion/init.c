@@ -6,12 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/17 11:15:35 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/24 07:25:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 
+#include "shell.h"
 #include "expand.h"
 #include "libft.h"
 
@@ -22,7 +23,7 @@ static void	set_exp_lexer_var_methods(t_exp_lexer *lexer)
 	i = 0;
 	while (i < CHAR_MAX)
 	{
-		if (ft_isalnum(i) || i == '_')
+		if (ft_isalnum(i) || i == '_' || is_special_var(i))
 			lexer->methods[EXP_STATE_VAR][i] = &exp_lexer_add_to_var;
 		else
 			lexer->methods[EXP_STATE_VAR][i] = &exp_lexer_cut_var;

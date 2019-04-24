@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 20:59:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 23:17:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 07:28:54 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ int	exp_lexer_add_to_buff(t_shell *shell, char c, int mask)
 int	exp_lexer_add_to_var(t_shell *shell, char c, int mask)
 {
 	(void)mask;
+	if (is_special_var(c))
+	{
+		if (shell->exp_lexer.var.pos == 0)
+		{
+			if (add_to_exp_buff(&shell->exp_lexer.var, c))
+				return (EXP_LEXER_RET_ERROR);
+			else if (exp_lexer_cut_var(shell, c, mask) != EXP_LEXER_RET_ERROR)
+				return (EXP_LEXER_RET_CONT);
+			else
+				return (EXP_LEXER_RET_ERROR);
+		}
+		else
+			return (EXP_LEXER_RET_ERROR);
+	}
 	if (add_to_exp_buff(&shell->exp_lexer.var, c))
 		return (EXP_LEXER_RET_ERROR);
 	return (EXP_LEXER_RET_CONT);
