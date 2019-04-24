@@ -13,7 +13,7 @@
 #include "shell.h"
 #include "arithmetic.h"
 
-int	rule_create_ari_statement(t_parser *parser, t_ast_token *list)
+int	rule_create_ari_statement(t_parser *parser, t_token *list)
 {
 	t_ast	*ast;
 
@@ -26,7 +26,7 @@ int	rule_create_ari_statement(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_create_ari_id(t_parser *parser, t_ast_token *list)
+int	rule_create_ari_id(t_parser *parser, t_token *list)
 {
 	t_ast	*ast;
 
@@ -39,7 +39,7 @@ int	rule_create_ari_id(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_ari_over(t_parser *parser, t_ast_token *list)
+int	rule_ari_over(t_parser *parser, t_token *list)
 {
 	while (parser->pss->op_stack)
 		add_to_ast_token_list(&parser->pss->output_queue,

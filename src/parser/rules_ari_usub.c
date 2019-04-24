@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-int	rule_ari_create_usub(t_parser *parser, t_ast_token *list)
+int	rule_ari_create_usub(t_parser *parser, t_token *list)
 {
 	t_ast	*ast;
 

@@ -15,7 +15,7 @@
 #include "ast.h"
 #include "shell.h"
 
-int	rule_or(t_parser *parser, t_ast_token *list)
+int	rule_or(t_parser *parser, t_token *list)
 {
 	t_ast		*node;
 
@@ -28,7 +28,7 @@ int	rule_or(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_and(t_parser *parser, t_ast_token *list)
+int	rule_and(t_parser *parser, t_token *list)
 {
 	t_ast		*node;
 

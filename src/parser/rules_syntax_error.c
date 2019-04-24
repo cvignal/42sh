@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-int	rule_syntax_error(t_parser *parser, t_ast_token *list)
+int	rule_syntax_error(t_parser *parser, t_token *list)
 {
 	(void)parser;
 	(void)list;

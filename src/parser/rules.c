@@ -16,7 +16,7 @@
 #include "shell.h"
 #include "libft.h"
 
-int	rule_first_word(t_parser *parser, t_ast_token *list)
+int	rule_first_word(t_parser *parser, t_token *list)
 {
 	int	type;
 
@@ -28,7 +28,7 @@ int	rule_first_word(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_push_cmd(t_parser *parser, t_ast_token *list)
+int	rule_push_cmd(t_parser *parser, t_token *list)
 {
 	t_ast	*node;
 
@@ -46,7 +46,7 @@ int	rule_push_cmd(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_add_to_cmd(t_parser *parser, t_ast_token *list)
+int	rule_add_to_cmd(t_parser *parser, t_token *list)
 {
 	int	ret;
 
@@ -71,7 +71,7 @@ int	rule_add_to_cmd(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_create_end(t_parser *parser, t_ast_token *list)
+int	rule_create_end(t_parser *parser, t_token *list)
 {
 	t_ast		*node_end;
 
@@ -84,7 +84,7 @@ int	rule_create_end(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_create_end_second(t_parser *parser, t_ast_token *list)
+int	rule_create_end_second(t_parser *parser, t_token *list)
 {
 	t_ast	*node_end;
 

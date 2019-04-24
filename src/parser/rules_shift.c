@@ -14,9 +14,9 @@
 #include "shell.h"
 #include "libft.h"
 
-int	rule_shift_first(t_parser *parser, t_ast_token *list)
+int	rule_shift_first(t_parser *parser, t_token *list)
 {
-	t_ast_token	*tmp;
+	t_token	*tmp;
 
 	(void)list;
 	tmp = parser->input_queue->next;
@@ -27,9 +27,9 @@ int	rule_shift_first(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_shift_second(t_parser *parser, t_ast_token *list)
+int	rule_shift_second(t_parser *parser, t_token *list)
 {
-	t_ast_token	*tmp;
+	t_token	*tmp;
 
 	(void)parser;
 	tmp = list->next->next;

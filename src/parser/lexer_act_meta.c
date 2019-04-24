@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:50:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 05:10:15 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 02:00:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	lexer_add_meta(t_shell *shell, t_token *token, char c)
 	else if (type == TT_WORD)
 	{
 		token->len--;
-		token->data[token->len] = 0;
+		((char *)token->data)[token->len] = 0;
 		lss_pop(&shell->lexer);
 		return (1 << LEXER_RET_CUT);
 	}
@@ -59,7 +59,7 @@ int	lexer_try_meta(t_shell *shell, t_token *token, char c)
 		token->type = type;
 		return (1 << LEXER_RET_CONT);
 	}
-	token->data[--token->len] = 0;
+	((char *)token->data)[--token->len] = 0;
 	lss_pop(&shell->lexer);
 	return (1 << LEXER_RET_CUT);
 }

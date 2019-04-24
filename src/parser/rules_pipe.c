@@ -14,7 +14,7 @@
 #include "shell.h"
 #include "parser.h"
 
-int	rule_pipe(t_parser *parser, t_ast_token *list)
+int	rule_pipe(t_parser *parser, t_token *list)
 {
 	t_ast		*pipe_node;
 
