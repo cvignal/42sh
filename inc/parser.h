@@ -73,6 +73,7 @@ typedef enum			e_lstate
 	LSTATE_ARI_NONE,
 	LSTATE_ARI_ID,
 	LSTATE_ARI_OP,
+	LSTATE_ESCAPED,
 	NUMBER_LSTATE
 }						t_lstate;
 
@@ -216,6 +217,16 @@ int						lexer_over(struct s_shell *shell, t_token *token,
 		char c);
 int						lexer_more_input(struct s_shell *shell, t_token *token,
 		char c);
+int						lexer_more_input_nl(struct s_shell *shell, t_token *token,
+		char c);
+
+/*
+** parser/lexer_act_escaped.c
+*/
+int						lexer_push_escaped(struct s_shell *shell,
+		t_token *token, char c);
+int						lexer_add_pop_escaped(struct s_shell *shell,
+		t_token *token, char c);
 
 /*
 ** parser/lexer.c
