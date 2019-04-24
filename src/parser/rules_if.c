@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 11:49:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/01/10 07:09:08 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/25 01:16:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int	pop_if(t_parser *parser)
 		return (1);
 	if (parser->input_queue->type == TT_STATEMENT)
 		parser->pss->ret->right = parser->input_queue->data;
+	free(parser->input_queue->data);
 	parser->input_queue->data = pss_pop(parser);
 	parser->input_queue->type = TT_STATEMENT;
 	return (0);
@@ -45,7 +46,7 @@ int			rule_elif(t_parser *parser, t_token *list)
 
 int			rule_close_if(t_parser *parser, t_token *list)
 {
-	free(list->data);
+	(void)list;
 	if (parser->pss->ret->type == TT_ELSE && pop_if(parser))
 		return (1);
 	while (parser->pss->ret->type == TT_ELIF)
