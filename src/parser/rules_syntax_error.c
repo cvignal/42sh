@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sig_msg.h                                          :+:      :+:    :+:   */
+/*   rules_syntax_error.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstadelw <fstadelw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/18 04:20:06 by fstadelw          #+#    #+#             */
-/*   Updated: 2019/04/24 16:57:16 by cvignal          ###   ########.fr       */
+/*   Created: 2019/04/23 11:50:02 by gchainet          #+#    #+#             */
+/*   Updated: 2019/04/23 11:50:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIG_MSG_H
-# define SIG_MSG_H
+#include "shell.h"
 
-# include <signal.h>
-
-/*
-** used to match an Error message to it's value
-*/
-typedef struct	s_sig_msg
+int	rule_syntax_error(t_parser *parser, t_ast_token *list)
 {
-	pid_t			sig;
-	const char		*msg;
-	unsigned char	rtn;
-}				t_sig_msg;
-
-#endif
+	(void)parser;
+	(void)list;
+	return (1);
+}

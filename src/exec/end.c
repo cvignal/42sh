@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:46:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/09 15:18:06 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/23 11:42:32 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ int		exec_end(t_shell *shell, t_ast *ast)
 {
 	if (shell->ctrlc)
 		return (0);
-	ast->left->exec(shell, ast->left);
-	wait_loop(ast->left);
+	if (ast->left)
+	{
+		ast->left->exec(shell, ast->left);
+		wait_loop(ast->left);
+	}
 	if (ast->right)
 	{
 		ast->right->exec(shell, ast->right);

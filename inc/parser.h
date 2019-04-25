@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/22 11:17:56 by marin            ###   ########.fr       */
+/*   Updated: 2019/04/24 17:29:43 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ enum
 {
 	PARSER_MORE_INPUT,
 	PARSER_EMPTY,
-	PARSER_COMPLETE
+	PARSER_COMPLETE,
+	PARSER_ERROR
 };
 
 typedef struct			s_lss
@@ -108,7 +109,7 @@ typedef struct			s_lss
 typedef struct			s_pss
 {
 	int					state;
-	int					error;
+	int					status;
 	struct s_ast_token	*output_queue;
 	struct s_ast_token	*op_stack;
 	struct s_ast_token	*stack;
@@ -127,6 +128,7 @@ typedef struct			s_lexer
 typedef struct			s_parser
 {
 	t_pss				*pss;
+	int					ret_status;
 	struct s_ast		*ret;
 	struct s_ast_token	*input_queue;
 }						t_parser;
@@ -232,5 +234,12 @@ int						ccmp(char a, char b);
 */
 int						keyword_type(const char *s);
 int						is_a_keyword(const char *s);
+
+/*
+** parser/tools_shunting_yard.c
+*/
+int						set_leaves(struct s_ast *node
+		, struct s_ast_token **stack);
+struct s_ast			*end_queue_to_ast(t_pss *pss);
 
 #endif
