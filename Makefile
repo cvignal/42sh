@@ -185,7 +185,11 @@ SRC		=								\
 	expansion/lexer_methods_quotes.c	\
 	expansion/lexer_methods_hist.c		\
 	expansion/home.c					\
-	expansion/expr.c
+	expansion/expr.c					\
+	jobs/job_state.c					\
+	jobs/job_wait.c						\
+	jobs/jobs.c							\
+	jobs/utils.c
 
 SRCDIR	:=	src
 OBJDIR	:=	obj

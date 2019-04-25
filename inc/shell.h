@@ -79,6 +79,8 @@ typedef struct		s_fd
 	struct s_fd		*next;
 }					t_fd;
 
+struct s_job;
+
 typedef struct		s_shell
 {
 	t_lexer			lexer;
@@ -102,6 +104,9 @@ typedef struct		s_shell
 	int				prompt_len;
 	int				prompt_height;
 	int				fc_cmd;
+	struct s_job	*jobs;
+	struct s_job	*curr;
+	struct s_job	*prev;
 }					t_shell;
 
 struct s_redir;

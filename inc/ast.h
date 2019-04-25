@@ -84,6 +84,7 @@ void					clean_last_end_token(t_parser *parser);
 struct s_ast;
 struct s_shell;
 struct s_redir;
+struct s_job;
 typedef int				(*t_exec)(struct s_shell *, struct s_ast *);
 typedef void			(*t_free)(struct s_ast *);
 
@@ -102,6 +103,7 @@ typedef struct			s_ast
 	struct s_redir		*redir_list;
 	struct s_ast		*left;
 	struct s_ast		*right;
+	struct s_job		*job;
 }						t_ast;
 
 typedef int				(*t_ast_act)(t_parser *, t_ast_token *);

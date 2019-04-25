@@ -14,6 +14,7 @@
 #include <unistd.h>
 
 #include "ast.h"
+#include "jobs.h"
 #include "shell.h"
 
 static void	set_pipes(t_ast *new_node)
@@ -60,6 +61,7 @@ t_ast		*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 	new_node->redir_list = NULL;
 	new_node->right = NULL;
 	new_node->left = NULL;
+	new_node->job = NULL;
 	set_ast_fd(new_node);
 	set_pipes(new_node);
 	return (new_node);

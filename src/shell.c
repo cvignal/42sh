@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <signal.h>
 
+#include "jobs.h"
 #include "shell.h"
 #include "libft.h"
 #include "fill_line.h"
@@ -99,6 +100,8 @@ int			free_shell(t_shell *shell)
 				free_hbt(shell->hash_table[i]);
 		free(shell->hash_table);
 	}
+	while (shell->jobs)
+		free_job(shell, shell->jobs);
 	free_shell_aux(shell);
 	reset_terminal_mode(shell);
 	return (1);

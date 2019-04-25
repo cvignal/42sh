@@ -18,11 +18,12 @@
 #include <sys/wait.h>
 
 #include "shell.h"
+#include "jobs.h"
 #include "fill_line.h"
 #include "libft.h"
 #include "expand.h"
 
-int		fail(char *proc, char *err, char *message, int ret)
+int			fail(char *proc, char *err, char *message, int ret)
 {
 	ft_dprintf(2, "%s: %s: %s\n", proc, err, message);
 	return (ret);
@@ -48,6 +49,11 @@ static int	do_error_handling(char *name)
 
 static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 {
+	if (!instr->job->pgid)
+		instr->job->pgid = instr->pid;
+	setpgid(instr->pid, instr->job->pgid);
+	if (1) // TODO: if (is_async)
+		tcsetpgrp(0, instr->job->pgid);
 	set_pipeline(shell, instr);
 	if (apply_redirs(shell, instr))
 	{
@@ -68,7 +74,9 @@ pid_t		do_exec(t_shell *shell, char **argv)
 
 	if (!(bin_path = find_command(shell, argv[0])))
 		return (do_error_handling(argv[0]));
-	if (!(pid = fork()))
+	if ((pid = fork()) == -1)
+		return (-1);
+	if (pid == 0)
 		exit(execve(bin_path, argv, shell->env));
 	free(bin_path);
 	wait(&status);
@@ -79,7 +87,6 @@ pid_t		do_exec(t_shell *shell, char **argv)
 
 pid_t		exec(t_shell *shell, t_ast *instr)
 {
-	pid_t		pid;
 	char		*prgm;
 	char		*bin_path;
 	t_builtin	builtin;
@@ -92,8 +99,10 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 		instr->ret = do_error_handling(prgm);
 		return (-1);
 	}
-	if (!(pid  = fork()))
+	if ((instr->pid = fork()) == -1)
+		return (-1);
+	if (instr->pid == 0)
 		exec_internal(shell, instr, bin_path);
-	instr->pid = pid;
+	register_proc(instr);
 	return (0);
 }
