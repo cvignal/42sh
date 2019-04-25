@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/25 11:26:27 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/25 12:06:11 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,8 +254,10 @@ int					builtin_hash(t_shell *shell, char **args);
 void				print_rec_tree(t_hbt *node);
 unsigned int		cd_parse_options(char **args, int *option);
 char				*cd_parse_path(t_shell *shell, char *dir);
-int					canonic_path(t_shell *shell, char *curpath, char *dir, int option);
-int					change_dir(t_shell *shell, char *curpath, char *dir, int option);
+int					canonic_path(t_shell *shell, char *curpath, char *dir
+		, int option);
+int					change_dir(t_shell *shell, char *curpath, char *dir
+		, int option);
 
 /*
 ** fc
