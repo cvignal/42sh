@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 22:31:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 05:59:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/25 23:12:23 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ static const t_ari_op_desc	g_op_desc[] =\
 	{"(", TT_OPEN_PAR, NULL, &free_ari},
 	{")", TT_CLOSE_PAR, NULL, &free_ari},
 	{"++", TT_ARI_OP_PLUS_PLUS, NULL, &free_ari},
-	{"--", TT_ARI_OP_SUB_SUB, NULL, &free_ari}
+	{"--", TT_ARI_OP_SUB_SUB, NULL, &free_ari},
+	{"<=", TT_ARI_OP_CMP_INF_EQ, &exec_ari_cmp_inf_eq, &free_ari},
+	{"<", TT_ARI_OP_CMP_INF, &exec_ari_cmp_inf, &free_ari},
+	{">=", TT_ARI_OP_CMP_SUP, &exec_ari_cmp_sup_eq, &free_ari},
+	{">", TT_ARI_OP_CMP_SUP_EQ, &exec_ari_cmp_sup, &free_ari},
+	{"==", TT_ARI_OP_CMP_EQ, &exec_ari_cmp_eq, &free_ari}
 };
 
 int		is_operator_char(char c)

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 23:58:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/25 14:43:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/25 23:21:26 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		exec_ari_statement(t_shell *shell, t_ast *ast)
 	{
 		shell->parser.ret->exec(shell, shell->parser.ret);
 		ast->ret = shell->parser.ret->ret;
+		set_ret(shell, ast, ast->ret);
 		shell->parser.ret->del(shell->parser.ret);
 	}
 	return (0);
