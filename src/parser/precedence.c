@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 03:43:14 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 08:05:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/25 23:50:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,19 @@ static const t_precedence	g_precedence[] =\
 	{TT_OR, 0},
 	{TT_AND, 0},
 	{TT_ARI_OP_EQ, 0},
-	{TT_ARI_OP_PLUS, 1},
-	{TT_ARI_OP_SUB, 1},
-	{TT_ARI_OP_PROD, 2},
-	{TT_ARI_OP_DIV, 2},
-	{TT_ARI_OP_MOD, 2},
-	{TT_ARI_OP_USUB, 3}
+	{TT_ARI_OP_CMP_EQ, 1},
+	{TT_ARI_OP_CMP_INF_EQ, 1},
+	{TT_ARI_OP_CMP_INF, 1},
+	{TT_ARI_OP_CMP_SUP, 1},
+	{TT_ARI_OP_CMP_SUP_EQ, 1},
+	{TT_ARI_OP_PLUS, 2},
+	{TT_ARI_OP_SUB, 2},
+	{TT_ARI_OP_PROD, 3},
+	{TT_ARI_OP_DIV, 3},
+	{TT_ARI_OP_MOD, 3},
+	{TT_ARI_OP_USUB, 4},
+	{TT_ARI_OP_PLUS_PLUS, 4},
+	{TT_ARI_OP_SUB_SUB, 4}
 };
 
 int		precedence(t_ttype type)
