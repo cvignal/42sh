@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 16:08:00 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/25 11:28:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int			change_dir(t_shell *shell, char *curpath, char *dir, int option)
 {
 	char	*pwd;
 
+	(void)dir;
 	if (!(pwd = ft_strdup(get_env_value(shell, "PWD"))))
 		pwd = getcwd(NULL, MAX_PATH);
 	if (chdir(curpath))
@@ -93,9 +94,9 @@ static int	cd_find_path(t_shell *shell, char *dir, int option)
 
 int			builtin_cd(t_shell *shell, char **args)
 {
-	unsigned int	i;
-	char			*dir;
-	int				option;
+	int		i;
+	char	*dir;
+	int		option;
 
 	if ((i = cd_parse_options(args, &option)) == -1)
 		return (1);

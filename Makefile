@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/24 16:10:00 by cvignal          ###   ########.fr        #
+#    Updated: 2019/04/25 11:26:46 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,11 +48,13 @@ SRC		=								\
 	parser/rules_redir_read_write.c		\
 	parser/rules_pipe.c					\
 	parser/rules_statement.c			\
+	parser/rules_syntax_error.c			\
 	parser/rules_if.c					\
 	parser/rules_if_nocd.c				\
 	parser/rules_while.c				\
 	parser/rules_shunting_yard.c		\
 	parser/shunting_yard.c				\
+	parser/tools_shunting_yard.c		\
 	parser/ast.c						\
 	parser/ast_token.c					\
 	parser/utils.c						\
@@ -124,8 +126,6 @@ SRC		=								\
 	builtins/tools_cd.c					\
 	builtins/trim_path.c				\
 	builtins/echo.c						\
-	builtins/env.c						\
-	builtins/env_options.c				\
 	builtins/setenv.c					\
 	builtins/unsetenv.c					\
 	builtins/exit.c						\
@@ -219,7 +219,7 @@ CC		?=	cc
 
 INCFLAG	:= -I $(INCDIR) $(LIB_INC)
 WFLAGS	?=	-Wall -Wextra -Werror 
-CFLAGS	=	$(INCFLAG) $(STDFLAG) -g
+CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG)
 
 DEPGEN	:=	$(CC)
 DEPFLAG	:=	-MM $(INCFLAG)

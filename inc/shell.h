@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 15:09:16 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/25 11:26:27 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,8 +197,7 @@ int					add_to_command(t_command *command, char *word);
 ** exec.c
 */
 pid_t				exec(t_shell *shell, t_ast *instr);
-int					exec_from_char(t_shell *shell, char **arg,
-					t_shell *tmp_shell);
+pid_t				do_exec(t_shell *shell, char **argv);
 int					wait_loop(t_ast *ast);
 
 /*
