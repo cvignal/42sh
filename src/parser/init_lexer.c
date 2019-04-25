@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:46:05 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 19:37:25 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/25 17:23:13 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static void	init_lexer_basics(t_lexer *lexer)
 	lexer->lexer_actions[LSTATE_WORD]['\\'] = &lexer_push_escaped;
 	lexer->lexer_actions[LSTATE_PAREN]['\\'] = &lexer_push_escaped;
 	lexer->lexer_actions[LSTATE_META]['\\'] = &lexer_cut;
-	lexer->lexer_actions[LSTATE_SQUOTE]['\\'] = &lexer_push_escaped;
 	lexer->lexer_actions[LSTATE_DQUOTE]['\\'] = &lexer_push_escaped;
 }
 
