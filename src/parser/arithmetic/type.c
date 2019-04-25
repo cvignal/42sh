@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 22:31:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 00:01:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/26 00:47:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static const t_ari_op_desc	g_op_desc[] =\
 	{"=", TT_ARI_OP_EQ, &exec_ari_eq, &free_ari},
 	{"(", TT_OPEN_PAR, NULL, &free_ari},
 	{")", TT_CLOSE_PAR, NULL, &free_ari},
-	{"++", TT_ARI_OP_PLUS_PLUS, NULL, &free_ari},
-	{"--", TT_ARI_OP_SUB_SUB, NULL, &free_ari},
 	{"<=", TT_ARI_OP_CMP_INF_EQ, &exec_ari_cmp_inf_eq, &free_ari},
 	{"<", TT_ARI_OP_CMP_INF, &exec_ari_cmp_inf, &free_ari},
 	{">=", TT_ARI_OP_CMP_SUP, &exec_ari_cmp_sup_eq, &free_ari},

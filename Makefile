@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/26 00:00:10 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/26 01:16:33 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -154,6 +154,7 @@ SRC		=									\
 	parser/arithmetic/lexer_actions_paren.c	\
 	parser/arithmetic/set_unary.c			\
 	parser/arithmetic/type.c				\
+	parser/arity.c							\
 	parser/assignement.c					\
 	parser/ast.c							\
 	parser/ast_token.c						\

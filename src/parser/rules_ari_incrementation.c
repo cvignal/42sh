@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 04:55:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 05:35:57 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/26 01:19:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,41 +18,31 @@
 int	rule_ari_post_plus_plus(t_parser *parser, t_token *list)
 {
 	t_ast	*ast_plus;
-	t_ast	*ast_value;
+	t_token	*tmp;
 
-	if (!(ast_value = alloc_ast(list->data, TT_STATEMENT,
-					&exec_ari_value, &free_ari)))
-		return (1);
-	if (!(ast_plus = alloc_ast(list->next->data, TT_STATEMENT,
+	(void)parser;
+	tmp = list->next->next;
+	if (!(ast_plus = alloc_ast(tmp->data, TT_ARI_OP_PLUS_PLUS,
 					&exec_ari_post_plus_plus, &free_ari)))
 		return (1);
-	ast_plus->left = ast_value;
-	list = list->next;
-	free(parser->input_queue);
-	parser->input_queue = list;
-	parser->input_queue->data = ast_plus;
-	parser->input_queue->type = TT_STATEMENT;
+	tmp->data = ast_plus;
+	tmp->type = TT_OP;
+	free(list->next->data);
+	free(list->next);
+	list->next = tmp;
 	return (0);
 }
 
 int	rule_ari_pre_plus_plus(t_parser *parser, t_token *list)
 {
 	t_ast		*ast_plus;
-	t_ast		*ast_value;
-	t_token	*tmp;
 
-	(void)parser;
 	if (!(ast_plus = alloc_ast(list->data, TT_STATEMENT,
 					&exec_ari_pre_plus_plus, &free_ari)))
 		return (1);
-	if (!(ast_value = alloc_ast(list->next->data, TT_STATEMENT,
-					&exec_ari_value, &free_ari)))
-		return (1);
-	ast_plus->left = ast_value;
-	list->data = ast_plus;
-	list->type = TT_STATEMENT;
-	tmp = list->next->next;
-	free(list->next);
-	list->next = tmp;
+	shift_token(parser, list, 0);
+	free(parser->input_queue->data);
+	parser->input_queue->data = ast_plus;
+	parser->input_queue->type = TT_OP;
 	return (0);
 }

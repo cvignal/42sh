@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 05:56:45 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/17 10:02:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/26 01:25:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	exec_ari_pre_sub_sub(t_shell *shell, t_ast *ast)
 	char	*res;
 
 	free(ast->data);
-	if ((var = get_var(shell->vars, ast->left->data)))
+	if ((var = get_var(shell->vars, ast->right->data)))
 		value = ft_atoi(get_var_value(var));
 	else
 		value = 0;
@@ -34,7 +34,7 @@ int	exec_ari_pre_sub_sub(t_shell *shell, t_ast *ast)
 	res = ft_itoa(value);
 	if (!res)
 		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-	set_var(&shell->vars, ast->left->data, res, var ? var->exported : 0);
+	set_var(&shell->vars, ast->right->data, res, var ? var->exported : 0);
 	free(res);
 	return (!value);
 }
@@ -46,7 +46,7 @@ int	exec_ari_post_sub_sub(t_shell *shell, t_ast *ast)
 	char	*res;
 
 	free(ast->data);
-	if ((var = get_var(shell->vars, ast->left->data)))
+	if ((var = get_var(shell->vars, ast->right->data)))
 		value = ft_atoi(get_var_value(var));
 	else
 		value = 0;
@@ -57,7 +57,7 @@ int	exec_ari_post_sub_sub(t_shell *shell, t_ast *ast)
 	res = ft_itoa(value);
 	if (!res)
 		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-	set_var(&shell->vars, ast->left->data, res, var ? var->exported : 0);
+	set_var(&shell->vars, ast->right->data, res, var ? var->exported : 0);
 	free(res);
 	return (!value);
 }

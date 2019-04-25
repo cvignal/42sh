@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/25 23:58:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/26 01:17:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef enum			e_ttype
 	TT_PAR,
 	TT_PARTIAL,
 	TT_PIPE,
-	TT_PIPELINE,
 	TT_REDIR_L,
 	TT_REDIR_L_CLOSE,
 	TT_REDIR_L_COMP,
@@ -82,6 +81,12 @@ typedef enum			e_ttype
 	TT_WHILENOCD,
 	TT_WORD
 }						t_ttype;
+
+typedef struct			s_arity
+{
+	t_ttype				type;
+	int					arity;
+}						t_arity;
 
 /*
 ** parser/ast_token.c
@@ -329,5 +334,10 @@ void					free_input_queue(t_token *input);
 **	parser/precedence.c
 */
 int						precedence(t_ttype type);
+
+/*
+** parser/arity.c
+*/
+int						get_arity(t_ttype type);
 
 #endif
