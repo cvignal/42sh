@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 07:03:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/25 01:18:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/25 12:05:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void		set_ret(t_shell *shell, t_ast *ast, int ret)
 		free(ret_str);
 	}
 }
-
 
 int			set_special_var(t_var **vars, const char *name, const char *value)
 {
