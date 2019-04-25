@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 03:43:14 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/25 23:50:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/26 00:00:26 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static const t_precedence	g_precedence[] =\
 	{TT_AND, 0},
 	{TT_ARI_OP_EQ, 0},
 	{TT_ARI_OP_CMP_EQ, 1},
+	{TT_ARI_OP_CMP_NOT_EQ, 1},
 	{TT_ARI_OP_CMP_INF_EQ, 1},
 	{TT_ARI_OP_CMP_INF, 1},
 	{TT_ARI_OP_CMP_SUP, 1},
