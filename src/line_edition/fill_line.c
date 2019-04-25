@@ -41,6 +41,8 @@ int		check_validity(t_shell *shell)
 	res = tgetent(NULL, name);
 	if (res <= 0)
 		return (1);
+	setpgid(0, 0);
+	tcsetpgrp(0, getpid());
 	shell->ctrlc = 0;
 	return (0);
 }

@@ -14,6 +14,7 @@
 #include <unistd.h>
 
 #include "shell.h"
+#include "jobs.h"
 #include "ast.h"
 #include "libft.h"
 #include "fill_line.h"
@@ -32,10 +33,20 @@ static void				exec_ast(t_shell *shell, t_token *tokens)
 	ret = parse(shell, tokens);
 	if (ret == PARSER_COMPLETE)
 	{
+		// set shell pgid
+
+		// Create initial job
+		// - Then create new ones when needed (; && ||) wow there
+		// Set it to ast
+		// exec creates procs and appends them to ast->job
+		// replace ALL wait_loop by register_job
+
 		ast = shell->parser.ret;
+		if (!(ast->job = new_job()))
+			exit(-1);
 		ast->exec(shell, ast);
 		close_everything(shell);
-		wait_loop(ast);
+		ast->ret = register_job(shell, ast->job, JOB_FG);
 		shell->ret_cmd = ast->ret;
 		ast->del(ast);
 		shell->parser.ret = NULL;
