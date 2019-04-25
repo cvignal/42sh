@@ -62,7 +62,6 @@ int				wait_job(t_shell *shell, t_job *job)
 	pid_t	pid;
 	int		status;
 
-	signal(SIGINT, SIG_IGN);
 	while (!job_is_stopped(job))
 	{
 		if ((pid = waitpid(-1, &status, WUNTRACED)) < 0)

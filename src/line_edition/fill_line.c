@@ -54,7 +54,7 @@ void	raw_terminal_mode(t_shell *shell)
 	(void)shell;
 	if (tcgetattr(0, &term) == -1)
 		return ;
-	term.c_lflag &= ~(ICANON | ECHO | ISIG | ECHOCTL);
+	term.c_lflag &= ~(ICANON | ECHO | ECHOCTL);
 	term.c_iflag &= ~(IXON | ICRNL);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;

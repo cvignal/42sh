@@ -22,7 +22,10 @@ static const t_builtin_desc	g_builtin_desc[] =\
 	{"cd", &builtin_cd},
 	{"type", &builtin_type},
 	{"hash", &builtin_hash},
-	{"fc", &builtin_fc}
+	{"fc", &builtin_fc},
+	{"jobs", &builtin_jobs},
+	{"fg", &builtin_fg},
+	{"bg", &builtin_bg},
 };
 
 t_builtin	is_builtin(char *cmd)

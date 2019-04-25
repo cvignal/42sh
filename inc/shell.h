@@ -182,6 +182,7 @@ typedef struct		s_tmpfile
 	int		fd;
 }					t_tmpfile;
 
+
 t_heredoc			*alloc_heredoc(void);
 int					add_to_heredoc(t_heredoc *heredoc, const char *line);
 int					heredoc_exit_error(t_heredoc *heredoc);
@@ -197,6 +198,7 @@ int					add_to_command(t_command *command, char *word);
 /*
 ** exec.c
 */
+int					fail(char *proc, char *err, char *message, int ret);
 pid_t				exec(t_shell *shell, t_ast *instr);
 pid_t				do_exec(t_shell *shell, char **argv);
 int					wait_loop(t_ast *ast);
@@ -244,6 +246,9 @@ int					builtin_setenv(t_shell *shell, char **args);
 int					builtin_unsetenv(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
+int					builtin_jobs(t_shell *shell, char **args);
+int					builtin_fg(t_shell *shell, char **args);
+int					builtin_bg(t_shell *shell, char **args);
 int					exec_builtin(t_shell *shell, t_builtin builtin,
 		t_ast *instr);
 int					builtin_type(t_shell *shell, char **args);

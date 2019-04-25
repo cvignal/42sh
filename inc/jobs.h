@@ -71,4 +71,6 @@ int				wait_job(struct s_shell *shell, t_job *job);
 t_job			*report_job(struct s_shell *shell, t_job *job, int opts);
 void			print_job_command(t_job *job);
 
+int				parse_number(char *str);
+
 #endif

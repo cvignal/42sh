@@ -88,4 +88,5 @@ void	print_job_command(t_job *job)
 		ft_putstr(" | ");
 		ft_putstr(p->command);
 	}
+	ft_putchar('\n');
 }
