@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/25 23:10:38 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/26 00:00:10 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC		=									\
 	exec/arithmetic/cmp_eq.c				\
 	exec/arithmetic/cmp_inf.c				\
 	exec/arithmetic/cmp_inf_eq.c			\
+	exec/arithmetic/cmp_not_eq.c			\
 	exec/arithmetic/cmp_sup.c				\
 	exec/arithmetic/cmp_sup_eq.c			\
 	exec/arithmetic/del.c					\
