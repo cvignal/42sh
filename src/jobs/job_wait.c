@@ -66,7 +66,6 @@ int				wait_job(t_shell *shell, t_job *job)
 	{
 		if ((pid = waitpid(-1, &status, WUNTRACED)) < 0)
 			break ;
-		ft_printf("%d\r\n\r\n", pid);
 		update_proc(shell, pid, status);
 	}
 	while ((pid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
