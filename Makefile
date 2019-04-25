@@ -126,6 +126,7 @@ SRC		=								\
 	builtins/unsetenv.c					\
 	builtins/exit.c						\
 	builtins/type.c						\
+	builtins/jobs.c						\
 	builtins/tools_type.c				\
 	builtins/builtin_hash.c				\
 	builtins/tools_hash.c				\

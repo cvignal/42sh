@@ -16,6 +16,51 @@
 #include <unistd.h>
 #include <signal.h>
 
+int			register_job(t_shell *shell, t_job *job, int foreground)
+{
+	t_job	*j;
+
+	if (!job->proc)
+	{
+		free_job(shell, job);
+		return (0);
+	}
+	if (!(j = shell->jobs))
+	{
+		shell->jobs = job;
+		job->index = 1;
+	}
+	else
+	{
+		while (j->next)
+			j = j->next;
+		j->next = job;
+		job->index = j->index + 1;
+	}
+	if (foreground)
+		return (job_fg(shell, job, 0));
+	job_bg(job, 0);
+	return (0);
+}
+
+int			register_proc(t_ast *ast)
+{
+	t_proc	**p;
+
+	p = &ast->job->proc;
+	if (ast->job->last)
+		p = &(ast->job->last)->next;
+	if (!(*p = ft_memalloc(sizeof(t_proc))))
+		return (1);
+	(*p)->pid = ast->pid;
+	(*p)->command = ft_strdup("TODO");
+	ast->job->last = *p;
+	if (!ast->job->pgid)
+		ast->job->pgid = ast->pid;
+	setpgid(ast->pid, ast->job->pgid);
+	return (0);
+}
+
 static void	print_job_infos(t_shell *shell, t_job *job, int opts)
 {
 	ft_printf("[%d]", job->index);
@@ -54,7 +99,7 @@ t_job		*report_job(t_shell *shell, t_job *job, int opts)
 
 	next = job->next;
 	if (opts == 'p')
-		ft_putnbr(job->pgid);
+		ft_printf("%d\n", job->pgid);
 	else
 	{
 		print_job_infos(shell, job, opts);
@@ -64,6 +109,5 @@ t_job		*report_job(t_shell *shell, t_job *job, int opts)
 		if (job->state == JOB_DONE)
 			free_job(shell, job);
 	}
-	ft_putchar('\n');
 	return (next);
 }

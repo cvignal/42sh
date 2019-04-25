@@ -25,7 +25,10 @@
 
 int			fail(char *proc, char *err, char *message, int ret)
 {
-	ft_dprintf(2, "%s: %s: %s\n", proc, err, message);
+	if (err)
+		ft_dprintf(2, "%s: %s: %s\n", proc, err, message);
+	else
+		ft_dprintf(2, "%s: %s\n", proc, message);
 	return (ret);
 }
 
@@ -49,11 +52,14 @@ static int	do_error_handling(char *name)
 
 static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 {
+	if (1)
+	{
 	if (!instr->job->pgid)
 		instr->job->pgid = instr->pid;
 	setpgid(instr->pid, instr->job->pgid);
 	if (1) // TODO: if (is_async)
 		tcsetpgrp(0, instr->job->pgid);
+	}
 	set_pipeline(shell, instr);
 	if (apply_redirs(shell, instr))
 	{
