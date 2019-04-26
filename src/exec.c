@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 16:58:15 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/26 18:25:44 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ static int	do_error_handling(char *name)
 static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 {
 	set_pipeline(shell, instr);
-	if (apply_redirs(shell, instr))
+	if (prepare_redirs(shell, instr, instr)
+			|| apply_redirs(shell, instr))
 	{
 		free_shell(shell);
-		exit(1);
+		exit(127);
 	}
 	enable_signal();
 	execve(bin_path, ((t_command *)instr->data)->args_value, shell->env);
