@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 18:24:27 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/26 18:48:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ static int	exec_builtin_internal(t_shell *shell, t_builtin builtin,
 		t_ast *instr)
 {
 	set_pipeline(shell, instr);
-	if (apply_redirs(shell, instr))
+	if ((prepare_redirs(shell, instr, instr))
+			||apply_redirs(shell, instr))
 		return (127);
 	return (builtin(shell, ((t_command *)instr->data)->args_value));
 }
@@ -70,21 +71,19 @@ int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 	int		fd[3];
 	pid_t	pid;
 
-	if (save_builtin_fds(shell, fd))
-		return (-1);
-	if (prepare_redirs(shell, instr, instr))
-		return (-1);
 	if (instr->pipes_in[PIPE_PARENT][STDIN_FILENO] != -1
 			|| instr->pipes_out[PIPE_PARENT][STDOUT_FILENO] != -1)
 	{
 		if (!(pid = fork()))
 			exit(exec_builtin_internal(shell, builtin, instr));
-		else
-			instr->pid = pid;
+		instr->pid = pid;
 	}
 	else
+	{
+		save_builtin_fds(shell, fd);
 		instr->ret = exec_builtin_internal(shell, builtin, instr);
-	reset_builtin_fds(shell, fd);
-	reset_redirs(shell, instr);
+		reset_builtin_fds(shell, fd);
+		reset_redirs(shell, instr);
+	}
 	return (instr->ret);
 }
