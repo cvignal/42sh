@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 04:04:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/26 21:31:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	exit_value(t_shell *shell, char **args)
 	}
 	else
 	{
-		ret = shell->ret_cmd;
+		ret = ft_atoi(get_var_value(get_var(shell->vars, SPECIAL_VAR_RET)));
 		free_shell(shell);
 		exit(ret);
 	}
