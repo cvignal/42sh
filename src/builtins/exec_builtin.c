@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 18:48:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/26 19:22:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void	reset_builtin_fds(t_shell *shell, int *old)
 	{
 		dup2(old[i], i);
 		remove_fd(shell, old[i]);
+		close(old[i]);
 		++i;
 	}
 }
