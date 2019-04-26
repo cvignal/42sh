@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 06:48:20 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 01:32:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/26 20:13:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 int	rule_send_to_shunting_yard(t_parser *parser, t_token *list)
 {
-	(void)list;
 	if (!(parser->pss->state & PS_ARI))
 	{
 		if (list->type == TT_STATEMENT

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 01:48:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/26 20:55:45 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 
 static int		set_leaves(t_ast *node, t_token **stack)
 {
-	t_token	*right;
-	t_token	*left;
+	t_token			*right;
+	t_token			*left;
+	const t_op_prop	*prop;
 
 	if (!node)
 		return (1);
@@ -27,7 +28,9 @@ static int		set_leaves(t_ast *node, t_token **stack)
 	node->right = right->data;
 	free(right);
 	node->left = NULL;
-	if (get_arity(node->type) == 1)
+	if (!(prop = get_op_prop(node->type)))
+		return (1);
+	if (prop->arity == 1)
 		return (0);
 	if (!(left = pop_ast_token(stack)))
 	{
@@ -73,13 +76,25 @@ static void		shunting_yard_parenthesis(t_parser *parser)
 
 void			shunting_yard(t_parser *parser)
 {
+	const t_op_prop	*input_op_prop;
+	const t_op_prop	*stack_op_prop;
+
 	if (parser->input_queue->type == TT_OP)
 	{
-		while (parser->pss->op_stack
-				&& precedence(((t_ast *)parser->input_queue->data)->type)
-				<= precedence(((t_ast *)parser->pss->op_stack->data)->type))
-			add_to_ast_token_list(&parser->pss->output_queue,
-					pop_ast_token(&parser->pss->op_stack));
+		input_op_prop = get_op_prop(((t_ast *)parser->input_queue->data)->type);
+		while (parser->pss->op_stack)
+		{
+			if (!(stack_op_prop = get_op_prop(((t_ast *)parser->pss->op_stack->data)->type)))
+				break ;
+			if ((input_op_prop->asso == LEFT
+						&& input_op_prop->precedence <= stack_op_prop->precedence)
+					|| (input_op_prop->asso == RIGHT
+						&& input_op_prop->precedence < stack_op_prop->precedence))
+				add_to_ast_token_list(&parser->pss->output_queue,
+						pop_ast_token(&parser->pss->op_stack));
+			else
+				break ;
+		}
 		push_ast_token(&parser->pss->op_stack,
 				pop_ast_token(&parser->input_queue));
 	}
@@ -94,14 +109,12 @@ void			shunting_yard(t_parser *parser)
 t_ast			*queue_to_ast(t_pss *pss)
 {
 	t_ast		*ret;
-	
+
 	while (pss->output_queue)
 	{
 		if (pss->output_queue->type == TT_OP)
-		{
 			if (set_leaves(pss->output_queue->data, &pss->stack))
 				return (clean_exit(pss));
-		}
 		push_ast_token(&pss->stack, pop_ast_token(&pss->output_queue));
 	}
 	if (pss->stack)

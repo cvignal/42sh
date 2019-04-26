@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/26 01:16:33 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/26 19:48:04 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -154,7 +154,6 @@ SRC		=									\
 	parser/arithmetic/lexer_actions_paren.c	\
 	parser/arithmetic/set_unary.c			\
 	parser/arithmetic/type.c				\
-	parser/arity.c							\
 	parser/assignement.c					\
 	parser/ast.c							\
 	parser/ast_token.c						\
@@ -170,9 +169,9 @@ SRC		=									\
 	parser/lexer_act_quote.c				\
 	parser/lexer.c							\
 	parser/lss.c							\
+	parser/op_prop.c						\
 	parser/parser.c							\
 	parser/parser_rules.c					\
-	parser/precedence.c						\
 	parser/pss.c							\
 	parser/rules_ari.c						\
 	parser/rules_ari_decrementation.c		\
@@ -188,9 +187,9 @@ SRC		=									\
 	parser/rules_parenthesis.c				\
 	parser/rules_pipe.c						\
 	parser/rules_redir.c					\
+	parser/rules_redir_close.c				\
 	parser/rules_redir_l_comp.c				\
 	parser/rules_redir_r_both.c				\
-	parser/rules_redir_close.c				\
 	parser/rules_redir_r_comp.c				\
 	parser/rules_redir_read_write.c			\
 	parser/rules_shift.c					\
@@ -208,10 +207,10 @@ SRC		=									\
 	prompt.c								\
 	propagate_pipe.c						\
 	redir.c									\
+	redir_close.c							\
 	redir_internal.c						\
 	redir_l_comp.c							\
 	redir_r_both.c							\
-	redir_close.c							\
 	redir_r_comp.c							\
 	redir_reset.c							\
 	redir_rw.c								\
@@ -219,10 +218,10 @@ SRC		=									\
 	signal.c								\
 	tools_fd.c								\
 	tools_heredoc.c							\
+	vars/special_vars.c						\
 	vars/var.c								\
 	vars/var_create.c						\
 	vars/var_utils.c						\
-	vars/special_vars.c						\
 	visual_mode/visual_mode.c				\
 	visual_mode/vm_copy.c					\
 	visual_mode/vm_cut.c					\

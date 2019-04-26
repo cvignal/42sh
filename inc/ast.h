@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 01:17:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/26 19:51:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,19 @@ typedef enum			e_ttype
 	TT_WORD
 }						t_ttype;
 
-typedef struct			s_arity
+typedef enum			s_asso
+{
+	LEFT,
+	RIGHT
+}						t_asso;
+
+typedef struct			s_op_prop
 {
 	t_ttype				type;
 	int					arity;
-}						t_arity;
+	t_asso				asso;
+	int					precedence;
+}						t_op_prop;
 
 /*
 ** parser/ast_token.c
@@ -252,7 +260,6 @@ int						rule_send_to_shunting_yard(t_parser *parser,
 		t_token *list);
 
 /*
-<<<<<<< HEAD
 ** parser/rules_ari.c
 */
 int						rule_create_ari_statement(t_parser *parser,
@@ -331,13 +338,8 @@ t_ast_act				get_rule(t_token *tokens, int state);
 void					free_input_queue(t_token *input);
 
 /*
-**	parser/precedence.c
+** parser/op_prop.c
 */
-int						precedence(t_ttype type);
-
-/*
-** parser/arity.c
-*/
-int						get_arity(t_ttype type);
+const t_op_prop			*get_op_prop(t_ttype type);
 
 #endif
