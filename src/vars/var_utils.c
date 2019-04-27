@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 08:16:59 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 07:02:01 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 16:36:54 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ int			check_var(const char *name)
 	size_t	len;
 
 	len = 0;
+	if (!ft_isalpha(name[0]) && name[0] != '_')
+		return (1);
 	while (name[len])
 	{
 		if (len > VAR_MAX)
 			return (1);
-		if (!ft_isalpha(name[len]) && name[len] != '_')
+		if (!ft_isalnum(name[len]) && name[len] != '_')
 			return (1);
 		++len;
 	}
