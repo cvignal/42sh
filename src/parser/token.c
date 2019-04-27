@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:02 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 01:58:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 23:17:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_token			*alloc_token(void)
 	new_token->alloc_size = TOKEN_ALLOC_SIZE;
 	new_token->len = 0;
 	new_token->next = NULL;
+	new_token->type = TT_WORD;
 	return (new_token);
 }
 
