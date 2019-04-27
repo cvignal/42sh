@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 19:52:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 23:50:29 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,24 @@
 
 # define EXP_LEXER_RET_CONT	(1 << 0)
 # define EXP_LEXER_RET_ERROR (1 << 1)
+# define EXP_LEXER_RET_OVER (1 << 2)
 
 # define EXP_LEXER_MASK_ALL (~0)
 # define EXP_LEXER_MASK_VARIABLE (1 << 0)
 # define EXP_LEXER_MASK_HISTORY (1 << 1)
 # define EXP_LEXER_MASK_QUOTE (1 << 2)
 # define EXP_LEXER_MASK_HOME (1 << 3)
+# define EXP_LEXER_MASK_ARI (1 << 4)
 
 typedef enum			e_exp_state
 {
 	EXP_STATE_WORD,
 	EXP_STATE_SQUOTE,
 	EXP_STATE_DQUOTE,
+	EXP_STATE_DOLLAR,
 	EXP_STATE_VAR,
+	EXP_STATE_ARI,
+	EXP_STATE_ARI_PAREN,
 	EXP_STATE_HIST,
 	EXP_STATE_ESCAPED,
 	NUMBER_EXP_STATE
@@ -113,6 +118,26 @@ int						exp_lexer_push_dquote(struct s_shell *shell, char c
 int						exp_lexer_pop_quote(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_push_escaped(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_push_dollar(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_set_var(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_dollar_fail(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_set_ari(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_pop_ari(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_pop_ari_paren(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_push_ari_paren(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_set_ari(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_error(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_over(struct s_shell *shell, char c
 		, int mask);
 
 /*

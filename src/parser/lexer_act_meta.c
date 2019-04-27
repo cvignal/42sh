@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:50:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 09:49:47 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 23:56:27 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ int	lexer_create_meta(t_shell *shell, t_token *token, char c)
 
 int	lexer_push_paren(t_shell *shell, t_token *token, char c)
 {
+	if (!token->len)
+		token->type = TT_PAR;
 	if (add_to_token(token, c))
 		return (1 << LEXER_RET_ERROR);
-	token->type = TT_PAR;
 	if (lss_push(&shell->lexer, LSTATE_PAREN))
 		return (1 << LEXER_RET_ERROR);
 	return (1 << LEXER_RET_CONT);

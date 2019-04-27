@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 20:59:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/27 18:16:14 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/27 23:04:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	exp_lexer_add_to_var(t_shell *shell, char c, int mask)
 				return (EXP_LEXER_RET_ERROR);
 		}
 		else
-			return (EXP_LEXER_RET_ERROR);
+			return (exp_lexer_cut_var(shell, c, mask));
 	}
 	if (add_to_exp_buff(&shell->exp_lexer.var, c))
 		return (EXP_LEXER_RET_ERROR);

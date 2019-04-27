@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 20:14:01 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 23:45:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ char		*expand(t_shell *shell, char *arg, int *error, int mask)
 	int	ret;
 
 	i = 0;
+	ret = 0;
 	ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
 	ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
-	while (arg[i] && (int)arg[i] != 127)
+	while (!(ret & EXP_LEXER_RET_OVER))
 	{
 		ret = shell->exp_lexer.methods[shell->exp_lexer.state->state]
 			[(int)arg[i]](shell, arg[i], mask);
@@ -49,14 +50,6 @@ char		*expand(t_shell *shell, char *arg, int *error, int mask)
 		if (ret & EXP_LEXER_RET_CONT)
 			++i;
 	}
-	if (shell->exp_lexer.state->state == EXP_STATE_VAR)
-		if (exp_lexer_cut_var(shell, 0, mask)
-				& EXP_LEXER_RET_ERROR)
-			return (clean_exit(&shell->exp_lexer, error));
-	if (shell->exp_lexer.state->state == EXP_STATE_HIST)
-		if (exp_lexer_cut_hist(shell, 0, mask)
-				& EXP_LEXER_RET_ERROR)
-			return (clean_exit(&shell->exp_lexer, error));
 	if (shell->exp_lexer.buffer.buffer)
 		expand_home(shell, error, mask);
 	return (shell->exp_lexer.buffer.buffer);
