@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 04:55:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 01:19:17 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 00:21:00 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	rule_ari_pre_plus_plus(t_parser *parser, t_token *list)
 {
 	t_ast		*ast_plus;
 
-	if (!(ast_plus = alloc_ast(list->data, TT_STATEMENT,
+	if (!(ast_plus = alloc_ast(list->data, TT_ARI_OP_PLUS_PLUS,
 					&exec_ari_pre_plus_plus, &free_ari)))
 		return (1);
 	shift_token(parser, list, 0);
