@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:45:06 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 12:46:26 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:29:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ int				rule_redir_close_generic(t_parser *parser, t_token *list,
 
 int				rule_redir_r_close(t_parser *parser, t_token *list)
 {
-	return (rule_redir_close_generic(parser, list, STDOUT_FILENO, TT_REDIR_R_CLOSE));
+	return (rule_redir_close_generic(parser
+				, list, STDOUT_FILENO, TT_REDIR_R_CLOSE));
 }
 
 int				rule_redir_l_close(t_parser *parser, t_token *list)
 {
-	return (rule_redir_close_generic(parser, list, STDIN_FILENO, TT_REDIR_L_CLOSE));
+	return (rule_redir_close_generic(parser
+				, list, STDIN_FILENO, TT_REDIR_L_CLOSE));
 }

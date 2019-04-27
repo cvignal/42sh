@@ -3,11 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_rules.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/15 07:56:33 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 01:18:47 by gchainet         ###   ########.fr       */
-/*   Updated: 2019/04/23 11:49:56 by gchainet         ###   ########.fr       */
+/*   Created: 2019/04/27 18:28:52 by cvignal           #+#    #+#             */
+/*   Updated: 2019/04/27 18:29:20 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +44,7 @@ static const t_ast_rule g_rules[] =\
 	{PS_CMD, {TT_REDIR_RW, TT_WORD, 0}, 2, &rule_redir_rw},
 	{PS_CMD, {0, 0, 0}, 0, &rule_pop_cmd_statement},
 	{PS_ARI, {TT_ARI_OP_UPLUS, TT_ARI_OP_UPLUS, TT_ARI_ID},
-	   	3, &rule_ari_pre_plus_plus},
+		3, &rule_ari_pre_plus_plus},
 	{PS_ARI, {TT_ARI_OP_USUB, TT_ARI_OP_USUB, TT_ARI_ID},
 		3, &rule_ari_pre_sub_sub},
 	{PS_ARI, {TT_ARI_ID, TT_ARI_OP_PLUS, TT_ARI_OP_UPLUS},

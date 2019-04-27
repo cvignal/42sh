@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/25 17:03:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:14:35 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,19 @@ static void	set_exp_lexer_hist_methods(t_exp_lexer *lexer)
 	}
 }
 
+static void	set_exp_lexer_other(t_exp_lexer *lexer)
+{
+	lexer->methods[EXP_STATE_WORD]['\\'] = &exp_lexer_push_escaped;
+	lexer->methods[EXP_STATE_DQUOTE]['\\'] = &exp_lexer_push_escaped;
+	lexer->methods[EXP_STATE_WORD]['\''] = &exp_lexer_push_squote;
+	lexer->methods[EXP_STATE_WORD]['"'] = &exp_lexer_push_dquote;
+	lexer->methods[EXP_STATE_WORD]['$'] = &exp_lexer_push_var;
+	lexer->methods[EXP_STATE_DQUOTE]['$'] = &exp_lexer_push_var;
+	lexer->methods[EXP_STATE_DQUOTE]['"'] = &exp_lexer_pop_quote;
+	lexer->methods[EXP_STATE_SQUOTE]['\''] = &exp_lexer_pop_quote;
+	lexer->methods[EXP_STATE_ESCAPED]['\n'] = &exp_lexer_pop_quote;
+}
+
 int			init_exp_lexer(t_exp_lexer *lexer)
 {
 	int	i;
@@ -62,15 +75,7 @@ int			init_exp_lexer(t_exp_lexer *lexer)
 	}
 	set_exp_lexer_hist_methods(lexer);
 	set_exp_lexer_var_methods(lexer);
-	lexer->methods[EXP_STATE_WORD]['\\'] = &exp_lexer_push_escaped;
-	lexer->methods[EXP_STATE_DQUOTE]['\\'] = &exp_lexer_push_escaped;
-	lexer->methods[EXP_STATE_WORD]['\''] = &exp_lexer_push_squote;
-	lexer->methods[EXP_STATE_WORD]['"'] = &exp_lexer_push_dquote;
-	lexer->methods[EXP_STATE_WORD]['$'] = &exp_lexer_push_var;
-	lexer->methods[EXP_STATE_DQUOTE]['$'] = &exp_lexer_push_var;
-	lexer->methods[EXP_STATE_DQUOTE]['"'] = &exp_lexer_pop_quote;
-	lexer->methods[EXP_STATE_SQUOTE]['\''] = &exp_lexer_pop_quote;
-	lexer->methods[EXP_STATE_ESCAPED]['\n'] = &exp_lexer_pop_quote;
+	set_exp_lexer_other(lexer);
 	if (exp_ss_push(lexer, EXP_STATE_WORD))
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/25 23:59:42 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:09:34 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -455,7 +455,7 @@ void				remove_var(t_var **vars, const char *name, int options);
 */
 t_var				*copy_env(const char **env);
 t_var				*copy_vars(t_var *vars, int only_exported);
-void				free_vars(t_var **vars);
+t_var				*free_vars(t_var **vars);
 
 /*
 **	var/special_vars.c
@@ -468,7 +468,7 @@ void				set_ret(t_shell *shell, t_ast *current, int ret);
 /*
 **	parser/rules_redir_comp_generic.c
 */
-int						create_redir_comp_generic(t_parser *parser,
+int					create_redir_comp_generic(t_parser *parser,
 		t_ttype type, t_redir_act act);
 
 #endif

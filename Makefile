@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/26 19:48:04 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/27 18:59:34 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -198,6 +198,7 @@ SRC		=									\
 	parser/rules_syntax_error.c				\
 	parser/rules_while.c					\
 	parser/shunting_yard.c					\
+	parser/tools_shunting_yard.c			\
 	parser/token.c							\
 	parser/token_type.c						\
 	parser/token_type_desc.c				\

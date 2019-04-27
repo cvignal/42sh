@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:14:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/27 16:44:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:27:26 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ast.h"
 #include "libft.h"
 
-t_token	*alloc_ast_token(void *data, t_ttype type)
+t_token		*alloc_ast_token(void *data, t_ttype type)
 {
 	t_token	*new_token;
 

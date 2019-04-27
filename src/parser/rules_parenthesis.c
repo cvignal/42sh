@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 09:24:03 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 09:31:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:28:30 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	is_arithmetic(const char *token)
 	return (0);
 }
 
-int	rule_parenthesis(t_parser *parser, t_token *list)
+int			rule_parenthesis(t_parser *parser, t_token *list)
 {
 	(void)parser;
 	if (is_arithmetic(list->data))

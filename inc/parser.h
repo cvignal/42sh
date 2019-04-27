@@ -1,10 +1,12 @@
+/* ************************************************************************** */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 17:29:43 by cvignal          ###   ########.fr       */
+/*   Created: 2019/04/27 18:03:52 by cvignal           #+#    #+#             */
+/*   Updated: 2019/04/27 19:01:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,8 +223,8 @@ int						lexer_over(struct s_shell *shell, t_token *token,
 		char c);
 int						lexer_more_input(struct s_shell *shell, t_token *token,
 		char c);
-int						lexer_more_input_nl(struct s_shell *shell, t_token *token,
-		char c);
+int						lexer_more_input_nl(struct s_shell *shell
+		, t_token *token, char c);
 
 /*
 ** parser/lexer_act_escaped.c
@@ -257,5 +259,10 @@ int						is_a_keyword(const char *s);
 **	parser/assignement.c
 */
 int						token_is_assignement(const char *value);
+
+/*
+** parser/tools_shunting_yard.c
+*/
+int						set_leaves(struct s_ast *node, struct s_token **stack);
 
 #endif

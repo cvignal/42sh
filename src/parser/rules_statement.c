@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 13:23:08 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/10 05:52:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:30:08 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	rule_create_statement(t_parser *parser, t_token *list)
 int	rule_pop_cmd_statement(t_parser *parser, t_token *list)
 {
 	t_token		*new_token;
-	t_command		*command;
+	t_command	*command;
 
 	(void)list;
 	new_token = alloc_ast_token(parser->pss->ret, TT_STATEMENT);

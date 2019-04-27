@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 09:04:48 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/25 12:08:49 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:08:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ t_var	*copy_vars(t_var *vars, int only_exported)
 		if ((only_exported && vars->exported) || !only_exported)
 		{
 			if (!(new_var = malloc(sizeof(*new_var))))
-			{
-				free_vars(&copy);
-				return (NULL);
-			}
+				return (free_vars(&copy));
 			if (!(new_var->var = ft_strdup(vars->var)))
 			{
 				free(new_var);
@@ -64,7 +61,7 @@ t_var	*copy_vars(t_var *vars, int only_exported)
 	return (copy);
 }
 
-void	free_vars(t_var **vars)
+t_var	*free_vars(t_var **vars)
 {
 	t_var			*next;
 	t_var			*iter;
@@ -78,4 +75,5 @@ void	free_vars(t_var **vars)
 		iter = next;
 	}
 	*vars = NULL;
+	return (NULL);
 }
