@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/27 18:06:01 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/28 00:15:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef enum			e_ttype
 	TT_ARI,
 	TT_ARI_ID,
 	TT_ARI_NUMBER,
+	TT_ARI_OP_AND,
 	TT_ARI_OP_CMP_EQ,
 	TT_ARI_OP_CMP_INF,
 	TT_ARI_OP_CMP_INF_EQ,
@@ -33,6 +34,7 @@ typedef enum			e_ttype
 	TT_ARI_OP_DIV,
 	TT_ARI_OP_EQ,
 	TT_ARI_OP_MOD,
+	TT_ARI_OP_OR,
 	TT_ARI_OP_PLUS,
 	TT_ARI_OP_PLUS_PLUS,
 	TT_ARI_OP_PROD,
