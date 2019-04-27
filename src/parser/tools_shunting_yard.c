@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:00:41 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/24 17:28:18 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/27 18:55:18 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,27 @@
 #include "parser.h"
 #include "libft.h"
 
-int				set_leaves(t_ast *node, t_ast_token **stack)
+int				set_leaves(t_ast *node, t_token **stack)
 {
-	t_ast_token	*right;
-	t_ast_token	*left;
+	t_token			*right;
+	t_token			*left;
+	const t_op_prop	*prop;
 
 	if (!node)
 		return (1);
-	right = pop_ast_token(stack);
+	if (!(right = pop_ast_token(stack)))
+		return (1);
 	node->right = right->data;
 	free(right);
 	node->left = NULL;
+	if (!(prop = get_op_prop(node->type)))
+		return (1);
+	if (prop->arity == 1)
+		return (0);
 	if (!(left = pop_ast_token(stack)))
 	{
-		if (node->type == TT_END)
-			return (0);
-		((t_ast *)right->data)->del(right->data);
-		free(right);
+		node->right->del(node->right);
+		node->right = NULL;
 		return (1);
 	}
 	node->left = left->data;

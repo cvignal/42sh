@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 23:09:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/25 23:13:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:10:31 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,3 @@ int	exec_ari_cmp_sup_eq(t_shell *shell, struct s_ast *ast)
 	ast->ret = !res;
 	return (res);
 }
-

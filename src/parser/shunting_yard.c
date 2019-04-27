@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 12:32:27 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 20:55:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 19:01:52 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,6 @@
 #include "ast.h"
 #include "parser.h"
 #include "libft.h"
-
-static int		set_leaves(t_ast *node, t_token **stack)
-{
-	t_token			*right;
-	t_token			*left;
-	const t_op_prop	*prop;
-
-	if (!node)
-		return (1);
-	if (!(right = pop_ast_token(stack)))
-		return (1);
-	node->right = right->data;
-	free(right);
-	node->left = NULL;
-	if (!(prop = get_op_prop(node->type)))
-		return (1);
-	if (prop->arity == 1)
-		return (0);
-	if (!(left = pop_ast_token(stack)))
-	{
-		node->right->del(node->right);
-		node->right = NULL;
-		return (1);
-	}
-	node->left = left->data;
-	free(left);
-	return (0);
-}
 
 static t_ast	*clean_exit(t_pss *pss)
 {
@@ -74,6 +46,18 @@ static void		shunting_yard_parenthesis(t_parser *parser)
 				pop_ast_token(&parser->input_queue));
 }
 
+static int		valid_token(const t_op_prop *input_op_prop
+		, const t_op_prop *stack_op_prop)
+{
+	if ((input_op_prop->asso == LEFT && input_op_prop->precedence
+			<= stack_op_prop->precedence) || (input_op_prop->asso
+				== RIGHT && input_op_prop->precedence
+					< stack_op_prop->precedence))
+		return (1);
+	else
+		return (0);
+}
+
 void			shunting_yard(t_parser *parser)
 {
 	const t_op_prop	*input_op_prop;
@@ -84,12 +68,10 @@ void			shunting_yard(t_parser *parser)
 		input_op_prop = get_op_prop(((t_ast *)parser->input_queue->data)->type);
 		while (parser->pss->op_stack)
 		{
-			if (!(stack_op_prop = get_op_prop(((t_ast *)parser->pss->op_stack->data)->type)))
+			if (!(stack_op_prop = get_op_prop(((t_ast *)parser->pss\
+								->op_stack->data)->type)))
 				break ;
-			if ((input_op_prop->asso == LEFT
-						&& input_op_prop->precedence <= stack_op_prop->precedence)
-					|| (input_op_prop->asso == RIGHT
-						&& input_op_prop->precedence < stack_op_prop->precedence))
+			if (valid_token(input_op_prop, stack_op_prop))
 				add_to_ast_token_list(&parser->pss->output_queue,
 						pop_ast_token(&parser->pss->op_stack));
 			else
@@ -104,7 +86,6 @@ void			shunting_yard(t_parser *parser)
 	else
 		shunting_yard_parenthesis(parser);
 }
-
 
 t_ast			*queue_to_ast(t_pss *pss)
 {

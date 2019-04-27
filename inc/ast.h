@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 19:51:57 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:06:01 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef enum			e_ttype
 	TT_WORD
 }						t_ttype;
 
-typedef enum			s_asso
+typedef enum			e_asso
 {
 	LEFT,
 	RIGHT
@@ -99,11 +99,11 @@ typedef struct			s_op_prop
 /*
 ** parser/ast_token.c
 */
-t_token				*alloc_ast_token(void *data, t_ttype type);
+t_token					*alloc_ast_token(void *data, t_ttype type);
 void					add_to_ast_token_list(t_token **list,
 		t_token *node);
 void					push_ast_token(t_token **list, t_token *node);
-t_token				*pop_ast_token(t_token **list);
+t_token					*pop_ast_token(t_token **list);
 void					free_ast_token(t_token *token);
 
 /*
@@ -296,7 +296,6 @@ int						rule_ari_pre_mangle(t_parser *parser,
 		t_token *list);
 int						rule_ari_post_mangle(t_parser *parser,
 		t_token *list);
-
 
 /*
 ** parser/rules_ari_usub.c

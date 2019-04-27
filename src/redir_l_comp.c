@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 11:16:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 11:16:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 19:02:11 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,3 @@ int	redir_l_comp(t_shell *shell, t_ast *instr, t_redir *redir)
 	redir->fd = redir->out;
 	return (0);
 }
-

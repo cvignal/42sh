@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 06:04:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 07:05:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:28:11 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 int	rule_ari_pre_mangle(t_parser *parser, t_token *list)
 {
 	t_token	*new_token;
-	int			type;
+	int		type;
 
 	if (list->type == TT_ARI_OP_PLUS_PLUS)
 		type = TT_ARI_OP_UPLUS;
@@ -35,7 +35,7 @@ int	rule_ari_pre_mangle(t_parser *parser, t_token *list)
 int	rule_ari_post_mangle(t_parser *parser, t_token *list)
 {
 	t_token	*new_token;
-	int			type;
+	int		type;
 
 	if (list->next->type == TT_ARI_OP_PLUS_PLUS)
 		type = TT_ARI_OP_UPLUS;
