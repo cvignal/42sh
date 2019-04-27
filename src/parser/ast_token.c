@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:14:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 00:54:05 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 16:44:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_token		*pop_ast_token(t_token **list)
 
 void		free_ast_token(t_token *token)
 {
-	free(token->data);
+	if (token->data)
+		free(token->data);
 	free(token);
 }

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:20:26 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 18:17:49 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 16:43:59 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	rule_add_to_cmd(t_parser *parser, t_token *list)
 		{
 			ret = set_var_full(&parser->pss->ret->assignements, list->data, 0);
 			free(list->data);
+			list->data = NULL;
 		}
 		else
 			ret = add_to_command(parser->pss->ret->data, list->data);
