@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 05:55:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 01:28:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 01:36:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int	rule_ari_post_sub_sub(t_parser *parser, t_token *list)
 	free(list->next->data);
 	free(list->next);
 	list->next = tmp;
+	if (tmp->next)
+	{
+		if (tmp->next->type == TT_ARI_OP_USUB)
+			tmp->next->type = TT_ARI_OP_SUB;
+		else if (tmp->next->type == TT_ARI_OP_UPLUS)
+			tmp->next->type = TT_ARI_OP_PLUS;
+	}
 	return (0);
 }
 
