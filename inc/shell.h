@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/27 18:09:34 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/28 02:59:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,6 +319,8 @@ int					exec_ari_cmp_sup_eq(t_shell *shell, struct s_ast *ast);
 int					exec_ari_cmp_sup(t_shell *shell, struct s_ast *ast);
 int					exec_ari_cmp_eq(t_shell *shell, struct s_ast *ast);
 int					exec_ari_cmp_not_eq(t_shell *shell, struct s_ast *ast);
+int					exec_ari_and(t_shell *shell, struct s_ast *ast);
+int					exec_ari_or(t_shell *shell, struct s_ast *ast);
 int					exec_ari_statement(t_shell *shell, struct s_ast *ast);
 void				free_ari_statement(struct s_ast *ast);
 

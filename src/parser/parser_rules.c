@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:28:52 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/27 18:29:20 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/28 03:04:01 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static const t_ast_rule g_rules[] =\
 	{PS_ARI, {TT_ARI_OP_DIV, 0, 0}, 1, &rule_ari_op},
 	{PS_ARI, {TT_ARI_OP_MOD, 0, 0}, 1, &rule_ari_op},
 	{PS_ARI, {TT_ARI_OP_EQ, 0, 0}, 1, &rule_ari_op},
+	{PS_ARI, {TT_ARI_OP_AND, 0, 0}, 1, &rule_ari_op},
+	{PS_ARI, {TT_ARI_OP_OR, 0, 0}, 1, &rule_ari_op},
 	{PS_ARI, {TT_OPEN_PAR, 0, 0}, 1, &rule_send_to_shunting_yard},
 	{PS_ARI, {TT_CLOSE_PAR, 0, 0}, 1, &rule_send_to_shunting_yard},
 	{PS_ARI, {TT_STATEMENT, 0, 0}, 1, &rule_send_to_shunting_yard},
