@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 16:31:00 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:02:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			exec_cmd(t_shell *shell, t_ast *ast)
 		return (1);
 	if (expand_redirs(shell, ast->redir_list, EXP_LEXER_MASK_ALL))
 		return (1);
-	if (prepare_redirs(shell, ast, ast))
+	if (prepare_redirs(shell, ast))
 		return ((ast->ret = 127));
 	ret = 0;
 	if (((t_command *)ast->data)->args_len == 0)

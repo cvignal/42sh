@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:43:45 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 12:43:48 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 18:04:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ int	redir_close(t_shell *shell, t_ast *instr, t_redir *redir)
 {
 	(void)shell;
 	(void)instr;
-	(void)redir;
+	redir->fd = redir->in;
 	return (0);
 }
