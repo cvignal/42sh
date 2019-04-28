@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 22:31:21 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 20:35:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 03:07:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static const t_ari_op_desc	g_op_desc[] =\
 	{"-", TT_ARI_OP_SUB, &exec_ari_sub, &free_ari},
 	{"+", TT_ARI_OP_PLUS, NULL, &free_ari},
 	{"-", TT_ARI_OP_SUB, &exec_ari_usub, &free_ari},
+	{"&&", TT_ARI_OP_AND, &exec_ari_and, &free_ari},
+	{"||", TT_ARI_OP_OR, &exec_ari_or, &free_ari},
 	{"*", TT_ARI_OP_PROD, &exec_ari_prod, &free_ari},
 	{"/", TT_ARI_OP_DIV, &exec_ari_div, &free_ari},
 	{"%", TT_ARI_OP_MOD, &exec_ari_mod, &free_ari},
@@ -33,6 +35,8 @@ static const t_ari_op_desc	g_op_desc[] =\
 	{">", TT_ARI_OP_CMP_SUP_EQ, &exec_ari_cmp_sup, &free_ari},
 	{"==", TT_ARI_OP_CMP_EQ, &exec_ari_cmp_eq, &free_ari},
 	{"!", TT_PARTIAL, NULL, NULL},
+	{"&", TT_PARTIAL, NULL, NULL},
+	{"|", TT_PARTIAL, NULL, NULL},
 	{"!=", TT_ARI_OP_CMP_NOT_EQ, &exec_ari_cmp_not_eq, &free_ari}
 };
 
