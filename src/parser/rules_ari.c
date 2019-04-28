@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 23:51:03 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 08:38:15 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 05:03:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	rule_ari_over(t_parser *parser, t_token *list)
 				pop_ast_token(&parser->pss->op_stack));
 	free(list->data);
 	list->data = queue_to_ast(parser->pss);
+	if (parser->pss->status == PARSER_ERROR)
+		return (1);
 	list->type = TT_STATEMENT;
 	pss_pop(parser);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 22:34:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 04:35:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 05:05:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,7 @@ int			exp_lexer_pop_ari(t_shell *shell, char c, int mask)
 		copy_ari_result(shell, shell->parser.ret->data);
 		shell->parser.ret->del(shell->parser.ret);
 	}
+	else
+		return (EXP_LEXER_RET_ERROR);
 	return (0);
 }
