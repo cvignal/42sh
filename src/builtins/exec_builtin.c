@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 01:22:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 16:32:37 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,57 +30,62 @@ static int	get_fd_copy(t_shell *shell, int fd)
 	return (new_fd);
 }
 
-static int	prepare_pipeline(t_shell *shell, t_ast *instr, int *old)
+static int	save_builtin_fds(t_shell *shell, int *old)
 {
-	old[STDIN_FILENO] = get_fd_copy(shell, STDIN_FILENO);
-	old[STDOUT_FILENO] = get_fd_copy(shell, STDOUT_FILENO);
-	old[STDERR_FILENO] = get_fd_copy(shell, STDERR_FILENO);
-	if (instr->pipes_in[PIPE_PARENT][STDIN_FILENO] != -1)
+	int	i;
+
+	i = 0;
+	while (i < 3)
 	{
-		if (dup2(instr->pipes_in[PIPE_PARENT][STDIN_FILENO], STDIN_FILENO)
-				== -1)
-		{
-			ft_dprintf(STDERR_FILENO, "%s: pipe creation failed\n", EXEC_NAME);
-			return (1);
-		}
-	}
-	if (instr->pipes_out[PIPE_PARENT][STDOUT_FILENO] != -1)
-	{
-		if (dup2(instr->pipes_out[PIPE_PARENT][STDOUT_FILENO], STDOUT_FILENO)
-				== -1)
-		{
-			ft_dprintf(STDERR_FILENO, "%s: pipe creation failed\n", EXEC_NAME);
-			return (1);
-		}
+		old[i] = get_fd_copy(shell, i);
+		++i;
 	}
 	return (0);
 }
 
-static void	reset_pipeline(t_shell *shell, int *old)
+static void	reset_builtin_fds(t_shell *shell, int *old)
 {
-	dup2(old[STDIN_FILENO], STDIN_FILENO);
-	dup2(old[STDOUT_FILENO], STDOUT_FILENO);
-	dup2(old[STDERR_FILENO], STDERR_FILENO);
-	remove_fd(shell, old[STDIN_FILENO]);
-	close(old[STDIN_FILENO]);
-	remove_fd(shell, old[STDOUT_FILENO]);
-	close(old[STDOUT_FILENO]);
-	remove_fd(shell, old[STDERR_FILENO]);
-	close(old[STDERR_FILENO]);
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		dup2(old[i], i);
+		remove_fd(shell, old[i]);
+		close(old[i]);
+		++i;
+	}
+}
+
+static int	exec_builtin_internal(t_shell *shell, t_builtin builtin,
+		t_ast *instr)
+{
+	set_pipeline(shell, instr);
+	if (apply_redirs(shell, instr))
+		return (127);
+	return (builtin(shell, ((t_command *)instr->data)->args_value));
 }
 
 int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 {
 	int		fd[3];
+	pid_t	pid;
 
-	if (prepare_pipeline(shell, instr, fd))
-		return (-1);
-	if (apply_redirs(shell, instr))
-		return (-1);
 	if (prepare_redirs(shell, instr, instr))
-		return (-1);
-	instr->ret = builtin(shell, ((t_command *)instr->data)->args_value);
-	reset_pipeline(shell, fd);
-	reset_redirs(shell, instr);
+		return (127);
+	if (instr->pipes_in[PIPE_PARENT][STDIN_FILENO] != -1
+			|| instr->pipes_out[PIPE_PARENT][STDOUT_FILENO] != -1)
+	{
+		if (!(pid = fork()))
+			exit(exec_builtin_internal(shell, builtin, instr));
+		instr->pid = pid;
+	}
+	else
+	{
+		save_builtin_fds(shell, fd);
+		instr->ret = exec_builtin_internal(shell, builtin, instr);
+		reset_builtin_fds(shell, fd);
+		reset_redirs(shell, instr);
+	}
 	return (instr->ret);
 }
