@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 22:34:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 05:05:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 06:35:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int			exp_lexer_pop_ari_paren(t_shell *shell, char c, int mask)
 int			exp_lexer_pop_ari(t_shell *shell, char c, int mask)
 {
 	t_token	*tokens;
+	int		ret;
 
 	(void)mask;
 	(void)c;
@@ -70,15 +71,16 @@ int			exp_lexer_pop_ari(t_shell *shell, char c, int mask)
 		return (1);
 	set_unary(tokens);
 	lss_pop(&shell->lexer);
-	shell->parser.ret = NULL;
 	if (pss_push(&shell->parser, PS_ARI))
 		return (1);
-	if (parse(shell, tokens) == PARSER_COMPLETE)
+	if ((ret = parse(shell, tokens)) == PARSER_COMPLETE)
 	{
 		shell->parser.ret->exec(shell, shell->parser.ret);
 		copy_ari_result(shell, shell->parser.ret->data);
 		shell->parser.ret->del(shell->parser.ret);
 	}
+	else if (ret == PARSER_EMPTY)
+		copy_ari_result(shell, "0");
 	else
 		return (EXP_LEXER_RET_ERROR);
 	return (0);
