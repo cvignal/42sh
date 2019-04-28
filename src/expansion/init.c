@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 03:10:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 16:40:40 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,6 @@ static void	set_exp_lexer_var_methods(t_exp_lexer *lexer)
 	}
 }
 
-static void	set_exp_lexer_hist_methods(t_exp_lexer *lexer)
-{
-	int	i;
-
-	i = 0;
-	while (i <= CHAR_MAX)
-	{
-		if (ft_isalnum(i) || i == '!' || i == '-')
-			lexer->methods[EXP_STATE_HIST][i] = &exp_lexer_add_to_var;
-		else
-			lexer->methods[EXP_STATE_HIST][i] = &exp_lexer_cut_var;
-		++i;
-	}
-}
-
 static void	set_exp_lexer_other(t_exp_lexer *lexer)
 {
 	lexer->methods[EXP_STATE_WORD]['\\'] = &exp_lexer_push_escaped;
@@ -64,7 +49,6 @@ static void	set_exp_lexer_other(t_exp_lexer *lexer)
 	lexer->methods[EXP_STATE_VAR][0] = &exp_lexer_cut_var;
 	lexer->methods[EXP_STATE_ARI][0] = &exp_lexer_pop_ari;
 	lexer->methods[EXP_STATE_ARI_PAREN][0] = &exp_lexer_error;
-	lexer->methods[EXP_STATE_HIST][0] = &exp_lexer_cut_hist;
 	lexer->methods[EXP_STATE_ESCAPED][0] = &exp_lexer_error;
 }
 
@@ -104,7 +88,6 @@ int			init_exp_lexer(t_exp_lexer *lexer)
 	lexer->methods[EXP_STATE_ARI]['('] = &exp_lexer_push_ari_paren;
 	lexer->methods[EXP_STATE_ARI_PAREN]['('] = &exp_lexer_push_ari_paren;
 	lexer->methods[EXP_STATE_ARI_PAREN][')'] = &exp_lexer_pop_ari_paren;
-	set_exp_lexer_hist_methods(lexer);
 	set_exp_lexer_var_methods(lexer);
 	set_exp_lexer_other(lexer);
 	set_exp_lexer_dollar(lexer);
