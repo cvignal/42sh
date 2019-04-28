@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 17:57:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/25 01:06:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 18:48:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int		exec_while(t_shell *shell, t_ast *ast)
 	{
 		ast->left->exec(shell, ast->left);
 		wait_loop(shell, ast->left);
-		set_ret(shell, ast, ast->left->ret);
 		((t_ast *)ast->data)->exec(shell, ast->data);
 		wait_loop(shell, ast->data);
 	}

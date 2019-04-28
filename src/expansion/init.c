@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 03:10:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 18:11:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int			init_exp_lexer(t_exp_lexer *lexer)
 		lexer->methods[EXP_STATE_WORD][i] = &exp_lexer_add_to_buff;
 		lexer->methods[EXP_STATE_SQUOTE][i] = &exp_lexer_add_to_buff;
 		lexer->methods[EXP_STATE_DQUOTE][i] = &exp_lexer_add_to_buff;
-		lexer->methods[EXP_STATE_ESCAPED][i] = &exp_lexer_pop_add_to_buff;
 		lexer->methods[EXP_STATE_ESCAPED][i] = &exp_lexer_pop_add_to_buff;
 		lexer->methods[EXP_STATE_ARI][i] = &exp_lexer_pop_ari;
 		lexer->methods[EXP_STATE_ARI_PAREN][i] = &exp_lexer_add_to_var;
