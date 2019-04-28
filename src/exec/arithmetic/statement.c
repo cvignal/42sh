@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 23:58:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 04:04:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 05:04:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int			exec_ari_statement(t_shell *shell, t_ast *ast)
 		return (1);
 	if (parse(shell, tokens) == PARSER_COMPLETE)
 		exec_complete_ari(shell, ast);
+	else
+		return (1);
 	return (0);
 }
 

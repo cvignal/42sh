@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 04:36:00 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 05:06:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ int			expand_params(t_shell *shell, t_command *command, int mask)
 		command->args_value[i - j] = do_expand(shell, command->args[i], &error
 				, mask);
 		if (error)
-		{
-			ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
 			return (1);
-		}
 		if (!command->args_value[i - j])
 			j++;
 		i++;
@@ -111,10 +108,7 @@ int			expand_redirs(t_shell *shell, t_redir *list, int mask)
 		else
 			curr->target_value = NULL;
 		if (error)
-		{
-			ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
 			return (1);
-		}
 		curr = curr->next;
 	}
 	return (0);
