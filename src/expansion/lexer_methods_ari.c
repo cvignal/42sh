@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 22:34:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 01:13:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 03:11:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	copy_ari_result(t_shell *shell, char *res)
 	return (0);
 }
 
-int	exp_lexer_set_ari(t_shell *shell, char c, int mask)
+int			exp_lexer_set_ari(t_shell *shell, char c, int mask)
 {
 	if (!(mask & EXP_LEXER_MASK_ARI))
 		return (exp_lexer_dollar_fail(shell, c, mask));
@@ -38,7 +38,7 @@ int	exp_lexer_set_ari(t_shell *shell, char c, int mask)
 	return (0);
 }
 
-int	exp_lexer_push_ari_paren(t_shell *shell, char c, int mask)
+int			exp_lexer_push_ari_paren(t_shell *shell, char c, int mask)
 {
 	(void)mask;
 	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_ARI_PAREN))
@@ -48,7 +48,7 @@ int	exp_lexer_push_ari_paren(t_shell *shell, char c, int mask)
 	return (EXP_LEXER_RET_CONT);
 }
 
-int	exp_lexer_pop_ari_paren(t_shell *shell, char c, int mask)
+int			exp_lexer_pop_ari_paren(t_shell *shell, char c, int mask)
 {
 	(void)mask;
 	exp_ss_pop(&shell->exp_lexer);
@@ -57,7 +57,7 @@ int	exp_lexer_pop_ari_paren(t_shell *shell, char c, int mask)
 	return (EXP_LEXER_RET_CONT);
 }
 
-int	exp_lexer_pop_ari(t_shell *shell, char c, int mask)
+int			exp_lexer_pop_ari(t_shell *shell, char c, int mask)
 {
 	t_token	*tokens;
 

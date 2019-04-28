@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/27 23:41:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 03:10:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	set_exp_lexer_other(t_exp_lexer *lexer)
 	lexer->methods[EXP_STATE_WORD][0] = &exp_lexer_over;
 	lexer->methods[EXP_STATE_SQUOTE][0] = &exp_lexer_error;
 	lexer->methods[EXP_STATE_DQUOTE][0] = &exp_lexer_error;
-	lexer->methods[EXP_STATE_DOLLAR][0] = &exp_lexer_dollar_fail;;
+	lexer->methods[EXP_STATE_DOLLAR][0] = &exp_lexer_dollar_fail;
 	lexer->methods[EXP_STATE_VAR][0] = &exp_lexer_cut_var;
 	lexer->methods[EXP_STATE_ARI][0] = &exp_lexer_pop_ari;
 	lexer->methods[EXP_STATE_ARI_PAREN][0] = &exp_lexer_error;
