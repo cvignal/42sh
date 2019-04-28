@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 22:34:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 07:46:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 16:29:23 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 #include "expand.h"
 #include "arithmetic.h"
 
-static int	copy_ari_result(t_shell *shell, char *res)
+static int	copy_ari_result(t_shell *shell, char *res, char c, int mask)
 {
 	int	i;
 
+	(void)c;
+	(void)mask;
 	i = 0;
 	while (res[i])
 	{
@@ -62,8 +64,6 @@ int			exp_lexer_pop_ari(t_shell *shell, char c, int mask)
 	t_token	*tokens;
 	int		ret;
 
-	(void)mask;
-	(void)c;
 	exp_ss_pop(&shell->exp_lexer);
 	if (lss_push(&shell->lexer, LSTATE_ARI_NONE))
 		return (EXP_LEXER_RET_ERROR);
@@ -77,11 +77,11 @@ int			exp_lexer_pop_ari(t_shell *shell, char c, int mask)
 	if ((ret = parse(shell, tokens)) == PARSER_COMPLETE)
 	{
 		shell->parser.ret->exec(shell, shell->parser.ret);
-		copy_ari_result(shell, shell->parser.ret->data);
+		copy_ari_result(shell, shell->parser.ret->data, c, mask);
 		shell->parser.ret->del(shell->parser.ret);
 	}
 	else if (ret == PARSER_EMPTY)
-		copy_ari_result(shell, "0");
+		copy_ari_result(shell, "0", c, mask);
 	else
 		return (EXP_LEXER_RET_ERROR);
 	return (0);
