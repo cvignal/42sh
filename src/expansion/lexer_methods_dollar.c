@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 22:24:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/27 23:07:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 04:33:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	exp_lexer_dollar_fail(t_shell *shell, char c, int mask)
 {
 	(void)mask;
 	exp_ss_pop(&shell->exp_lexer);
-	if (add_to_exp_buff(&shell->exp_lexer.buffer, 's'))
+	if (add_to_exp_buff(&shell->exp_lexer.buffer, '$'))
 		return (EXP_LEXER_RET_ERROR);
 	if (add_to_exp_buff(&shell->exp_lexer.buffer, c))
 		return (EXP_LEXER_RET_ERROR);
