@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 11:21:38 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 16:32:37 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:05:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 	int		fd[3];
 	pid_t	pid;
 
-	if (prepare_redirs(shell, instr, instr))
-		return (127);
 	if (instr->pipes_in[PIPE_PARENT][STDIN_FILENO] != -1
 			|| instr->pipes_out[PIPE_PARENT][STDOUT_FILENO] != -1)
 	{

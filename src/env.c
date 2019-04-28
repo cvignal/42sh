@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 09:04:48 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/27 18:08:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/28 17:49:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ t_var	*copy_vars(t_var *vars, int only_exported)
 			}
 			new_var->next = NULL;
 			new_var->exported = vars->exported;
+			new_var->len_name = vars->len_name;
+			new_var->len_value = vars->len_value;
+			new_var->alloc_size = ft_strlen(vars->var);
 			add_to_vars(&copy, new_var);
 		}
 		vars = vars->next;

@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 16:24:26 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:01:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,7 +343,7 @@ void				add_to_redir_list(t_ast *instr, t_redir *redir);
 /*
 ** redir_internal.c
 */
-int					prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root);
+int					prepare_redirs(t_shell *shell, t_ast *instr);
 int					redir_l(t_shell *shell, t_ast *ast, t_redir *redir);
 int					redir_ll(t_shell *shell, t_ast *ast, t_redir *redir);
 int					redir_r(t_shell *shell, t_ast *ast, t_redir *redir);
