@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 16:31:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:02:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 	if (!env)
 		exit(1);
 	set_pipeline(shell, instr);
-	if (prepare_redirs(shell, instr, instr)
-			|| apply_redirs(shell, instr))
+	if (apply_redirs(shell, instr))
 	{
 		free_shell(shell);
 		exit(127);
