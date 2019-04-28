@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 18:01:52 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 18:56:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ typedef struct		s_shell
 	int				ctrlc;
 	int				end_heredoc;
 	int				prev_cmd_state;
-	int				ret_cmd;
 	t_token			*output;
 	t_token			*current;
 	int				prompt_len;
