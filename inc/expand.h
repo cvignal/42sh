@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/27 23:50:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 04:03:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void					exp_ss_pop(t_exp_lexer *lexer);
 struct s_command;
 int						expand_params(struct s_shell *shell,
 		struct s_command *command, int mask);
-char					*expand(struct s_shell *shell, char *arg, int *error,
-		int mask);
+char					*do_expand(struct s_shell *shell, char *arg,
+		int *error, int mask);
 int						expand_redirs(struct s_shell *shell,
 		struct s_redir *list, int mask);
 

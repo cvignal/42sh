@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:18:39 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/27 23:45:57 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 04:36:00 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,6 @@
 #include "shell.h"
 #include "expand.h"
 #include "libft.h"
-
-static int	error_message(void)
-{
-	ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
-	return (1);
-}
 
 static char	*clean_exit(t_exp_lexer *lexer, int *error)
 {
@@ -32,7 +26,7 @@ static char	*clean_exit(t_exp_lexer *lexer, int *error)
 	return (NULL);
 }
 
-char		*expand(t_shell *shell, char *arg, int *error, int mask)
+static char	*expand(t_shell *shell, char *arg, int *error, int mask)
 {
 	int	i;
 	int	ret;
@@ -55,6 +49,26 @@ char		*expand(t_shell *shell, char *arg, int *error, int mask)
 	return (shell->exp_lexer.buffer.buffer);
 }
 
+char		*do_expand(t_shell *shell, char *arg, int *error, int mask)
+{
+	char	*tmp;
+	char	*ret;
+
+	ret = NULL;
+	if (mask & EXP_LEXER_MASK_ARI)
+	{
+		tmp = expand(shell, arg, error, mask & (~EXP_LEXER_MASK_ARI));
+		if (!*error)
+		{
+			ret = expand(shell, tmp, error, EXP_LEXER_MASK_ARI);
+			free(tmp);
+		}
+	}
+	else
+		ret = expand(shell, arg, error, mask);
+	return (ret);
+}
+
 int			expand_params(t_shell *shell, t_command *command, int mask)
 {
 	int		i;
@@ -68,12 +82,13 @@ int			expand_params(t_shell *shell, t_command *command, int mask)
 	{
 		if (command->args_value[i - j])
 			free(command->args_value[i - j]);
-		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
-		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
-		command->args_value[i - j] = expand(shell, command->args[i], &error
+		command->args_value[i - j] = do_expand(shell, command->args[i], &error
 				, mask);
 		if (error)
-			return (error_message());
+		{
+			ft_dprintf(2, "%s: unable to allocate memory\n", EXEC_NAME);
+			return (1);
+		}
 		if (!command->args_value[i - j])
 			j++;
 		i++;
@@ -92,7 +107,7 @@ int			expand_redirs(t_shell *shell, t_redir *list, int mask)
 	while (curr)
 	{
 		if (curr->target)
-			curr->target_value = expand(shell, curr->target, &error, mask);
+			curr->target_value = do_expand(shell, curr->target, &error, mask);
 		else
 			curr->target_value = NULL;
 		if (error)
