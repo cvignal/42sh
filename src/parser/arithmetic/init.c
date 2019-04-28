@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:33:40 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 09:28:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 08:00:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,9 @@ static inline void	init_arithmetic_op(t_lexer *lexer, int i)
 
 static inline void	init_arithmetic_other(t_lexer *lexer, int i)
 {
-	if (i == '$')
-	{
-		lexer->lexer_actions[LSTATE_ARI_NONE][i] = &alexer_create;
-		lexer->lexer_actions[LSTATE_ARI_ID][i] = &alexer_cut;
-		lexer->lexer_actions[LSTATE_ARI_OP][i] = &alexer_cut;
-	}
-	else
-	{
-		lexer->lexer_actions[LSTATE_ARI_NONE][i] = &alexer_input_error;
-		lexer->lexer_actions[LSTATE_ARI_ID][i] = &alexer_cut;
-		lexer->lexer_actions[LSTATE_ARI_OP][i] = &alexer_cut;
-	}
+	lexer->lexer_actions[LSTATE_ARI_NONE][i] = &alexer_input_error;
+	lexer->lexer_actions[LSTATE_ARI_ID][i] = &alexer_cut;
+	lexer->lexer_actions[LSTATE_ARI_OP][i] = &alexer_cut;
 }
 
 int					init_arithmetic_lexer(t_lexer *lexer)

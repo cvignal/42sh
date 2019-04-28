@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:03:52 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/27 19:01:12 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/28 07:55:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <limits.h>
 
 # define META_CHARS ";|&<>()"
-# define SPECIAL_CHARS ";|&<>$~"
 
 # define TOKEN_ALLOC_SIZE	128
 
