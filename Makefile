@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/28 03:03:07 by gchainet         ###   ########.fr        #
+#    Updated: 2019/04/28 16:23:11 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,14 +32,17 @@ SRC		=									\
 	builtins/idx_fc.c						\
 	builtins/parsing_fc.c					\
 	builtins/setenv.c						\
+	builtins/tools_cd.c						\
 	builtins/tools_fc.c						\
 	builtins/tools_hash.c					\
 	builtins/tools_type.c					\
+	builtins/trim_path.c					\
 	builtins/type.c							\
 	builtins/unset.c						\
 	builtins/unsetenv.c						\
 	command.c								\
 	env.c									\
+	exec.c									\
 	exec/and.c								\
 	exec/arithmetic/and.c					\
 	exec/arithmetic/cmp_eq.c				\
@@ -62,7 +65,6 @@ SRC		=									\
 	exec/arithmetic/usub.c					\
 	exec/arithmetic/utils.c					\
 	exec/arithmetic/value.c					\
-	exec.c									\
 	exec/cmd.c								\
 	exec/else.c								\
 	exec/end.c								\
@@ -72,15 +74,15 @@ SRC		=									\
 	exec/pipeline.c							\
 	exec/while.c							\
 	expansion/buffer.c						\
-	expansion/expr.c						\
 	expansion/exp_ss.c						\
+	expansion/expr.c						\
 	expansion/home.c						\
 	expansion/init.c						\
 	expansion/lexer.c						\
 	expansion/lexer_methods.c				\
 	expansion/lexer_methods_ari.c			\
-	expansion/lexer_methods_escaped.c		\
 	expansion/lexer_methods_dollar.c		\
+	expansion/lexer_methods_escaped.c		\
 	expansion/lexer_methods_hist.c			\
 	expansion/lexer_methods_over.c			\
 	expansion/lexer_methods_quotes.c		\
@@ -167,24 +169,24 @@ SRC		=									\
 	parser/init_parser.c					\
 	parser/input_queue.c					\
 	parser/keyword.c						\
+	parser/lexer.c							\
 	parser/lexer_act.c						\
 	parser/lexer_act_escaped.c				\
 	parser/lexer_act_meta.c					\
 	parser/lexer_act_over.c					\
 	parser/lexer_act_quote.c				\
-	parser/lexer.c							\
 	parser/lss.c							\
 	parser/op_prop.c						\
 	parser/parser.c							\
 	parser/parser_rules.c					\
 	parser/pss.c							\
+	parser/rules.c							\
 	parser/rules_ari.c						\
 	parser/rules_ari_decrementation.c		\
 	parser/rules_ari_incrementation.c		\
 	parser/rules_ari_mangle.c				\
 	parser/rules_ari_op.c					\
 	parser/rules_ari_usub.c					\
-	parser/rules.c							\
 	parser/rules_expr.c						\
 	parser/rules_if.c						\
 	parser/rules_if_nocd.c					\
@@ -203,10 +205,10 @@ SRC		=									\
 	parser/rules_syntax_error.c				\
 	parser/rules_while.c					\
 	parser/shunting_yard.c					\
-	parser/tools_shunting_yard.c			\
 	parser/token.c							\
 	parser/token_type.c						\
 	parser/token_type_desc.c				\
+	parser/tools_shunting_yard.c			\
 	parser/utils.c							\
 	path.c									\
 	pipeline.c								\
@@ -376,10 +378,10 @@ sure: warn ffcheck norm
 
 #### DEBUGING ####
 # Change warning flag to debug and local recompile
-debug:	WFLAGS	:= -g3 -ggdb
+debug:	WFLAGS	+= -g3 -ggdb
 debug:	all
 
-rdebug:	WFLAGS	:= -g3 -ggdb
+rdebug:	WFLAGS	+= -g3 -ggdb
 rdebug:	lre
 
 fsan:	WFLAGS	:= -g -fsanitize=address

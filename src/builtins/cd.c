@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 22:56:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 16:26:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,51 +40,79 @@ static int	exit_error_cd(const char *file)
 	return (1);
 }
 
-static int	change_dir(t_shell *shell, const char *dir)
+int			change_dir(t_shell *shell, char *curpath,
+		const char *dir, int option)
 {
-	char	*cwd;
+	char	*pwd;
+
+	(void)dir;
+	if (!(pwd = ft_strdup(get_var_value(get_var(shell->exec_vars, "PWD")))))
+		pwd = getcwd(NULL, MAX_PATH);
+	if (chdir(curpath))
+	{
+		free(pwd);
+		return (exit_error_cd(curpath));
+	}
+	set_var(&shell->vars, "OLDPWD", pwd, 1);
+	free(pwd);
+	if (option)
+	{
+		pwd = getcwd(NULL, MAX_PATH);
+		set_var(&shell->vars, "PWD", pwd, 1);
+		free(pwd);
+	}
+	else
+		set_var(&shell->vars, "PWD", curpath, 1);
+	free(curpath);
+	return (0);
+}
+
+static int	cd_find_path(t_shell *shell, const char *dir, int option)
+{
+	char	*curpath;
+	char	*pwd;
 
 	if (!dir)
 		return (1);
-	cwd = getcwd(NULL, MAX_PATH);
-	if (chdir(dir))
+	if (*dir == '/')
+		curpath = ft_strdup(dir);
+	else if (ft_strnequ(dir, "./", 2) || ft_strnequ(dir, "../", 3))
+		curpath = ft_strdup(dir);
+	else
+		curpath = cd_parse_path(shell, dir);
+	if (option)
+		return (change_dir(shell, curpath, dir, option));
+	else if (*curpath != '/')
 	{
-		free(cwd);
-		return (exit_error_cd(dir));
+		if (!(pwd = ft_strdup(get_var_value(get_var(shell->exec_vars, "PWD")))))
+			pwd = getcwd(NULL, MAX_PATH);
+		if (pwd[ft_strlen(pwd) - 1] != '/')
+			pwd = ft_strjoin_free(pwd, "/", 1);
+		curpath = ft_strjoin_free(pwd, curpath, 3);
 	}
-	set_var(&shell->vars, "OLDPWD", cwd, 1);
-	free(cwd);
-	cwd = getcwd(NULL, MAX_PATH);
-	set_var(&shell->vars, "PWD", cwd, 1);
-	free(cwd);
-	return (0);
+	return (canonic_path(shell, curpath, dir, option));
 }
 
 int			builtin_cd(t_shell *shell, char **args)
 {
-	size_t			arg_len;
-	unsigned int	i;
-	const char		*value;
+	int			i;
+	const char	*dir;
+	int			option;
 
-	arg_len = 0;
-	while (args[arg_len])
-		++arg_len;
-	if (arg_len > 3)
+	if ((i = cd_parse_options(args, &option)) == -1)
+		return (1);
+	if (args[i] && args[i + 1])
 		return (exit_error(NULL, "too many arguments"));
-	i = 1;
-	while (i < arg_len)
+	if (args[i] && ft_strequ(args[i], "-"))
 	{
-		if (!ft_strcmp(args[i], "-"))
-		{
-			if (!(value = get_var_value(get_var(shell->exec_vars, "OLDPWD"))))
-				return (exit_error(NULL, "OLDPWD not set"));
-			ft_dprintf(g_fd_output, "%s\n", value);
-			return (change_dir(shell, value));
-		}
-		else
-			return (change_dir(shell, args[i]));
+		if (!(dir = get_var_value(get_var(shell->exec_vars, "OLDPWD"))))
+			return (exit_error(NULL, "OLDPWD not set"));
+		ft_dprintf(g_fd_output, "%s\n", dir);
+		return (cd_find_path(shell, dir, option));
 	}
-	if (!(value = get_var_value(get_var(shell->exec_vars, "HOME"))))
+	else if (args[i])
+		return (cd_find_path(shell, args[i], option));
+	if (!(dir = get_var_value(get_var(shell->exec_vars, "HOME"))))
 		return (exit_error(NULL, "HOME not set"));
-	return (change_dir(shell, value));
+	return (cd_find_path(shell, dir, option));
 }
