@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/29 13:42:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/30 00:21:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define EXPAND_H
 
 # include <limits.h>
+
+# include "libft.h"
+
+# define DEFAULT_IFS " \n\t"
 
 # define EXP_BUFFER_ALLOC_SIZE	128
 
@@ -27,6 +31,7 @@
 # define EXP_LEXER_MASK_QUOTE (1 << 2)
 # define EXP_LEXER_MASK_HOME (1 << 3)
 # define EXP_LEXER_MASK_ARI (1 << 4)
+# define EXP_LEXER_MASK_FIELD_SPLITTING (1 << 5)
 
 typedef enum			e_exp_state
 {
@@ -64,6 +69,9 @@ typedef int				(*t_exp_lexer_f)(struct s_shell *, char, int);
 typedef struct			s_exp_lexer
 {
 	t_exp_ss			*state;
+	int					split;
+	t_array				ret;
+	const char			*ifs;
 	t_exp_lexer_f		methods[NUMBER_EXP_STATE][CHAR_MAX + 1];
 }						t_exp_lexer;
 
@@ -84,7 +92,7 @@ char					*exp_ss_pop(t_exp_lexer *lexer);
 struct s_command;
 int						expand_params(struct s_shell *shell,
 		struct s_command *command, int mask);
-char					*do_expand(struct s_shell *shell, char *arg,
+char					*expand_no_split(struct s_shell *shell, char *arg,
 		int *error, int mask);
 int						expand_redirs(struct s_shell *shell,
 		struct s_redir *list, int mask);

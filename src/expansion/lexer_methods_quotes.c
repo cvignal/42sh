@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:12:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/29 16:22:42 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/30 01:04:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int	exp_lexer_push_squote(struct s_shell *shell, char c, int mask)
 {
+	shell->exp_lexer.split = 0;
 	if (!(mask & EXP_LEXER_MASK_QUOTE))
 		return (exp_lexer_add_to_buff(shell, c, mask));
 	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_SQUOTE))
@@ -24,6 +25,7 @@ int	exp_lexer_push_squote(struct s_shell *shell, char c, int mask)
 
 int	exp_lexer_push_dquote(struct s_shell *shell, char c, int mask)
 {
+	shell->exp_lexer.split = 0;
 	if (!(mask & EXP_LEXER_MASK_QUOTE))
 		return (exp_lexer_add_to_buff(shell, c, mask));
 	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_DQUOTE))
@@ -47,5 +49,13 @@ int	exp_lexer_pop_quote(struct s_shell *shell, char c, int mask)
 		}
 		free(value);
 	}
+	else
+	{
+		if (add_char_to_exp_buff(&shell->exp_lexer, 0))
+			return (EXP_LEXER_RET_ERROR);
+		--shell->exp_lexer.state->buffer.pos;
+	}
+	if (mask & EXP_LEXER_MASK_FIELD_SPLITTING)
+		shell->exp_lexer.split = 1;
 	return (EXP_LEXER_RET_CONT);
 }
