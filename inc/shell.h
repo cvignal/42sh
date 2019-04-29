@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 18:56:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/30 01:31:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,7 +348,7 @@ int					redir_ll(t_shell *shell, t_ast *ast, t_redir *redir);
 int					redir_r(t_shell *shell, t_ast *ast, t_redir *redir);
 int					redir_rr(t_shell *shell, t_ast *ast, t_redir *redir);
 int					expand_heredoc(t_heredoc *heredoc, t_shell *shell
-		, int fd[2]);
+		, int fd[2], const char *target);
 
 /*
 ** apply_redirs.c
