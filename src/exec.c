@@ -21,31 +21,27 @@
 #include "libft.h"
 #include "expand.h"
 
-static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
+static void	exec_internal(t_shell *shell, t_ast *instr,
+	const char *path, t_builtin builtin)
 {
+	char **args;
+
+	if (!instr->job->pgid)
+		instr->job->pgid = instr->pid;
+	setpgid(instr->pid, instr->job->pgid);
+	if (instr->flags & (CMD_ASYNC | CMD_FORK))
+		tcsetpgrp(0, instr->job->pgid);
 	set_pipeline(shell, instr);
 	if (apply_redirs(shell, instr))
 	{
 		free_shell(shell);
 		exit(1);
 	}
-	enable_signal();
-	execve(bin_path, ((t_command *)instr->data)->args_value, shell->env);
-}
-
-static void	prepare_exec(t_shell *shell, t_ast *instr,
-	const char *path, t_builtin builtin)
-{
-	if (!instr->job->pgid)
-		instr->job->pgid = instr->pid;
-	setpgid(instr->pid, instr->job->pgid);
-	if (instr->flags & CMD_ASYNC)
-		tcsetpgrp(0, instr->job->pgid);
+	args = ((t_command *)instr->data)->args_value;
 	if (builtin)
-		exec_builtin(shell, builtin, instr);
-	else
-		exec_internal(shell, instr, path);
-	exit(1);
+		exit(builtin(shell, args));
+	enable_signal();
+	exit(execve(path, args, shell->env));
 }
 
 pid_t		do_exec(t_shell *shell, char **argv)
@@ -81,7 +77,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 		instr->ret = do_error_handling(prgm);
 		return (-1);
 	}
-	if (!builtin || instr->flags & CMD_ASYNC)
+	if (!builtin || instr->flags & CMD_FORK)
 	{
 		if ((instr->pid = fork()) == -1)
 			return (-1);
@@ -89,7 +85,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	else
 		return (exec_builtin(shell, builtin, instr));
 	if (instr->pid == 0)
-		prepare_exec(shell, instr, bin_path, builtin);
+		exec_internal(shell, instr, bin_path, builtin);
 	register_proc(instr);
 	return (0);
 }

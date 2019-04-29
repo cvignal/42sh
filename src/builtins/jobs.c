@@ -15,21 +15,6 @@
 
 #include <unistd.h>
 
-t_job	*parse_jobspec(t_shell *shell, char *jobspec)
-{
-	int	num;
-
-	if (jobspec[0] != '%')
-		return (0);
-	if ((num = parse_number(jobspec + 1)) != -1)
-		return (find_job(shell, num));
-	if (jobspec[1] == '%' || jobspec[1] == '+')
-		return (shell->curr);
-	if (jobspec[1] == '-')
-		return (shell->prev);
-	return (NULL);
-}
-
 int		parse_opts(int *i, char **argv)
 {
 	char	*str;

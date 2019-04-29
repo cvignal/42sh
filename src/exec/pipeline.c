@@ -69,11 +69,13 @@ int			exec_pipeline(t_shell *shell, t_ast *ast)
 		ft_dprintf(2, "%s: Unable to create pipe\n", EXEC_NAME);
 		return (1);
 	}
-	ast->left->flags |= CMD_ASYNC;
+	ast->left->flags |= CMD_FORK;
+	ast->left->job = ast->job;
 	ast->left->exec(shell, ast->left);
 	if (shell->ctrlc)
 		return (0);
-	ast->left->flags |= CMD_ASYNC;
+	ast->right->flags |= CMD_FORK;
+	ast->right->job = ast->job;
 	ast->right->exec(shell, ast->right);
 	close_all_pipes(shell, ast);
 	return (0);

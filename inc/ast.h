@@ -17,6 +17,7 @@
 # define PIPE_NODE 1
 
 # define CMD_ASYNC (1 << 0)
+# define CMD_FORK (1 << 1)
 
 # include "parser.h"
 
