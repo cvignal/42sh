@@ -196,9 +196,14 @@ void				free_command(t_command *command);
 int					add_to_command(t_command *command, char *word);
 
 /*
-** exec.c
+** utils.c
 */
 int					fail(char *proc, char *err, char *message, int ret);
+int					do_error_handling(char *name);
+
+/*
+** exec.c
+*/
 pid_t				exec(t_shell *shell, t_ast *instr);
 pid_t				do_exec(t_shell *shell, char **argv);
 int					wait_loop(t_ast *ast);

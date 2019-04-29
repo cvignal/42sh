@@ -16,6 +16,8 @@
 # define PIPE_PARENT 0
 # define PIPE_NODE 1
 
+# define CMD_ASYNC (1 << 0)
+
 # include "parser.h"
 
 typedef enum			e_ttype
@@ -98,6 +100,7 @@ typedef struct			s_ast
 	int					old_fds[10];
 	int					fds[10];
 	void				*data;
+	int					flags;
 	pid_t				pid;
 	int					ret;
 	struct s_redir		*redir_list;
