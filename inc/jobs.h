@@ -16,9 +16,6 @@
 # include "libft.h"
 # include <sys/types.h>
 
-# define JOB_BG 0
-# define JOB_FG 1
-
 typedef struct	s_proc
 {
 	pid_t			pid;
@@ -58,7 +55,7 @@ void			free_job(struct s_shell *shell, t_job *job);
 t_job			*find_job(struct s_shell *shell, int index);
 
 int				register_proc(struct s_ast *ast);
-int				register_job(struct s_shell *shell, t_job *job, int foreground);
+int				register_job(struct s_shell *shell, t_job *job);
 
 int				job_fg(struct s_shell *shell, t_job *job, int cont);
 void			job_bg(t_job *job, int cont);
