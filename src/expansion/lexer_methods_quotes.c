@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 21:12:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/29 13:41:32 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/29 16:22:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ int	exp_lexer_pop_quote(struct s_shell *shell, char c, int mask)
 	(void)c;
 	(void)mask;
 	value = exp_ss_pop(&shell->exp_lexer);
-	if (add_string_to_exp_buff(&shell->exp_lexer, value))
+	if (value)
 	{
+		if (add_string_to_exp_buff(&shell->exp_lexer, value))
+		{
+			free(value);
+			return (EXP_LEXER_RET_ERROR);
+		}
 		free(value);
-		return (EXP_LEXER_RET_ERROR);
 	}
-	free(value);
 	return (EXP_LEXER_RET_CONT);
 }
