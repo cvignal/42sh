@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:30:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/29 13:57:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/29 22:19:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ static char	*expand(t_shell *shell, char *arg, int *error, int mask)
 	}
 	if (shell->exp_lexer.state->state != EXP_STATE_WORD)
 		return (clean_exit(&shell->exp_lexer, error));
-	return (shell->exp_lexer.state->buffer.buffer);
+	if (shell->exp_lexer.state->buffer.buffer)
+		return (shell->exp_lexer.state->buffer.buffer);
+	return (ft_strdup(""));
 }
 
 char		*do_expand(t_shell *shell, char *arg, int *error, int mask)
@@ -66,25 +68,21 @@ char		*do_expand(t_shell *shell, char *arg, int *error, int mask)
 int			expand_params(t_shell *shell, t_command *command, int mask)
 {
 	int		i;
-	int		j;
 	int		error;
 
 	i = 0;
-	j = 0;
 	error = 0;
 	while (command->args[i])
 	{
-		if (command->args_value[i - j])
-			free(command->args_value[i - j]);
-		command->args_value[i - j] = do_expand(shell, command->args[i], &error
+		if (command->args_value[i])
+			free(command->args_value[i]);
+		command->args_value[i] = do_expand(shell, command->args[i], &error
 				, mask);
 		if (error)
 			return (1);
-		if (!command->args_value[i - j])
-			j++;
 		i++;
 	}
-	command->args_value[i - j] = NULL;
+	command->args_value[i] = NULL;
 	return (0);
 }
 
