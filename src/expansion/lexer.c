@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:30:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/30 00:53:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/30 01:21:03 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ int			expand_redirs(t_shell *shell, t_redir *list, int mask)
 		{
 			if (expand(shell, curr->target, mask))
 				return (1);
-			curr->target_value = shell->exp_lexer.state->buffer.buffer;
+			curr->target_value = shell->exp_lexer.ret.data[0];
+			free(shell->exp_lexer.ret.data);
 		}
 		else
 			curr->target_value = NULL;
