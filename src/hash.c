@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 15:20:51 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/12 14:40:08 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/10 03:09:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_hbt	*alloc_hbt_node(t_shell *shell, const char *bin)
 	t_hbt		*node;
 	char		*path;
 
-	path = find_command(shell, bin);
+	path = find_command(shell->vars, bin);
 	if (!path)
 		return (NULL);
 	node = malloc(sizeof(*node));

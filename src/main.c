@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/22 14:22:06 by marin            ###   ########.fr       */
+/*   Updated: 2019/04/28 18:53:00 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,29 @@ static const t_readline	g_functions[2] =\
 static void				exec_ast(t_shell *shell, t_token *tokens)
 {
 	t_ast	*ast;
-	int ret;
 
-	ret = parse(shell, tokens);
-	if (ret == PARSER_COMPLETE)
+	parse(shell, tokens);
+	if (shell->parser.ret_status == PARSER_COMPLETE)
 	{
-		// set shell pgid
-
-		// Create initial job
-		// - Then create new ones when needed (; && ||) wow there
-		// Set it to ast
-		// exec creates procs and appends them to ast->job
-		// replace ALL wait_loop by register_job
-
 		ast = shell->parser.ret;
 		if (!(ast->job = new_job()))
 			exit(-1);
 		ast->exec(shell, ast);
 		close_everything(shell);
 		ast->ret = register_job(shell, ast->job);
-		shell->ret_cmd = ast->ret;
+		set_ret(shell, NULL, ast->ret);
 		ast->del(ast);
 		shell->parser.ret = NULL;
 	}
+	else if (shell->parser.ret_status == PARSER_ERROR)
+		set_ret(shell, NULL, 2);
 	add_to_history(shell->line.data, shell, 0);
 	reset_terminal_mode(shell);
 	raw_terminal_mode(shell);
-	print_prompt(&shell->parser, shell, ret == PARSER_MORE_INPUT);
+	print_prompt(shell, 0);
 }
 
-int						main(int ac, char **av, char **environ)
+int						main(int ac, char **av, const char **environ)
 {
 	t_shell		shell;
 	t_token		*tokens;
@@ -68,14 +61,15 @@ int						main(int ac, char **av, char **environ)
 	if (init_shell(&shell, environ))
 		return (free_shell(&shell));
 	ret = check_validity(&shell);
-	print_prompt(&shell.parser, &shell, 0);
+	set_special_var(&shell.vars, SPECIAL_VAR_RET, "0");
+	print_prompt(&shell, 0);
 	disable_signal(&shell);
 	while (!g_functions[ret].f(&shell))
 	{
-		if (!(tokens = lex(&shell)))
+		if (!(tokens = lex(&shell, shell.line.data)))
 		{
 			add_to_history(shell.line.data, &shell, 1);
-			print_prompt(&shell.parser, &shell, 1);
+			print_prompt(&shell, 1);
 		}
 		else
 			exec_ast(&shell, tokens);

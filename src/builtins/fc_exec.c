@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 12:23:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/11 13:59:16 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/23 23:05:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,8 @@
 
 int		fc_switch_env(t_shell *new_shell, t_shell *shell)
 {
-	int	i;
-
-	i = 0;
-	if (shell->env)
-	{
-		while (shell->env[i])
-			free(shell->env[i++]);
-		free(shell->env);
-	}
-	shell->env = new_shell->env;
+	free_vars(&shell->vars);
+	shell->vars = copy_vars(new_shell->vars, 0);
 	return (0);
 }
 
@@ -42,7 +34,7 @@ int		fc_exec_line(char *str, t_shell *shell)
 	if (ft_addchar(&tmp_shell, str, 1))
 		return (1);
 	ft_printf("\n");
-	if (!(tokens = lex(&tmp_shell)))
+	if (!(tokens = lex(&tmp_shell, tmp_shell.line.data)))
 	{
 		free_shell(&tmp_shell);
 		return (1);
@@ -68,7 +60,7 @@ int		fc_exec_file(char *name, t_shell *shell)
 	{
 		ft_addchar(&tmp_shell, cmd, 1);
 		ft_printf("\n");
-		if ((tokens = lex(&tmp_shell)))
+		if ((tokens = lex(&tmp_shell, tmp_shell.line.data)))
 			fc_exec_ast(&tmp_shell, tokens);
 		free_line(&tmp_shell.line);
 		free(cmd);

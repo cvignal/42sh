@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redir_r_close.c                                    :+:      :+:    :+:   */
+/*   assignement.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/23 19:41:37 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/07 19:24:34 by gchainet         ###   ########.fr       */
+/*   Created: 2019/04/10 05:31:34 by gchainet          #+#    #+#             */
+/*   Updated: 2019/04/11 08:33:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
 #include "shell.h"
+#include "libft.h"
 
-int	redir_r_close(t_shell *shell, t_ast *instr, t_redir *redir)
+int	token_is_assignement(const char *value)
 {
-	(void)shell;
-	(void)instr;
-	(void)redir;
-	return (0);
+	int	i;
+
+	if (!ft_isalpha(value[0]) && value[0] != '_')
+		return (0);
+	i = 1;
+	while (value[i] && value[i] != '=')
+	{
+		if (!ft_isalnum(value[i]) && value[i] != '_')
+			return (0);
+		if (i > VAR_MAX)
+			return (0);
+		++i;
+	}
+	return (value[i] == '=');
 }

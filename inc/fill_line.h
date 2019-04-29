@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/17 11:13:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/23 12:42:13 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int				open_history_file(t_shell *shell);
 */
 int				t_puts(char *id);
 int				pos_cursor_col(t_shell *shell, int width, int len);
-void			print_prompt(t_parser *parser, t_shell *shell, int flag);
+void			print_prompt(t_shell *shell, int flag);
 
 /*
 ** History research mode

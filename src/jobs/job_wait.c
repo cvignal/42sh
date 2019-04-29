@@ -54,7 +54,6 @@ void			update_proc(t_shell *shell, pid_t pid, int status)
 	{
 		p->stopped = 1;
 		p->ret = 128 + WSTOPSIG(status);
-		ft_printf("\r\ni was stopped %d\r\n", p->ret);
 	}
 }
 

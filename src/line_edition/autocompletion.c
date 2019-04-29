@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/18 17:30:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/23 22:52:41 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,26 +71,23 @@ static void	ft_add_files(char *word, t_list **list)
 static void	ft_add_var(char *word, t_list **list, t_shell *shell)
 {
 	t_list	*new;
-	int		i;
+	t_var	*i;
 	char	*name;
 
-	if (shell->env)
+	i = shell->vars;
+	while (i)
 	{
-		i = 0;
-		while (shell->env[i])
+		if (!(name = ft_strdup(i->var)))
+			return ;
+		name[ft_strlen(name) - ft_strlen(ft_strchr(name, '='))] = 0;
+		if (ft_comp(ft_strchr(word, '$') + 1, name))
 		{
-			if (!(name = ft_strdup(shell->env[i])))
+			if (!(new = ft_lstnew(name, ft_strlen(name) + 1)))
 				return ;
-			name[ft_strlen(name) - ft_strlen(ft_strchr(name, '='))] = 0;
-			if (ft_comp(ft_strchr(word, '$') + 1, name))
-			{
-				if (!(new = ft_lstnew(name, ft_strlen(name) + 1)))
-					return ;
-				ft_lstadd(list, new);
-			}
-			ft_strdel(&name);
-			i++;
+			ft_lstadd(list, new);
 		}
+		ft_strdel(&name);
+		i = i->next;
 	}
 }
 

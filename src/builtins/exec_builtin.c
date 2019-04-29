@@ -79,7 +79,7 @@ int			exec_builtin(t_shell *shell, t_builtin builtin, t_ast *instr)
 		return (-1);
 	if (apply_redirs(shell, instr))
 		return (-1);
-	if (prepare_redirs(shell, instr, instr))
+	if (prepare_redirs(shell, instr))
 		return (-1);
 	instr->ret = builtin(shell, ((t_command *)instr->data)->args_value);
 	reset_pipeline(shell, fd);

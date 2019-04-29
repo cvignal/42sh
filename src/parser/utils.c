@@ -14,7 +14,7 @@
 
 #include "ast.h"
 
-void	shift_ast_token(t_parser *parser, t_ast_token *list, int del)
+void	shift_token(t_parser *parser, t_token *list, int del)
 {
 	if (del == 1)
 		free(list->data);
@@ -26,7 +26,7 @@ void	shift_ast_token(t_parser *parser, t_ast_token *list, int del)
 
 void	clean_last_end_token(t_parser *parser)
 {
-	t_ast_token	*tmp;
+	t_token	*tmp;
 
 	if (parser->pss->op_stack)
 	{

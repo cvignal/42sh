@@ -17,7 +17,7 @@
 #include "shell.h"
 #include "parser.h"
 
-int	rule_redir_r_both(t_parser *parser, t_ast_token *list)
+int	rule_redir_r_both(t_parser *parser, t_token *list)
 {
 	t_ast		*instr;
 	t_redir		*redir;

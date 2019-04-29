@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/06 20:01:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/05 11:11:38 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/24 12:44:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ static t_redir_apply_desc	g_redir_apply_desc[] =\
 	{TT_REDIR_R, &apply_redir_generic},
 	{TT_REDIR_RR, &apply_redir_generic},
 	{TT_REDIR_L, &apply_redir_generic},
+	{TT_REDIR_L_COMP, &apply_redir_comp},
 	{TT_REDIR_LL, &apply_redir_generic},
-	{TT_REDIR_R_CLOSE, &apply_redir_r_close},
-	{TT_REDIR_R_COMP, &apply_redir_r_comp},
+	{TT_REDIR_R_CLOSE, &apply_redir_close},
+	{TT_REDIR_L_CLOSE, &apply_redir_close},
+	{TT_REDIR_R_COMP, &apply_redir_comp},
 	{TT_REDIR_R_BOTH, &apply_redir_r_both},
 	{TT_REDIR_RW, &apply_redir_rw}
 };
@@ -58,10 +60,12 @@ int		apply_redir_generic(t_redir *redir)
 		ft_dprintf(2, "%s: unable to create redirection\n", EXEC_NAME);
 		return (1);
 	}
+	close(redir->fd);
+	redir->fd = redir->in;
 	return (0);
 }
 
-int		apply_redir_r_close(t_redir *redir)
+int		apply_redir_close(t_redir *redir)
 {
 	close(redir->in);
 	return (0);
@@ -78,9 +82,18 @@ int		apply_redir_r_both(t_redir *redir)
 	return (0);
 }
 
-int		apply_redir_r_comp(t_redir *redir)
+int		apply_redir_comp(t_redir *redir)
 {
-	if (dup2(redir->out, redir->in) == -1)
+	if (redir->out == -1)
+	{
+		if (dup2(STDERR_FILENO, redir->in) == -1
+				|| dup2(STDOUT_FILENO, redir->in) == -1)
+		{
+			ft_dprintf(2, "%s: unable to create redirection\n", EXEC_NAME);
+			return (1);
+		}
+	}
+	else if (dup2(redir->out, redir->in) == -1)
 	{
 		ft_dprintf(2, "%s: unable to create redirection\n", EXEC_NAME);
 		return (1);
