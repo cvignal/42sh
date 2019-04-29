@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:14:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/29 13:37:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/30 00:54:06 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,38 @@ int			add_char_to_exp_buff(t_exp_lexer *lexer, char c)
 	t_exp_buff	*buffer;
 
 	buffer = &lexer->state->buffer;
-	if (buffer->pos + 1 >= buffer->alloc_size)
+	if (lexer->state->state == EXP_STATE_WORD && lexer->split
+			&& ft_strchr(lexer->ifs, c))
 	{
-		if (realloc_exp_buff(buffer,
-					buffer->alloc_size + EXP_BUFFER_ALLOC_SIZE))
-			return (1);
+		if (buffer->buffer)
+		{
+			ft_arrayadd(&lexer->ret, buffer->buffer);
+			free(buffer->buffer);
+			ft_bzero(buffer, sizeof(*buffer));
+		}
 	}
-	buffer->buffer[buffer->pos++] = c;
+	else
+	{
+		if (buffer->pos + 1 >= buffer->alloc_size)
+		{
+			if (realloc_exp_buff(buffer,
+						buffer->alloc_size + EXP_BUFFER_ALLOC_SIZE))
+				return (1);
+		}
+		buffer->buffer[buffer->pos++] = c;
+	}
 	return (0);
 }
 
 int			add_string_to_exp_buff(t_exp_lexer *lexer, const char *s)
 {
-	t_exp_buff	*buffer;
-	size_t		len;
-	size_t		alloc_size;
+	unsigned int	i;
 
-	buffer = &lexer->state->buffer;
-	len = ft_strlen(s);
-	if (buffer->pos + len >= buffer->alloc_size)
+	i = 0;
+	while (s[i])
 	{
-		alloc_size = buffer->alloc_size + (len / EXP_BUFFER_ALLOC_SIZE + 1)
-			* (EXP_BUFFER_ALLOC_SIZE);
-		if (realloc_exp_buff(buffer, alloc_size))
-			return (1);
+		add_char_to_exp_buff(lexer, s[i]);
+		++i;
 	}
-	ft_strncpy(buffer->buffer + buffer->pos, s, len);
-	buffer->pos += len;
 	return (0);
 }
