@@ -44,6 +44,7 @@ typedef struct	s_job
 	t_proc			*last;
 	pid_t			pgid;
 	int				index;
+	int				async;
 	enum e_state	state;
 	struct s_job	*next;
 }				t_job;
@@ -71,6 +72,7 @@ int				wait_job(struct s_shell *shell, t_job *job);
 t_job			*report_job(struct s_shell *shell, t_job *job, int opts);
 void			print_job_command(t_job *job);
 
+t_job			*parse_jobspec(struct s_shell *shell, char *jobspec);
 int				parse_number(char *str);
 
 #endif

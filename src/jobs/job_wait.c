@@ -54,6 +54,7 @@ void			update_proc(t_shell *shell, pid_t pid, int status)
 	{
 		p->stopped = 1;
 		p->ret = 128 + WSTOPSIG(status);
+		ft_printf("\r\ni was stopped %d\r\n", p->ret);
 	}
 }
 
@@ -70,7 +71,7 @@ int				wait_job(t_shell *shell, t_job *job)
 	}
 	while ((pid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
 		update_proc(shell, pid, status);
-	status = job->last->ret;
+	status = job->async ? 0 : job->last->ret;
 	if (job_is_done(job))
 		free_job(shell, job);
 	else if (job->state == JOB_STOPPED)
