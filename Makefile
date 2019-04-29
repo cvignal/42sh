@@ -100,6 +100,7 @@ SRC		=								\
 	shell.c								\
 	command.c							\
 	exec.c								\
+	utils.c								\
 	path.c								\
 	env.c								\
 	env_utils.c							\
