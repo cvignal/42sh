@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 18:02:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/29 13:24:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,10 @@ static int	set_assignements(t_shell *shell, t_ast *ast, t_var **vars)
 	iter = ast->assignements;
 	while (iter)
 	{
-		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
-		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
 		error = 0;
 		expanded = do_expand(shell, iter->var, &error, EXP_LEXER_MASK_ALL);
 		if (error || set_var_full(vars, expanded, export))
 			return (1);
-		if (shell->exp_lexer.buffer.buffer)
-			free(shell->exp_lexer.buffer.buffer);
 		iter = iter->next;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:30:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/28 16:04:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/29 13:57:13 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,16 @@
 
 static char	*clean_exit(t_exp_lexer *lexer, int *error)
 {
-	if (lexer->buffer.pos)
-		free(lexer->buffer.buffer);
-	if (lexer->var.pos)
-		free(lexer->var.buffer);
+	t_exp_ss	*next;
+
+	while (lexer->state && lexer->state->state != EXP_STATE_WORD)
+	{
+		next = lexer->state->next;
+		if (lexer->state->buffer.buffer)
+			free(lexer->state->buffer.buffer);
+		free(lexer->state);
+		lexer->state = next;
+	}
 	*error = 1;
 	return (NULL);
 }
@@ -33,8 +39,8 @@ static char	*expand(t_shell *shell, char *arg, int *error, int mask)
 
 	i = 0;
 	ret = 0;
-	ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
-	ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
+	ft_bzero(&shell->exp_lexer.state->buffer,
+			sizeof(shell->exp_lexer.state->buffer));
 	while (!(ret & EXP_LEXER_RET_OVER))
 	{
 		ret = shell->exp_lexer.methods[shell->exp_lexer.state->state]
@@ -44,28 +50,16 @@ static char	*expand(t_shell *shell, char *arg, int *error, int mask)
 		if (ret & EXP_LEXER_RET_CONT)
 			++i;
 	}
-	if (shell->exp_lexer.buffer.buffer)
-		expand_home(shell, error, mask);
-	return (shell->exp_lexer.buffer.buffer);
+	if (shell->exp_lexer.state->state != EXP_STATE_WORD)
+		return (clean_exit(&shell->exp_lexer, error));
+	return (shell->exp_lexer.state->buffer.buffer);
 }
 
 char		*do_expand(t_shell *shell, char *arg, int *error, int mask)
 {
-	char	*tmp;
 	char	*ret;
 
-	ret = NULL;
-	if (mask & EXP_LEXER_MASK_ARI)
-	{
-		tmp = expand(shell, arg, error, mask & (~EXP_LEXER_MASK_ARI));
-		if (!*error)
-		{
-			ret = expand(shell, tmp, error, EXP_LEXER_MASK_ARI);
-			free(tmp);
-		}
-	}
-	else
-		ret = expand(shell, arg, error, mask);
+	ret = expand(shell, arg, error, mask);
 	return (ret);
 }
 

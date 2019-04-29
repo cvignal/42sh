@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 18:11:07 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/29 13:42:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,9 @@ typedef enum			e_exp_state
 	EXP_STATE_VAR,
 	EXP_STATE_ARI,
 	EXP_STATE_ARI_PAREN,
-	EXP_STATE_HIST,
 	EXP_STATE_ESCAPED,
 	NUMBER_EXP_STATE
 }						t_exp_state;
-
-typedef struct			s_exp_ss
-{
-	t_exp_state			state;
-	struct s_exp_ss		*next;
-}						t_exp_ss;
 
 typedef struct			s_exp_buff
 {
@@ -54,6 +47,13 @@ typedef struct			s_exp_buff
 	unsigned int		pos;
 	unsigned int		alloc_size;
 }						t_exp_buff;
+
+typedef struct			s_exp_ss
+{
+	t_exp_buff			buffer;
+	t_exp_state			state;
+	struct s_exp_ss		*next;
+}						t_exp_ss;
 
 struct s_exp_lexer;
 struct s_shell;
@@ -63,8 +63,6 @@ typedef int				(*t_exp_lexer_f)(struct s_shell *, char, int);
 
 typedef struct			s_exp_lexer
 {
-	t_exp_buff			buffer;
-	t_exp_buff			var;
 	t_exp_ss			*state;
 	t_exp_lexer_f		methods[NUMBER_EXP_STATE][CHAR_MAX + 1];
 }						t_exp_lexer;
@@ -78,7 +76,7 @@ int						init_exp_lexer(t_exp_lexer *exp_lexer);
 ** expansion/exp_ss.c
 */
 int						exp_ss_push(t_exp_lexer *lexer, t_exp_state state);
-void					exp_ss_pop(t_exp_lexer *lexer);
+char					*exp_ss_pop(t_exp_lexer *lexer);
 
 /*
 ** expansion/lexer.c
@@ -94,13 +92,13 @@ int						expand_redirs(struct s_shell *shell,
 /*
 ** expansion/home.c
 */
-int						expand_home(struct s_shell *shell, int *error
-		, int mask);
 
 /*
 ** expansion/buffer.c
 */
-int						add_to_exp_buff(t_exp_buff *buffer, char c);
+int						add_char_to_exp_buff(t_exp_lexer *lexer, char c);
+int						add_string_to_exp_buff(t_exp_lexer *lexer,
+		const char *s);
 int						exp_lexer_add_to_buff(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_pop_add_to_buff(struct s_shell *shell, char c
