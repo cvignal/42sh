@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/22 19:34:06 by agrouard         ###   ########.fr       */
+/*   Updated: 2019/04/28 18:56:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@
 # define COMMAND_NOT_FOUND_MSG "command not found"
 # define ERR_CHAR_VAR "invalid characters in var name"
 # define ERR_LEN_VAR "variable too long"
+# define ERR_BUILTIN_UNSET_ARG "invalid argument"
 # define FC_0 "fc: usage:\n"
 # define FC_1 "\t(i)   fc [-r] [-e editor] [[first] [last]]\n"
 # define FC_2 "\t(ii)  fc -l [-nr] [first [last]]\n"
 # define FC_3 "\t(iii) fc -s [pat=rep] [command]"
-# define FC_USAGE_MESSAGE FC_0 FC_1 FC_2 FC_3
 
 # define ARGS_ALLOC_SIZE 8
 # define HEREDOC_ALLOC_SIZE 256
@@ -42,9 +42,17 @@
 # define CHAR_TILDE	'~'
 # define CHAR_VAR '$'
 
-# define MAX_PATH	1024
+# define MAX_PATH 1024
 # define VAR_MAX 1024
 # define SEARCH_MAX 128
+# define SPECIAL_VAR_RET "?"
+
+# define REMOVE_VAR_ENV 0
+# define REMOVE_VAR_LOCAL 1
+
+# define STATE_WRITE 0
+# define STATE_SLASH 1
+# define STATE_DOT 2
 
 typedef struct		s_curs
 {
@@ -79,14 +87,26 @@ typedef struct		s_fd
 	struct s_fd		*next;
 }					t_fd;
 
+typedef struct		s_var
+{
+	char			*var;
+	size_t			len_name;
+	size_t			len_value;
+	size_t			alloc_size;
+	int				exported;
+	struct s_var	*next;
+}					t_var;
+
 struct s_job;
 
 typedef struct		s_shell
 {
 	t_lexer			lexer;
+	t_lexer			ari_lexer;
 	t_parser		parser;
 	t_exp_lexer		exp_lexer;
-	char			**env;
+	t_var			*vars;
+	t_var			*exec_vars;
 	t_line			line;
 	t_array			*history;
 	int				his_pos;
@@ -98,7 +118,6 @@ typedef struct		s_shell
 	int				ctrlc;
 	int				end_heredoc;
 	int				prev_cmd_state;
-	int				ret_cmd;
 	t_token			*output;
 	t_token			*current;
 	int				prompt_len;
@@ -206,18 +225,18 @@ int					do_error_handling(char *name);
 */
 pid_t				exec(t_shell *shell, t_ast *instr);
 pid_t				do_exec(t_shell *shell, char **argv);
-int					wait_loop(t_ast *ast);
+int					wait_loop(t_shell *shell, t_ast *ast);
 
 /*
 ** path.c
 */
-char				*find_command(t_shell *shell, const char *command);
+char				*find_command(t_var *vars, const char *command);
 
 /*
 ** shell.c
 */
 int					free_shell(t_shell *shell);
-int					init_shell(t_shell *shell, char **environ);
+int					init_shell(t_shell *shell, const char **environ);
 
 /*
 ** line.c
@@ -226,28 +245,17 @@ int					add_to_line(t_line *line, char buf);
 int					free_line(t_line *line);
 
 /*
-** env.c
-*/
-int					set_env_var(t_shell *shell, const char *var,
-					const char *value);
-void				remove_env(t_shell *shell);
-
-/*
-** env_utils.c
-*/
-char				**copy_env(char **env);
-char				**split_env_arg(char *arg);
-char				*get_env_value(t_shell *shell, char *name);
-int					remove_env_value(t_shell *shell, char *name);
-
-/*
 ** builtins/
 */
-t_builtin			is_builtin(char *cmd);
 int					builtin_cd(t_shell *shell, char **args);
+int					builtin_echo(t_shell *shell, char **args);
+int					builtin_env_get_opts(char **args, t_var **tmp_env);
 int					builtin_env(t_shell *shell, char **args);
-int					builtin_env_get_opts(char **args, t_shell *tmp_shell);
+int					builtin_exit(t_shell *shell, char **args);
+int					builtin_hash(t_shell *shell, char **args);
 int					builtin_setenv(t_shell *shell, char **args);
+int					builtin_type(t_shell *shell, char **args);
+int					builtin_unset(t_shell *shell, char **args);
 int					builtin_unsetenv(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
@@ -256,13 +264,18 @@ int					builtin_fg(t_shell *shell, char **args);
 int					builtin_bg(t_shell *shell, char **args);
 int					exec_builtin(t_shell *shell, t_builtin builtin,
 		t_ast *instr);
-int					builtin_type(t_shell *shell, char **args);
-void				print_only_type(char **args, int i, char *flags
-		, t_shell *shell);
-void				print_loc_type(char **args, int i, char *flags
-		, t_shell *shell);
-int					builtin_hash(t_shell *shell, char **args);
+t_builtin			is_builtin(char *cmd);
+void				print_loc_type(char **args, int i, char *flags,
+		t_shell *shell);
+void				print_only_type(char **args, int i, char *flags,
+		t_shell *shell);
 void				print_rec_tree(t_hbt *node);
+unsigned int		cd_parse_options(char **args, int *option);
+char				*cd_parse_path(t_shell *shell, const char *dir);
+int					canonic_path(t_shell *shell, char *curpath, const char *dir
+		, int option);
+int					change_dir(t_shell *shell, char *curpath, const char *dir
+		, int option);
 
 /*
 ** fc
@@ -313,6 +326,29 @@ int					exec_else(t_shell *shell, struct s_ast *ast);
 void				free_else(struct s_ast *ast);
 int					exec_while(t_shell *shell, struct s_ast *ast);
 void				free_while(struct s_ast *ast);
+int					exec_ari_plus(t_shell *shell, struct s_ast *ast);
+int					exec_ari_pre_plus_plus(t_shell *shell, struct s_ast *ast);
+int					exec_ari_post_plus_plus(t_shell *shell, struct s_ast *ast);
+int					exec_ari_mod(t_shell *shell, struct s_ast *ast);
+int					exec_ari_sub(t_shell *shell, struct s_ast *ast);
+int					exec_ari_pre_sub_sub(t_shell *shell, struct s_ast *ast);
+int					exec_ari_post_sub_sub(t_shell *shell, struct s_ast *ast);
+int					exec_ari_usub(t_shell *shell, struct s_ast *ast);
+int					exec_ari_div(t_shell *shell, struct s_ast *ast);
+int					exec_ari_prod(t_shell *shell, struct s_ast *ast);
+int					exec_ari_eq(t_shell *shell, struct s_ast *ast);
+int					exec_ari_value(t_shell *shell, struct s_ast *ast);
+void				free_ari(struct s_ast *ast);
+int					exec_ari_cmp_inf_eq(t_shell *shell, struct s_ast *ast);
+int					exec_ari_cmp_inf(t_shell *shell, struct s_ast *ast);
+int					exec_ari_cmp_sup_eq(t_shell *shell, struct s_ast *ast);
+int					exec_ari_cmp_sup(t_shell *shell, struct s_ast *ast);
+int					exec_ari_cmp_eq(t_shell *shell, struct s_ast *ast);
+int					exec_ari_cmp_not_eq(t_shell *shell, struct s_ast *ast);
+int					exec_ari_and(t_shell *shell, struct s_ast *ast);
+int					exec_ari_or(t_shell *shell, struct s_ast *ast);
+int					exec_ari_statement(t_shell *shell, struct s_ast *ast);
+void				free_ari_statement(struct s_ast *ast);
 
 /*
 ** redir.c
@@ -323,7 +359,7 @@ void				add_to_redir_list(t_ast *instr, t_redir *redir);
 /*
 ** redir_internal.c
 */
-int					prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root);
+int					prepare_redirs(t_shell *shell, t_ast *instr);
 int					redir_l(t_shell *shell, t_ast *ast, t_redir *redir);
 int					redir_ll(t_shell *shell, t_ast *ast, t_redir *redir);
 int					redir_r(t_shell *shell, t_ast *ast, t_redir *redir);
@@ -336,9 +372,9 @@ int					expand_heredoc(t_heredoc *heredoc, t_shell *shell
 */
 int					apply_redirs(t_shell *shell, t_ast *instr);
 int					apply_redir_generic(t_redir *redir);
-int					apply_redir_r_close(t_redir *redir);
+int					apply_redir_close(t_redir *redir);
 int					apply_redir_r_both(t_redir *redir);
-int					apply_redir_r_comp(t_redir *redir);
+int					apply_redir_comp(t_redir *redir);
 int					apply_redir_rw(t_redir *redir);
 
 /*
@@ -347,9 +383,14 @@ int					apply_redir_rw(t_redir *redir);
 int					redir_r_comp(t_shell *shell, t_ast *ast, t_redir *redir);
 
 /*
-** redir_r_close.c
+** redir_l_comp.c
 */
-int					redir_r_close(t_shell *shell, t_ast *ast, t_redir *redir);
+int					redir_l_comp(t_shell *shell, t_ast *ast, t_redir *redir);
+
+/*
+** redir_close.c
+*/
+int					redir_close(t_shell *shell, t_ast *ast, t_redir *redir);
 
 /*
 ** redir_r_both.c
@@ -406,5 +447,56 @@ void				add_tty_history_fd(t_shell *shell, t_fd *tty_fd
 ** alt_shell.c
 */
 int					alt_init_shell(t_shell *shell);
+
+/*
+**	exec/arithmetic/utils.c
+*/
+int					arithmetic_is_var(const char *value);
+
+/*
+** var_utils.c
+*/
+char				**build_env(t_var *vars);
+int					check_var(const char *name);
+int					concat_var(t_var *var, const char *name, const char *value);
+
+/*
+**	var_create.c
+*/
+int					set_var(t_var **vars, const char *name,
+		const char *value, int exported);
+int					set_var_full(t_var **vars, const char *value,
+		int exported);
+t_var				*alloc_var(const char *name, const char *value,
+		int exported);
+void				add_to_vars(t_var **to, t_var *from);
+
+/*
+** var.c
+*/
+t_var				*get_var(t_var *var, const char *name);
+const char			*get_var_value(t_var *var);
+void				remove_var(t_var **vars, const char *name, int options);
+
+/*
+** env.c
+*/
+t_var				*copy_env(const char **env);
+t_var				*copy_vars(t_var *vars, int only_exported);
+t_var				*free_vars(t_var **vars);
+
+/*
+**	var/special_vars.c
+*/
+int					set_special_var(t_var **vars, const char *name,
+		const char *value);
+int					is_special_var(char name);
+void				set_ret(t_shell *shell, t_ast *current, int ret);
+
+/*
+**	parser/rules_redir_comp_generic.c
+*/
+int					create_redir_comp_generic(t_parser *parser,
+		t_ttype type, t_redir_act act);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 11:32:04 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/01 12:18:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/11 05:09:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ void	print_only_type(char **args, int i, char *flags, t_shell *shell)
 		if (is_builtin(args[i]))
 		{
 			ft_printf("builtin\n");
-			if (ft_strchr(flags, 'a') && (cmd = find_command(shell, args[i])))
+			if (ft_strchr(flags, 'a')
+					&& (cmd = find_command(shell->exec_vars, args[i])))
 				ft_printf("file\n");
 			if (cmd)
 				ft_strdel(&cmd);
 		}
-		else if ((cmd = find_command(shell, args[i])))
+		else if ((cmd = find_command(shell->exec_vars, args[i])))
 			ft_printf("file\n");
 		else if (is_a_keyword(args[i]))
 			ft_printf("keyword\n");
@@ -47,12 +48,13 @@ void	print_loc_type(char **args, int i, char *flags, t_shell *shell)
 	{
 		if (is_builtin(args[i]))
 		{
-			if (ft_strchr(flags, 'a') && (cmd = find_command(shell, args[i])))
+			if (ft_strchr(flags, 'a') && (cmd = find_command(shell->exec_vars,
+							args[i])))
 				ft_printf("%s\n", cmd);
 			if (cmd)
 				ft_strdel(&cmd);
 		}
-		else if ((cmd = find_command(shell, args[i])))
+		else if ((cmd = find_command(shell->exec_vars, args[i])))
 			ft_printf("%s\n", cmd);
 		if (cmd)
 			ft_strdel(&cmd);

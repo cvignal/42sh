@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:20:26 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/11 22:32:35 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 16:43:59 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "shell.h"
 #include "libft.h"
 
-int	rule_first_word(t_parser *parser, t_ast_token *list)
+int	rule_first_word(t_parser *parser, t_token *list)
 {
 	int	type;
 
@@ -28,7 +28,7 @@ int	rule_first_word(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_push_cmd(t_parser *parser, t_ast_token *list)
+int	rule_push_cmd(t_parser *parser, t_token *list)
 {
 	t_ast	*node;
 
@@ -46,20 +46,43 @@ int	rule_push_cmd(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_add_to_cmd(t_parser *parser, t_ast_token *list)
+int	rule_add_to_cmd(t_parser *parser, t_token *list)
 {
-	if (add_to_command(parser->pss->ret->data, list->data))
-		return (1);
+	int	ret;
+
+	if (((t_command *)parser->pss->ret->data)->args_len)
+	{
+		if (add_to_command(parser->pss->ret->data, list->data))
+			return (1);
+	}
+	else
+	{
+		if (token_is_assignement(list->data))
+		{
+			ret = set_var_full(&parser->pss->ret->assignements, list->data, 0);
+			free(list->data);
+			list->data = NULL;
+		}
+		else
+			ret = add_to_command(parser->pss->ret->data, list->data);
+		if (ret)
+			return (1);
+	}
 	free(pop_ast_token(&parser->input_queue));
 	return (0);
 }
 
-int	rule_create_end(t_parser *parser, t_ast_token *list)
+int	rule_create_end(t_parser *parser, t_token *list)
 {
 	t_ast		*node_end;
+	t_ttype		type;
 
 	(void)parser;
-	if (!(node_end = alloc_ast(NULL, TT_END, exec_end, free_end)))
+	if (list->next->type == TT_OVER)
+		type = TT_END_UNARY;
+	else
+		type = TT_END;
+	if (!(node_end = alloc_ast(NULL, type, &exec_end, &free_end)))
 		return (1);
 	free(list->data);
 	list->data = node_end;
@@ -67,12 +90,12 @@ int	rule_create_end(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_create_end_second(t_parser *parser, t_ast_token *list)
+int	rule_create_end_second(t_parser *parser, t_token *list)
 {
 	t_ast	*node_end;
 
 	(void)parser;
-	node_end = alloc_ast(NULL, TT_END, exec_end, free_end);
+	node_end = alloc_ast(NULL, TT_END, &exec_end, &free_end);
 	if (!node_end)
 		return (1);
 	free(list->next->data);

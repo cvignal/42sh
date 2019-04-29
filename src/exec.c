@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/22 19:39:29 by agrouard         ###   ########.fr       */
+/*   Updated: 2019/04/28 18:02:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,27 @@ static void	exec_internal(t_shell *shell, t_ast *instr,
 	if (apply_redirs(shell, instr))
 	{
 		free_shell(shell);
-		exit(1);
+		exit(127);
 	}
 	args = ((t_command *)instr->data)->args_value;
 	if (builtin)
 		exit(builtin(shell, args));
 	enable_signal();
-	exit(execve(path, args, shell->env));
+	exit(execve(path, args, build_env(shell->exec_vars)));
 }
 
 pid_t		do_exec(t_shell *shell, char **argv)
 {
-	int		status;
+	int			status;
 	pid_t		pid;
 	char		*bin_path;
-	t_builtin	builtin;
 
-	if (!(bin_path = find_command(shell, argv[0])))
+	if (!(bin_path = find_command(shell->vars, argv[0])))
 		return (do_error_handling(argv[0]));
 	if ((pid = fork()) == -1)
 		return (-1);
 	if (pid == 0)
-		exit(execve(bin_path, argv, shell->env));
+		exit(execve(bin_path, argv, build_env(shell->exec_vars)));
 	free(bin_path);
 	wait(&status);
 	if (WIFEXITED(status) || WIFSIGNALED(status))

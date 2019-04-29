@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 10:08:55 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:48:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 08:47:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,19 @@ int	lexer_over(struct s_shell *shell, t_token *token, char c)
 	return (1 << LEXER_RET_OVER);
 }
 
-int	lexer_more_input(t_shell *shell, t_token *token, char c)
+int	lexer_more_input_nl(t_shell *shell, t_token *token, char c)
 {
 	(void)shell;
 	(void)c;
 	if (add_to_token(token, '\n'))
 		return (1 << LEXER_RET_ERROR);
+	return (1 << LEXER_RET_MORE_INPUT);
+}
+
+int	lexer_more_input(t_shell *shell, t_token *token, char c)
+{
+	(void)shell;
+	(void)c;
+	(void)token;
 	return (1 << LEXER_RET_MORE_INPUT);
 }

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:15:24 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/01 09:44:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/11 08:04:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 #include "shell.h"
 #include "libft.h"
 
-static char	*concat_path(const char *path, const char *bin, size_t size_path)
+static char			*concat_path(const char *path, const char *bin,
+		size_t size_path)
 {
 	size_t		size_bin;
 	char		*ret;
@@ -37,21 +38,7 @@ static char	*concat_path(const char *path, const char *bin, size_t size_path)
 	return (ret);
 }
 
-static char	*get_path(char **env)
-{
-	int		i;
-
-	i = 0;
-	while (env[i])
-	{
-		if (!ft_strncmp(env[i], "PATH=", 5))
-			return (env[i] + 5);
-		++i;
-	}
-	return (NULL);
-}
-
-static char	*get_local_exec(const char *path)
+static char			*get_local_exec(const char *path)
 {
 	struct stat	st;
 
@@ -62,7 +49,7 @@ static char	*get_local_exec(const char *path)
 	return (ft_strdup(path));
 }
 
-char		*find_command(t_shell *shell, const char *command)
+char				*find_command(t_var *vars, const char *command)
 {
 	const char	*path;
 	char		*bin_path;
@@ -72,7 +59,7 @@ char		*find_command(t_shell *shell, const char *command)
 		return (NULL);
 	if (ft_strchr(command, '/'))
 		return (get_local_exec(command));
-	if (shell->env && (path = get_path(shell->env)))
+	if ((path = get_var_value(get_var(vars, "PATH"))))
 	{
 		while (*path)
 		{

@@ -16,7 +16,7 @@
 #include "parser.h"
 #include "ast.h"
 
-int	rule_create_while(t_parser *parser, t_ast_token *list)
+int	rule_create_while(t_parser *parser, t_token *list)
 {
 	t_ast	*node;
 
@@ -29,29 +29,29 @@ int	rule_create_while(t_parser *parser, t_ast_token *list)
 		return (1);
 	}
 	parser->pss->ret = node;
-	shift_ast_token(parser, list, 1);
+	shift_token(parser, list, 1);
 	return (0);
 }
 
-int	rule_while_add_cd(t_parser *parser, t_ast_token *list)
+int	rule_while_add_cd(t_parser *parser, t_token *list)
 {
 	if (parser->pss->ret->data)
 		return (1);
 	parser->pss->ret->data = list->data;
-	shift_ast_token(parser, list, 0);
+	shift_token(parser, list, 0);
 	return (0);
 }
 
-int	rule_while_close_cd(t_parser *parser, t_ast_token *list)
+int	rule_while_close_cd(t_parser *parser, t_token *list)
 {
 	if (!parser->pss->ret->data)
 		return (1);
 	parser->pss->state = PS_WHILECD | PS_NONE;
-	shift_ast_token(parser, list, 1);
+	shift_token(parser, list, 1);
 	return (0);
 }
 
-int	rule_while_close(t_parser *parser, t_ast_token *list)
+int	rule_while_close(t_parser *parser, t_token *list)
 {
 	t_ast	*data;
 

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:34:34 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/11 12:08:34 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:53:23 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void	fc_exec_ast(t_shell *shell, t_token *tokens)
 		ast = shell->parser.ret;
 		ast->exec(shell, ast);
 		close_everything(shell);
-		wait_loop(ast);
-		shell->ret_cmd = ast->ret;
+		wait_loop(shell, ast);
 		ast->del(ast);
 		shell->parser.ret = NULL;
 	}
@@ -71,8 +70,8 @@ int		fc_init_shell(t_shell *shell, t_shell *old_shell)
 	shell->used_fd->is_pipe = 0;
 	shell->used_fd->next = NULL;
 	ft_bzero(&shell->line, sizeof(shell->line));
-	if (!(shell->env = copy_env(old_shell->env)))
-		return (1);
+	shell->vars = copy_vars(old_shell->vars, 0);
+	shell->exec_vars = NULL;
 	shell->fd_op = old_shell->fd_op;
 	return (0);
 }

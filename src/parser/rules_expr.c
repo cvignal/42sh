@@ -16,15 +16,15 @@
 #include "parser.h"
 #include "shell.h"
 
-int	rule_create_expr(t_parser *parser, t_ast_token *list)
+int	rule_create_expr(t_parser *parser, t_token *list)
 {
 	if (pss_push(parser, PS_EXPR))
 		return (1);
-	shift_ast_token(parser, list, 1);
+	shift_token(parser, list, 1);
 	return (0);
 }
 
-int	rule_make_expr(t_parser *parser, t_ast_token *list)
+int	rule_make_expr(t_parser *parser, t_token *list)
 {
 	t_ast		*node;
 	t_expr		*expr;
@@ -50,9 +50,9 @@ int	rule_make_expr(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_add_to_expr(t_parser *parser, t_ast_token *list)
+int	rule_add_to_expr(t_parser *parser, t_token *list)
 {
-	t_ast_token	*tmp;
+	t_token	*tmp;
 
 	(void)parser;
 	if ((list->next->type = keyword_type(list->next->data)) != TT_WORD)
@@ -65,7 +65,7 @@ int	rule_add_to_expr(t_parser *parser, t_ast_token *list)
 	return (0);
 }
 
-int	rule_close_expr(t_parser *parser, t_ast_token *list)
+int	rule_close_expr(t_parser *parser, t_token *list)
 {
 	t_ast	*data;
 

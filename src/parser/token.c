@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:36:02 by gchainet          #+#    #+#             */
-/*   Updated: 2018/12/23 18:49:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/27 23:17:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,18 @@ t_token			*alloc_token(void)
 	new_token->alloc_size = TOKEN_ALLOC_SIZE;
 	new_token->len = 0;
 	new_token->next = NULL;
+	new_token->type = TT_WORD;
 	return (new_token);
 }
 
 int				add_to_token(t_token *token, char c)
 {
-	if (token->len + 2 == token->alloc_size)
+	if (token->len + 2 >= token->alloc_size)
 	{
 		if (realloc_token(token))
 			return (1);
 	}
-	token->data[token->len++] = c;
+	((char *)token->data)[token->len++] = c;
 	return (0);
 }
 

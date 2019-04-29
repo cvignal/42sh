@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/12 07:31:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/22 11:17:56 by marin            ###   ########.fr       */
+/*   Created: 2019/04/27 18:03:52 by cvignal           #+#    #+#             */
+/*   Updated: 2019/04/28 07:55:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include <stdlib.h>
 # include <limits.h>
 
-# define META_CHARS ";|&<>"
-# define SPECIAL_CHARS ";|&<>$~"
+# define META_CHARS ";|&<>()"
 
 # define TOKEN_ALLOC_SIZE	128
 
@@ -29,18 +28,18 @@
 # define PS_WHILECD (1 << 5)
 # define PS_EXPR (1 << 6)
 # define PS_CMD (1 << 7)
+# define PS_ARI (1 << 8)
 # define PS_ALL (~0)
 
 struct s_shell;
 struct s_ast;
-struct s_ast_token;
 
 typedef struct			s_token
 {
-	char				*data;
+	void				*data;
 	size_t				alloc_size;
 	size_t				len;
-	int					type;
+	unsigned int		type;
 	struct s_token		*next;
 }						t_token;
 
@@ -71,6 +70,11 @@ typedef enum			e_lstate
 	LSTATE_META,
 	LSTATE_SQUOTE,
 	LSTATE_DQUOTE,
+	LSTATE_ARI_NONE,
+	LSTATE_ARI_ID,
+	LSTATE_ARI_OP,
+	LSTATE_PAREN,
+	LSTATE_ESCAPED,
 	NUMBER_LSTATE
 }						t_lstate;
 
@@ -95,7 +99,8 @@ enum
 {
 	PARSER_MORE_INPUT,
 	PARSER_EMPTY,
-	PARSER_COMPLETE
+	PARSER_COMPLETE,
+	PARSER_ERROR
 };
 
 typedef struct			s_lss
@@ -108,10 +113,10 @@ typedef struct			s_lss
 typedef struct			s_pss
 {
 	int					state;
-	int					error;
-	struct s_ast_token	*output_queue;
-	struct s_ast_token	*op_stack;
-	struct s_ast_token	*stack;
+	int					status;
+	t_token				*output_queue;
+	t_token				*op_stack;
+	t_token				*stack;
 	struct s_ast		*ret;
 	struct s_pss		*next;
 }						t_pss;
@@ -127,8 +132,9 @@ typedef struct			s_lexer
 typedef struct			s_parser
 {
 	t_pss				*pss;
+	int					ret_status;
 	struct s_ast		*ret;
-	struct s_ast_token	*input_queue;
+	t_token				*input_queue;
 }						t_parser;
 
 /*
@@ -161,7 +167,7 @@ void					free_token_list(t_token *list);
 /*
 ** parser/token_type.c
 */
-int						get_token_type(t_token *token);
+int						get_token_type(t_token *token, int state);
 
 /*
 ** parser/lexer_act.c
@@ -185,6 +191,10 @@ int						lexer_create_meta(struct s_shell *shell,
 int						lexer_add_meta(struct s_shell *shell,
 		t_token *token, char c);
 int						lexer_try_meta(struct s_shell *shell,
+		t_token *token, char c);
+int						lexer_push_paren(struct s_shell *shell,
+		t_token *token, char c);
+int						lexer_pop_paren(struct s_shell *shell,
 		t_token *token, char c);
 
 /*
@@ -212,11 +222,21 @@ int						lexer_over(struct s_shell *shell, t_token *token,
 		char c);
 int						lexer_more_input(struct s_shell *shell, t_token *token,
 		char c);
+int						lexer_more_input_nl(struct s_shell *shell
+		, t_token *token, char c);
+
+/*
+** parser/lexer_act_escaped.c
+*/
+int						lexer_push_escaped(struct s_shell *shell,
+		t_token *token, char c);
+int						lexer_add_pop_escaped(struct s_shell *shell,
+		t_token *token, char c);
 
 /*
 ** parser/lexer.c
 */
-t_token					*lex(struct s_shell *shell);
+t_token					*lex(struct s_shell *shell, const char *input);
 int						init_lexer(t_lexer *lexer);
 int						clean_exit_lexer(t_lexer *lexer, t_token **list
 		, t_token **current, const char *msg);
@@ -225,6 +245,7 @@ int						clean_exit_lexer(t_lexer *lexer, t_token **list
 ** parser/token_type_desc.c
 */
 int						ccmp_digit(char a, char b);
+int						ccmp_all(char a, char b);
 int						ccmp(char a, char b);
 
 /*
@@ -232,5 +253,15 @@ int						ccmp(char a, char b);
 */
 int						keyword_type(const char *s);
 int						is_a_keyword(const char *s);
+
+/*
+**	parser/assignement.c
+*/
+int						token_is_assignement(const char *value);
+
+/*
+** parser/tools_shunting_yard.c
+*/
+int						set_leaves(struct s_ast *node, struct s_token **stack);
 
 #endif

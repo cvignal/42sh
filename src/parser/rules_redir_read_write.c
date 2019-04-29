@@ -13,7 +13,7 @@
 #include "shell.h"
 #include "libft.h"
 
-static t_redir	*create_redir_rw(t_ast_token *list)
+static t_redir	*create_redir_rw(t_token *list)
 {
 	t_redir	*new_redir;
 
@@ -39,7 +39,7 @@ static t_redir	*create_redir_rw(t_ast_token *list)
 	return (new_redir);
 }
 
-int				rule_redir_rw(t_parser *parser, t_ast_token *list)
+int				rule_redir_rw(t_parser *parser, t_token *list)
 {
 	t_ast		*instr;
 	t_redir		*redir;

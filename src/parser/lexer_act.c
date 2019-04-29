@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:46:31 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/08 13:54:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 09:48:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 int		lexer_add(t_shell *shell, t_token *token, char c)
 {
 	(void)shell;
-	token->type = TT_WORD;
 	if (add_to_token(token, c))
 		return (1 << LEXER_RET_ERROR);
 	return (1 << LEXER_RET_CONT);

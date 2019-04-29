@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/02 14:20:27 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/28 18:01:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,10 @@
 #include "libft.h"
 #include "fill_line.h"
 
-int	prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root)
+int	prepare_redirs(t_shell *shell, t_ast *instr)
 {
 	t_redir	*redir;
 
-	if (root && root != instr)
-	{
-		ft_memcpy(instr->old_fds, root->old_fds, sizeof(instr->old_fds));
-		ft_memcpy(instr->fds, root->fds, sizeof(instr->fds));
-	}
 	redir = instr->redir_list;
 	while (redir)
 	{
@@ -38,10 +33,6 @@ int	prepare_redirs(t_shell *shell, t_ast *instr, t_ast *root)
 		redir->applied = 1;
 		redir = redir->next;
 	}
-	if (instr->left)
-		prepare_redirs(shell, instr->left, root);
-	if (instr->right)
-		prepare_redirs(shell, instr->right, root);
 	return (0);
 }
 

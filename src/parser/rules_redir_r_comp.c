@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 12:43:13 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 00:43:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/24 11:37:37 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "shell.h"
 #include "libft.h"
 
-static t_redir	*create_redir_comp(char *data)
+static t_redir	*create_redir_r_comp(char *data)
 {
 	t_redir		*new_redir;
 
@@ -44,13 +44,15 @@ static t_redir	*create_redir_comp(char *data)
 	return (new_redir);
 }
 
-int				rule_redir_r_comp(t_parser *parser, t_ast_token *list)
+int				rule_redir_r_comp(t_parser *parser, t_token *list)
 {
 	t_ast		*instr;
 	t_redir		*redir;
 	t_redir		*iter;
+	t_token		*next;
 
-	if (!(redir = create_redir_comp(list->data)))
+	(void)list;
+	if (!(redir = create_redir_r_comp(parser->input_queue->data)))
 		return (1);
 	instr = parser->pss->ret;
 	iter = instr->redir_list;
@@ -62,7 +64,9 @@ int				rule_redir_r_comp(t_parser *parser, t_ast_token *list)
 			iter = iter->next;
 		iter->next = redir;
 	}
+	next = parser->input_queue->next;
 	free(parser->input_queue->data);
 	free(pop_ast_token(&parser->input_queue));
+	parser->input_queue = next;
 	return (0);
 }
