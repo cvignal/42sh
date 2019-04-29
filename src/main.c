@@ -46,7 +46,7 @@ static void				exec_ast(t_shell *shell, t_token *tokens)
 			exit(-1);
 		ast->exec(shell, ast);
 		close_everything(shell);
-		ast->ret = register_job(shell, ast->job, JOB_FG);
+		ast->ret = register_job(shell, ast->job);
 		shell->ret_cmd = ast->ret;
 		ast->del(ast);
 		shell->parser.ret = NULL;

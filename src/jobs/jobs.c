@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <signal.h>
 
-int			register_job(t_shell *shell, t_job *job, int foreground)
+int			register_job(t_shell *shell, t_job *job)
 {
 	t_job	*j;
 
@@ -37,7 +37,7 @@ int			register_job(t_shell *shell, t_job *job, int foreground)
 		j->next = job;
 		job->index = j->index + 1;
 	}
-	if (foreground)
+	if (!job->async)
 		return (job_fg(shell, job, 0));
 	job_bg(job, 0);
 	return (0);
