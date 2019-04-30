@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/23 22:52:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/30 15:56:32 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,16 @@ static void	ft_add_files(char *word, t_list **list)
 		return (ft_strdel(&path));
 	while ((dirent = readdir(dir)) != NULL)
 	{
-		if (ft_comp(word, dirent->d_name))
+		name = ft_escape(dirent->d_name);
+		if (ft_comp(word, name))
 		{
-			name = dirent->d_type != 4 ? ft_strdup(dirent->d_name)
-				: ft_strjoin(dirent->d_name, "/");
+			if (dirent->d_type == 4)
+				name = ft_strjoin_free(name, "/", 1);
 			if (!name || !(new = ft_lstnew(name, ft_strlen(name) + 1)))
 				return ;
 			ft_lstadd(list, new);
-			ft_strdel(&name);
 		}
+		ft_strdel(&name);
 	}
 	closedir(dir);
 	ft_strdel(&path);
