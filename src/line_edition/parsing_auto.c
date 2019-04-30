@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 15:23:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/30 16:19:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/30 16:46:27 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char		*word_to_complete(t_line *line)
 	buf[line->cursor] = 0;
 	while (buf[++i])
 	{
-		if ((buf[i] == ' ' && i > 0  && buf[i - 1] != '\\') || buf[i] == ';'
+		if ((buf[i] == ' ' && i > 0 && buf[i - 1] != '\\') || buf[i] == ';'
 			|| buf[i] == '>' || buf[i] == '<' || buf[i] == 38 || buf[i] == 124
 				|| buf[i] == 39 || buf[i] == 34)
 			ret = buf + i;
