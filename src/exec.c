@@ -26,10 +26,11 @@ static void	exec_internal(t_shell *shell, t_ast *instr,
 {
 	char **args;
 
+	instr->pid = getpid();
 	if (!instr->job->pgid)
 		instr->job->pgid = instr->pid;
 	setpgid(instr->pid, instr->job->pgid);
-	if (instr->flags & (CMD_ASYNC | CMD_FORK))
+	if (!(instr->flags & CMD_ASYNC))
 		tcsetpgrp(0, instr->job->pgid);
 	set_pipeline(shell, instr);
 	if (apply_redirs(shell, instr))
@@ -37,10 +38,10 @@ static void	exec_internal(t_shell *shell, t_ast *instr,
 		free_shell(shell);
 		exit(127);
 	}
+	enable_signal();
 	args = ((t_command *)instr->data)->args_value;
 	if (builtin)
 		exit(builtin(shell, args));
-	enable_signal();
 	exit(execve(path, args, build_env(shell->exec_vars)));
 }
 
