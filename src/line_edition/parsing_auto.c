@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 15:23:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/30 15:58:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/30 16:19:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ char		*word_to_complete(t_line *line)
 	char	*buf;
 
 	ret = NULL;
-	i = 0;
+	i = -1;
 	if (!(buf = ft_strdup(line->data)))
 		return (NULL);
 	buf[line->cursor] = 0;
-	while (buf[i])
+	while (buf[++i])
 	{
-		if (buf[i] == ' ' || buf[i] == ';' || buf[i] == '>' || buf[i] == '<'
-			|| buf[i] == 38 || buf[i] == 124 || buf[i] == 39 || buf[i] == 34)
+		if ((buf[i] == ' ' && i > 0  && buf[i - 1] != '\\') || buf[i] == ';'
+			|| buf[i] == '>' || buf[i] == '<' || buf[i] == 38 || buf[i] == 124
+				|| buf[i] == 39 || buf[i] == 34)
 			ret = buf + i;
-		i++;
 	}
 	if (ret)
 		ret = ft_strdup(ret + 1);
