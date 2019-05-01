@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/05/01 14:41:07 by gchainet         ###   ########.fr        #
+#    Updated: 2019/05/01 15:16:08 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -147,6 +147,7 @@ SRC		=									\
 	line_edition/line.c						\
 	line_edition/line_keys.c				\
 	line_edition/other_keys.c				\
+	line_edition/parsing_auto.c				\
 	line_edition/rightkey.c					\
 	line_edition/switch_mode.c				\
 	line_edition/tools_auto.c				\
