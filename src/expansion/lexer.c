@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:30:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/05/01 21:33:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 22:34:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static int		expand(t_shell *shell, char *arg, int mask)
 	i = 0;
 	ret = 0;
 	reset_exp_lexer(shell, mask);
+	shell->exp_lexer.split = 0;
 	while (!(ret & EXP_LEXER_RET_OVER))
 	{
 		ret = shell->exp_lexer.methods[shell->exp_lexer.state->state]
