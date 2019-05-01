@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/01 14:17:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 15:03:22 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@
 # define SEARCH_MAX 128
 # define SPECIAL_VAR_RET "?"
 
-# define REMOVE_VAR_ENV 0
-# define REMOVE_VAR_LOCAL 1
+# define REMOVE_VAR_ENV (1 << 0)
+# define REMOVE_VAR_LOCAL (1 << 1)
 
 # define STATE_WRITE 0
 # define STATE_SLASH 1
