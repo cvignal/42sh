@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:30:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/30 01:21:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 21:33:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int		expand(t_shell *shell, char *arg, int mask)
 		ft_arrayadd(&shell->exp_lexer.ret, shell->exp_lexer.state->buffer.buffer);
 		free(shell->exp_lexer.state->buffer.buffer);
 	}
-	return (0);
+	return (expand_home(shell, arg));
 }
 
 char		*expand_no_split(struct s_shell *shell, char *arg,

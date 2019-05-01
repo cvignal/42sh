@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/30 00:21:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 21:34:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int						expand_redirs(struct s_shell *shell,
 /*
 ** expansion/home.c
 */
+int						expand_home(struct s_shell *shell, const char *arg);
 
 /*
 ** expansion/buffer.c
