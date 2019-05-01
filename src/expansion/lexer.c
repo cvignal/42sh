@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:30:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/05/01 22:34:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 23:10:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,18 +129,20 @@ int			expand_params(t_shell *shell, t_command *command, int mask)
 int			expand_redirs(t_shell *shell, t_redir *list, int mask)
 {
 	t_redir	*curr;
+	int		error;
 
 	curr = list;
+	error = 0;
 	while (curr)
 	{
 		if (curr->target_value)
 			free(curr->target_value);
 		if (curr->target)
 		{
-			if (expand(shell, curr->target, mask))
+			curr->target_value = expand_no_split(shell, curr->target,
+					&error, mask);
+			if (error)
 				return (1);
-			curr->target_value = shell->exp_lexer.ret.data[0];
-			free(shell->exp_lexer.ret.data);
 		}
 		else
 			curr->target_value = NULL;
