@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/30 01:31:05 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 14:17:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,6 +332,7 @@ int					exec_ari_and(t_shell *shell, struct s_ast *ast);
 int					exec_ari_or(t_shell *shell, struct s_ast *ast);
 int					exec_ari_statement(t_shell *shell, struct s_ast *ast);
 void				free_ari_statement(struct s_ast *ast);
+int					exec_ari_fail(t_ast *ast);
 
 /*
 ** redir.c

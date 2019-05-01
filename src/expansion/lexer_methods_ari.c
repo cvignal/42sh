@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 22:34:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/30 03:02:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/30 17:25:00 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,22 @@ int			exp_lexer_pop_ari_paren(t_shell *shell, char c, int mask)
 	return (EXP_LEXER_RET_CONT);
 }
 
-static void	exec_ari(t_shell *shell)
+static int	exec_ari(t_shell *shell)
 {
 	t_ast	*ast;
+	int		ret;
 
 	ast = shell->parser.ret;
 	ast->exec(shell, ast);
-	add_string_to_exp_buff(&shell->exp_lexer, ast->data);
+	if (ast->data)
+	{
+		add_string_to_exp_buff(&shell->exp_lexer, ast->data);
+		ret = 0;
+	}
+	else
+		ret = 1;
 	ast->del(ast);
+	return (ret);
 }
 
 int			exp_lexer_pop_ari(t_shell *shell, char c, int mask)
@@ -83,7 +91,10 @@ int			exp_lexer_pop_ari(t_shell *shell, char c, int mask)
 	if (pss_push(&shell->parser, PS_ARI))
 		return (EXP_LEXER_RET_ERROR);
 	if ((ret = parse(shell, tokens)) == PARSER_COMPLETE)
-		exec_ari(shell);
+	{
+		if (exec_ari(shell))
+			return (EXP_LEXER_RET_ERROR);
+	}
 	else if (ret == PARSER_EMPTY)
 		add_string_to_exp_buff(&shell->exp_lexer, "0");
 	else

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 23:58:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/30 00:19:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 14:39:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			exec_ari_statement(t_shell *shell, t_ast *ast)
 	error = 0;
 	if (!(expanded = expand_no_split(shell, ast->data, &error,
 					EXP_LEXER_MASK_ALL)))
-		return (1);
+		return (0);
 	if (error || !(tokens = lex(shell, expanded)))
 	{
 		free(expanded);

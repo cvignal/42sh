@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 23:58:41 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/25 23:59:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 14:20:45 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@ int	exec_ari_cmp_not_eq(t_shell *shell, struct s_ast *ast)
 	int	res;
 
 	ast->left->exec(shell, ast->left);
+	if (!ast->left->data)
+		return (exec_ari_fail(ast));
 	ast->right->exec(shell, ast->right);
+	if (!ast->right->data)
+		return (exec_ari_fail(ast));
 	free(ast->data);
-	if (!ast->left->data || !ast->right->data)
-	{
-		ast->data = NULL;
-		return (1);
-	}
 	a = ft_atoi(ast->left->data);
 	b = ft_atoi(ast->right->data);
 	res = a != b;
