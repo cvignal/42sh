@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/01 21:34:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/02 01:18:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define EXP_LEXER_MASK_HOME (1 << 3)
 # define EXP_LEXER_MASK_ARI (1 << 4)
 # define EXP_LEXER_MASK_FIELD_SPLITTING (1 << 5)
+# define EXP_LEXER_MASK_TILDE (1 << 6)
+# define EXP_LEXER_MASK_NO_MULTI_TILDE (1 << 7)
 
 typedef enum			e_exp_state
 {
@@ -43,6 +45,7 @@ typedef enum			e_exp_state
 	EXP_STATE_ARI,
 	EXP_STATE_ARI_PAREN,
 	EXP_STATE_ESCAPED,
+	EXP_STATE_TILDE,
 	NUMBER_EXP_STATE
 }						t_exp_state;
 
@@ -98,16 +101,12 @@ int						expand_redirs(struct s_shell *shell,
 		struct s_redir *list, int mask);
 
 /*
-** expansion/home.c
-*/
-int						expand_home(struct s_shell *shell, const char *arg);
-
-/*
 ** expansion/buffer.c
 */
 int						add_char_to_exp_buff(t_exp_lexer *lexer, char c);
 int						add_string_to_exp_buff(t_exp_lexer *lexer,
 		const char *s);
+
 int						exp_lexer_add_to_buff(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_pop_add_to_buff(struct s_shell *shell, char c
@@ -146,7 +145,10 @@ int						exp_lexer_error(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_over(struct s_shell *shell, char c
 		, int mask);
-
+int						exp_lexer_pop_tilde(struct s_shell *shell, char c,
+		int mask);
+int						exp_lexer_push_tilde(struct s_shell *shell, char c,
+		int mask);
 /*
 ** expansion/expr.c
 */

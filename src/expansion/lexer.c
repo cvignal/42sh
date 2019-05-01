@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:30:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/05/01 23:10:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/02 01:15:42 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,11 @@ static int	clean_exit(t_exp_lexer *lexer)
 	return (1);
 }
 
-static void	reset_exp_lexer(t_shell *shell, int mask)
+static void	reset_exp_lexer(t_shell *shell)
 {
 	const char	*ifs;
 
-	if (mask & EXP_LEXER_MASK_FIELD_SPLITTING)
-		shell->exp_lexer.split = 1;
-	else
-		shell->exp_lexer.split = 0;
+	shell->exp_lexer.split = 0;
 	ft_bzero(&shell->exp_lexer.ret, sizeof(shell->exp_lexer.ret));
 	ft_bzero(&shell->exp_lexer.state->buffer,
 			sizeof(shell->exp_lexer.state->buffer));
@@ -57,8 +54,7 @@ static int		expand(t_shell *shell, char *arg, int mask)
 
 	i = 0;
 	ret = 0;
-	reset_exp_lexer(shell, mask);
-	shell->exp_lexer.split = 0;
+	reset_exp_lexer(shell);
 	while (!(ret & EXP_LEXER_RET_OVER))
 	{
 		ret = shell->exp_lexer.methods[shell->exp_lexer.state->state]
@@ -68,14 +64,16 @@ static int		expand(t_shell *shell, char *arg, int mask)
 		if (ret & EXP_LEXER_RET_CONT)
 			++i;
 	}
-	if (shell->exp_lexer.state->state != EXP_STATE_WORD)
-		return (clean_exit(&shell->exp_lexer));
 	if (shell->exp_lexer.state->buffer.buffer)
 	{
-		ft_arrayadd(&shell->exp_lexer.ret, shell->exp_lexer.state->buffer.buffer);
+		if (ft_arrayadd(&shell->exp_lexer.ret, shell->exp_lexer.state->buffer.buffer))
+		{
+			free(shell->exp_lexer.state->buffer.buffer);
+			return (1);
+		}
 		free(shell->exp_lexer.state->buffer.buffer);
 	}
-	return (expand_home(shell, arg));
+	return (0);
 }
 
 char		*expand_no_split(struct s_shell *shell, char *arg,
