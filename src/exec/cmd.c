@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/30 00:49:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 14:51:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,16 @@ int			exec_cmd(t_shell *shell, t_ast *ast)
 	if (shell->ctrlc)
 		return (0);
 	if (expand_params(shell, ast->data, EXP_LEXER_MASK_ALL))
-		return (1);
+		return ((ast->ret = 1));
 	if (expand_redirs(shell, ast->redir_list, EXP_LEXER_MASK_ALL))
-		return (1);
+		return ((ast->ret = 1));
 	if (prepare_redirs(shell, ast))
-		return ((ast->ret = 127));
+		return ((ast->ret = 1));
 	ret = 0;
 	if (((t_command *)ast->data)->args_len == 0)
 	{
 		if (set_assignements(shell, ast, &shell->vars))
-			return (127);
+			return ((ast->ret = 1));
 	}
 	else
 		ret = exec_cmd_internal(shell, ast);
