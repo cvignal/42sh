@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:14:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/01 22:46:33 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 23:31:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	realloc_exp_buff(t_exp_buff *buffer, size_t new_size)
 	return (0);
 }
 
-static int	add_arg_to_array(t_exp_lexer *lexer)
+static int	add_arg_to_array(t_exp_lexer *lexer, char c)
 {
 	t_exp_buff	*buffer;
 	int			ret;
@@ -55,7 +55,7 @@ static int	add_arg_to_array(t_exp_lexer *lexer)
 			ft_bzero(buffer, sizeof(*buffer));
 		}
 	}
-	else
+	else if (!ft_strchr(DEFAULT_IFS, c))
 	{
 		if (!(empty_line = ft_strdup("")))
 			ret = 1;
@@ -73,7 +73,7 @@ int			add_char_to_exp_buff(t_exp_lexer *lexer, char c)
 	if (lexer->state->state == EXP_STATE_WORD && lexer->split
 			&& ft_strchr(lexer->ifs, c))
 	{
-		if (add_arg_to_array(lexer))
+		if (add_arg_to_array(lexer, c))
 			return (1);
 	}
 	else
