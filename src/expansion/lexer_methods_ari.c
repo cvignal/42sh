@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 22:34:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/30 17:25:00 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 23:26:51 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,34 @@ static int	exec_ari(t_shell *shell)
 	return (ret);
 }
 
+static int	parse_and_exec_ari(t_shell *shell, t_token *tokens, int mask)
+{
+	int		ret;
+
+	if (pss_push(&shell->parser, PS_ARI))
+		return (EXP_LEXER_RET_ERROR);
+	if (shell->exp_lexer.state->state == EXP_STATE_WORD
+			&& (mask & EXP_LEXER_MASK_FIELD_SPLITTING))
+		shell->exp_lexer.split = 1;
+	if ((ret = parse(shell, tokens)) == PARSER_COMPLETE)
+	{
+		if (exec_ari(shell))
+			return (EXP_LEXER_RET_ERROR);
+	}
+	else if (ret == PARSER_EMPTY)
+		add_string_to_exp_buff(&shell->exp_lexer, "0");
+	else
+		return (EXP_LEXER_RET_ERROR);
+	shell->exp_lexer.split = 0;
+	return (0);
+}
+
 int			exp_lexer_pop_ari(t_shell *shell, char c, int mask)
 {
 	t_token	*tokens;
-	int		ret;
 	char	*stmt;
 
 	(void)c;
-	(void)mask;
 	if (lss_push(&shell->lexer, LSTATE_ARI_NONE))
 		return (EXP_LEXER_RET_ERROR);
 	stmt = exp_ss_pop(&shell->exp_lexer);
@@ -88,16 +108,5 @@ int			exp_lexer_pop_ari(t_shell *shell, char c, int mask)
 	free(stmt);
 	set_unary(tokens);
 	lss_pop(&shell->lexer);
-	if (pss_push(&shell->parser, PS_ARI))
-		return (EXP_LEXER_RET_ERROR);
-	if ((ret = parse(shell, tokens)) == PARSER_COMPLETE)
-	{
-		if (exec_ari(shell))
-			return (EXP_LEXER_RET_ERROR);
-	}
-	else if (ret == PARSER_EMPTY)
-		add_string_to_exp_buff(&shell->exp_lexer, "0");
-	else
-		return (EXP_LEXER_RET_ERROR);
-	return (0);
+	return (parse_and_exec_ari(shell, tokens, mask));
 }
