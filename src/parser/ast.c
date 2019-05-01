@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 08:26:16 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 04:03:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/30 16:46:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_ast		*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 	new_node = malloc(sizeof(*new_node));
 	if (!new_node)
 		return (NULL);
+	new_node->rec_lvl = 0;
 	new_node->data = data;
 	new_node->type = type;
 	new_node->exec = exec;
@@ -84,4 +85,14 @@ void		free_ast(t_ast *ast)
 	}
 	free_vars(&ast->assignements);
 	free(ast);
+}
+
+void		set_rec_lvl(t_ast *ast, int rec_lvl)
+{
+	if (ast)
+	{
+		ast->rec_lvl = rec_lvl;
+		set_rec_lvl(ast->left, rec_lvl);
+		set_rec_lvl(ast->right, rec_lvl);
+	}
 }

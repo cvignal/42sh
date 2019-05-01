@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/29 13:38:59 by gchainet         ###   ########.fr        #
+#    Updated: 2019/05/01 14:41:07 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRC		=									\
 	exec/arithmetic/del.c					\
 	exec/arithmetic/div.c					\
 	exec/arithmetic/eq.c					\
+	exec/arithmetic/fail.c					\
 	exec/arithmetic/mod.c					\
 	exec/arithmetic/or.c					\
 	exec/arithmetic/plus.c					\
