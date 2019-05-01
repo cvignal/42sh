@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:30:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/05/02 01:15:42 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/02 01:54:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ char		*expand_no_split(struct s_shell *shell, char *arg,
 	char	*res;
 
 	*error = 0;
+	res = NULL;
 	if (expand(shell, arg, mask & ~(EXP_LEXER_MASK_FIELD_SPLITTING)))
 	{
 		*error = 1;
@@ -121,6 +122,7 @@ int			expand_params(t_shell *shell, t_command *command, int mask)
 		i++;
 	}
 	command->args_value = result.data;
+	command->args_len = result.length;
 	return (0);
 }
 
