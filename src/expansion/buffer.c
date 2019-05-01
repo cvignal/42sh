@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:14:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/30 00:54:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 22:46:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,34 @@ static int	realloc_exp_buff(t_exp_buff *buffer, size_t new_size)
 	return (0);
 }
 
+static int	add_arg_to_array(t_exp_lexer *lexer)
+{
+	t_exp_buff	*buffer;
+	int			ret;
+	char		*empty_line;
+
+	ret = 0;
+	buffer = &lexer->state->buffer;
+	if (buffer->buffer)
+	{
+		if (ft_arrayadd(&lexer->ret, buffer->buffer))
+			ret = 1;
+		else
+		{
+			free(buffer->buffer);
+			ft_bzero(buffer, sizeof(*buffer));
+		}
+	}
+	else
+	{
+		if (!(empty_line = ft_strdup("")))
+			ret = 1;
+		else
+			ft_arrayadd(&lexer->ret, empty_line);
+	}
+	return (ret);
+}
+
 int			add_char_to_exp_buff(t_exp_lexer *lexer, char c)
 {
 	t_exp_buff	*buffer;
@@ -45,12 +73,8 @@ int			add_char_to_exp_buff(t_exp_lexer *lexer, char c)
 	if (lexer->state->state == EXP_STATE_WORD && lexer->split
 			&& ft_strchr(lexer->ifs, c))
 	{
-		if (buffer->buffer)
-		{
-			ft_arrayadd(&lexer->ret, buffer->buffer);
-			free(buffer->buffer);
-			ft_bzero(buffer, sizeof(*buffer));
-		}
+		if (add_arg_to_array(lexer))
+			return (1);
 	}
 	else
 	{

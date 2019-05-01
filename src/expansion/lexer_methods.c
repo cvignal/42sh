@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 20:59:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/01 21:20:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 22:38:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	exp_lexer_cut_var(t_shell *shell, char c, int mask)
 	(void)c;
 	(void)mask;
 	name = exp_ss_pop(&shell->exp_lexer);
+	if (shell->exp_lexer.state->state == EXP_STATE_WORD)
+		shell->exp_lexer.split = 1;
 	if (name)
 	{
 		if ((value = get_var_value(get_var(shell->vars , name))))
@@ -77,6 +79,8 @@ int	exp_lexer_cut_var(t_shell *shell, char c, int mask)
 		}
 		free(name);
 	}
+	if (shell->exp_lexer.state->state == EXP_STATE_WORD)
+		shell->exp_lexer.split = 0;
 	return (0);
 }
 
@@ -84,6 +88,7 @@ int	exp_lexer_push_var(t_shell *shell, char c, int mask)
 {
 	if (!(mask & EXP_LEXER_MASK_VARIABLE))
 		return (exp_lexer_add_to_buff(shell, c, mask));
+	shell->exp_lexer.split = 1;
 	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_VAR))
 		return (EXP_LEXER_RET_ERROR);
 	return (EXP_LEXER_RET_CONT);
