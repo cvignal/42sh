@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 23:28:26 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/02 23:32:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ static void	set_exp_lexer_other(t_exp_lexer *lexer)
 	lexer->methods[EXP_STATE_ESCAPED][0] = &exp_lexer_error;
 	lexer->methods[EXP_STATE_TILDE][0] = &exp_lexer_pop_tilde;
 	lexer->methods[EXP_STATE_PROC_SUB][0] = &exp_lexer_error;
+	lexer->methods[EXP_STATE_WORD]['~'] = &exp_lexer_push_tilde;
+	lexer->methods[EXP_STATE_TILDE][':'] = &exp_lexer_pop_tilde;
+	lexer->methods[EXP_STATE_TILDE]['/'] = &exp_lexer_pop_tilde;
+	lexer->methods[EXP_STATE_PROC_SUB][')'] = &exp_lexer_pop_proc_sub;
 }
 
 static void	set_exp_lexer_dollar(t_exp_lexer *lexer)
@@ -94,10 +98,6 @@ int			init_exp_lexer(t_exp_lexer *lexer)
 	lexer->methods[EXP_STATE_ARI]['('] = &exp_lexer_push_ari_paren;
 	lexer->methods[EXP_STATE_ARI_PAREN]['('] = &exp_lexer_push_ari_paren;
 	lexer->methods[EXP_STATE_ARI_PAREN][')'] = &exp_lexer_pop_ari_paren;
-	lexer->methods[EXP_STATE_WORD]['~'] = &exp_lexer_push_tilde;
-	lexer->methods[EXP_STATE_TILDE][':'] = &exp_lexer_pop_tilde;
-	lexer->methods[EXP_STATE_TILDE]['/'] = &exp_lexer_pop_tilde;
-	lexer->methods[EXP_STATE_PROC_SUB][')'] = &exp_lexer_pop_proc_sub;
 	set_exp_lexer_var_methods(lexer);
 	set_exp_lexer_other(lexer);
 	set_exp_lexer_dollar(lexer);
