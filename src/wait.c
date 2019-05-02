@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:49:17 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/30 16:51:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/05/03 00:32:08 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int			wait_loop(t_shell *shell, t_ast *ast)
 	reset_terminal_mode(NULL);
 	while (!is_over(ast))
 		do_wait(shell, ast);
+	set_pipeline_ret(ast);
 	signal(SIGINT, prompt_signal_handler);
 	return (0);
 }
