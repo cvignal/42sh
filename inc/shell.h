@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/01 15:03:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/03 00:32:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,6 +289,7 @@ t_shell				*save_shell(t_shell *shell);
 struct s_ast;
 int					exec_cmd(t_shell *shell, struct s_ast *ast);
 void				free_cmd(struct s_ast *ast);
+void				set_pipeline_ret(t_ast *ast);
 int					exec_pipeline(t_shell *shell, struct s_ast *ast);
 void				free_pipeline(struct s_ast *ast);
 int					exec_end(t_shell *shell, struct s_ast *ast);
