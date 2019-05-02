@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 20:02:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/02 23:28:26 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	set_exp_lexer_var_methods(t_exp_lexer *lexer)
 
 static void	set_exp_lexer_other(t_exp_lexer *lexer)
 {
+	lexer->methods[EXP_STATE_WORD]['\\'] = &exp_lexer_push_escaped;
 	lexer->methods[EXP_STATE_WORD]['\\'] = &exp_lexer_push_escaped;
 	lexer->methods[EXP_STATE_DQUOTE]['\\'] = &exp_lexer_push_escaped;
 	lexer->methods[EXP_STATE_WORD]['\''] = &exp_lexer_push_squote;
