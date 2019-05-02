@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 01:56:08 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/02 02:03:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	set_assignements(t_shell *shell, t_ast *ast, t_var **vars)
 	t_var	*iter;
 	int		export;
 
-	export = ((t_command *)ast->data)->args_len ? 0 : 1;
+	export = ((t_command *)ast->data)->args_len ? 1 : 0;
 	iter = ast->assignements;
 	while (iter)
 	{
