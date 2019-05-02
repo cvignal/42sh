@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 21:40:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 18:47:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/03 00:19:47 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int		exec_and(t_shell *shell, t_ast *ast)
 	{
 		ast->right->exec(shell, ast->right);
 		wait_loop(shell, ast->right);
-		return (ast->ret);
+		return ((ast->ret = ast->right->ret));
 	}
-	return (1);
+	return ((ast->ret = 1));
 }
 
 void	free_and(t_ast *ast)
