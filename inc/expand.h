@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 01:18:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/02 20:02:41 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define EXP_LEXER_MASK_FIELD_SPLITTING (1 << 5)
 # define EXP_LEXER_MASK_TILDE (1 << 6)
 # define EXP_LEXER_MASK_NO_MULTI_TILDE (1 << 7)
+# define EXP_LEXER_MASK_PROC_SUB (1 << 8)
 
 typedef enum			e_exp_state
 {
@@ -46,6 +47,7 @@ typedef enum			e_exp_state
 	EXP_STATE_ARI_PAREN,
 	EXP_STATE_ESCAPED,
 	EXP_STATE_TILDE,
+	EXP_STATE_PROC_SUB,
 	NUMBER_EXP_STATE
 }						t_exp_state;
 
@@ -148,6 +150,10 @@ int						exp_lexer_over(struct s_shell *shell, char c
 int						exp_lexer_pop_tilde(struct s_shell *shell, char c,
 		int mask);
 int						exp_lexer_push_tilde(struct s_shell *shell, char c,
+		int mask);
+int						exp_lexer_set_proc_sub(struct s_shell *shell, char c,
+		int mask);
+int						exp_lexer_pop_proc_sub(struct s_shell *shell, char c,
 		int mask);
 /*
 ** expansion/expr.c
