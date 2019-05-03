@@ -90,12 +90,11 @@ void		free_ast(t_ast *ast)
 	free(ast);
 }
 
-void		set_rec_lvl(t_ast *ast, int rec_lvl)
+void		free_ast_both(t_ast *ast)
 {
-	if (ast)
-	{
-		ast->rec_lvl = rec_lvl;
-		set_rec_lvl(ast->left, rec_lvl);
-		set_rec_lvl(ast->right, rec_lvl);
-	}
+	if (ast->left)
+		ast->left->del(ast->left);
+	if (ast->right)
+		ast->right->del(ast->right);
+	free_ast(ast);
 }

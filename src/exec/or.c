@@ -29,12 +29,3 @@ int		exec_or(t_shell *shell, t_ast *ast)
 	}
 	return ((ast->ret = 0));
 }
-
-void	free_or(t_ast *ast)
-{
-	if (ast->left)
-		ast->left->del(ast->left);
-	if (ast->right)
-		ast->right->del(ast->right);
-	free_ast(ast);
-}
