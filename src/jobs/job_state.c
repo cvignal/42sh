@@ -75,18 +75,3 @@ int		job_is_done(t_job *j)
 	j->state = JOB_DONE;
 	return (1);
 }
-
-void	print_job_command(t_job *job)
-{
-	t_proc		*p;
-
-	p = job->proc;
-	ft_putstr(p->command);
-	while (p->next)
-	{
-		p = p->next;
-		ft_putstr(" | ");
-		ft_putstr(p->command);
-	}
-	ft_putchar('\n');
-}

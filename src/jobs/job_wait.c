@@ -34,7 +34,7 @@ static t_proc	*find_proc(t_shell *shell, pid_t pid)
 	return (NULL);
 }
 
-void			update_proc(t_shell *shell, pid_t pid, int status)
+static void		update_proc(t_shell *shell, pid_t pid, int status)
 {
 	t_proc	*p;
 
