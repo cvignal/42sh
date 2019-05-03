@@ -53,6 +53,7 @@ t_ast		*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 	if (!new_node)
 		return (NULL);
 	new_node->data = data;
+	new_node->flags = 0;
 	new_node->type = type;
 	new_node->exec = exec;
 	new_node->del = del;

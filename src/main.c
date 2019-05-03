@@ -33,11 +33,8 @@ static void				exec_ast(t_shell *shell, t_token *tokens)
 	if (shell->parser.ret_status == PARSER_COMPLETE)
 	{
 		ast = shell->parser.ret;
-		if (!(ast->job = new_job()))
-			exit(-1);
-		ast->exec(shell, ast);
+		exec_job(shell, ast, NULL);
 		close_everything(shell);
-		ast->ret = register_job(shell, ast->job);
 		set_ret(shell, NULL, ast->ret);
 		ast->del(ast);
 		shell->parser.ret = NULL;

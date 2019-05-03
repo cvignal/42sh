@@ -19,15 +19,11 @@ int		exec_and(t_shell *shell, t_ast *ast)
 {
 	if (shell->ctrlc)
 		return (0);
-	ast->left->exec(shell, ast->left);
-	wait_loop(shell, ast->left);
+	if (exec_job(shell, ast->left, NULL))
+		return (-1);
 	if (ast->left->ret == 0)
-	{
-		ast->right->exec(shell, ast->right);
-		wait_loop(shell, ast->right);
-		return (ast->ret);
-	}
-	return (1);
+		return (exec_job(shell, ast->right, ast->job));
+	return (0);
 }
 
 void	free_and(t_ast *ast)

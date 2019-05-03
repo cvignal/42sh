@@ -225,7 +225,8 @@ int					do_error_handling(char *name);
 */
 pid_t				exec(t_shell *shell, t_ast *instr);
 pid_t				do_exec(t_shell *shell, char **argv);
-int					wait_loop(t_shell *shell, t_ast *ast);
+int					exec_job(t_shell *shell, t_ast *node, struct s_job *job);
+int					wait_loop(t_shell *shell, t_ast *ast); // TODO: remove
 
 /*
 ** path.c
@@ -308,6 +309,7 @@ int					exec_cmd(t_shell *shell, struct s_ast *ast);
 void				free_cmd(struct s_ast *ast);
 int					exec_pipeline(t_shell *shell, struct s_ast *ast);
 void				free_pipeline(struct s_ast *ast);
+int					exec_async(t_shell *shell, struct s_ast *ast);
 int					exec_end(t_shell *shell, struct s_ast *ast);
 void				free_end(struct s_ast *ast);
 int					exec_cmd(t_shell *shell, struct s_ast *ast);
