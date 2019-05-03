@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/23 12:42:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/30 15:42:11 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void			clean_under_line(t_shell *shell);
 char			*word_to_complete(t_line *line);
 void			ft_add_builtins(char *word, t_list **list);
 int				is_a_command(t_line *line);
+char			*ft_escape(char *name);
 
 /*
 ** Tools for multi lines and cursor motion

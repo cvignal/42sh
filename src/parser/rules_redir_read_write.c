@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 01:02:14 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/12 02:24:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/02 23:50:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ static t_redir	*create_redir_rw(t_token *list)
 	new_redir->next = NULL;
 	new_redir->redir_act = &redir_rw;
 	new_redir->target = list->next->data;
+	new_redir->target_value = list->next->data;
 	new_redir->applied = 0;
+	new_redir->fd = -1;
 	if (ft_isdigit(*(char *)list->data))
 	{
 		new_redir->in = ft_atoi(list->data);

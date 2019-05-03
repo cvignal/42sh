@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:49:17 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 19:50:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/03 00:32:08 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,8 @@ static int	set_process_as_finished(t_ast *ast, pid_t pid, int status,
 				ast->ret = crash;
 			return (1);
 		}
-		else
-		{
-			if (!set_process_as_finished(ast->left, pid, status, crash))
-				return (set_process_as_finished(ast->right, pid, status, crash));
-		}
+		else if (!set_process_as_finished(ast->left, pid, status, crash))
+			return (set_process_as_finished(ast->right, pid, status, crash));
 	}
 	return (0);
 }
@@ -125,6 +122,7 @@ int			wait_loop(t_shell *shell, t_ast *ast)
 	reset_terminal_mode(NULL);
 	while (!is_over(ast))
 		do_wait(shell, ast);
+	set_pipeline_ret(ast);
 	signal(SIGINT, prompt_signal_handler);
 	return (0);
 }
