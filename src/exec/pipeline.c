@@ -70,13 +70,11 @@ int			exec_pipeline(t_shell *shell, t_ast *ast)
 		return (1);
 	}
 	ast->left->flags |= CMD_FORK;
-	ast->left->job = ast->job;
-	ast->left->exec(shell, ast->left);
+	exec_job(shell, ast->left, ast->job);
 	if (shell->ctrlc)
 		return (0);
 	ast->right->flags |= CMD_FORK;
-	ast->right->job = ast->job;
-	ast->right->exec(shell, ast->right);
+	exec_job(shell, ast->right, ast->job);
 	close_all_pipes(shell, ast);
 	return (0);
 }

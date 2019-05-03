@@ -15,21 +15,22 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-#include "shell.h"
 #include "jobs.h"
-#include "fill_line.h"
+#include "shell.h"
 #include "libft.h"
 #include "expand.h"
+#include "fill_line.h"
 
 static void	exec_internal(t_shell *shell, t_ast *instr,
 	const char *path, t_builtin builtin)
 {
 	char **args;
 
+	instr->pid = getpid();
 	if (!instr->job->pgid)
 		instr->job->pgid = instr->pid;
 	setpgid(instr->pid, instr->job->pgid);
-	if (instr->flags & (CMD_ASYNC | CMD_FORK))
+	if (!instr->job->async)
 		tcsetpgrp(0, instr->job->pgid);
 	set_pipeline(shell, instr);
 	if (apply_redirs(shell, instr))
@@ -37,10 +38,10 @@ static void	exec_internal(t_shell *shell, t_ast *instr,
 		free_shell(shell);
 		exit(127);
 	}
+	enable_signal();
 	args = ((t_command *)instr->data)->args_value;
 	if (builtin)
 		exit(builtin(shell, args));
-	enable_signal();
 	exit(execve(path, args, build_env(shell->exec_vars)));
 }
 
@@ -72,10 +73,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	prgm = ((t_command *)instr->data)->args_value[0];
 	if (!(builtin = is_builtin(prgm))
 		&& !(bin_path = hbt_command(shell, prgm)))
-	{
-		instr->ret = do_error_handling(prgm);
-		return (-1);
-	}
+		return (do_error_handling(prgm));
 	if (!builtin || instr->flags & CMD_FORK)
 	{
 		if ((instr->pid = fork()) == -1)
@@ -86,5 +84,23 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	if (instr->pid == 0)
 		exec_internal(shell, instr, bin_path, builtin);
 	register_proc(instr);
+	return (0);
+}
+
+/*
+** This functions executes a node and adds its processes to the job.
+** If job is NULL, it gets created and registered.
+*/
+
+int			exec_job(t_shell *shell, t_ast *node, t_job *job)
+{
+	node->job = job;
+	if (!job && !(node->job = new_job()))
+		return (-1);
+	node->ret = node->exec(shell, node);
+	if (!job && node->job->proc)
+		node->ret = register_job(shell, node->job);
+	else if (!job)
+		free(node->job);
 	return (0);
 }

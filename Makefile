@@ -66,6 +66,7 @@ SRC		=								\
 	exec/arithmetic/usub.c \
 	exec/arithmetic/utils.c \
 	exec/arithmetic/value.c \
+	exec/async.c \
 	exec/cmd.c \
 	exec/else.c \
 	exec/end.c \
@@ -270,7 +271,7 @@ include $(LIBFT_PATH)/include.mk
 CC		?=	cc
 
 INCFLAG	:= -I $(INCDIR) $(LIB_INC)
-WFLAGS	?=	-Wall -Wextra -Werror 
+WFLAGS	?=	-Wall -Wextra -Werror -g
 CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG)
 
 DEPGEN	:=	$(CC)
