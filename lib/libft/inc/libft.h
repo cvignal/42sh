@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/23 22:57:01 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/30 00:14:15 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ long long			ft_llmax(long long a, long long b);
 long long			ft_llmin(long long a, long long b);
 char				*ft_strrstr(const char *haystack, const char *needle);
 int					ft_arrayadd(t_array *table, char *str);
+int					ft_arraymerge(t_array *table, t_array *other);
 void				ft_swap_int(int *a, int *b);
 void				ft_replace_str(char *dst, char *src,
 		char *old_p, char *new_p);

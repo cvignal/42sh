@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 19:42:46 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 04:44:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/02 00:13:26 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static const t_op_prop	g_op_prop[] =\
 	{TT_ARI_OP_EQ, 2, LEFT, 0},
 	{TT_ARI_OP_MOD, 2, LEFT, 4},
 	{TT_ARI_OP_OR, 2, LEFT, 1},
-	{TT_ARI_OP_PLUS, 2, LEFT, 4},
+	{TT_ARI_OP_PLUS, 2, LEFT, 3},
 	{TT_ARI_OP_PLUS_PLUS, 1, RIGHT, 5},
 	{TT_ARI_OP_PROD, 2, LEFT, 4},
 	{TT_ARI_OP_SUB, 2, LEFT, 3},

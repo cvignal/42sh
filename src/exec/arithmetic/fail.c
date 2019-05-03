@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   and.c                                              :+:      :+:    :+:   */
+/*   fail.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/15 21:40:25 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/03 00:19:47 by gchainet         ###   ########.fr       */
+/*   Created: 2019/05/01 14:15:54 by gchainet          #+#    #+#             */
+/*   Updated: 2019/05/01 14:17:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
-#include "shell.h"
 #include "ast.h"
 
-int		exec_and(t_shell *shell, t_ast *ast)
+int	exec_ari_fail(t_ast *ast)
 {
-	if (shell->ctrlc)
-		return (0);
-	if (exec_job(shell, ast->left, NULL))
-		return (-1);
-	if (ast->left->ret == 0)
-		return (exec_job(shell, ast->right, ast->job));
-	return (0);
+	free(ast->data);
+	ast->data = NULL;
+	ast->ret = 1;
+	return (1);
 }
 
-void	free_and(t_ast *ast)
-{
-	if (ast->left)
-		ast->left->del(ast->left);
-	if (ast->right)
-		ast->right->del(ast->right);
-	free_ast(ast);
-}

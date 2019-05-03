@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 08:16:59 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/27 16:36:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/02 01:39:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	**alloc_env(t_var *vars)
 int			concat_var(t_var *var, const char *name, const char *value)
 {
 	var->len_name = ft_strlen(name);
-	var->len_value = ft_strlen(value);
+	var->len_value = value ? ft_strlen(value) : 0;
 	if (var->alloc_size < var->len_name + var->len_value + 2)
 	{
 		var->alloc_size = var->len_name + var->len_value + 2;
@@ -49,7 +49,8 @@ int			concat_var(t_var *var, const char *name, const char *value)
 	}
 	ft_strncpy(var->var, name, var->len_name);
 	var->var[var->len_name] = '=';
-	ft_strncpy(var->var + var->len_name + 1, value, var->len_value);
+	if (value)
+		ft_strncpy(var->var + var->len_name + 1, value, var->len_value);
 	var->var[var->len_name + var->len_value + 1] = 0;
 	return (0);
 }
