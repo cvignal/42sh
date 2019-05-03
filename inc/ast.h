@@ -329,7 +329,7 @@ int						rule_parenthesis(t_parser *parser, t_token *list);
 t_ast					*alloc_ast(void *data, t_ttype type,
 		t_exec exec, t_free del);
 void					free_ast(t_ast *ast);
-void					set_rec_lvl(t_ast *ast, int rec_lvl);
+void					free_ast_both(t_ast *ast);
 
 /*
 ** parser/shunting_yard.c
