@@ -94,14 +94,17 @@ int			exec(t_shell *shell, t_ast *instr)
 
 int			exec_job(t_shell *shell, t_ast *node, t_job *job)
 {
-	node->job = job;
-	if (!job && !(node->job = new_job()))
+	t_job	*job2;
+
+	job2 = job;
+	if (!job2 && !(job2 = new_job()))
 		return (-1);
+	node->job = job2;
 	if (node->exec(shell, node))
 		return (-1);
-	if (!job && node->job->proc)
-		node->ret = register_job(shell, node->job);
+	if (!job && job2->proc)
+		node->ret = register_job(shell, job2);
 	else if (!job)
-		free(node->job);
+		free(job2);
 	return (0);
 }
