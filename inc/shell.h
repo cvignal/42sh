@@ -165,7 +165,6 @@ typedef struct		s_command
 	char			**args_value;
 	size_t			alloc_size;
 	size_t			args_len;
-	pid_t			pid;
 }					t_command;
 
 typedef int			(*t_builtin)(t_shell *, char **);
@@ -219,6 +218,7 @@ int					add_to_command(t_command *command, char *word);
 */
 int					fail(char *proc, char *err, char *message, int ret);
 int					do_error_handling(char *name);
+char					*ft_strcjoin_free(char *s1, const char c, char *s2, int flag);
 
 /*
 ** exec.c
