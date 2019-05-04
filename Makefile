@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/28 16:39:32 by cvignal          ###   ########.fr        #
+#    Updated: 2019/05/04 15:34:06 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,7 @@ SRC		=									\
 	expansion/lexer_methods_ari.c			\
 	expansion/lexer_methods_dollar.c		\
 	expansion/lexer_methods_escaped.c		\
+	expansion/lexer_methods_hist.c			\
 	expansion/lexer_methods_over.c			\
 	expansion/lexer_methods_quotes.c		\
 	expr/a.c								\

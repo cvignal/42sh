@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/10 02:41:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/04 15:35:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int		fill_line(t_shell *shell)
 	if (!shell->line.alloc_size)
 		shell->line.data = ft_strdup("");
 	clean_under_line(shell);
+	expand_history(shell);
 	if (!shell->end_heredoc)
 		ft_dprintf(shell->fd_op, "\n");
 	return (res == -1 || shell->line.data == NULL);

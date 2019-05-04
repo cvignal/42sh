@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/23 12:42:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/04 15:36:26 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,4 +185,5 @@ int				vm_homekey(t_shell *shell);
 int				vm_endkey(t_shell *shell);
 int				visual_mode(t_shell *shell);
 
+int				expand_history(t_shell *shell);
 #endif
