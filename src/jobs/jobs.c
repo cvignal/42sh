@@ -48,24 +48,16 @@ static char *redir_to_string(t_redir *redir)
 	static char *chars[] = {"<", "<&-", "<&", "<<",
 		">", ">&", ">&-", ">&", ">>", "<>"};
 	int			index;
+	char		*str;
 
 	index = redir->type - TT_REDIR_L;
-	return ft_strdup(chars[index]);
-	/*
-	if (redir->type == '<' || redir->type == '>')
-		index = (redir->type == '>');
-	else
-		index = redir->type - TOK_DLESS + 2;
-	str = ft_strcjoinf(ft_itoa(redir->redirected), ' ',
-			ft_strdup(chars[index]));
-	if (redir->dest.type == REDIR_FD)
-		str = ft_strcjoinf(str, ' ', ft_itoa(redir->dest.val.fd));
-	else if (redir->dest.type == REDIR_FILE)
-		str = ft_strcjoinf(str, ' ', ft_strdup(redir->dest.val.file));
-	else if (redir->dest.type == REDIR_CLOSE)
-		str = ft_strcjoinf(str, ' ', ft_strdup("-"));
+	str = ft_strjoin_free(ft_itoa(redir->in), chars[index], 1);
+	if (redir->target)
+		str = ft_strjoin_free(str, redir->target, 1);
+	else if (redir->type == TT_REDIR_L_COMP ||
+			redir->type == TT_REDIR_R_COMP)
+		str = ft_strjoin_free(str, ft_itoa(redir->fd), 1 | 2);
 	return (str);
-	*/
 }
 
 static char	*proc_to_string(t_ast *ast)
