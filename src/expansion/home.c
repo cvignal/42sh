@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:35:26 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 01:19:52 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/06 01:22:27 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,13 @@ int					exp_lexer_pop_tilde(t_shell *shell, char c, int mask)
 	{
 		if (add_char_to_exp_buff(&shell->exp_lexer, '~'))
 			return (EXP_LEXER_RET_ERROR);
-		if (add_string_to_exp_buff(&shell->exp_lexer, buffer))
-			return (EXP_LEXER_RET_ERROR);
+		if (buffer)
+		{
+			if (add_string_to_exp_buff(&shell->exp_lexer, buffer))
+				return (EXP_LEXER_RET_ERROR);
+		}
 	}
-	free(buffer);
+	if (buffer)
+		free(buffer);
 	return (0);
 }
