@@ -6,12 +6,14 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/03 00:32:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/06 02:09:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
+
+# include <sys/types.h>
 
 # include "parser.h"
 # include "ast.h"
