@@ -30,6 +30,21 @@ pipeline {
             sh './42shtester/42shtester.rb 42sh expand'
           }
         }
+        stage('test backslash') {
+          steps {
+            sh './42shtester/42shtester.rb 42sh backslash'
+          }
+        }
+        stage('test pipe') {
+          steps {
+            sh './42shtester/42shtester.rb 42sh pipe'
+          }
+        }
+        stage('test hard') {
+          steps {
+            sh './42shtester/42shtester.rb 42sh hard'
+          }
+        }
       }
     }
   }
