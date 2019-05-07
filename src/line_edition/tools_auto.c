@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/30 16:46:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/05/07 14:10:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char		*ft_escape(char *name)
 	i = -1;
 	len = 0;
 	while (name[++i])
-		if (name[i] == ' ' || name[i] == '"' || name[i] == '\'')
+		if (name[i] == ' ' || name[i] == '"' || name[i] == '\'' || name[i] == '\n')
 			len++;
 	len += i;
 	if (!(ret = ft_strnew(len)))
@@ -82,7 +82,7 @@ char		*ft_escape(char *name)
 	len = 0;
 	while (name[++i])
 	{
-		if (name[i] == ' ' || name[i] == '"' || name[i] == '\'')
+		if (name[i] == ' ' || name[i] == '"' || name[i] == '\'' || name[i] == '\n')
 		{
 			ret[len++] = '\\';
 			ret[len++] = name[i];
