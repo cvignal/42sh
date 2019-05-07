@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:18:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/05/07 13:59:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/05/07 17:20:33 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@ char	*exp_find_cmd(t_array *history, char *buf)
 	return (history->data[idx]);
 }
 
-int	exp_replace_history(t_line *line, t_exp_lexer *lexer, char *value)
+int	exp_replace_history(t_shell *shell, char *buf)
 {
-	char	*pattern;
+	char	*value;
 
-	if (!(pattern = ft_strjoin("!", lexer->var.buffer)))
+	if (!(value = exp_find_cmd(shell->history, buf + 1)))
 		return (1);
-	if (!(line->data = ft_replace_all(line->data, pattern, value, 1)))
+	if (!(shell->line.data = ft_replace_all(shell->line.data, buf, value, 1)))
 		return (1);
-	free(pattern);
 	return (0);
 }
 
@@ -55,6 +54,8 @@ int			replace_exclamation_mark(t_shell *shell, int i)
 		buf_size++;
 	}
 	if (!(buf = ft_strsub(shell->line.data, i, buf_size + 1)))
+		return (-1);
+	if (exp_replace_history(shell, buf))
 		return (-1);
 	ft_strdel(&buf);
 	return (buf_size);
@@ -83,5 +84,6 @@ int			expand_history(t_shell *shell)
 			backslash = 0;
 		i++;
 	}
+	ft_dprintf(2, "\n%s", shell->line.data);
 	return (0);
 }
