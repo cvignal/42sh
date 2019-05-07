@@ -6,17 +6,17 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 00:15:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/07 14:00:18 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 
+# include "parser.h"
+
 # define PIPE_PARENT 0
 # define PIPE_NODE 1
-
-# include "parser.h"
 
 typedef enum			e_ttype
 {

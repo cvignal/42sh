@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:18:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/05/04 15:38:39 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/05/07 13:59:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			replace_exclamation_mark(t_shell *shell, int i)
 	}
 	if (!(buf = ft_strsub(shell->line.data, i, buf_size + 1)))
 		return (-1);
-	ft_dprintf(2, "\n%s\n", buf);
+	ft_strdel(&buf);
 	return (buf_size);
 }
 
