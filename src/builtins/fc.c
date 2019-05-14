@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 17:11:37 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/11 14:00:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/05/14 16:43:21 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,6 @@ int		fc_exec_cmd(t_fc *cmd, t_shell *shell)
 	ret = fc_exec_line(cpy, shell);
 	free(cpy);
 	return (ret);
-}
-
-int		fc_display(t_fc *cmd, t_shell *shell)
-{
-	int		i;
-	char	**multi_lines;
-	int		j;
-
-	i = cmd->i_first;
-	while (i < shell->history->length && i <= cmd->i_last)
-	{
-		if (!ft_strchr(cmd->flags, 'n'))
-			ft_printf("%d", i);
-		if (ft_strchr(shell->history->data[i], '\n'))
-		{
-			if (!(multi_lines = ft_strsplit(shell->history->data[i], "\n")))
-				return (1);
-			j = 0;
-			while (multi_lines[j])
-				ft_printf("\t%s\n", multi_lines[j++]);
-			ft_deltab(&multi_lines);
-		}
-		else
-			ft_printf("\t%s\n", shell->history->data[i]);
-		i++;
-	}
-	return (0);
 }
 
 int		fc_edit(t_fc *cmd, t_shell *shell)
