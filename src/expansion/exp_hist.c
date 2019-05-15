@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:18:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/05/14 16:54:08 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/05/15 14:25:11 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,14 @@ static int	find_event(char *str, t_array *history)
 	return (-1);
 }
 
-char	*exp_find_cmd(t_array *history, char *buf)
+static void	init_parsing_hist(int *backslash, int *i, int *squote)
+{
+	*backslash = 0;
+	*i = 0;
+	*squote = 0;
+}
+
+char		*exp_find_cmd(t_array *history, char *buf)
 {
 	int	idx;
 
@@ -61,48 +68,13 @@ char	*exp_find_cmd(t_array *history, char *buf)
 	return (history->data[idx]);
 }
 
-int		exp_replace_history(t_shell *shell, char *buf)
-{
-	char	*value;
-
-	if (!(value = exp_find_cmd(shell->history, buf + 1)))
-		return (1);
-	if (!(shell->line.data = ft_replace_all(shell->line.data, buf, value, 1)))
-		return (1);
-	return (0);
-}
-
-int		replace_exclamation_mark(t_shell *shell, int i)
-{
-	int		j;
-	int		buf_size;
-	char	*buf;
-
-	j = i + 1;
-	buf_size = 0;
-	while (shell->line.data[j] && shell->line.data[j] != ' '
-			&& !ft_strchr(META_CHARS, shell->line.data[j]))
-	{
-		j++;
-		buf_size++;
-	}
-	if (!(buf = ft_strsub(shell->line.data, i, buf_size + 1)))
-		return (-1);
-	if (exp_replace_history(shell, buf))
-		return (-1);
-	ft_strdel(&buf);
-	return (i + buf_size);
-}
-
-int		expand_history(t_shell *shell)
+int			expand_history(t_shell *shell)
 {
 	int	i;
 	int	backslash;
 	int	squote;
 
-	backslash = 0;
-	squote = 0;
-	i = 0;
+	init_parsing_hist(&backslash, &i, &squote);
 	while (shell->line.data[i])
 	{
 		if (shell->line.data[i] == '\\' && !backslash)
