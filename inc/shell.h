@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/06 02:09:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/14 21:28:43 by vagrant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,13 @@ typedef struct		s_var
 	struct s_var	*next;
 }					t_var;
 
+typedef struct		s_arg_file
+{
+	char			**argv;
+	int			argc;
+	int			fd;
+}			t_arg_file;
+
 typedef struct		s_shell
 {
 	t_lexer			lexer;
@@ -109,6 +116,7 @@ typedef struct		s_shell
 	t_var			*exec_vars;
 	t_line			line;
 	t_array			*history;
+	t_arg_file		*arg_file;
 	int				his_pos;
 	t_hbt			**hash_table;
 	char			*pbpaste;
