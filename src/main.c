@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/25 13:24:25 by marin            ###   ########.fr       */
+/*   Updated: 2019/05/25 13:41:42 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,43 +47,6 @@ static void				exec_ast(t_shell *shell, t_token *tokens)
 	reset_terminal_mode(shell);
 	raw_terminal_mode(shell);
 	print_prompt(shell, 0);
-}
-
-void	set_shell_input_file(t_shell *shell, int ac, char **av)
-{
-	if ((shell->arg_file = malloc(sizeof(t_arg_file))) == NULL)
-	{
-		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-		exit(127);
-	}
-	shell->arg_file->filename = av[0];
-	shell->arg_file->argv = av;
-	shell->arg_file->argc = ac;
-	if (!access(shell->arg_file->filename, F_OK))
-	{
-		if (!access(shell->arg_file->filename, R_OK))
-		{
-			if ((shell->arg_file->fd = open(shell->arg_file->filename, O_RDONLY)) != -1)
-				return;
-			//TODO permission denied message	
-			ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-			exit(127);
-		}
-		//TODO: file not found message 
-		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-		exit(127);
-	}
-}
-
-void	parse_args(t_shell *shell, int ac, char **av)
-{
-	int	i;
-
-	i = 1;
-	while (i < ac && *av[i] == '-')
-		i++; // will deal with shell params later
-	if (ac != i)
-		set_shell_input_file(shell, ac - i, &av[i]);
 }
 
 int						main(int ac, char **av, const char **environ)
