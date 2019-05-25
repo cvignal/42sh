@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/05/02 19:47:08 by gchainet         ###   ########.fr        #
+#    Updated: 2019/05/25 00:39:03 by marin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC		=									\
 	alt_shell.c								\
 	apply_redir_rw.c						\
 	apply_redirs.c							\
+	arg_file.c							\
 	builtins/builtin_hash.c					\
 	builtins/builtins.c						\
 	builtins/cd.c							\

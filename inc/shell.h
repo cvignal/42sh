@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/14 21:28:43 by vagrant          ###   ########.fr       */
+/*   Updated: 2019/05/25 00:08:12 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct		s_var
 typedef struct		s_arg_file
 {
 	char			**argv;
+	char			*filename;
 	int			argc;
 	int			fd;
 }			t_arg_file;

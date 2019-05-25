@@ -6,19 +6,21 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/16 16:22:18 by vagrant          ###   ########.fr       */
+/*   Updated: 2019/05/25 13:24:25 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include "shell.h"
 #include "ast.h"
 #include "libft.h"
 #include "fill_line.h"
 
-static const t_readline	g_functions[2] =\
+static const t_readline	g_functions[3] =\
 {
 	{0, &fill_line},
 	{1, &alt_fill_line},
@@ -49,24 +51,32 @@ static void				exec_ast(t_shell *shell, t_token *tokens)
 
 void	set_shell_input_file(t_shell *shell, int ac, char **av)
 {
-	if ((shell->arg_file = malloc(sizeof t_arg_file)) == NULL)
-		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG) && exit(127);
+	if ((shell->arg_file = malloc(sizeof(t_arg_file))) == NULL)
+	{
+		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
+		exit(127);
+	}
 	shell->arg_file->filename = av[0];
 	shell->arg_file->argv = av;
 	shell->arg_file->argc = ac;
 	if (!access(shell->arg_file->filename, F_OK))
 	{
 		if (!access(shell->arg_file->filename, R_OK))
-			if ((shell->arg_file->fd = open(shell->arg_file->filename, O_RDONLY) == -1)
-				ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG) && exit(127);
-			ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG) && exit(127);
-		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG) && exit(127);
+		{
+			if ((shell->arg_file->fd = open(shell->arg_file->filename, O_RDONLY)) != -1)
+				return;
+			//TODO permission denied message	
+			ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
+			exit(127);
+		}
+		//TODO: file not found message 
+		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
+		exit(127);
 	}
 }
 
 void	parse_args(t_shell *shell, int ac, char **av)
 {
-	char	*filename;
 	int	i;
 
 	i = 1;

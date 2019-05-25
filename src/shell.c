@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/14 21:29:55 by vagrant          ###   ########.fr       */
+/*   Updated: 2019/05/25 00:27:03 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int			free_shell(t_shell *shell)
 int			init_shell(t_shell *shell, const char **environ)
 {
 	ft_bzero(shell, sizeof(*shell));
-	shell.arg_file = NULL;
+	shell->arg_file = NULL;
 	if (init_lexer(&shell->lexer) || init_parser(&shell->parser)
 			|| init_exp_lexer(&shell->exp_lexer))
 		return (1);
