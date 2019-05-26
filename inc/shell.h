@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/25 14:47:54 by marin            ###   ########.fr       */
+/*   Updated: 2019/05/26 22:06:51 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@
 # define SEARCH_MAX 128
 # define SPECIAL_VAR_RET	"?"
 
-# define SPECIAL_PARAM_AT	"@"
-# define SPECIAL_PARAM_STAR	"*"
-# define SPECIAL_PARAM_ZERO	"0"
-# define SPECIAL_PARAM_BANG	"!"
-# define SPECIAL_PARAM_HASH	"#"
+# define SPECIAL_PARAM_AT	'@'
+# define SPECIAL_PARAM_STAR	'*'
+# define SPECIAL_PARAM_ZERO	'0'
+# define SPECIAL_PARAM_BANG	'!'
+# define SPECIAL_PARAM_HASH	'#'
 
 # define REMOVE_VAR_ENV (1 << 0)
 # define REMOVE_VAR_LOCAL (1 << 1)
