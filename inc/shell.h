@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/25 00:08:12 by marin            ###   ########.fr       */
+/*   Updated: 2019/05/25 14:47:54 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,13 @@
 # define MAX_PATH 1024
 # define VAR_MAX 1024
 # define SEARCH_MAX 128
-# define SPECIAL_VAR_RET "?"
+# define SPECIAL_VAR_RET	"?"
+
+# define SPECIAL_PARAM_AT	"@"
+# define SPECIAL_PARAM_STAR	"*"
+# define SPECIAL_PARAM_ZERO	"0"
+# define SPECIAL_PARAM_BANG	"!"
+# define SPECIAL_PARAM_HASH	"#"
 
 # define REMOVE_VAR_ENV (1 << 0)
 # define REMOVE_VAR_LOCAL (1 << 1)
@@ -242,6 +248,12 @@ int					init_shell(t_shell *shell, const char **environ);
 */
 int					add_to_line(t_line *line, char buf);
 int					free_line(t_line *line);
+
+
+/*
+** builtins/
+*/
+int					is_special_param(char name);
 
 /*
 ** builtins/

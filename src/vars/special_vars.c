@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 07:03:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 18:47:20 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/25 14:28:46 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static const char	*g_special_vars[] =\
 {
-	SPECIAL_VAR_RET
+	SPECIAL_VAR_RET,
+	SPECIAL_VAR_AT,
+	SPECIAL_VAR_STAR
 };
 
 int			is_special_var(char name)

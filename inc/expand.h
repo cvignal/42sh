@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 20:02:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/25 15:01:32 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef enum			e_exp_state
 	EXP_STATE_DOLLAR,
 	EXP_STATE_VAR,
 	EXP_STATE_ARI,
+	EXP_STATE_SPECIAL_PARAM,
 	EXP_STATE_ARI_PAREN,
 	EXP_STATE_ESCAPED,
 	EXP_STATE_TILDE,
@@ -113,7 +114,11 @@ int						exp_lexer_add_to_buff(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_pop_add_to_buff(struct s_shell *shell, char c
 		, int mask);
+int						exp_lexer_cut_special_param(struct s_shell *shell, char c
+		, int mask);
 int						exp_lexer_add_to_var(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_set_special_param(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_cut_var(struct s_shell *shell, char c
 		, int mask);

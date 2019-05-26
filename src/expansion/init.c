@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 23:32:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/25 14:55:59 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	set_exp_lexer_var_methods(t_exp_lexer *lexer)
 	i = 0;
 	while (i <= CHAR_MAX)
 	{
+		lexer->methods[EXP_STATE_SPECIAL_PARAM][i] = &exp_lexer_cut_special_param;
 		if (ft_isalnum(i) || i == '_' || is_special_var(i))
 			lexer->methods[EXP_STATE_VAR][i] = &exp_lexer_add_to_var;
 		else
@@ -67,7 +68,9 @@ static void	set_exp_lexer_dollar(t_exp_lexer *lexer)
 	i = 0;
 	while (i <= CHAR_MAX)
 	{
-		if (ft_isalpha(i) || is_special_var(i) || i == '_')
+		if (is_special_param(i))
+			lexer->methods[EXP_STATE_DOLLAR][i] = &exp_lexer_set_special_param;
+		else if (ft_isalpha(i) || is_special_var(i) || i == '_')
 			lexer->methods[EXP_STATE_DOLLAR][i] = &exp_lexer_set_var;
 		else
 			lexer->methods[EXP_STATE_DOLLAR][i] = &exp_lexer_dollar_fail;
