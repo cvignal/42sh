@@ -6,7 +6,7 @@
 /*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:57:18 by marin             #+#    #+#             */
-/*   Updated: 2019/05/26 22:36:55 by marin            ###   ########.fr       */
+/*   Updated: 2019/05/27 23:15:28 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ int	exp_lexer_cut_special_param(struct s_shell *shell, char c, int mask)
 	char	*name;
 
 	name = exp_ss_pop(&shell->exp_lexer);
-	add_string_to_exp_buff(&shell->exp_lexer, ft_strjoin(name, "expension here "));
+	add_string_to_exp_buff(&shell->exp_lexer, get_special_param_value(name, shell));
 	return (0);
 }

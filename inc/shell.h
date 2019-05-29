@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/26 22:06:51 by marin            ###   ########.fr       */
+/*   Updated: 2019/05/27 23:30:55 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@
 # define SPECIAL_PARAM_ZERO	'0'
 # define SPECIAL_PARAM_BANG	'!'
 # define SPECIAL_PARAM_HASH	'#'
+# define SPECIAL_PARAM_DOLLAR	'$'
 
 # define REMOVE_VAR_ENV (1 << 0)
 # define REMOVE_VAR_LOCAL (1 << 1)
@@ -254,6 +255,7 @@ int					free_line(t_line *line);
 ** builtins/
 */
 int					is_special_param(char name);
+char					*get_special_param_value(char *name, t_shell *shell);
 
 /*
 ** builtins/
