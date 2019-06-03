@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/27 22:43:46 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/03 11:26:05 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,6 @@ int						exp_lexer_cut_hist(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_push_hist(struct s_shell *shell, char c
 		, int mask);
+int						add_arg_to_array(t_exp_lexer *lexer, char c);
 
 #endif
