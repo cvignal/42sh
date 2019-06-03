@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 23:20:53 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/04 00:43:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/04 01:00:45 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	print_escaped(const char *var)
 	equal_found = 0;
 	while (var[end])
 	{
-		if (var[end] == '$' || var[end] == '"')
+		if (var[end] == '$' || var[end] == '"' || var[end] == '\\')
 			print_escaped_special(var, &begin, &end);
 		else if (!equal_found && var[end] == '=')
 		{
