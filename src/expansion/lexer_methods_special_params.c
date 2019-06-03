@@ -6,7 +6,7 @@
 /*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:57:18 by marin             #+#    #+#             */
-/*   Updated: 2019/05/27 23:15:28 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/02 18:19:58 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ int	exp_lexer_cut_special_param(struct s_shell *shell, char c, int mask)
 	char	*name;
 
 	name = exp_ss_pop(&shell->exp_lexer);
-	add_string_to_exp_buff(&shell->exp_lexer, get_special_param_value(name, shell));
+	if (shell->exp_lexer.state->state == EXP_STATE_WORD
+			&& (mask & EXP_LEXER_MASK_FIELD_SPLITTING))
+		shell->exp_lexer.split = 1;
+	if (expand_special_params(&shell->exp_lexer, shell, name[0]))
+			return (EXP_LEXER_RET_ERROR);
+	if (shell->exp_lexer.state->state == EXP_STATE_WORD)
+		shell->exp_lexer.split = 0;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/27 23:30:55 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/02 17:48:11 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ int					free_line(t_line *line);
 ** builtins/
 */
 int					is_special_param(char name);
-char					*get_special_param_value(char *name, t_shell *shell);
+int					expand_special_params(t_exp_lexer *lexer, t_shell *shell, char name);
 
 /*
 ** builtins/
