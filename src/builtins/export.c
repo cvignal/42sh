@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 23:20:53 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/04 00:23:01 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/04 00:43:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,40 @@
 #include "shell.h"
 #include "libft.h"
 
+static void	print_escaped_special(const char *var, unsigned int *begin,
+		unsigned int *end)
+{
+	if (*end != *begin)
+		write(STDOUT_FILENO, var + *begin, *end - *begin - 1);
+	write(STDOUT_FILENO, "\\", 1);
+	*begin = *end;
+}
+
 static void	print_escaped(const char *var)
 {
 	unsigned int	begin;
 	unsigned int	end;
-	size_t			len;
+	int				equal_found;
 
-	len = ft_strlen(var);
 	begin = 0;
 	end = 0;
-	while (begin < len)
+	equal_found = 0;
+	while (var[end])
 	{
-		if (!var[end])
+		if (var[end] == '$' || var[end] == '"')
+			print_escaped_special(var, &begin, &end);
+		else if (!equal_found && var[end] == '=')
 		{
-			write(STDOUT_FILENO, var + begin, end - begin);
-			break ;
-		}
-		else if (var[end] == '$' || var[end] == '"')
-		{
-			if (end != begin)
-				write(STDOUT_FILENO, var + begin, end - begin - 1);
-			write(STDOUT_FILENO, "\\", 1);
-			begin = end;
+			equal_found = 1;
+			write(STDOUT_FILENO, var + begin, end - begin + 1);
+			begin = end + 1;
+			write(STDOUT_FILENO, "\"", 1);
 		}
 		++end;
 	}
-	write(STDOUT_FILENO, "\n", 1);
+	if (end != begin)
+		write(STDOUT_FILENO, var + begin, end - begin);
+	write(STDOUT_FILENO, "\"\n", 2);
 }
 
 static void	print_env_dec(t_shell *shell)
@@ -53,7 +61,13 @@ static void	print_env_dec(t_shell *shell)
 		if (var->exported)
 		{
 			ft_printf("export ");
-			print_escaped(var->var);
+			if (var->set)
+				print_escaped(var->var);
+			else
+			{
+				write(STDOUT_FILENO, var->var, ft_strlen(var->var) - 1);
+				write(STDOUT_FILENO, "\n", 1);
+			}
 		}
 		var = var->next;
 	}
@@ -68,7 +82,7 @@ int			builtin_export(t_shell *shell, char **args)
 	ac = 0;
 	while (args[ac])
 		++ac;
-	if (ac == 2 && !ft_strcmp(args[1], "-p"))
+	if (ac == 1 || (ac == 2 && !ft_strcmp(args[1], "-p")))
 		print_env_dec(shell);
 	else
 	{
