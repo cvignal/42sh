@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 08:16:59 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 01:39:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/04 00:15:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char		**build_env(t_var *vars)
 	i = 0;
 	while (vars)
 	{
-		if (vars->exported)
+		if (vars->exported && vars->set)
 			env[i++] = vars->var;
 		vars = vars->next;
 	}

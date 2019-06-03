@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/06 02:09:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/04 00:09:06 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct		s_var
 	size_t			len_value;
 	size_t			alloc_size;
 	int				exported;
+	int				set;
 	struct s_var	*next;
 }					t_var;
 
@@ -242,6 +243,7 @@ int					builtin_echo(t_shell *shell, char **args);
 int					builtin_env_get_opts(char **args, t_var **tmp_env);
 int					builtin_env(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
+int					builtin_export(t_shell *shell, char **args);
 int					builtin_hash(t_shell *shell, char **args);
 int					builtin_setenv(t_shell *shell, char **args);
 int					builtin_type(t_shell *shell, char **args);

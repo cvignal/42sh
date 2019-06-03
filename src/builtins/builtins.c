@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 12:07:42 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 22:56:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/03 23:24:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static const t_builtin_desc	g_builtin_desc[] =\
 {
 	{"cd", &builtin_cd},
 	{"echo", &builtin_echo},
+	{"export", &builtin_export},
 	{"setenv", &builtin_setenv},
 	{"unsetenv", &builtin_unsetenv},
 	{"exit", &builtin_exit},
