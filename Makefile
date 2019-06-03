@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/03 23:43:57 by gchainet         ###   ########.fr        #
+#    Updated: 2019/06/04 01:16:16 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRC		=									\
 	builtins/file_fc.c						\
 	builtins/idx_fc.c						\
 	builtins/parsing_fc.c					\
-	builtins/setenv.c						\
+	builtins/set.c							\
 	builtins/tools_cd.c						\
 	builtins/tools_fc.c						\
 	builtins/tools_hash.c					\
@@ -40,7 +40,6 @@ SRC		=									\
 	builtins/trim_path.c					\
 	builtins/type.c							\
 	builtins/unset.c						\
-	builtins/unsetenv.c						\
 	command.c								\
 	env.c									\
 	exec.c									\

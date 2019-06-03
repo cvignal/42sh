@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/04 00:09:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/04 01:14:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,15 +240,12 @@ int					free_line(t_line *line);
 */
 int					builtin_cd(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
-int					builtin_env_get_opts(char **args, t_var **tmp_env);
-int					builtin_env(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
 int					builtin_export(t_shell *shell, char **args);
 int					builtin_hash(t_shell *shell, char **args);
-int					builtin_setenv(t_shell *shell, char **args);
 int					builtin_type(t_shell *shell, char **args);
 int					builtin_unset(t_shell *shell, char **args);
-int					builtin_unsetenv(t_shell *shell, char **args);
+int					builtin_set(t_shell *shell, char **args);
 int					exec_builtin(t_shell *shell, t_builtin builtin,
 		t_ast *instr);
 t_builtin			is_builtin(char *cmd);
