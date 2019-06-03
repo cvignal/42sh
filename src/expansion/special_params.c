@@ -6,28 +6,22 @@
 /*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:35:55 by marin             #+#    #+#             */
-/*   Updated: 2019/06/03 10:55:57 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/03 11:28:42 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "expand.h"
 #include <unistd.h>
-
 
 //TODO: cleaning
 
 typedef struct		s_special_param
 {
 	char	name;
-	int	(*f)(t_exp_lexer *lexer, t_shell *shell);
+	int	(*f)(t_shell *shell);
 }			t_special_param;
 
-int	get_special_param_at(t_exp_lexer *lexer, t_shell *shell)
-{
-	(void)shell;
-	(void)lexer;
-	return 0;
-}
 
 int	args_malloc_size(t_shell *shell)
 {
@@ -35,7 +29,7 @@ int	args_malloc_size(t_shell *shell)
 	int	i;
 
 	i = 1;
-	size = shell->arg_file->argc - 1;
+	size = shell->arg_file->argc;
 	while (i < shell->arg_file->argc)
 		size += ft_strlen(shell->arg_file->argv[i++]);
 	return (size);
@@ -62,11 +56,33 @@ char	*join_args(t_shell *shell, char separator)
 
 }
 
-int	get_special_param_star(t_exp_lexer *lexer, t_shell *shell)
+int	get_special_param_at(t_shell *shell)
+{
+	int	i;
+
+	i = 1;
+	if (shell->exp_lexer.split)
+		while (i < shell->arg_file->argc)
+		{
+			add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++]);
+			add_string_to_exp_buff(&shell->exp_lexer, shell->exp_lexer.ifs);
+		}
+	else
+	{
+		while (i < shell->arg_file->argc)
+		{
+			add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++]);
+			if (i != shell->arg_file->argc)
+				add_arg_to_array(&shell->exp_lexer, 0);
+		}
+	}
+	return 0;
+}
+
+int	get_special_param_star(t_shell *shell)
 {
 	char	*ret;
 	int	i;
-	(void)lexer;
 
 	i = 1;
 	if (shell->exp_lexer.split)
@@ -86,27 +102,24 @@ int	get_special_param_star(t_exp_lexer *lexer, t_shell *shell)
 	}
 	return (0);
 }
-int	get_special_param_bang(t_exp_lexer *lexer, t_shell *shell)
+int	get_special_param_bang(t_shell *shell)
 {
 	(void) shell;
-	(void)lexer;
 	return (0);
 }
-int	get_special_param_dollar(t_exp_lexer *lexer, t_shell *shell)
+int	get_special_param_dollar(t_shell *shell)
 {
 	char *pid_str;
 
-	(void)lexer;
 	if (!(pid_str = ft_itoa(getpid())))
 		return (1);
 	add_string_to_exp_buff(&shell->exp_lexer, pid_str);
 	return (0);
 }
-int	get_special_param_hash(t_exp_lexer *lexer, t_shell *shell)
+int	get_special_param_hash(t_shell *shell)
 {
 	char *argc_str;
 
-	(void)lexer;
 	if (!(argc_str = ft_itoa(shell->arg_file ? shell->arg_file->argc - 1: 0)))
 		return (1);
 	add_string_to_exp_buff(&shell->exp_lexer, argc_str);
@@ -136,7 +149,7 @@ int			is_special_param(char name)
 	return (0);
 }
 
-int	expand_special_params(t_exp_lexer *lexer, t_shell *shell, char name)
+int	expand_special_params(t_shell *shell, char name)
 {
 	unsigned int	i;
 
@@ -144,7 +157,7 @@ int	expand_special_params(t_exp_lexer *lexer, t_shell *shell, char name)
 	while (i < sizeof(g_special_params) / sizeof(*g_special_params))
 	{
 		if (g_special_params[i].name == name)
-			return (g_special_params[i].f(lexer, shell));
+			return (g_special_params[i].f(shell));
 		++i;
 	}
 	return (0);
