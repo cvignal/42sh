@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 20:02:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/04 14:58:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ int						exp_lexer_push_dquote(struct s_shell *shell, char c
 int						exp_lexer_pop_quote(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_push_escaped(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_pop_escaped(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_push_dollar(struct s_shell *shell, char c
 		, int mask);
