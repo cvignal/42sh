@@ -38,6 +38,16 @@ static char	*exec_complete_ari(t_shell *shell)
 	return (ret);
 }
 
+static void	set_rec_lvl(t_ast *ast, int rec_lvl)
+{
+	if (ast)
+	{
+		ast->rec_lvl = rec_lvl;
+		set_rec_lvl(ast->left, rec_lvl);
+		set_rec_lvl(ast->right, rec_lvl);
+	}
+}
+
 static char	*get_ari_value(t_shell *shell, const char *input, int rec_lvl)
 {
 	t_token	*tokens;

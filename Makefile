@@ -137,6 +137,7 @@ SRC	=										\
 	history_research/move_keys.c			\
 	history_research/other_movekeys.c		\
 	history_research/tools_hs.c				\
+	jobs/job_print.c						\
 	jobs/job_state.c						\
 	jobs/job_wait.c							\
 	jobs/jobs.c								\

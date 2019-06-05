@@ -22,15 +22,12 @@ int		exec_and(t_shell *shell, t_ast *ast)
 	if (exec_job(shell, ast->left, NULL))
 		return (-1);
 	if (ast->left->ret == 0)
-		return (exec_job(shell, ast->right, ast->job));
+	{
+		if (exec_job(shell, ast->right, ast->job))
+			return (-1);
+		ast->ret = ast->right->ret;
+	}
+	else
+		ast->ret = ast->left->ret;
 	return (0);
-}
-
-void	free_and(t_ast *ast)
-{
-	if (ast->left)
-		ast->left->del(ast->left);
-	if (ast->right)
-		ast->right->del(ast->right);
-	free_ast(ast);
 }

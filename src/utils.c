@@ -43,3 +43,34 @@ int	do_error_handling(char *name)
 		return (fail(EXEC_NAME, name, "No such file or directory", 127));
 	return (fail(EXEC_NAME, name, "Command not found", 127));
 }
+
+char	*ft_strcjoin(char const *s1, const char c, char const *s2)
+{
+	unsigned int	i;
+	char			*join;
+
+	if (!s1 || !s2)
+		return (NULL);
+	if (!(join = ft_strnew(ft_strlen(s1) + 1 + ft_strlen(s2))))
+		return (NULL);
+	i = 0;
+	while (*s1)
+		join[i++] = *s1++;
+	join[i++] = c;
+	while (*s2)
+		join[i++] = *s2++;
+	join[i] = 0;
+	return (join);
+}
+
+char	*ft_strcjoin_free(char *s1, const char c, char *s2, int flag)
+{
+	char *res;
+
+	res = ft_strcjoin(s1, c, s2);
+	if (flag & 1)
+		ft_strdel(&s1);
+	if (flag & 2)
+		ft_strdel(&s2);
+	return (res);
+}

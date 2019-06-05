@@ -43,6 +43,44 @@ int			register_job(t_shell *shell, t_job *job)
 	return (0);
 }
 
+static char *redir_to_string(t_redir *redir)
+{
+	static char *chars[] = {"<", "<&-", "<&", "<<",
+		">", ">&", ">&-", ">&", ">>", "<>"};
+	int			index;
+	char		*str;
+
+	index = redir->type - TT_REDIR_L;
+	str = ft_strjoin_free(ft_itoa(redir->in), chars[index], 1);
+	if (redir->target)
+		str = ft_strjoin_free(str, redir->target, 1);
+	else if (redir->type == TT_REDIR_L_COMP ||
+			redir->type == TT_REDIR_R_COMP)
+		str = ft_strjoin_free(str, ft_itoa(redir->fd), 1 | 2);
+	return (str);
+}
+
+static char	*proc_to_string(t_ast *ast)
+{
+	size_t		i;
+	char		*str;
+	t_command	*cmd;
+	t_redir		*redir;
+
+	i = 0;
+	cmd = (t_command *)ast->data;
+	str = ft_strdup(cmd->args[i]);
+	while (++i < cmd->args_len)
+		str = ft_strcjoin_free(str, ' ', cmd->args[i], 1);
+	redir = ast->redir_list;
+	while (redir)
+	{
+		str = ft_strcjoin_free(str, ' ', redir_to_string(redir), 1 | 2);
+		redir = redir->next;		
+	}
+	return (str);
+}
+
 int			register_proc(t_ast *ast)
 {
 	t_proc	**p;
@@ -53,61 +91,10 @@ int			register_proc(t_ast *ast)
 	if (!(*p = ft_memalloc(sizeof(t_proc))))
 		return (1);
 	(*p)->pid = ast->pid;
-	(*p)->command = ft_strdup("TODO");
+	(*p)->command = proc_to_string(ast);
 	ast->job->last = *p;
 	if (!ast->job->pgid)
 		ast->job->pgid = ast->pid;
 	setpgid(ast->pid, ast->job->pgid);
 	return (0);
-}
-
-static void	print_job_infos(t_shell *shell, t_job *job, int opts)
-{
-	ft_printf("[%d]", job->index);
-	if (job == shell->curr)
-		ft_putchar('+');
-	else if (job == shell->prev)
-		ft_putchar('-');
-	else
-		ft_putchar(' ');
-	ft_putstr("  ");
-	if (opts == 'l')
-		ft_printf("%d ", job->pgid);
-}
-
-static void	print_job_state(t_job *job)
-{
-	static char	*status[] = {"None", "Running", "Stopped", "Done"};
-
-	ft_putstr(status[job->state]);
-	if (job->state == JOB_DONE && job->last->ret)
-		ft_printf("(%d)", job->last->ret);
-	if (job->state == JOB_STOPPED)
-	{
-		if (job->last->ret - 128 == SIGSTOP)
-			ft_putstr("(SIGSTOP)");
-		if (job->last->ret - 128 == SIGTTIN)
-			ft_putstr("(SIGTTIN)");
-		if (job->last->ret - 128 == SIGTTOU)
-			ft_putstr("(SIGTTOU)");
-	}
-}
-
-t_job		*report_job(t_shell *shell, t_job *job, int opts)
-{
-	t_job		*next;
-
-	next = job->next;
-	if (opts == 'p')
-		ft_printf("%d\n", job->pgid);
-	else
-	{
-		print_job_infos(shell, job, opts);
-		print_job_state(job);
-		ft_putstr("\t\t");
-		print_job_command(job);
-		if (job->state == JOB_DONE)
-			free_job(shell, job);
-	}
-	return (next);
 }
