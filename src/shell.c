@@ -98,7 +98,7 @@ int			free_shell(t_shell *shell)
 	while (shell->jobs)
 		free_job(shell, shell->jobs);
 	free_shell_aux(shell);
-	reset_terminal_mode(shell);
+	reset_terminal_mode();
 	return (1);
 }
 

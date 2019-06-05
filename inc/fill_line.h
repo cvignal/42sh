@@ -84,7 +84,7 @@ int				is_a_special_key(char *buf);
 int				apply_key(char *buf, t_shell *shell);
 int				ft_addchar(t_shell *shell, char *buf, int flag);
 int				ft_printchar(int c);
-void			reset_terminal_mode(t_shell *shell);
+void			reset_terminal_mode();
 void			raw_terminal_mode(t_shell *shell);
 int				check_validity(t_shell *shell);
 int				alt_fill_line(t_shell *shell);
