@@ -165,7 +165,6 @@ typedef struct		s_command
 	char			**args_value;
 	size_t			alloc_size;
 	size_t			args_len;
-	pid_t			pid;
 }					t_command;
 
 typedef int			(*t_builtin)(t_shell *, char **);
@@ -219,11 +218,12 @@ int					add_to_command(t_command *command, char *word);
 */
 int					fail(char *proc, char *err, char *message, int ret);
 int					do_error_handling(char *name);
+char					*ft_strcjoin_free(char *s1, const char c, char *s2, int flag);
 
 /*
 ** exec.c
 */
-pid_t				exec(t_shell *shell, t_ast *instr);
+int					exec(t_shell *shell, t_ast *instr);
 pid_t				do_exec(t_shell *shell, char **argv);
 int					exec_job(t_shell *shell, t_ast *node, struct s_job *job);
 int					wait_loop(t_shell *shell, t_ast *ast); // TODO: remove
@@ -316,11 +316,8 @@ void				free_end(struct s_ast *ast);
 int					exec_cmd(t_shell *shell, struct s_ast *ast);
 void				free_cmd(struct s_ast *ast);
 int					exec_end(t_shell *shell, struct s_ast *ast);
-void				free_end(struct s_ast *ast);
 int					exec_or(t_shell *shell, struct s_ast *ast);
-void				free_or(struct s_ast *ast);
 int					exec_and(t_shell *shell, struct s_ast *ast);
-void				free_and(struct s_ast *ast);
 int					exec_expr(t_shell *shell, struct s_ast *ast);
 void				free_expr(struct s_ast *ast);
 int					exec_if(t_shell *shell, struct s_ast *ast);

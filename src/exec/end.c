@@ -29,12 +29,3 @@ int		exec_end(t_shell *shell, t_ast *ast)
 		exec_job(shell, ast->right, ast->job);
 	return (0);
 }
-
-void	free_end(t_ast *ast)
-{
-	if (ast->left)
-		ast->left->del(ast->left);
-	if (ast->right)
-		ast->right->del(ast->right);
-	free_ast(ast);
-}

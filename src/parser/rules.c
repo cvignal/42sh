@@ -86,7 +86,7 @@ int	rule_create_end(t_parser *parser, t_token *list)
 	exec = exec_end;
 	if (*(char*)list->data == '&')
 		exec = exec_async;
-	if (!(node_end = alloc_ast(NULL, type, exec, &free_end)))
+	if (!(node_end = alloc_ast(NULL, type, exec, &free_ast_both)))
 		return (1);
 	free(list->data);
 	list->data = node_end;
@@ -99,7 +99,7 @@ int	rule_create_end_second(t_parser *parser, t_token *list)
 	t_ast	*node_end;
 
 	(void)parser;
-	node_end = alloc_ast(NULL, TT_END, &exec_end, &free_end);
+	node_end = alloc_ast(NULL, TT_END, &exec_end, &free_ast_both);
 	if (!node_end)
 		return (1);
 	free(list->next->data);

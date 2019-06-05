@@ -64,7 +64,7 @@ pid_t		do_exec(t_shell *shell, char **argv)
 	return (WEXITSTATUS(status));
 }
 
-pid_t		exec(t_shell *shell, t_ast *instr)
+int			exec(t_shell *shell, t_ast *instr)
 {
 	char		*prgm;
 	char		*bin_path;
@@ -73,14 +73,14 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 	prgm = ((t_command *)instr->data)->args_value[0];
 	if (!(builtin = is_builtin(prgm))
 		&& !(bin_path = hbt_command(shell, prgm)))
-		return (do_error_handling(prgm));
-	if (!builtin || instr->flags & CMD_FORK)
+		return (instr->ret = do_error_handling(prgm), 0);
+	if (!builtin || instr->flags & CMD_FORK || instr->job->async)
 	{
 		if ((instr->pid = fork()) == -1)
 			return (-1);
 	}
 	else
-		return (exec_builtin(shell, builtin, instr));
+		return (instr->ret = exec_builtin(shell, builtin, instr), 0);
 	if (instr->pid == 0)
 		exec_internal(shell, instr, bin_path, builtin);
 	register_proc(instr);
@@ -94,13 +94,17 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 
 int			exec_job(t_shell *shell, t_ast *node, t_job *job)
 {
-	node->job = job;
-	if (!job && !(node->job = new_job()))
+	t_job	*job2;
+
+	job2 = job;
+	if (!job2 && !(job2 = new_job()))
 		return (-1);
-	node->ret = node->exec(shell, node);
-	if (!job && node->job->proc)
-		node->ret = register_job(shell, node->job);
+	node->job = job2;
+	if (node->exec(shell, node))
+		return (-1);
+	if (!job && job2->proc)
+		node->ret = register_job(shell, job2);
 	else if (!job)
-		free(node->job);
+		free(job2);
 	return (0);
 }

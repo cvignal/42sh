@@ -63,13 +63,12 @@ void			job_bg(t_job *job, int cont);
 int				job_is_stopped(t_job *j);
 int				job_is_done(t_job *j);
 
-void			update_proc(struct s_shell *shell, pid_t pid, int status);
-void			update_jobs(struct s_shell *shell);
 int				wait_job(struct s_shell *shell, t_job *job);
-t_job			*report_job(struct s_shell *shell, t_job *job, int opts);
+void			update_jobs(struct s_shell *shell);
+
 void			print_job_command(t_job *job);
+t_job			*report_job(struct s_shell *shell, t_job *job, int opts);
 
 t_job			*parse_jobspec(struct s_shell *shell, char *jobspec);
-int				parse_number(char *str);
 
 #endif

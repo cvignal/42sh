@@ -19,22 +19,15 @@ int		exec_or(t_shell *shell, t_ast *ast)
 {
 	if (shell->ctrlc)
 		return (0);
-	ast->left->exec(shell, ast->left);
-	wait_loop(shell, ast->left);
+	if (exec_job(shell, ast->left, NULL))
+		return (-1);
 	if (ast->left->ret != 0)
 	{
-		ast->right->exec(shell, ast->right);
-		wait_loop(shell, ast->right);
-		return ((ast->ret = ast->right->ret));
+		if (exec_job(shell, ast->right, ast->job))
+			return (-1);
+		ast->ret = ast->right->ret;
 	}
-	return ((ast->ret = 0));
-}
-
-void	free_or(t_ast *ast)
-{
-	if (ast->left)
-		ast->left->del(ast->left);
-	if (ast->right)
-		ast->right->del(ast->right);
-	free_ast(ast);
+	else
+		ast->ret = ast->left->ret;
+	return (0);
 }
