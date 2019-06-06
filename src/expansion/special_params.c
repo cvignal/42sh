@@ -6,7 +6,7 @@
 /*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:35:55 by marin             #+#    #+#             */
-/*   Updated: 2019/06/03 11:28:42 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/05 20:44:23 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 typedef struct		s_special_param
 {
-	char	name;
+	char	*name;
 	int	(*f)(t_shell *shell);
 }			t_special_param;
 
@@ -102,6 +102,7 @@ int	get_special_param_star(t_shell *shell)
 	}
 	return (0);
 }
+
 int	get_special_param_bang(t_shell *shell)
 {
 	(void) shell;
@@ -113,26 +114,53 @@ int	get_special_param_dollar(t_shell *shell)
 
 	if (!(pid_str = ft_itoa(getpid())))
 		return (1);
-	add_string_to_exp_buff(&shell->exp_lexer, pid_str);
+	if (add_string_to_exp_buff(&shell->exp_lexer, pid_str)){
+		free(pid_str);
+		return (1);
+	}
+	free(pid_str);
 	return (0);
 }
 int	get_special_param_hash(t_shell *shell)
 {
 	char *argc_str;
-
+	//TODO: free memory
 	if (!(argc_str = ft_itoa(shell->arg_file ? shell->arg_file->argc - 1: 0)))
 		return (1);
-	add_string_to_exp_buff(&shell->exp_lexer, argc_str);
+	if (add_string_to_exp_buff(&shell->exp_lexer, argc_str))
+	{
+		free(argc_str);
+		return (1);
+	}
+	free(argc_str);
 	return (0);
 }
 
-static const t_special_param	g_special_params[5] = \
+int	get_special_param_zero(t_shell *shell)
+{
+	const char	*prog_name;
+
+	prog_name = shell->arg_file ? shell->arg_file->argv[0] : "42sh";
+	return (add_string_to_exp_buff(&shell->exp_lexer, prog_name));
+}
+
+int	get_special_param_qmark(t_shell *shell)
+{
+	const char	*value;	
+
+	value = get_var_value(get_var(shell->vars , "?"));
+		return (add_string_to_exp_buff(&shell->exp_lexer, value));
+}
+
+static const t_special_param	g_special_params[7] = \
 {
 	{SPECIAL_PARAM_AT, &get_special_param_at},
 	{SPECIAL_PARAM_STAR, &get_special_param_star},
 	{SPECIAL_PARAM_BANG, &get_special_param_bang},
+	{SPECIAL_PARAM_ZERO, &get_special_param_zero},
 	{SPECIAL_PARAM_DOLLAR, &get_special_param_dollar},
-	{SPECIAL_PARAM_HASH, &get_special_param_hash}
+	{SPECIAL_PARAM_QMARK, &get_special_param_qmark},
+	{SPECIAL_PARAM_HASH, &get_special_param_hash},
 };
 
 int			is_special_param(char name)
@@ -142,7 +170,7 @@ int			is_special_param(char name)
 	i = 0;
 	while (i < sizeof(g_special_params) / sizeof(*g_special_params))
 	{
-		if (g_special_params[i].name == name)
+		if (g_special_params[i].name[0] == name)
 			return (1);
 		++i;
 	}
@@ -156,7 +184,7 @@ int	expand_special_params(t_shell *shell, char name)
 	i = 0;
 	while (i < sizeof(g_special_params) / sizeof(*g_special_params))
 	{
-		if (g_special_params[i].name == name)
+		if (g_special_params[i].name[0] == name)
 			return (g_special_params[i].f(shell));
 		++i;
 	}
