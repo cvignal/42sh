@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:03:52 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/28 07:55:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/04 14:47:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,8 @@ int						lexer_over(struct s_shell *shell, t_token *token,
 int						lexer_more_input(struct s_shell *shell, t_token *token,
 		char c);
 int						lexer_more_input_nl(struct s_shell *shell
+		, t_token *token, char c);
+int						lexer_more_input_escaped(struct s_shell *shell
 		, t_token *token, char c);
 
 /*

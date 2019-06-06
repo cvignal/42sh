@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 10:08:55 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 08:47:15 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/04 14:46:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,13 @@ int	lexer_more_input(t_shell *shell, t_token *token, char c)
 	(void)shell;
 	(void)c;
 	(void)token;
+	return (1 << LEXER_RET_MORE_INPUT);
+}
+
+int	lexer_more_input_escaped(t_shell *shell, t_token *token, char c)
+{
+	(void)c;
+	(void)token;
+	lss_pop(&shell->lexer);
 	return (1 << LEXER_RET_MORE_INPUT);
 }
