@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 23:32:24 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/04 14:57:08 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	set_exp_lexer_other(t_exp_lexer *lexer)
 	lexer->methods[EXP_STATE_VAR][0] = &exp_lexer_cut_var;
 	lexer->methods[EXP_STATE_ARI][0] = &exp_lexer_pop_ari;
 	lexer->methods[EXP_STATE_ARI_PAREN][0] = &exp_lexer_error;
-	lexer->methods[EXP_STATE_ESCAPED][0] = &exp_lexer_error;
+	lexer->methods[EXP_STATE_ESCAPED][0] = &exp_lexer_pop_escaped;
 	lexer->methods[EXP_STATE_TILDE][0] = &exp_lexer_pop_tilde;
 	lexer->methods[EXP_STATE_PROC_SUB][0] = &exp_lexer_error;
 	lexer->methods[EXP_STATE_WORD]['~'] = &exp_lexer_push_tilde;
