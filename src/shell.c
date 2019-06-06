@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/23 22:50:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/06 03:32:09 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int			init_shell(t_shell *shell, const char **environ)
 		return (1);
 	ft_bzero(shell->hash_table, sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
 	ft_bzero(&shell->line, sizeof(shell->line));
-	if (!(shell->vars = copy_env(environ)))
+	if (environ[0] && !(shell->vars = copy_env(environ)))
 	{
 		ft_dprintf(2, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
 		return (1);
