@@ -6,7 +6,7 @@
 /*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:57:18 by marin             #+#    #+#             */
-/*   Updated: 2019/06/03 11:17:40 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/03 21:55:35 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 int	exp_lexer_set_special_param(struct s_shell *shell, char c, int mask)
 {
-	(void)c;
 	(void)mask;
 	free(exp_ss_pop(&shell->exp_lexer));
 	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_SPECIAL_PARAM))

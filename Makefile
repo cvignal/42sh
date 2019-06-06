@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/05/26 22:06:18 by marin            ###   ########.fr        #
+#    Updated: 2019/06/04 20:41:43 by marin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,7 @@ SRC		=									\
 	expansion/lexer_methods_over.c			\
 	expansion/lexer_methods_proc_sub.c		\
 	expansion/lexer_methods_quotes.c		\
+	expansion/lexer_methods_curly_exp.c		\
 	expr/a.c								\
 	expr/b.c								\
 	expr/c.c								\
