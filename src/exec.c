@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 18:02:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 21:15:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ pid_t		exec(t_shell *shell, t_ast *instr)
 		return (exec_builtin(shell, builtin, instr));
 	if (!(bin_path = hbt_command(shell, prgm)))
 	{
-		instr->ret = do_error_handling(prgm);
+		set_ret(shell, instr, do_error_handling(prgm));
 		return (-1);
 	}
 	if (!(pid = fork()))

@@ -6,12 +6,14 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 18:56:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/25 00:08:12 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
+
+# include <sys/types.h>
 
 # include "parser.h"
 # include "ast.h"
@@ -47,8 +49,8 @@
 # define SEARCH_MAX 128
 # define SPECIAL_VAR_RET "?"
 
-# define REMOVE_VAR_ENV 0
-# define REMOVE_VAR_LOCAL 1
+# define REMOVE_VAR_ENV (1 << 0)
+# define REMOVE_VAR_LOCAL (1 << 1)
 
 # define STATE_WRITE 0
 # define STATE_SLASH 1
@@ -97,6 +99,14 @@ typedef struct		s_var
 	struct s_var	*next;
 }					t_var;
 
+typedef struct		s_arg_file
+{
+	char			**argv;
+	char			*filename;
+	int			argc;
+	int			fd;
+}			t_arg_file;
+
 typedef struct		s_shell
 {
 	t_lexer			lexer;
@@ -107,6 +117,7 @@ typedef struct		s_shell
 	t_var			*exec_vars;
 	t_line			line;
 	t_array			*history;
+	t_arg_file		*arg_file;
 	int				his_pos;
 	t_hbt			**hash_table;
 	char			*pbpaste;
@@ -289,6 +300,7 @@ t_shell				*save_shell(t_shell *shell);
 struct s_ast;
 int					exec_cmd(t_shell *shell, struct s_ast *ast);
 void				free_cmd(struct s_ast *ast);
+void				set_pipeline_ret(t_ast *ast);
 int					exec_pipeline(t_shell *shell, struct s_ast *ast);
 void				free_pipeline(struct s_ast *ast);
 int					exec_end(t_shell *shell, struct s_ast *ast);
@@ -332,6 +344,7 @@ int					exec_ari_and(t_shell *shell, struct s_ast *ast);
 int					exec_ari_or(t_shell *shell, struct s_ast *ast);
 int					exec_ari_statement(t_shell *shell, struct s_ast *ast);
 void				free_ari_statement(struct s_ast *ast);
+int					exec_ari_fail(t_ast *ast);
 
 /*
 ** redir.c
@@ -348,7 +361,7 @@ int					redir_ll(t_shell *shell, t_ast *ast, t_redir *redir);
 int					redir_r(t_shell *shell, t_ast *ast, t_redir *redir);
 int					redir_rr(t_shell *shell, t_ast *ast, t_redir *redir);
 int					expand_heredoc(t_heredoc *heredoc, t_shell *shell
-		, int fd[2]);
+		, int fd[2], const char *target);
 
 /*
 ** apply_redirs.c

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/30 15:42:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/05/25 13:43:47 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,14 @@ void			reset_terminal_mode(t_shell *shell);
 void			raw_terminal_mode(t_shell *shell);
 int				check_validity(t_shell *shell);
 int				alt_fill_line(t_shell *shell);
+int				read_from_file(t_shell *shell);
+/*
+** Arg file tools
+*/
 
+void				set_shell_input_file(t_shell *shell, int ac, char **av);
+void				parse_args(t_shell *shell, int ac, char **av);
+void				parse_args(t_shell *shell, int ac, char **av);
 /*
 ** Special keys
 */
