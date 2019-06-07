@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 18:02:36 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/02 02:03:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,45 @@
 #include "shell.h"
 #include "ast.h"
 
+static int	expand_var(t_shell *shell, t_var *var, t_var **dst, int export)
+{
+	char	*expanded;
+	char	*name;
+	char	*value;
+	int		error;
+
+	error = 0;
+	name = malloc(sizeof(*name) * (var->len_name + 1));
+	if (!name)
+		return (1);
+	ft_strncpy(name, var->var, var->len_name);
+	name[var->len_name] = 0;
+	value = ft_strchr(var->var, '=') + 1;
+	expanded = expand_no_split(shell, value, &error,
+			EXP_LEXER_MASK_ALL & (~EXP_LEXER_MASK_NO_MULTI_TILDE));
+	if (error)
+	{
+		free(name);
+		return (1);
+	}
+	set_var(dst, name, expanded, export);
+	free(name);
+	if (expanded)
+		free(expanded);
+	return (0);
+}
+
 static int	set_assignements(t_shell *shell, t_ast *ast, t_var **vars)
 {
 	t_var	*iter;
-	char	*expanded;
-	int		error;
 	int		export;
 
 	export = ((t_command *)ast->data)->args_len ? 1 : 0;
 	iter = ast->assignements;
 	while (iter)
 	{
-		ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
-		ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
-		error = 0;
-		expanded = do_expand(shell, iter->var, &error, EXP_LEXER_MASK_ALL);
-		if (error || set_var_full(vars, expanded, export))
+		if (expand_var(shell, iter, vars, export))
 			return (1);
-		if (shell->exp_lexer.buffer.buffer)
-			free(shell->exp_lexer.buffer.buffer);
 		iter = iter->next;
 	}
 	return (0);
@@ -68,16 +88,16 @@ int			exec_cmd(t_shell *shell, t_ast *ast)
 	if (shell->ctrlc)
 		return (0);
 	if (expand_params(shell, ast->data, EXP_LEXER_MASK_ALL))
-		return (1);
+		return ((ast->ret = 1));
 	if (expand_redirs(shell, ast->redir_list, EXP_LEXER_MASK_ALL))
-		return (1);
+		return ((ast->ret = 1));
 	if (prepare_redirs(shell, ast))
-		return ((ast->ret = 127));
+		return ((ast->ret = 1));
 	ret = 0;
 	if (((t_command *)ast->data)->args_len == 0)
 	{
 		if (set_assignements(shell, ast, &shell->vars))
-			return (127);
+			return ((ast->ret = 1));
 	}
 	else
 		ret = exec_cmd_internal(shell, ast);

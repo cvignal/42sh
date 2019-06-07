@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 18:11:07 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/02 20:02:41 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define EXPAND_H
 
 # include <limits.h>
+
+# include "libft.h"
+
+# define DEFAULT_IFS " \n\t"
 
 # define EXP_BUFFER_ALLOC_SIZE	128
 
@@ -27,6 +31,10 @@
 # define EXP_LEXER_MASK_QUOTE (1 << 2)
 # define EXP_LEXER_MASK_HOME (1 << 3)
 # define EXP_LEXER_MASK_ARI (1 << 4)
+# define EXP_LEXER_MASK_FIELD_SPLITTING (1 << 5)
+# define EXP_LEXER_MASK_TILDE (1 << 6)
+# define EXP_LEXER_MASK_NO_MULTI_TILDE (1 << 7)
+# define EXP_LEXER_MASK_PROC_SUB (1 << 8)
 
 typedef enum			e_exp_state
 {
@@ -37,16 +45,11 @@ typedef enum			e_exp_state
 	EXP_STATE_VAR,
 	EXP_STATE_ARI,
 	EXP_STATE_ARI_PAREN,
-	EXP_STATE_HIST,
 	EXP_STATE_ESCAPED,
+	EXP_STATE_TILDE,
+	EXP_STATE_PROC_SUB,
 	NUMBER_EXP_STATE
 }						t_exp_state;
-
-typedef struct			s_exp_ss
-{
-	t_exp_state			state;
-	struct s_exp_ss		*next;
-}						t_exp_ss;
 
 typedef struct			s_exp_buff
 {
@@ -54,6 +57,13 @@ typedef struct			s_exp_buff
 	unsigned int		pos;
 	unsigned int		alloc_size;
 }						t_exp_buff;
+
+typedef struct			s_exp_ss
+{
+	t_exp_buff			buffer;
+	t_exp_state			state;
+	struct s_exp_ss		*next;
+}						t_exp_ss;
 
 struct s_exp_lexer;
 struct s_shell;
@@ -63,9 +73,10 @@ typedef int				(*t_exp_lexer_f)(struct s_shell *, char, int);
 
 typedef struct			s_exp_lexer
 {
-	t_exp_buff			buffer;
-	t_exp_buff			var;
 	t_exp_ss			*state;
+	int					split;
+	t_array				ret;
+	const char			*ifs;
 	t_exp_lexer_f		methods[NUMBER_EXP_STATE][CHAR_MAX + 1];
 }						t_exp_lexer;
 
@@ -78,7 +89,7 @@ int						init_exp_lexer(t_exp_lexer *exp_lexer);
 ** expansion/exp_ss.c
 */
 int						exp_ss_push(t_exp_lexer *lexer, t_exp_state state);
-void					exp_ss_pop(t_exp_lexer *lexer);
+char					*exp_ss_pop(t_exp_lexer *lexer);
 
 /*
 ** expansion/lexer.c
@@ -86,21 +97,18 @@ void					exp_ss_pop(t_exp_lexer *lexer);
 struct s_command;
 int						expand_params(struct s_shell *shell,
 		struct s_command *command, int mask);
-char					*do_expand(struct s_shell *shell, char *arg,
+char					*expand_no_split(struct s_shell *shell, char *arg,
 		int *error, int mask);
 int						expand_redirs(struct s_shell *shell,
 		struct s_redir *list, int mask);
 
 /*
-** expansion/home.c
-*/
-int						expand_home(struct s_shell *shell, int *error
-		, int mask);
-
-/*
 ** expansion/buffer.c
 */
-int						add_to_exp_buff(t_exp_buff *buffer, char c);
+int						add_char_to_exp_buff(t_exp_lexer *lexer, char c);
+int						add_string_to_exp_buff(t_exp_lexer *lexer,
+		const char *s);
+
 int						exp_lexer_add_to_buff(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_pop_add_to_buff(struct s_shell *shell, char c
@@ -139,7 +147,14 @@ int						exp_lexer_error(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_over(struct s_shell *shell, char c
 		, int mask);
-
+int						exp_lexer_pop_tilde(struct s_shell *shell, char c,
+		int mask);
+int						exp_lexer_push_tilde(struct s_shell *shell, char c,
+		int mask);
+int						exp_lexer_set_proc_sub(struct s_shell *shell, char c,
+		int mask);
+int						exp_lexer_pop_proc_sub(struct s_shell *shell, char c,
+		int mask);
 /*
 ** expansion/expr.c
 */

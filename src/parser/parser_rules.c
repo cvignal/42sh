@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:28:52 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/28 03:04:01 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 16:54:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ static int		is_target_rule(t_token *token, unsigned int rule_id,
 	unsigned int	i;
 
 	i = 0;
-	if (g_rules[rule_id].len <= len_tokens)
+	if (g_rules[rule_id].len <= len_tokens
+			&& (state & g_rules[rule_id].state_mask))
 	{
 		while (i < g_rules[rule_id].len)
 		{
@@ -130,7 +131,7 @@ static int		is_target_rule(t_token *token, unsigned int rule_id,
 			token = token->next;
 			++i;
 		}
-		return (state & g_rules[rule_id].state_mask);
+		return (1);
 	}
 	return (0);
 }
