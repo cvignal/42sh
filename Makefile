@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/30 15:27:39 by cvignal          ###   ########.fr        #
+#    Updated: 2019/05/25 00:39:03 by marin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC		=									\
 	alt_shell.c								\
 	apply_redir_rw.c						\
 	apply_redirs.c							\
+	arg_file.c							\
 	builtins/builtin_hash.c					\
 	builtins/builtins.c						\
 	builtins/cd.c							\
@@ -54,6 +55,7 @@ SRC		=									\
 	exec/arithmetic/del.c					\
 	exec/arithmetic/div.c					\
 	exec/arithmetic/eq.c					\
+	exec/arithmetic/fail.c					\
 	exec/arithmetic/mod.c					\
 	exec/arithmetic/or.c					\
 	exec/arithmetic/plus.c					\
@@ -83,8 +85,8 @@ SRC		=									\
 	expansion/lexer_methods_ari.c			\
 	expansion/lexer_methods_dollar.c		\
 	expansion/lexer_methods_escaped.c		\
-	expansion/lexer_methods_hist.c			\
 	expansion/lexer_methods_over.c			\
+	expansion/lexer_methods_proc_sub.c		\
 	expansion/lexer_methods_quotes.c		\
 	expr/a.c								\
 	expr/b.c								\

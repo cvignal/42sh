@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 00:15:22 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/06 02:09:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define PIPE_PARENT 0
 # define PIPE_NODE 1
+
+# include <sys/types.h>
 
 # include "parser.h"
 
@@ -128,6 +130,7 @@ typedef struct			s_ast
 	t_exec				exec;
 	t_free				del;
 	struct s_var		*assignements;
+	int					rec_lvl;
 	int					pipes_in[2][2];
 	int					pipes_out[2][2];
 	int					old_fds[10];
@@ -322,6 +325,7 @@ int						rule_parenthesis(t_parser *parser, t_token *list);
 t_ast					*alloc_ast(void *data, t_ttype type,
 		t_exec exec, t_free del);
 void					free_ast(t_ast *ast);
+void					set_rec_lvl(t_ast *ast, int rec_lvl);
 
 /*
 ** parser/shunting_yard.c
