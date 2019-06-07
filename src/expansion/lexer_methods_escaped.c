@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 19:50:22 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/04 14:58:05 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/07 02:50:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,12 @@ int	exp_lexer_pop_escaped(t_shell *shell, char c, int mask)
 	(void)mask;
 	exp_ss_pop(&shell->exp_lexer);
 	return (0);
+}
+
+int	exp_lexer_pop_pass(t_shell *shell, char c, int mask)
+{
+	(void)c;
+	(void)mask;
+	exp_ss_pop(&shell->exp_lexer);
+	return (EXP_LEXER_RET_CONT);
 }

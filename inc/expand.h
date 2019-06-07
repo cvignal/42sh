@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/04 14:58:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/07 02:51:06 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ int						add_string_to_exp_buff(t_exp_lexer *lexer,
 		const char *s);
 
 int						exp_lexer_add_to_buff(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_pop_pass(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_pop_add_to_buff(struct s_shell *shell, char c
 		, int mask);
