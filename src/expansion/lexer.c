@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 17:30:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/28 16:04:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/05/02 01:54:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,81 +16,113 @@
 #include "expand.h"
 #include "libft.h"
 
-static char	*clean_exit(t_exp_lexer *lexer, int *error)
+static int	clean_exit(t_exp_lexer *lexer)
 {
-	if (lexer->buffer.pos)
-		free(lexer->buffer.buffer);
-	if (lexer->var.pos)
-		free(lexer->var.buffer);
-	*error = 1;
-	return (NULL);
+	t_exp_ss	*next;
+
+	while (lexer->state && lexer->state->state != EXP_STATE_WORD)
+	{
+		next = lexer->state->next;
+		if (lexer->state->buffer.buffer)
+			free(lexer->state->buffer.buffer);
+		free(lexer->state);
+		lexer->state = next;
+	}
+	if (lexer->ret.data)
+		ft_deltab(&lexer->ret.data);
+	return (1);
 }
 
-static char	*expand(t_shell *shell, char *arg, int *error, int mask)
+static void	reset_exp_lexer(t_shell *shell)
+{
+	const char	*ifs;
+
+	shell->exp_lexer.split = 0;
+	ft_bzero(&shell->exp_lexer.ret, sizeof(shell->exp_lexer.ret));
+	ft_bzero(&shell->exp_lexer.state->buffer,
+			sizeof(shell->exp_lexer.state->buffer));
+	ifs = get_var_value(get_var(shell->vars, "IFS"));
+	if (!ifs)
+		ifs = DEFAULT_IFS;
+	shell->exp_lexer.ifs = ifs;
+}
+
+static int		expand(t_shell *shell, char *arg, int mask)
 {
 	int	i;
 	int	ret;
 
 	i = 0;
 	ret = 0;
-	ft_bzero(&shell->exp_lexer.buffer, sizeof(shell->exp_lexer.buffer));
-	ft_bzero(&shell->exp_lexer.var, sizeof(shell->exp_lexer.var));
+	reset_exp_lexer(shell);
 	while (!(ret & EXP_LEXER_RET_OVER))
 	{
 		ret = shell->exp_lexer.methods[shell->exp_lexer.state->state]
 			[(int)arg[i]](shell, arg[i], mask);
 		if (ret & EXP_LEXER_RET_ERROR)
-			return (clean_exit(&shell->exp_lexer, error));
+			return (clean_exit(&shell->exp_lexer));
 		if (ret & EXP_LEXER_RET_CONT)
 			++i;
 	}
-	if (shell->exp_lexer.buffer.buffer)
-		expand_home(shell, error, mask);
-	return (shell->exp_lexer.buffer.buffer);
+	if (shell->exp_lexer.state->buffer.buffer)
+	{
+		if (ft_arrayadd(&shell->exp_lexer.ret, shell->exp_lexer.state->buffer.buffer))
+		{
+			free(shell->exp_lexer.state->buffer.buffer);
+			return (1);
+		}
+		free(shell->exp_lexer.state->buffer.buffer);
+	}
+	return (0);
 }
 
-char		*do_expand(t_shell *shell, char *arg, int *error, int mask)
+char		*expand_no_split(struct s_shell *shell, char *arg,
+		int *error, int mask)
 {
-	char	*tmp;
-	char	*ret;
+	char	*res;
 
-	ret = NULL;
-	if (mask & EXP_LEXER_MASK_ARI)
+	*error = 0;
+	res = NULL;
+	if (expand(shell, arg, mask & ~(EXP_LEXER_MASK_FIELD_SPLITTING)))
 	{
-		tmp = expand(shell, arg, error, mask & (~EXP_LEXER_MASK_ARI));
-		if (!*error)
-		{
-			ret = expand(shell, tmp, error, EXP_LEXER_MASK_ARI);
-			free(tmp);
-		}
+		*error = 1;
+		return (NULL);
 	}
-	else
-		ret = expand(shell, arg, error, mask);
-	return (ret);
+	if (shell->exp_lexer.ret.data)
+	{
+		res = shell->exp_lexer.ret.data[0];
+		free(shell->exp_lexer.ret.data);
+	}
+	return (res);
 }
 
 int			expand_params(t_shell *shell, t_command *command, int mask)
 {
 	int		i;
-	int		j;
-	int		error;
+	t_array	result;
 
+	ft_bzero(&result, sizeof(result));
+	if (command->args_value)
+	{
+		i = 0;
+		while (command->args_value[i])
+			free(command->args_value[i++]);
+		free(command->args_value);
+	}
 	i = 0;
-	j = 0;
-	error = 0;
 	while (command->args[i])
 	{
-		if (command->args_value[i - j])
-			free(command->args_value[i - j]);
-		command->args_value[i - j] = do_expand(shell, command->args[i], &error
-				, mask);
-		if (error)
+		if (expand(shell, command->args[i], mask))
+		{
+			ft_deltab(&result.data);
 			return (1);
-		if (!command->args_value[i - j])
-			j++;
+		}
+		ft_arraymerge(&result, &shell->exp_lexer.ret);
+		free(shell->exp_lexer.ret.data);
 		i++;
 	}
-	command->args_value[i - j] = NULL;
+	command->args_value = result.data;
+	command->args_len = result.length;
 	return (0);
 }
 
@@ -99,16 +131,21 @@ int			expand_redirs(t_shell *shell, t_redir *list, int mask)
 	t_redir	*curr;
 	int		error;
 
-	error = 0;
 	curr = list;
+	error = 0;
 	while (curr)
 	{
+		if (curr->target_value)
+			free(curr->target_value);
 		if (curr->target)
-			curr->target_value = do_expand(shell, curr->target, &error, mask);
+		{
+			curr->target_value = expand_no_split(shell, curr->target,
+					&error, mask);
+			if (error)
+				return (1);
+		}
 		else
 			curr->target_value = NULL;
-		if (error)
-			return (1);
 		curr = curr->next;
 	}
 	return (0);

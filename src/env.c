@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 09:04:48 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 17:49:10 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/30 16:50:54 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "shell.h"
 
-t_var	*copy_env(const char **env)
+t_var		*copy_env(const char **env)
 {
 	t_var	*res;
 	int		i;
@@ -34,7 +34,15 @@ t_var	*copy_env(const char **env)
 	return (res);
 }
 
-t_var	*copy_vars(t_var *vars, int only_exported)
+static void	copy_content(t_var *new_var, t_var *old_var)
+{
+	new_var->exported = old_var->exported;
+	new_var->len_name = old_var->len_name;
+	new_var->len_value = old_var->len_value;
+	new_var->alloc_size = ft_strlen(old_var->var);
+}
+
+t_var		*copy_vars(t_var *vars, int only_exported)
 {
 	t_var	*copy;
 	t_var	*new_var;
@@ -53,10 +61,7 @@ t_var	*copy_vars(t_var *vars, int only_exported)
 				return (NULL);
 			}
 			new_var->next = NULL;
-			new_var->exported = vars->exported;
-			new_var->len_name = vars->len_name;
-			new_var->len_value = vars->len_value;
-			new_var->alloc_size = ft_strlen(vars->var);
+			copy_content(new_var, vars);
 			add_to_vars(&copy, new_var);
 		}
 		vars = vars->next;
@@ -64,7 +69,7 @@ t_var	*copy_vars(t_var *vars, int only_exported)
 	return (copy);
 }
 
-t_var	*free_vars(t_var **vars)
+t_var		*free_vars(t_var **vars)
 {
 	t_var			*next;
 	t_var			*iter;

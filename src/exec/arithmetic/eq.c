@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 01:51:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/13 05:42:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/01 14:24:23 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 static int	exec_ari_eq_var(t_shell *shell, t_ast *ast)
 {
 	ast->right->exec(shell, ast->right);
+	if (!ast->right->data)
+		return (exec_ari_fail(ast));
 	free(ast->data);
 	if (ast->right->data)
 	{
@@ -46,6 +48,8 @@ static int	exec_ari_eq_non_var(t_ast *ast)
 
 int			exec_ari_eq(t_shell *shell, t_ast *ast)
 {
+	if (!ast->left->data)
+		return (exec_ari_fail(ast));
 	if (arithmetic_is_var(ast->left->data))
 		return (exec_ari_eq_var(shell, ast));
 	else

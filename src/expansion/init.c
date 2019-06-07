@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 16:40:40 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/07 16:01:42 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ static void	set_exp_lexer_var_methods(t_exp_lexer *lexer)
 static void	set_exp_lexer_other(t_exp_lexer *lexer)
 {
 	lexer->methods[EXP_STATE_WORD]['\\'] = &exp_lexer_push_escaped;
+	lexer->methods[EXP_STATE_WORD]['\\'] = &exp_lexer_push_escaped;
 	lexer->methods[EXP_STATE_DQUOTE]['\\'] = &exp_lexer_push_escaped;
 	lexer->methods[EXP_STATE_WORD]['\''] = &exp_lexer_push_squote;
 	lexer->methods[EXP_STATE_WORD]['"'] = &exp_lexer_push_dquote;
 	lexer->methods[EXP_STATE_WORD]['$'] = &exp_lexer_push_dollar;
 	lexer->methods[EXP_STATE_DQUOTE]['$'] = &exp_lexer_push_dollar;
+	lexer->methods[EXP_STATE_ARI_PAREN]['$'] = &exp_lexer_push_dollar;
 	lexer->methods[EXP_STATE_DQUOTE]['"'] = &exp_lexer_pop_quote;
 	lexer->methods[EXP_STATE_SQUOTE]['\''] = &exp_lexer_pop_quote;
 	lexer->methods[EXP_STATE_ESCAPED]['\n'] = &exp_lexer_pop_quote;
@@ -50,6 +52,12 @@ static void	set_exp_lexer_other(t_exp_lexer *lexer)
 	lexer->methods[EXP_STATE_ARI][0] = &exp_lexer_pop_ari;
 	lexer->methods[EXP_STATE_ARI_PAREN][0] = &exp_lexer_error;
 	lexer->methods[EXP_STATE_ESCAPED][0] = &exp_lexer_error;
+	lexer->methods[EXP_STATE_TILDE][0] = &exp_lexer_pop_tilde;
+	lexer->methods[EXP_STATE_PROC_SUB][0] = &exp_lexer_error;
+	lexer->methods[EXP_STATE_WORD]['~'] = &exp_lexer_push_tilde;
+	lexer->methods[EXP_STATE_TILDE][':'] = &exp_lexer_pop_tilde;
+	lexer->methods[EXP_STATE_TILDE]['/'] = &exp_lexer_pop_tilde;
+	lexer->methods[EXP_STATE_PROC_SUB][')'] = &exp_lexer_pop_proc_sub;
 }
 
 static void	set_exp_lexer_dollar(t_exp_lexer *lexer)
@@ -65,7 +73,8 @@ static void	set_exp_lexer_dollar(t_exp_lexer *lexer)
 			lexer->methods[EXP_STATE_DOLLAR][i] = &exp_lexer_dollar_fail;
 		++i;
 	}
-	lexer->methods[EXP_STATE_DOLLAR]['('] = &exp_lexer_set_ari;
+	lexer->methods[EXP_STATE_DOLLAR]['('] = &exp_lexer_set_proc_sub;
+	lexer->methods[EXP_STATE_PROC_SUB]['('] = &exp_lexer_set_ari;
 }
 
 int			init_exp_lexer(t_exp_lexer *lexer)
@@ -80,9 +89,10 @@ int			init_exp_lexer(t_exp_lexer *lexer)
 		lexer->methods[EXP_STATE_SQUOTE][i] = &exp_lexer_add_to_buff;
 		lexer->methods[EXP_STATE_DQUOTE][i] = &exp_lexer_add_to_buff;
 		lexer->methods[EXP_STATE_ESCAPED][i] = &exp_lexer_pop_add_to_buff;
-		lexer->methods[EXP_STATE_ESCAPED][i] = &exp_lexer_pop_add_to_buff;
 		lexer->methods[EXP_STATE_ARI][i] = &exp_lexer_pop_ari;
 		lexer->methods[EXP_STATE_ARI_PAREN][i] = &exp_lexer_add_to_var;
+		lexer->methods[EXP_STATE_TILDE][i] = &exp_lexer_add_to_buff;
+		lexer->methods[EXP_STATE_PROC_SUB][i] = &exp_lexer_add_to_buff;
 		++i;
 	}
 	lexer->methods[EXP_STATE_ARI]['('] = &exp_lexer_push_ari_paren;

@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:49:17 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/24 19:53:35 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/03 00:32:08 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,13 @@ static int	set_process_as_finished(t_ast *ast, pid_t pid, int status,
 				ast->ret = crash;
 			return (1);
 		}
-		else
-		{
-			if (!set_process_as_finished(ast->left, pid, status, crash))
-				set_process_as_finished(ast->right, pid, status, crash);
-		}
+		else if (!set_process_as_finished(ast->left, pid, status, crash))
+			return (set_process_as_finished(ast->right, pid, status, crash));
 	}
 	return (0);
 }
 
-static void	do_wait(t_ast *ast)
+static void	do_wait(t_shell *shell, t_ast *ast)
 {
 	int		status;
 	pid_t	pid;
@@ -107,17 +104,25 @@ static void	do_wait(t_ast *ast)
 	{
 		crash = print_crash_signal(status);
 		if (WIFEXITED(status) || WIFSIGNALED(status))
-			set_process_as_finished(ast, pid, status, crash);
+		{
+			if (set_process_as_finished(ast, pid, status, crash))
+			{
+				if (crash == 0)
+					set_ret(shell, NULL, WEXITSTATUS(status));
+				else
+					set_ret(shell, NULL, crash);
+			}
+		}
 	}
 }
 
 int			wait_loop(t_shell *shell, t_ast *ast)
 {
-	(void)shell;
 	signal(SIGINT, SIG_IGN);
 	reset_terminal_mode(NULL);
 	while (!is_over(ast))
-		do_wait(ast);
+		do_wait(shell, ast);
+	set_pipeline_ret(ast);
 	signal(SIGINT, prompt_signal_handler);
 	return (0);
 }

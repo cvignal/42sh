@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 06:24:13 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/27 18:13:00 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/05/01 14:32:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ int	exec_ari_usub(t_shell *shell, t_ast *ast)
 	int	value;
 
 	ast->right->exec(shell, ast->right);
-	value = 0;
-	if (ast->right->data)
-	{
-		value = ft_atoi(ast->right->data);
-		free(ast->data);
-		if (!(ast->data = ft_itoa(-value)))
-			ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-		ast->ret = !value;
-	}
+	if (!ast->right->data)
+		return (exec_ari_fail(ast));
+	value = ft_atoi(ast->right->data);
+	free(ast->data);
+	if (!(ast->data = ft_itoa(-value)))
+		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
+	ast->ret = !value;
 	return (!value);
 }

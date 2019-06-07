@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 07:46:37 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/01 10:54:25 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/05/03 00:31:53 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,15 @@ static void	close_all_pipes(t_shell *shell, t_ast *ast)
 	{
 		remove_fd(shell, ast->pipes_out[PIPE_NODE][STDOUT_FILENO]);
 		close(ast->pipes_out[PIPE_NODE][STDOUT_FILENO]);
+	}
+}
+
+void		set_pipeline_ret(t_ast *ast)
+{
+	if (ast && ast->type == TT_PIPE)
+	{
+		set_pipeline_ret(ast->left);
+		ast->ret = ast->right->ret;
 	}
 }
 

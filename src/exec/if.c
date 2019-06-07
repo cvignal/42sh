@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 13:01:03 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 18:02:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/04/28 18:48:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int		exec_if(t_shell *shell, t_ast *ast)
 	{
 		ast->left->exec(shell, ast->left);
 		wait_loop(shell, ast->left);
-		set_ret(shell, ast, ast->left->ret);
 		reset_redirs(shell, ast);
 		return (ast->left->ret);
 	}
@@ -32,7 +31,6 @@ int		exec_if(t_shell *shell, t_ast *ast)
 	{
 		ast->right->exec(shell, ast->right);
 		wait_loop(shell, ast->right);
-		set_ret(shell, ast, ast->right->ret);
 		reset_redirs(shell, ast);
 		return (ast->right->ret);
 	}

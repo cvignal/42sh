@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/18 17:56:56 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/04/30 16:46:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,57 +64,31 @@ int			ft_comp(char *word, char *name)
 	}
 }
 
-char		*word_to_complete(t_line *line)
+char		*ft_escape(char *name)
 {
 	char	*ret;
-	int		i;
-	char	*buf;
-
-	ret = NULL;
-	i = 0;
-	if (!(buf = ft_strdup(line->data)))
-		return (NULL);
-	buf[line->cursor] = 0;
-	while (buf[i])
-	{
-		if (buf[i] == ' ' || buf[i] == ';' || buf[i] == '>' || buf[i] == '<'
-			|| buf[i] == 38 || buf[i] == 124 || buf[i] == 39 || buf[i] == 34)
-			ret = buf + i;
-		i++;
-	}
-	if (ret)
-		ret = ft_strdup(ret + 1);
-	else
-		ret = ft_strdup(buf);
-	ft_strdel(&buf);
-	return (ret);
-}
-
-int			is_a_command(t_line *line)
-{
-	int		ret;
+	size_t	len;
 	size_t	i;
-	char	c;
-	int		prev_word;
 
-	i = 0;
-	ret = 1;
-	prev_word = -1;
-	while (line->data[i] && i < line->cursor)
+	i = -1;
+	len = 0;
+	while (name[++i])
+		if (name[i] == ' ' || name[i] == '"' || name[i] == '\'')
+			len++;
+	len += i;
+	if (!(ret = ft_strnew(len)))
+		return (NULL);
+	i = -1;
+	len = 0;
+	while (name[++i])
 	{
-		c = line->data[i];
-		if ((c == ' ' || c == '>' || c == '<') && prev_word == 1)
-			ret = 0;
-		if (c == ';' || c == '&' || c == '|')
+		if (name[i] == ' ' || name[i] == '"' || name[i] == '\'')
 		{
-			prev_word = -1;
-			ret = 1;
+			ret[len++] = '\\';
+			ret[len++] = name[i];
 		}
-		if (c == '$')
-			ret = 2;
-		if (ft_isalnum(c) && prev_word < 1)
-			prev_word = 1;
-		i++;
+		else
+			ret[len++] = name[i];
 	}
 	return (ret);
 }

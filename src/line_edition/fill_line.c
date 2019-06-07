@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/05/04 15:35:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/07 16:01:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int		check_validity(t_shell *shell)
 	int		res;
 	char	*default_term[3];
 
+	if (shell->arg_file != NULL)
+		return (2);
 	if (!isatty(0))
 		return (1);
 	if (!(name = getenv("TERM")) || ft_strnequ(name, "dumb", 4))
