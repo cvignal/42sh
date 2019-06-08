@@ -19,7 +19,7 @@ int		exec_and(t_shell *shell, t_ast *ast)
 {
 	if (shell->ctrlc)
 		return (0);
-	if (exec_job(shell, ast->left, NULL))
+	if (exec_job(shell, ast->left, ast->job))
 		return (-1);
 	if (ast->left->ret == 0)
 	{

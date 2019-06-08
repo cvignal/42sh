@@ -91,10 +91,10 @@ int			register_proc(t_ast *ast)
 	if (!(*p = ft_memalloc(sizeof(t_proc))))
 		return (1);
 	(*p)->pid = ast->pid;
-	(*p)->command = proc_to_string(ast);
 	ast->job->last = *p;
 	if (!ast->job->pgid)
 		ast->job->pgid = ast->pid;
 	setpgid(ast->pid, ast->job->pgid);
+	job_command_add(ast->job, proc_to_string(ast));
 	return (0);
 }

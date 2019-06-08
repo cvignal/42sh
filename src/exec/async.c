@@ -18,7 +18,7 @@
 
 static int	do_async(t_shell *shell, t_ast *node)
 {
-	if (!(node->job = new_job()))
+	if (!(node->job = ft_memalloc(sizeof(t_job))))
 		return (-1);
 	node->job->async = 1;
 	node->ret = node->exec(shell, node);

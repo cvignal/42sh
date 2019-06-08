@@ -69,8 +69,8 @@ char	*ft_strcjoin_free(char *s1, const char c, char *s2, int flag)
 
 	res = ft_strcjoin(s1, c, s2);
 	if (flag & 1)
-		ft_strdel(&s1);
+		free(s1);
 	if (flag & 2)
-		ft_strdel(&s2);
+		free(s2);
 	return (res);
 }

@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <signal.h>
 
-static void	print_job_infos(t_shell *shell, t_job *job, int opts)
+void		print_job_infos(t_shell *shell, t_job *job, int opts)
 {
 	ft_printf("[%d]", job->index);
 	if (job == shell->curr)
@@ -48,19 +48,12 @@ static void	print_job_state(t_job *job)
 	}
 }
 
-void		print_job_command(t_job *job)
+void		job_command_add(t_job *job, char *str)
 {
-	t_proc		*p;
-
-	p = job->proc;
-	ft_putstr(p->command);
-	while (p->next)
-	{
-		p = p->next;
-		ft_putstr(" | ");
-		ft_putstr(p->command);
-	}
-	ft_putchar('\n');
+	if (job->command == NULL)
+		job->command = str;
+	else
+		job->command = ft_strcjoin_free(job->command, ' ', str, 1 | 2);
 }
 
 t_job		*report_job(t_shell *shell, t_job *job, int opts)
@@ -74,8 +67,7 @@ t_job		*report_job(t_shell *shell, t_job *job, int opts)
 	{
 		print_job_infos(shell, job, opts);
 		print_job_state(job);
-		ft_putstr("\t\t");
-		print_job_command(job);
+		ft_printf("\t\t%s\n", job->command);
 		if (job->state == JOB_DONE)
 			free_job(shell, job);
 	}
