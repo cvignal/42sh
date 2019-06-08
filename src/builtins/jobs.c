@@ -84,9 +84,8 @@ int		builtin_fg(t_shell *shell, char **argv)
 	}
 	if (job_is_done(target))
 		return (fail("fg", NULL, "job has terminated", 1));
-	print_job_command(target);
-	job_fg(shell, target, 1);
-	return (0);
+	ft_putendl(target->command);
+	return (job_fg(shell, target, 1));
 }
 
 int		builtin_bg(t_shell *shell, char **argv)
@@ -107,8 +106,8 @@ int		builtin_bg(t_shell *shell, char **argv)
 	}
 	if (job_is_done(target))
 		return (fail("bg", NULL, "job has terminated", 1));
-	ft_printf("[%d] ", target->index);
-	print_job_command(target);
+	print_job_infos(shell, target, 0);
+	ft_putendl(target->command);
 	job_bg(target, 1);
 	return (0);
 }

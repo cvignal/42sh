@@ -15,11 +15,6 @@
 #include "jobs.h"
 #include "shell.h"
 
-t_job	*new_job(void)
-{
-	return (ft_memalloc(sizeof(t_job)));
-}
-
 void	free_job(t_shell *shell, t_job *job)
 {
 	t_proc	*tmp;
@@ -42,10 +37,10 @@ void	free_job(t_shell *shell, t_job *job)
 	while (job->proc)
 	{
 		tmp = job->proc->next;
-		free(job->proc->command);
 		free(job->proc);
 		job->proc = tmp;
 	}
+	free(job->command);
 	free(job);
 }
 
