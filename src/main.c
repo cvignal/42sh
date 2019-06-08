@@ -42,9 +42,6 @@ static void				exec_ast(t_shell *shell, t_token *tokens)
 	else if (shell->parser.ret_status == PARSER_ERROR)
 		set_ret(shell, NULL, 2);
 	add_to_history(shell->line.data, shell, 0);
-	reset_terminal_mode(shell);
-	raw_terminal_mode(shell);
-	print_prompt(shell, 0);
 }
 
 int						main(int ac, char **av, const char **environ)
@@ -63,6 +60,7 @@ int						main(int ac, char **av, const char **environ)
 	disable_signal(&shell);
 	while (!g_functions[ret].f(&shell))
 	{
+		reset_terminal_mode();
 		if (!(tokens = lex(&shell, shell.line.data)))
 		{
 			add_to_history(shell.line.data, &shell, 1);
@@ -72,6 +70,7 @@ int						main(int ac, char **av, const char **environ)
 			exec_ast(&shell, tokens);
 		free_line(&shell.line);
 		raw_terminal_mode(&shell);
+		print_prompt(&shell, 0);
 	}
 	builtin_exit(&shell, NULL);
 }
