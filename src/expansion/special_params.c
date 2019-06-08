@@ -6,7 +6,7 @@
 /*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:35:55 by marin             #+#    #+#             */
-/*   Updated: 2019/06/05 20:44:23 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/08 13:24:09 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,22 @@ int	get_special_param_at(t_shell *shell)
 	int	i;
 
 	i = 1;
-	if (shell->exp_lexer.split)
-		while (i < shell->arg_file->argc)
-		{
-			add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++]);
-			add_string_to_exp_buff(&shell->exp_lexer, shell->exp_lexer.ifs);
-		}
-	else
+	if (shell->arg_file)
 	{
-		while (i < shell->arg_file->argc)
+		if (shell->exp_lexer.split)
+			while (i < shell->arg_file->argc)
+			{
+				add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++]);
+				add_string_to_exp_buff(&shell->exp_lexer, shell->exp_lexer.ifs);
+			}
+		else
 		{
-			add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++]);
-			if (i != shell->arg_file->argc)
-				add_arg_to_array(&shell->exp_lexer, 0);
+			while (i < shell->arg_file->argc)
+			{
+				add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++]);
+				if (i != shell->arg_file->argc)
+					add_arg_to_array(&shell->exp_lexer, 0);
+			}
 		}
 	}
 	return 0;
@@ -84,21 +87,24 @@ int	get_special_param_star(t_shell *shell)
 	char	*ret;
 	int	i;
 
-	i = 1;
-	if (shell->exp_lexer.split)
-		while (i < shell->arg_file->argc)
-		{
-			add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++]);
-			add_string_to_exp_buff(&shell->exp_lexer, shell->exp_lexer.ifs);
-		}
-	else
+	if (shell->arg_file)
 	{
-		//TODO: make sure the return in the good one
-		if (!(ret = join_args(shell, shell->exp_lexer.ifs[0])))
-			return (1);
-		//TODO: protect this?
-		add_string_to_exp_buff(&shell->exp_lexer, ret);
-		free(ret);
+		i = 1;
+		if (shell->exp_lexer.split)
+			while (i < shell->arg_file->argc)
+			{
+				add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++]);
+				add_string_to_exp_buff(&shell->exp_lexer, shell->exp_lexer.ifs);
+			}
+		else
+		{
+			//TODO: make sure the return in the good one
+			if (!(ret = join_args(shell, shell->exp_lexer.ifs[0])))
+				return (1);
+			//TODO: protect this?
+			add_string_to_exp_buff(&shell->exp_lexer, ret);
+			free(ret);
+		}
 	}
 	return (0);
 }
