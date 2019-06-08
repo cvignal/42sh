@@ -63,11 +63,10 @@ void	raw_terminal_mode(t_shell *shell)
 	tgetent(NULL, getenv("TERM"));
 }
 
-void	reset_terminal_mode(t_shell *shell)
+void	reset_terminal_mode()
 {
 	struct termios term;
 
-	(void)shell;
 	if (tcgetattr(0, &term) == -1)
 		return ;
 	term.c_lflag |= (ICANON | ECHO | ISIG | ECHOCTL);
