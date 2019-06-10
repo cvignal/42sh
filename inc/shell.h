@@ -6,12 +6,14 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/03 00:32:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/25 00:08:12 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
+
+# include <sys/types.h>
 
 # include "parser.h"
 # include "ast.h"
@@ -97,8 +99,15 @@ typedef struct		s_var
 	struct s_var	*next;
 }					t_var;
 
-struct s_job;
+typedef struct		s_arg_file
+{
+	char			**argv;
+	char			*filename;
+	int			argc;
+	int			fd;
+}			t_arg_file;
 
+struct s_job;
 typedef struct		s_shell
 {
 	t_lexer			lexer;
@@ -109,6 +118,7 @@ typedef struct		s_shell
 	t_var			*exec_vars;
 	t_line			line;
 	t_array			*history;
+	t_arg_file		*arg_file;
 	int				his_pos;
 	t_hbt			**hash_table;
 	char			*pbpaste;
