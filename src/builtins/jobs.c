@@ -20,7 +20,7 @@ int		parse_opts(int *i, char **argv)
 	char	*str;
 	int		opts;
 
-	opts = 0;
+	opts = 1 | 4 | 8;
 	*i = 1;
 	while (argv[*i] && argv[*i][0] == '-' && argv[*i][1])
 	{
@@ -31,7 +31,7 @@ int		parse_opts(int *i, char **argv)
 		{
 			if (*str != 'l' && *str != 'p')
 				return (fail("jobs", "usage", "jobs [-lp] [jobspec ...]", -1));
-			opts = *str;
+			opts = (*str == 'p') ? 2 : 1 | 2 | 4 | 8;
 			str++;
 		}
 	}
@@ -84,7 +84,7 @@ int		builtin_fg(t_shell *shell, char **argv)
 	}
 	if (job_is_done(target))
 		return (fail("fg", NULL, "job has terminated", 1));
-	ft_putendl(target->command);
+	report_job(shell, target, 8);
 	return (job_fg(shell, target, 1));
 }
 
@@ -106,8 +106,7 @@ int		builtin_bg(t_shell *shell, char **argv)
 	}
 	if (job_is_done(target))
 		return (fail("bg", NULL, "job has terminated", 1));
-	print_job_infos(shell, target, 0);
-	ft_putendl(target->command);
+	report_job(shell, target, 1 | 8);
 	job_bg(target, 1);
 	return (0);
 }

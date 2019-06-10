@@ -60,7 +60,7 @@ static char *redir_to_string(t_redir *redir)
 	return (str);
 }
 
-static char	*proc_to_string(t_ast *ast)
+static char	*ast_to_string(t_ast *ast)
 {
 	size_t		i;
 	char		*str;
@@ -90,11 +90,11 @@ int			register_proc(t_ast *ast)
 		p = &(ast->job->last)->next;
 	if (!(*p = ft_memalloc(sizeof(t_proc))))
 		return (1);
-	(*p)->pid = ast->pid;
 	ast->job->last = *p;
 	if (!ast->job->pgid)
 		ast->job->pgid = ast->pid;
 	setpgid(ast->pid, ast->job->pgid);
-	job_command_add(ast->job, proc_to_string(ast));
+	(*p)->pid = ast->pid;
+	(*p)->name = ast_to_string(ast);
 	return (0);
 }

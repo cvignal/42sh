@@ -14,7 +14,7 @@
 #include "shell.h"
 #include <sys/wait.h>
 
-static t_proc	*find_proc(t_shell *shell, pid_t pid)
+static t_proc	*find_proc(t_shell *shell, pid_t pid, t_job **job)
 {
 	t_job	*j;
 	t_proc	*p;
@@ -22,6 +22,8 @@ static t_proc	*find_proc(t_shell *shell, pid_t pid)
 	j = shell->jobs;
 	while (j)
 	{
+		if (job)
+			*job = j;
 		p = j->proc;
 		while (p)
 		{
@@ -36,9 +38,10 @@ static t_proc	*find_proc(t_shell *shell, pid_t pid)
 
 static void		update_proc(t_shell *shell, pid_t pid, int status)
 {
+	t_job	*j;
 	t_proc	*p;
 
-	if (!(p = find_proc(shell, pid)))
+	if (!(p = find_proc(shell, pid, &j)))
 		return ;
 	if (WIFEXITED(status))
 	{
@@ -52,6 +55,7 @@ static void		update_proc(t_shell *shell, pid_t pid, int status)
 	}
 	else if (WIFSTOPPED(status))
 	{
+		j->state = JOB_STOPPED;
 		p->stopped = 1;
 		p->ret = 128 + WSTOPSIG(status);
 	}
