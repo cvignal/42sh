@@ -100,7 +100,7 @@ static void	do_wait(t_shell *shell, t_ast *ast)
 	pid_t	pid;
 	int		crash;
 
-	if ((pid = waitpid(0, &status, 0)) > 0)
+	if ((pid = waitpid(-1, &status, 0)) > 0)
 	{
 		crash = print_crash_signal(status);
 		if (WIFEXITED(status) || WIFSIGNALED(status))
@@ -119,7 +119,7 @@ static void	do_wait(t_shell *shell, t_ast *ast)
 int			wait_loop(t_shell *shell, t_ast *ast)
 {
 	signal(SIGINT, SIG_IGN);
-	reset_terminal_mode(NULL);
+	reset_terminal_mode();
 	while (!is_over(ast))
 		do_wait(shell, ast);
 	set_pipeline_ret(ast);

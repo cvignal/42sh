@@ -16,8 +16,10 @@
 # define PIPE_PARENT 0
 # define PIPE_NODE 1
 
-# include <sys/types.h>
+# define CMD_ASYNC (1 << 0)
+# define CMD_FORK (1 << 1)
 
+# include <sys/types.h>
 # include "parser.h"
 
 typedef enum			e_ttype
@@ -120,6 +122,7 @@ void					clean_last_end_token(t_parser *parser);
 struct s_ast;
 struct s_shell;
 struct s_redir;
+struct s_job;
 struct s_var;
 typedef int				(*t_exec)(struct s_shell *, struct s_ast *);
 typedef void			(*t_free)(struct s_ast *);
@@ -136,11 +139,13 @@ typedef struct			s_ast
 	int					old_fds[10];
 	int					fds[10];
 	void				*data;
+	int					flags;
 	pid_t				pid;
 	int					ret;
 	struct s_redir		*redir_list;
 	struct s_ast		*left;
 	struct s_ast		*right;
+	struct s_job		*job;
 }						t_ast;
 
 typedef int				(*t_ast_act)(t_parser *, t_token *);
@@ -325,7 +330,7 @@ int						rule_parenthesis(t_parser *parser, t_token *list);
 t_ast					*alloc_ast(void *data, t_ttype type,
 		t_exec exec, t_free del);
 void					free_ast(t_ast *ast);
-void					set_rec_lvl(t_ast *ast, int rec_lvl);
+void					free_ast_both(t_ast *ast);
 
 /*
 ** parser/shunting_yard.c
