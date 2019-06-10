@@ -14,6 +14,7 @@
 #include <unistd.h>
 
 #include "ast.h"
+#include "jobs.h"
 #include "shell.h"
 
 static void	set_pipes(t_ast *new_node)
@@ -53,6 +54,7 @@ t_ast		*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 		return (NULL);
 	new_node->rec_lvl = 0;
 	new_node->data = data;
+	new_node->flags = 0;
 	new_node->type = type;
 	new_node->exec = exec;
 	new_node->del = del;
@@ -61,6 +63,7 @@ t_ast		*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 	new_node->redir_list = NULL;
 	new_node->right = NULL;
 	new_node->left = NULL;
+	new_node->job = NULL;
 	new_node->assignements = NULL;
 	set_ast_fd(new_node);
 	set_pipes(new_node);
@@ -87,12 +90,11 @@ void		free_ast(t_ast *ast)
 	free(ast);
 }
 
-void		set_rec_lvl(t_ast *ast, int rec_lvl)
+void		free_ast_both(t_ast *ast)
 {
-	if (ast)
-	{
-		ast->rec_lvl = rec_lvl;
-		set_rec_lvl(ast->left, rec_lvl);
-		set_rec_lvl(ast->right, rec_lvl);
-	}
+	if (ast->left)
+		ast->left->del(ast->left);
+	if (ast->right)
+		ast->right->del(ast->right);
+	free_ast(ast);
 }

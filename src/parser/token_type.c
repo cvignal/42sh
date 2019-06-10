@@ -22,7 +22,7 @@ static const t_token_desc	g_token_desc[] =\
 	{";", TT_END},
 	{"|", TT_PIPE},
 	{"||", TT_OR},
-	{"&", TT_BG},
+	{"&", TT_END},
 	{"&&", TT_AND},
 	{"(", TT_OPEN_PAR},
 	{")", TT_CLOSE_PAR},

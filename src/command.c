@@ -33,7 +33,6 @@ t_command	*alloc_command(void)
 			sizeof(*new_command->args) * (ARGS_ALLOC_SIZE + 1));
 	new_command->alloc_size = ARGS_ALLOC_SIZE;
 	new_command->args_len = 0;
-	new_command->pid = -1;
 	new_command->args_value = NULL;
 	return (new_command);
 }

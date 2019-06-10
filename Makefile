@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/04 01:16:16 by gchainet         ###   ########.fr        #
+#    Updated: 2019/06/10 22:13:11 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,11 @@
 #### FILE STRUCTURE ####
 NAME	:=	42sh
 
-SRC		=									\
+SRC	=										\
 	alt_shell.c								\
 	apply_redir_rw.c						\
 	apply_redirs.c							\
+	arg_file.c								\
 	builtins/builtin_hash.c					\
 	builtins/builtins.c						\
 	builtins/cd.c							\
@@ -31,6 +32,7 @@ SRC		=									\
 	builtins/fc_exec.c						\
 	builtins/file_fc.c						\
 	builtins/idx_fc.c						\
+	builtins/jobs.c							\
 	builtins/parsing_fc.c					\
 	builtins/set.c							\
 	builtins/tools_cd.c						\
@@ -66,6 +68,7 @@ SRC		=									\
 	exec/arithmetic/usub.c					\
 	exec/arithmetic/utils.c					\
 	exec/arithmetic/value.c					\
+	exec/async.c							\
 	exec/cmd.c								\
 	exec/else.c								\
 	exec/end.c								\
@@ -135,6 +138,11 @@ SRC		=									\
 	history_research/move_keys.c			\
 	history_research/other_movekeys.c		\
 	history_research/tools_hs.c				\
+	jobs/job_print.c						\
+	jobs/job_state.c						\
+	jobs/job_wait.c							\
+	jobs/jobs.c								\
+	jobs/utils.c							\
 	line_edition/autocompletion.c			\
 	line_edition/backspace.c				\
 	line_edition/cursor.c					\
@@ -228,6 +236,7 @@ SRC		=									\
 	signal.c								\
 	tools_fd.c								\
 	tools_heredoc.c							\
+	utils.c									\
 	vars/special_vars.c						\
 	vars/var.c								\
 	vars/var_create.c						\
@@ -266,7 +275,7 @@ include $(LIBFT_PATH)/include.mk
 CC		?=	cc
 
 INCFLAG	:= -I $(INCDIR) $(LIB_INC)
-WFLAGS	?=	-Wall -Wextra -Werror 
+WFLAGS	?=	-Wall -Wextra -Werror -g
 CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG)
 
 DEPGEN	:=	$(CC)
@@ -313,7 +322,7 @@ all:		$(NAME)
 # Program linkage
 $(NAME):	$(OBJ) | $(LIBFT_PATH)/$(LIBFT)
 	@ echo $(ONGOINGCOL)[...]$(COLRESET)"	: "$@$(MOVELINE)
-	@ $(LD) -o $(NAME) $(OBJ) $(LDFLAG) &> $(TMP) && \
+	@ $(LD) -o $(NAME) $(OBJ) $(LDFLAG) > $(TMP) && \
 		(echo $(CLEARLINE)$(LINKCOLOR)[shell]$(COLRESET)"	: created"  ; \
 			cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP)) || \
 		(echo $(CLEARLINE)$(KOCOLOR)[KO]$(COLRESET)"	: linkage fail" ; \
@@ -322,7 +331,7 @@ $(NAME):	$(OBJ) | $(LIBFT_PATH)/$(LIBFT)
 # Compilation and .d generation
 $(OBJDIR)/%.o:		$(SRCDIR)/%.c | $(OBJDIR) $(DEPDIR)
 	@ echo $(ONGOINGCOL)[...]$(COLRESET)"	: "$@$(MOVELINE)
-	@ $(CC) -c $< $(CFLAGS) -o  $@ &> $(TMP) && \
+	@ $(CC) -c $< $(CFLAGS) -o  $@ > $(TMP) && \
 		(echo $(CLEARLINE)$(COMPCOLOR)[OK]$(COLRESET)"	: "$@ ; \
 			cat $(TMP) | sed -e "s/^/    /g") || \
 		(echo $(CLEARLINE)$(KOCOLOR)[KO]$(COLRESET)"	: "$@ ; \
@@ -362,8 +371,8 @@ ffcheck:	$(NAME)
 		grep -Ev \
 			`cat .function_whitelist.txt | \
 			sed -e 's/^/\^_?/g' | sed -e 's/$$/|/g' | \
-			tr -d '\n' | sed 's/|$$//g'` &> $(TMP) ; \
-		wc -l < $(TMP) | grep -e '^\s*\0$$' &> /dev/null && \
+			tr -d '\n' | sed 's/|$$//g'` > $(TMP) ; \
+		wc -l < $(TMP) | grep -e '^\s*\0$$' > /dev/null && \
 	echo $(BGREEN)[func]$(COLRESET)"	: no forbiden functions found" || \
 	(echo $(RED)[func]$(COLRESET)"	: forbiden functions found" ; \
 		cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP))
@@ -371,7 +380,7 @@ ffcheck:	$(NAME)
 #### NORM ####
 norm:
 	@ norminette $(SRC) $(INCDIR) | \
-		(! grep -E -B 1 "(^Warning|^Error)" &> $(TMP)) && \
+		(! grep -E -B 1 "(^Warning|^Error)" > $(TMP)) && \
 		echo $(CYAN)[NORM]$(COLRESET)"	: pass, it's ok for now" || \
 		(echo $(RED)[NORM]$(COLRESET)"	: you failed miserably !" ; \
 		cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP))
@@ -405,14 +414,14 @@ rtest:	lre
 
 #### LOCAL (Don't recompile lib) ####
 lclean:
-	@ rm -r $(OBJDIR) &> /dev/null && \
+	@ rm -r $(OBJDIR) > /dev/null && \
 		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" obj ; (exit 0)
-	@ rm -r $(DEPDIR) &> /dev/null && \
+	@ rm -r $(DEPDIR) > /dev/null && \
 		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" dep ; (exit 0)
 	@ rm -rfd 21sh.dSYM
 
 lfclean: lclean
-	@ rm $(NAME) &> /dev/null && \
+	@ rm $(NAME) > /dev/null && \
 		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" $(NAME) ; (exit 0)
 
 lre: lfclean all
