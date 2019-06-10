@@ -14,8 +14,6 @@
 #include "parser.h"
 #include "libft.h"
 
-int rule_create_async(t_parser * parser, t_token *list);
-
 static const t_ast_rule g_rules[] =\
 {
 	{PS_WHILENOCD, {TT_STATEMENT, 0, 0}, 1, &rule_while_add_cd},
