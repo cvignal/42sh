@@ -18,6 +18,7 @@
 
 typedef struct	s_proc
 {
+	char			*name;
 	pid_t			pid;
 	int				ret;
 	int				done;
@@ -41,7 +42,6 @@ typedef struct	s_job
 	pid_t			pgid;
 	int				index;
 	int				async;
-	char			*command;
 	enum e_state	state;
 	struct s_job	*next;
 }				t_job;
@@ -65,9 +65,6 @@ int				job_is_done(t_job *j);
 int				wait_job(struct s_shell *shell, t_job *job);
 void			update_jobs(struct s_shell *shell);
 
-void			job_command_add(t_job *job, char *str);
-void			print_job_command(t_job *job);
-void			print_job_infos(struct s_shell *shell, t_job *job, int opts);
 t_job			*report_job(struct s_shell *shell, t_job *job, int opts);
 
 t_job			*parse_jobspec(struct s_shell *shell, char *jobspec);

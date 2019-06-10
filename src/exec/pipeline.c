@@ -83,7 +83,6 @@ int			exec_pipeline(t_shell *shell, t_ast *ast)
 	exec_job(shell, ast->left, ast->job);
 	if (shell->ctrlc)
 		return (0);
-	job_command_add(ast->job, ft_strdup("|"));
 	ast->right->flags |= CMD_FORK;
 	exec_job(shell, ast->right, ast->job);
 	close_all_pipes(shell, ast);

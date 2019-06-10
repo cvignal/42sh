@@ -37,10 +37,10 @@ void	free_job(t_shell *shell, t_job *job)
 	while (job->proc)
 	{
 		tmp = job->proc->next;
+		free(job->proc->name);
 		free(job->proc);
 		job->proc = tmp;
 	}
-	free(job->command);
 	free(job);
 }
 

@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <signal.h>
 
-void		print_job_infos(t_shell *shell, t_job *job, int opts)
+static void		print_job_infos(t_shell *shell, t_job *job)
 {
 	ft_printf("[%d]", job->index);
 	if (job == shell->curr)
@@ -25,16 +25,14 @@ void		print_job_infos(t_shell *shell, t_job *job, int opts)
 		ft_putchar('-');
 	else
 		ft_putchar(' ');
-	ft_putstr("  ");
-	if (opts == 'l')
-		ft_printf("%d ", job->pgid);
+	ft_putchar(' ');
 }
 
 static void	print_job_state(t_job *job)
 {
 	static char	*status[] = {"None", "Running", "Stopped", "Done"};
 
-	ft_putstr(status[job->state]);
+	ft_printf(" %s", status[job->state]);
 	if (job->state == JOB_DONE && job->last->ret)
 		ft_printf("(%d)", job->last->ret);
 	if (job->state == JOB_STOPPED)
@@ -48,12 +46,18 @@ static void	print_job_state(t_job *job)
 	}
 }
 
-void		job_command_add(t_job *job, char *str)
+static void print_pipeline(t_job *job)
 {
-	if (job->command == NULL)
-		job->command = str;
-	else
-		job->command = ft_strcjoin_free(job->command, ' ', str, 1 | 2);
+	t_proc		*p;
+
+	p = job->proc;
+	ft_putstr(p->name);
+	while (p->next)
+	{
+		p = p->next;
+		ft_putstr(" | ");
+		ft_putstr(p->name);
+	}
 }
 
 t_job		*report_job(t_shell *shell, t_job *job, int opts)
@@ -61,15 +65,20 @@ t_job		*report_job(t_shell *shell, t_job *job, int opts)
 	t_job		*next;
 
 	next = job->next;
-	if (opts == 'p')
-		ft_printf("%d\n", job->pgid);
-	else
-	{
-		print_job_infos(shell, job, opts);
+	if (opts & 1)
+		print_job_infos(shell, job);
+	if (opts & 2)
+		ft_printf("%d", job->pgid);
+	if (opts & 4)
 		print_job_state(job);
-		ft_printf("\t\t%s\n", job->command);
+	if (opts & 4 && opts & 8)
+		ft_printf("\t\t");
+	if (opts & 8)
+	{
+		print_pipeline(job);
 		if (job->state == JOB_DONE)
 			free_job(shell, job);
 	}
+	ft_putchar('\n');
 	return (next);
 }
