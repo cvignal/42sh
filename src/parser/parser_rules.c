@@ -96,7 +96,6 @@ static const t_ast_rule g_rules[] =\
 	{PS_NONE | PS_EXPR, {TT_OR, 0, 0}, 1, &rule_or},
 	{PS_NONE | PS_EXPR, {TT_AND, 0, 0}, 1, &rule_and},
 	{PS_NONE, {TT_END, TT_END, 0}, 2, &rule_syntax_error},
-	{PS_NONE, {TT_BG, 0, 0}, 1, &rule_create_end},
 	{PS_NONE, {TT_END, 0, 0}, 1, &rule_create_end},
 	{PS_NONE, {TT_OVER, TT_OVER, 0}, 2, &rule_shift_second},
 	{PS_NONE, {TT_IF, 0, 0}, 1, &rule_create_if_nocd},
