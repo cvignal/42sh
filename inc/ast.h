@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/30 16:47:05 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/06 02:09:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define CMD_ASYNC (1 << 0)
 # define CMD_FORK (1 << 1)
 
+# include <sys/types.h>
 # include "parser.h"
 
 typedef enum			e_ttype
