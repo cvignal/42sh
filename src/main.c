@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/25 13:41:42 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/10 23:11:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void				exec_ast(t_shell *shell, t_token *tokens)
 	else if (shell->parser.ret_status == PARSER_ERROR)
 		set_ret(shell, NULL, 2);
 	add_to_history(shell->line.data, shell, 0);
+	print_prompt(shell, 0);
 }
 
 int						main(int ac, char **av, const char **environ)
@@ -72,7 +73,6 @@ int						main(int ac, char **av, const char **environ)
 			exec_ast(&shell, tokens);
 		free_line(&shell.line);
 		raw_terminal_mode(&shell);
-		print_prompt(&shell, 0);
 	}
 	builtin_exit(&shell, NULL);
 }
