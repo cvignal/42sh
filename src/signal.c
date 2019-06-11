@@ -6,7 +6,7 @@
 /*   By: cvignal <cvignal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 13:50:27 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/11 11:13:39 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/11 13:52:42 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ void	prompt_signal_handler(int sig)
 void	resize_window(int sig)
 {
 	(void)sig;
+	t_puts("cl");
+	print_prompt(g_shell, 0);
+	ft_dprintf(g_shell->fd_op, "%s", g_shell->line.data);
 	ioctl(0, TIOCGWINSZ, &g_shell->win);
 }
 
