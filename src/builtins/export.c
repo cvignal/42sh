@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 23:20:53 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/11 15:34:01 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/11 16:51:50 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,33 @@ static void	print_escaped(const char *var)
 	write(STDOUT_FILENO, "\"\n", 2);
 }
 
-static void	print_env_dec(t_shell *shell)
+static int	print_env_dec(t_var *vars)
 {
-	t_var	*var;
+	t_var			*vars_array;
+	unsigned int	i;
 
-	var = shell->exec_vars;
-	while (var)
+	if (!(vars_array = vars_to_array(vars)))
+		return (1);
+	i = 0;
+	while (vars)
 	{
-		if (var->exported)
+		if (vars_array[i].exported)
 		{
 			ft_printf("export ");
-			if (var->set)
-				print_escaped(var->var);
+			if (vars_array[i].set)
+				print_escaped(vars_array[i].var);
 			else
 			{
-				write(STDOUT_FILENO, var->var, ft_strlen(var->var) - 1);
+				write(STDOUT_FILENO, vars_array[i].var,
+						ft_strlen(vars_array[i].var));
 				write(STDOUT_FILENO, "\n", 1);
 			}
 		}
-		var = var->next;
+		vars = vars->next;
+		++i;
 	}
+	free(vars_array);
+	return (0);
 }
 
 static int	args_parser(char **args)
@@ -104,7 +111,7 @@ int			builtin_export(t_shell *shell, char **args)
 
 	i = args_parser(args);
 	if (!args[i])
-		print_env_dec(shell);
+		print_env_dec(shell->exec_vars);
 	else
 	{
 		while (args[i])

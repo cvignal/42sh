@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/10 22:13:11 by gchainet         ###   ########.fr        #
+#    Updated: 2019/06/11 16:40:33 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC	=										\
 	builtins/exec_builtin.c					\
 	builtins/exit.c							\
 	builtins/export.c						\
+	builtins/export_set_utils.c				\
 	builtins/fc.c							\
 	builtins/fc_exec.c						\
 	builtins/file_fc.c						\
