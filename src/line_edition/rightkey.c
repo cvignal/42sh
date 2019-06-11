@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:46:06 by cvignal           #+#    #+#             */
-/*   Updated: 2019/02/27 17:11:46 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/11 10:48:35 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 
 int			ft_rightkey(t_shell *shell)
 {
-	struct winsize	win;
 	int				curs_col;
 	char			c;
 
@@ -31,9 +30,8 @@ int			ft_rightkey(t_shell *shell)
 	{
 		c = shell->line.data[shell->line.cursor];
 		shell->line.cursor++;
-		ioctl(0, TIOCGWINSZ, &win);
-		curs_col = pos_cursor_col(shell, win.ws_col, 0);
-		t_puts(win.ws_col == curs_col ? "do" : "nd");
+		curs_col = pos_cursor_col(shell, shell->win.ws_col, 0);
+		t_puts(shell->win.ws_col == curs_col ? "do" : "nd");
 		if (c == '\n')
 			t_puts("do");
 	}

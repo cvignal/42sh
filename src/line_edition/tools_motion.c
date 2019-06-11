@@ -6,13 +6,14 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 11:28:55 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 17:43:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/11 11:26:22 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
 #include <curses.h>
 #include <sys/ioctl.h>
+#include <fcntl.h>
 
 #include "libft.h"
 #include "fill_line.h"
@@ -66,7 +67,6 @@ void	clean_under_line(t_shell *shell)
 	t_curs			curs;
 	struct winsize	win;
 
-	ioctl(0, TIOCGWINSZ, &win);
 	t_puts("sc");
 	if (shell)
 	{
@@ -75,6 +75,7 @@ void	clean_under_line(t_shell *shell)
 	}
 	else
 	{
+		ioctl(0, TIOCGWINSZ, &win);
 		get_cursor_pos(&curs);
 		if (curs.line != win.ws_row)
 			t_puts("do");
