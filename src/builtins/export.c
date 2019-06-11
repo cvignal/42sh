@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 23:20:53 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/04 01:00:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/11 15:34:01 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,27 +73,53 @@ static void	print_env_dec(t_shell *shell)
 	}
 }
 
+static int	args_parser(char **args)
+{
+	unsigned int	i;
+
+	i = 1;
+	while (args[i] && args[i][0] == '-')
+	{
+		if (!ft_strcmp(args[i], "--"))
+			return (i + 1);
+		else if (ft_strcmp(args[i], "-p"))
+		{
+			ft_dprintf(STDERR_FILENO,
+					"%s: export: %s invalid option\n",
+					EXEC_NAME, args[i]);
+			ft_dprintf(STDERR_FILENO, 
+					"%s: usage: export [-p] [NAME[=VALUE] ...]\n",
+					EXEC_NAME);
+		}
+		++i;
+	}
+	return (i);
+}
+
 int			builtin_export(t_shell *shell, char **args)
 {
-	size_t	ac;
 	int		i;
 	t_var	*var;
+	int		ret;
 
-	ac = 0;
-	while (args[ac])
-		++ac;
-	if (ac == 1 || (ac == 2 && !ft_strcmp(args[1], "-p")))
+	i = args_parser(args);
+	if (!args[i])
 		print_env_dec(shell);
 	else
 	{
-		i = 1;
-		if (ft_strchr(args[i], '='))
-			return (set_var_full(&shell->vars, args[i], 1));
-		else if ((var = get_var(shell->vars, args[i])))
-			var->exported = 1;
-		else
-			return (set_var(&shell->vars, args[i], NULL, 1));
-			
+		while (args[i])
+		{
+			ret = 0;
+			if (ft_strchr(args[i], '='))
+				ret = set_var_full(&shell->vars, args[i], 1);
+			else if ((var = get_var(shell->vars, args[i])))
+				var->exported = 1;
+			else
+				ret = set_var(&shell->vars, args[i], NULL, 1);
+			if (ret)
+				return (1);
+			++i;
+		}
 	}
 	return (0);
 }
