@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 02:03:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/11 19:06:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	expand_var(t_shell *shell, t_var *var, t_var **dst, int export)
 	char	*name;
 	char	*value;
 	int		error;
+	t_var	*found;
 
 	error = 0;
 	name = malloc(sizeof(*name) * (var->len_name + 1));
@@ -36,6 +37,8 @@ static int	expand_var(t_shell *shell, t_var *var, t_var **dst, int export)
 		free(name);
 		return (1);
 	}
+	if ((found = get_var(shell->vars, name)))
+		export = found->exported;
 	set_var(dst, name, expanded, export);
 	free(name);
 	if (expanded)
