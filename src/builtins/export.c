@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 23:20:53 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/11 16:51:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/11 19:07:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ static int	args_parser(char **args)
 			ft_dprintf(STDERR_FILENO, 
 					"%s: usage: export [-p] [NAME[=VALUE] ...]\n",
 					EXEC_NAME);
+			return (-1);
 		}
 		++i;
 	}
@@ -109,7 +110,8 @@ int			builtin_export(t_shell *shell, char **args)
 	t_var	*var;
 	int		ret;
 
-	i = args_parser(args);
+	if ((i = args_parser(args)) < 0)
+		return (1);
 	if (!args[i])
 		print_env_dec(shell->exec_vars);
 	else
