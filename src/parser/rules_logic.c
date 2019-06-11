@@ -20,7 +20,7 @@ int	rule_or(t_parser *parser, t_token *list)
 	t_ast		*node;
 
 	(void)parser;
-	if (!(node = alloc_ast(NULL, TT_OR, exec_or, free_or)))
+	if (!(node = alloc_ast(NULL, TT_OR, exec_or, free_ast_both)))
 		return (1);
 	free(list->data);
 	list->data = node;
@@ -33,7 +33,7 @@ int	rule_and(t_parser *parser, t_token *list)
 	t_ast		*node;
 
 	(void)parser;
-	if (!(node = alloc_ast(NULL, TT_AND, exec_and, free_and)))
+	if (!(node = alloc_ast(NULL, TT_AND, exec_and, free_ast_both)))
 		return (1);
 	free(list->data);
 	list->data = node;

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 12:07:42 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/04 01:13:47 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/10 22:12:23 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,19 @@
 
 static const t_builtin_desc	g_builtin_desc[] =\
 {
+	{"bg", &builtin_bg},
 	{"cd", &builtin_cd},
 	{"echo", &builtin_echo},
-	{"export", &builtin_export},
 	{"exit", &builtin_exit},
+	{"export", &builtin_export},
 	{"fc", &builtin_fc},
+	{"fc", &builtin_fc},
+	{"fg", &builtin_fg},
 	{"hash", &builtin_hash},
-	{"type", &builtin_type},
-	{"unset", &builtin_unset},
+	{"jobs", &builtin_jobs},
 	{"set", &builtin_set},
+	{"type", &builtin_type},
+	{"unset", &builtin_unset}
 };
 
 t_builtin	is_builtin(char *cmd)

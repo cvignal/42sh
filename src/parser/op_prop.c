@@ -33,9 +33,8 @@ static const t_op_prop	g_op_prop[] =\
 	{TT_ARI_OP_SUB_SUB, 1, RIGHT, 5},
 	{TT_ARI_OP_UPLUS, 1, RIGHT, 5},
 	{TT_ARI_OP_USUB, 1, RIGHT, 5},
-	{TT_BG, 1, RIGHT, 1},
 	{TT_END, 2, LEFT, 0},
-	{TT_END_UNARY, 1, RIGHT, 1},
+	{TT_END_UNARY, 1, LEFT, 0},
 	{TT_OR, 2, LEFT, 1},
 	{TT_PIPE, 2, LEFT, 2}
 };
