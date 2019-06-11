@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 15:41:09 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/11 17:11:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/11 20:43:06 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static inline void	*addr(t_heap_sort *hs, unsigned int n)
 	return ((unsigned char *)hs->data + n * hs->content_size);
 }
 
-static void	heapify(t_heap_sort *hs, unsigned int node, unsigned int n)
+static void			heapify(t_heap_sort *hs, unsigned int node, unsigned int n)
 {
 	unsigned int	i;
 
@@ -38,7 +38,7 @@ static void	heapify(t_heap_sort *hs, unsigned int node, unsigned int n)
 	}
 }
 
-void		ft_heap_sort(void *data, size_t content_size, size_t len,
+void				ft_heap_sort(void *data, size_t content_size, size_t len,
 		int (*cmp)(void *, void *))
 {
 	t_heap_sort		hs;
