@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 19:02:11 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 17:46:01 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/11 11:03:59 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,14 @@ static void	back_to_startline(int len_prompt)
 	}
 }
 
-int			nb_multi_lines(size_t len, int len_prompt)
+int			nb_multi_lines(t_shell *shell, size_t len, int len_prompt)
 {
 	int				length;
 	int				width;
-	struct winsize	win;
 	int				nb;
 
 	length = (int)len;
-	ioctl(0, TIOCGWINSZ, &win);
-	width = win.ws_col;
+	width = shell->win.ws_col;
 	if (length + len_prompt >= width)
 		length -= width - len_prompt;
 	else
@@ -78,11 +76,9 @@ int			ft_lineup(t_shell *shell)
 {
 	int				cursor_nb;
 	int				width;
-	struct winsize	win;
 
-	ioctl(0, TIOCGWINSZ, &win);
-	width = win.ws_col;
-	cursor_nb = nb_multi_lines(shell->line.cursor, shell->prompt_len);
+	width = shell->win.ws_col;
+	cursor_nb = nb_multi_lines(shell, shell->line.cursor, shell->prompt_len);
 	if (cursor_nb > 0)
 	{
 		t_puts("up");
@@ -101,12 +97,10 @@ int			ft_linedown(t_shell *shell)
 	int				line_nb;
 	int				cursor_nb;
 	int				width;
-	struct winsize	win;
 
-	ioctl(0, TIOCGWINSZ, &win);
-	width = win.ws_col;
-	line_nb = nb_multi_lines(shell->line.len, shell->prompt_len);
-	cursor_nb = nb_multi_lines(shell->line.cursor, shell->prompt_len);
+	width = shell->win.ws_col;
+	line_nb = nb_multi_lines(shell, shell->line.len, shell->prompt_len);
+	cursor_nb = nb_multi_lines(shell, shell->line.cursor, shell->prompt_len);
 	if (cursor_nb < line_nb)
 	{
 		down_one_line(shell->line, width, shell->prompt_len

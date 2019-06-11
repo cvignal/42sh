@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/25 00:08:12 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/11 11:21:53 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SHELL_H
 
 # include <sys/types.h>
+# include <sys/ioctl.h>
 
 # include "parser.h"
 # include "ast.h"
@@ -132,6 +133,7 @@ typedef struct		s_shell
 	int				prompt_len;
 	int				prompt_height;
 	int				fc_cmd;
+	struct winsize	win;
 }					t_shell;
 
 struct s_redir;

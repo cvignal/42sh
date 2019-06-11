@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/05 16:24:59 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/11 11:28:01 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@
 #include "libft.h"
 #include "fill_line.h"
 
-static void	fill_table(int *table, t_list *list)
+static void	fill_table(t_shell *shell, int *table, t_list *list)
 {
-	struct winsize	window;
 	t_list			*curr;
 	size_t			max_len;
 	int				nb;
 
-	ioctl(0, TIOCGWINSZ, &window);
 	curr = list;
 	max_len = 0;
 	nb = 0;
@@ -38,7 +36,7 @@ static void	fill_table(int *table, t_list *list)
 		nb++;
 	}
 	table[1] = (int)max_len;
-	table[0] = window.ws_col / (max_len + 1);
+	table[0] = shell->win.ws_col / (max_len + 1);
 	table[2] = nb;
 	if (table[0] == 0)
 		table[3] = nb;
@@ -72,7 +70,8 @@ static void	display_table(char **array, int table[4])
 	ft_deltab(&array);
 }
 
-static int	ask_for_many_possibilities(int *table, t_curs *cursor)
+static int	ask_for_many_possibilities(t_shell *shell, int *table
+		, t_curs *cursor)
 {
 	char	buf[10];
 	int		ret;
@@ -88,14 +87,14 @@ static int	ask_for_many_possibilities(int *table, t_curs *cursor)
 		ret = read(STDIN_FILENO, buf, 10);
 		buf[ret] = 0;
 		t_puts("rc");
-		if (cursor->line + 1 > tgetnum("li"))
+		if (cursor->line + 1 > shell->win.ws_row)
 			t_puts("up");
 		clean_under_line(NULL);
 		return (buf[0] == 'y' || buf[0] == 13);
 	}
 }
 
-void		display_list(t_list *list)
+void		display_list(t_shell *shell, t_list *list)
 {
 	int		table[4];
 	char	**array;
@@ -103,13 +102,13 @@ void		display_list(t_list *list)
 	int		nb;
 
 	t_puts("sc");
-	fill_table(table, list);
+	fill_table(shell, table, list);
 	get_cursor_pos(&cursor);
-	if (!ask_for_many_possibilities(table, &cursor))
+	if (!ask_for_many_possibilities(shell, table, &cursor))
 		return ;
 	get_cursor_pos(&cursor);
-	if (table[3] + cursor.line > tgetnum("li"))
-		nb = table[3] + cursor.line - tgetnum("li") + 1;
+	if (table[3] + cursor.line > shell->win.ws_row)
+		nb = table[3] + cursor.line - shell->win.ws_row + 1;
 	else
 		nb = 0;
 	array = ft_listtotab(list, table[2]);
