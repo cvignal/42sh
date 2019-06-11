@@ -13,46 +13,25 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <sys/wait.h>
 
+#include "jobs.h"
 #include "shell.h"
-#include "fill_line.h"
 #include "libft.h"
 #include "expand.h"
+#include "fill_line.h"
 
-int			fail(char *proc, char *err, char *message, int ret)
+static void	exec_internal(t_shell *shell, t_ast *instr,
+	const char *path, t_builtin builtin)
 {
-	ft_dprintf(2, "%s: %s: %s\n", proc, err, message);
-	return (ret);
-}
+	char **args;
 
-static int	do_error_handling(char *name)
-{
-	struct stat info;
-
-	if (access(name, F_OK) == 0)
-	{
-		if (stat(name, &info) != -1 && S_ISDIR(info.st_mode))
-			return (fail(EXEC_NAME, name, "Is a directory", 126));
-		else if (access(name, X_OK) == -1)
-			return (fail(EXEC_NAME, name, "Permission denied", 126));
-		else
-			return (fail(EXEC_NAME, name, "Unexpected error", 127));
-	}
-	if (ft_strchr(name, '/') != NULL)
-		return (fail(EXEC_NAME, name, "No such file or directory", 127));
-	return (fail(EXEC_NAME, name, "Command not found", 127));
-}
-
-static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
-{
-	char	**env;
-
-	env = build_env(shell->exec_vars);
-	if (!env)
-		exit(1);
+	instr->pid = getpid();
+	if (!instr->job->pgid)
+		instr->job->pgid = instr->pid;
+	setpgid(instr->pid, instr->job->pgid);
+	if (!instr->job->async)
+		tcsetpgrp(0, instr->job->pgid);
 	set_pipeline(shell, instr);
 	if (apply_redirs(shell, instr))
 	{
@@ -60,8 +39,10 @@ static void	exec_internal(t_shell *shell, t_ast *instr, const char *bin_path)
 		exit(127);
 	}
 	enable_signal();
-	execve(bin_path, ((t_command *)instr->data)->args_value, env);
-	exit(1);
+	args = ((t_command *)instr->data)->args_value;
+	if (builtin)
+		exit(builtin(shell, args));
+	exit(execve(path, args, build_env(shell->exec_vars)));
 }
 
 pid_t		do_exec(t_shell *shell, char **argv)
@@ -69,15 +50,13 @@ pid_t		do_exec(t_shell *shell, char **argv)
 	int			status;
 	pid_t		pid;
 	char		*bin_path;
-	char		**env;
 
 	if (!(bin_path = find_command(shell->vars, argv[0])))
 		return (do_error_handling(argv[0]));
-	if (!(pid = fork()))
-	{
-		env = build_env(shell->exec_vars);
-		exit(execve(bin_path, argv, env));
-	}
+	if ((pid = fork()) == -1)
+		return (-1);
+	if (pid == 0)
+		exit(execve(bin_path, argv, build_env(shell->exec_vars)));
 	free(bin_path);
 	wait(&status);
 	if (WIFEXITED(status) || WIFSIGNALED(status))
@@ -85,23 +64,47 @@ pid_t		do_exec(t_shell *shell, char **argv)
 	return (WEXITSTATUS(status));
 }
 
-pid_t		exec(t_shell *shell, t_ast *instr)
+int			exec(t_shell *shell, t_ast *instr)
 {
-	pid_t		pid;
 	char		*prgm;
 	char		*bin_path;
 	t_builtin	builtin;
 
 	prgm = ((t_command *)instr->data)->args_value[0];
-	if ((builtin = is_builtin(prgm)))
-		return (exec_builtin(shell, builtin, instr));
-	if (!(bin_path = hbt_command(shell, prgm)))
+	if (!(builtin = is_builtin(prgm))
+		&& !(bin_path = hbt_command(shell, prgm)))
+		return (instr->ret = do_error_handling(prgm), 0);
+	if (!builtin || instr->flags & CMD_FORK || instr->job->async)
 	{
-		set_ret(shell, instr, do_error_handling(prgm));
-		return (-1);
+		if ((instr->pid = fork()) == -1)
+			return (-1);
 	}
-	if (!(pid = fork()))
-		exec_internal(shell, instr, bin_path);
-	instr->pid = pid;
+	else
+		return (instr->ret = exec_builtin(shell, builtin, instr), 0);
+	if (instr->pid == 0)
+		exec_internal(shell, instr, bin_path, builtin);
+	register_proc(instr);
+	return (0);
+}
+
+/*
+** This functions executes a node and adds its processes to the job.
+** If job is NULL, it gets created and registered.
+*/
+
+int			exec_job(t_shell *shell, t_ast *node, t_job *job)
+{
+	t_job	*job2;
+
+	job2 = job;
+	if (!job2 && !(job2 = ft_memalloc(sizeof(t_job))))
+		return (-1);
+	node->job = job2;
+	if (node->exec(shell, node))
+		return (-1);
+	if (!job && job2->proc)
+		node->ret = register_job(shell, job2);
+	else if (!job)
+		free(job2);
 	return (0);
 }

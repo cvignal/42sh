@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/04 01:14:17 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/10 22:14:33 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,15 @@ typedef struct		s_var
 	struct s_var	*next;
 }					t_var;
 
+typedef struct		s_arg_file
+{
+	char			**argv;
+	char			*filename;
+	int			argc;
+	int			fd;
+}			t_arg_file;
+
+struct s_job;
 typedef struct		s_shell
 {
 	t_lexer			lexer;
@@ -110,6 +119,7 @@ typedef struct		s_shell
 	t_var			*exec_vars;
 	t_line			line;
 	t_array			*history;
+	t_arg_file		*arg_file;
 	int				his_pos;
 	t_hbt			**hash_table;
 	char			*pbpaste;
@@ -124,6 +134,9 @@ typedef struct		s_shell
 	int				prompt_len;
 	int				prompt_height;
 	int				fc_cmd;
+	struct s_job	*jobs;
+	struct s_job	*curr;
+	struct s_job	*prev;
 }					t_shell;
 
 struct s_redir;
@@ -163,7 +176,6 @@ typedef struct		s_command
 	char			**args_value;
 	size_t			alloc_size;
 	size_t			args_len;
-	pid_t			pid;
 }					t_command;
 
 typedef int			(*t_builtin)(t_shell *, char **);
@@ -199,6 +211,7 @@ typedef struct		s_tmpfile
 	int		fd;
 }					t_tmpfile;
 
+
 t_heredoc			*alloc_heredoc(void);
 int					add_to_heredoc(t_heredoc *heredoc, const char *line);
 int					heredoc_exit_error(t_heredoc *heredoc);
@@ -212,11 +225,19 @@ void				free_command(t_command *command);
 int					add_to_command(t_command *command, char *word);
 
 /*
+** utils.c
+*/
+int					fail(char *proc, char *err, char *message, int ret);
+int					do_error_handling(char *name);
+char					*ft_strcjoin_free(char *s1, const char c, char *s2, int flag);
+
+/*
 ** exec.c
 */
-pid_t				exec(t_shell *shell, t_ast *instr);
+int					exec(t_shell *shell, t_ast *instr);
 pid_t				do_exec(t_shell *shell, char **argv);
-int					wait_loop(t_shell *shell, t_ast *ast);
+int					exec_job(t_shell *shell, t_ast *node, struct s_job *job);
+int					wait_loop(t_shell *shell, t_ast *ast); // TODO: remove
 
 /*
 ** path.c
@@ -246,6 +267,12 @@ int					builtin_hash(t_shell *shell, char **args);
 int					builtin_type(t_shell *shell, char **args);
 int					builtin_unset(t_shell *shell, char **args);
 int					builtin_set(t_shell *shell, char **args);
+int					builtin_unsetenv(t_shell *shell, char **args);
+int					builtin_echo(t_shell *shell, char **args);
+int					builtin_exit(t_shell *shell, char **args);
+int					builtin_jobs(t_shell *shell, char **args);
+int					builtin_fg(t_shell *shell, char **args);
+int					builtin_bg(t_shell *shell, char **args);
 int					exec_builtin(t_shell *shell, t_builtin builtin,
 		t_ast *instr);
 t_builtin			is_builtin(char *cmd);
@@ -293,16 +320,14 @@ void				free_cmd(struct s_ast *ast);
 void				set_pipeline_ret(t_ast *ast);
 int					exec_pipeline(t_shell *shell, struct s_ast *ast);
 void				free_pipeline(struct s_ast *ast);
+int					exec_async(t_shell *shell, struct s_ast *ast);
 int					exec_end(t_shell *shell, struct s_ast *ast);
 void				free_end(struct s_ast *ast);
 int					exec_cmd(t_shell *shell, struct s_ast *ast);
 void				free_cmd(struct s_ast *ast);
 int					exec_end(t_shell *shell, struct s_ast *ast);
-void				free_end(struct s_ast *ast);
 int					exec_or(t_shell *shell, struct s_ast *ast);
-void				free_or(struct s_ast *ast);
 int					exec_and(t_shell *shell, struct s_ast *ast);
-void				free_and(struct s_ast *ast);
 int					exec_expr(t_shell *shell, struct s_ast *ast);
 void				free_expr(struct s_ast *ast);
 int					exec_if(t_shell *shell, struct s_ast *ast);
