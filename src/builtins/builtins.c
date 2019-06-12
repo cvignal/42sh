@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 12:07:42 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/10 22:12:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/12 03:43:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static const t_builtin_desc	g_builtin_desc[] =\
 	{"jobs", &builtin_jobs},
 	{"set", &builtin_set},
 	{"type", &builtin_type},
-	{"unset", &builtin_unset}
+	{"unset", &builtin_unset},
+	{"test", &builtin_test}
 };
 
 t_builtin	is_builtin(char *cmd)

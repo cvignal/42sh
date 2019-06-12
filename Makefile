@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/11 16:40:33 by gchainet         ###   ########.fr        #
+#    Updated: 2019/06/12 03:32:30 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ SRC	=										\
 	builtins/jobs.c							\
 	builtins/parsing_fc.c					\
 	builtins/set.c							\
+	builtins/test.c							\
+	builtins/test_ops.c						\
 	builtins/tools_cd.c						\
 	builtins/tools_fc.c						\
 	builtins/tools_hash.c					\
@@ -129,6 +131,7 @@ SRC	=										\
 	expr/v.c								\
 	expr/w.c								\
 	expr/x.c								\
+	expr/z.c								\
 	fd.c									\
 	hash.c									\
 	hash_sanitize.c							\

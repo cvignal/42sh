@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/11 16:49:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/12 03:38:20 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,6 @@ typedef struct		s_tmpfile
 	int		fd;
 }					t_tmpfile;
 
-
 t_heredoc			*alloc_heredoc(void);
 int					add_to_heredoc(t_heredoc *heredoc, const char *line);
 int					heredoc_exit_error(t_heredoc *heredoc);
@@ -273,6 +272,7 @@ int					builtin_exit(t_shell *shell, char **args);
 int					builtin_jobs(t_shell *shell, char **args);
 int					builtin_fg(t_shell *shell, char **args);
 int					builtin_bg(t_shell *shell, char **args);
+int					builtin_test(t_shell *shell, char **args);
 int					exec_builtin(t_shell *shell, t_builtin builtin,
 		t_ast *instr);
 t_builtin			is_builtin(char *cmd);
