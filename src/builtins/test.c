@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 23:42:19 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/12 04:32:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/12 06:29:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ static int	exec_test_builtin(t_shell *shell, char **expr)
 	len = 0;
 	while (expr[len] && len < 3)
 		++len;
+	if (len == 1)
+		return (!ft_strlen(expr[0]));
 	if (len == 2)
 		action = get_test_action(expr[0]);
 	else if (len == 3)
