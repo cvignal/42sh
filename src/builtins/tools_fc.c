@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:34:34 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/28 18:53:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/12 17:59:28 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ int		fc_init_shell(t_shell *shell, t_shell *old_shell)
 	shell->vars = copy_vars(old_shell->vars, 0);
 	shell->exec_vars = NULL;
 	shell->fd_op = old_shell->fd_op;
+	shell->prompt_len = 0;
+	shell->win = old_shell->win;
+	shell->history = old_shell->history;
 	return (0);
 }
 
