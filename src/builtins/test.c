@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 23:42:19 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/12 06:29:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/12 20:13:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,13 @@ static int	handle_arg(char *arg, char **expr, int state)
 	return (TEST_STATE_FAILURE);
 }
 
-static int	exec_test_builtin(t_shell *shell, char **expr)
+static int	exec_test_builtin(t_shell *shell, char **expr, int eval)
 {
 	size_t		len;
 	t_expr_exec	action;
 
+	if (eval & TEST_SKIP)
+		return (!(eval & TEST_TRUE));
 	len = 0;
 	while (expr[len] && len < 3)
 		++len;
@@ -98,8 +100,7 @@ int			builtin_test(t_shell *shell, char **args)
 	{
 		if (state == TEST_STATE_COMPLETE)
 		{
-			if (!(eval & TEST_SKIP))
-				ret = exec_test_builtin(shell, expr);
+			ret = exec_test_builtin(shell, expr, eval);
 			ft_bzero(expr, sizeof(*expr) * 3);
 			eval = handle_logical_op(args[i], ret);
 			state = TEST_STATE_DEFAULT;
@@ -109,5 +110,5 @@ int			builtin_test(t_shell *shell, char **args)
 		else
 			state = handle_arg(args[i], expr, state);
 	}
-	return (exec_test_builtin(shell, expr));
+	return (exec_test_builtin(shell, expr, eval));
 }
