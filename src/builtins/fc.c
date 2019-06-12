@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 17:11:37 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/11 14:00:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/12 17:43:16 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int		fc_exec_cmd(t_fc *cmd, t_shell *shell)
 	int		ret;
 
 	shell->fc_cmd = 1;
+	if (!shell->history->length)
+		return (0);
 	if (!shell->history || !shell->history->length)
 		return (0);
 	len = ft_strlen(shell->history->data[cmd->i_first]);
@@ -50,7 +52,6 @@ int		fc_exec_cmd(t_fc *cmd, t_shell *shell)
 	else
 		ft_strcpy(cpy, shell->history->data[cmd->i_first]);
 	ret = fc_exec_line(cpy, shell);
-	free(cpy);
 	return (ret);
 }
 
@@ -61,6 +62,8 @@ int		fc_display(t_fc *cmd, t_shell *shell)
 	int		j;
 
 	i = cmd->i_first;
+	if (!shell->history->length)
+		return (0);
 	while (i < shell->history->length && i <= cmd->i_last)
 	{
 		if (!ft_strchr(cmd->flags, 'n'))
@@ -87,6 +90,8 @@ int		fc_edit(t_fc *cmd, t_shell *shell)
 	int			ret;
 
 	shell->fc_cmd = 1;
+	if (!shell->history->length)
+		return (0);
 	if (fc_open_file(cmd, shell, &file))
 		return (1);
 	if (fc_open_editor(cmd, &file, shell))
@@ -109,6 +114,7 @@ int		builtin_fc(t_shell *shell, char **args)
 	int		ret;
 
 	ft_bzero(&cmd, sizeof(cmd));
+	ret = 0;
 	if (fc_init_args(&cmd, args, shell))
 	{
 		free_fc(&cmd);
