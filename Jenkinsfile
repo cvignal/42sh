@@ -105,6 +105,11 @@ pipeline {
             sh './42shtester/42shtester.rb 42sh signal'
           }
         }
+        stage('test test') {
+          steps {
+            sh './42shtester/42shtester.rb 42sh test'
+          }
+        }
       }
     }
   }
