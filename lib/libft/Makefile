@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/20 14:14:18 by cvignal           #+#    #+#              #
-#    Updated: 2019/04/30 00:13:58 by gchainet         ###   ########.fr        #
+#    Updated: 2019/06/12 15:57:20 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -145,7 +145,8 @@ SRC			= ft_memset.c										\
 			  ft_replace_str.c									\
 			  ft_replace_all.c									\
 			  ft_itoa.c											\
-			  ft_arraymerge.c
+			  ft_arraymerge.c									\
+			  ft_strnchr.c
 
 SRCDIR  :=      src
 OBJDIR  :=      obj

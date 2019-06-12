@@ -6,14 +6,13 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:48:22 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/11 11:27:50 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/12 16:00:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <term.h>
 #include <stdlib.h>
-#include <fcntl.h>
 #include <curses.h>
 #include <sys/ioctl.h>
 
