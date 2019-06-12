@@ -6,18 +6,42 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 11:44:35 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/11 11:04:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/12 16:01:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
 #include <curses.h>
 #include <stdlib.h>
-#include <fcntl.h>
+#include <unistd.h>
 
 #include "libft.h"
 #include "shell.h"
 #include "fill_line.h"
+
+int			pos_in_special_line(t_shell *shell)
+{
+	int	ret;
+	int	i;
+	int	k;
+
+	i = 0;
+	ret = 0;
+	while (i < (int)shell->line.cursor)
+	{
+		if (shell->line.data[i] == '\n')
+		{
+			ret = 0;
+			k = 1;
+		}
+		else
+			ret++;
+		i++;
+	}
+	if (!k)
+		ret += shell->prompt_len;
+	return (ret);
+}
 
 int			pos_cursor_col(t_shell *shell, int width, int len)
 {
@@ -28,6 +52,8 @@ int			pos_cursor_col(t_shell *shell, int width, int len)
 		ret = shell->prompt_len + shell->line.cursor;
 	else
 	{
+		if (ft_strnchr(shell->line.data, '\n', shell->line.cursor))
+			return (pos_in_special_line(shell)); 
 		length = (int)shell->line.cursor;
 		length -= width - shell->prompt_len;
 		ret = length % width;
@@ -39,7 +65,7 @@ int			pos_cursor_col(t_shell *shell, int width, int len)
 
 static void	print_multi_lines(t_shell *shell, char buf)
 {
-	int				curs_col;
+	int	curs_col;
 
 	t_puts("ce");
 	curs_col = pos_cursor_col(shell, shell->win.ws_col, 1);
