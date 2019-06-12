@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 23:42:19 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/12 03:40:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/12 04:32:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static const t_test_parser	g_test_parser[] =\
 {
-	{TEST_STATE_DEFAULT, &test_arg, TEST_STATE_ARG},
 	{TEST_STATE_DEFAULT, &test_op_unary, TEST_STATE_UNARY},
+	{TEST_STATE_DEFAULT, &test_arg, TEST_STATE_ARG},
 	{TEST_STATE_ARG, &test_op_binary, TEST_STATE_BINARY},
 	{TEST_STATE_BINARY, &test_arg, TEST_STATE_COMPLETE},
 	{TEST_STATE_UNARY, &test_arg, TEST_STATE_COMPLETE}
@@ -66,7 +66,7 @@ static int	exec_test_builtin(t_shell *shell, char **expr)
 	t_expr_exec	action;
 
 	len = 0;
-	while (expr[len])
+	while (expr[len] && len < 3)
 		++len;
 	if (len == 2)
 		action = get_test_action(expr[0]);

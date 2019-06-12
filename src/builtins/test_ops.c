@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 00:25:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/12 03:41:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/12 04:37:05 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,14 @@ static const t_expr_desc	g_test_desc_binary[] =\
 
 int	test_arg(char *s, char **arg)
 {
-	if (!*arg)
-		arg[0] = s;
-	else
-		arg[2] = s;
+	unsigned int	i;
+
+	if (s[0] == '-')
+		return (1);
+	i = 0;
+	while (arg[i])
+		++i;
+	arg[i] = s;
 	return (0);
 }
 
@@ -104,7 +108,7 @@ t_expr_exec	get_test_action(char *s)
 	while (i < sizeof(g_test_desc_unary) / sizeof(*g_test_desc_unary))
 	{
 		if (!ft_strcmp(g_test_desc_unary[i].desc, s))
-			return (g_test_desc_binary[i].exec);
+			return (g_test_desc_unary[i].exec);
 		++i;
 	}
 	return (NULL);
