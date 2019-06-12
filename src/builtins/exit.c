@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/26 21:31:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/12 18:19:29 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,18 @@ void		delete_fc_folder(void)
 {
 	DIR				*dir;
 	struct dirent	*dirent;
+	char			*path;
 
 	if (!(dir = opendir("/tmp/folder_fc_builtin")))
 		return ;
 	while ((dirent = readdir(dir)))
 	{
 		if (!ft_strequ(dirent->d_name, ".") && !ft_strequ(dirent->d_name, ".."))
-			unlink(dirent->d_name);
+		{
+			path = ft_strjoin("/tmp/folder_fc_builtin/", dirent->d_name);
+			unlink(path);
+			free(path);
+		}
 	}
 	rmdir("/tmp/folder_fc_builtin");
 }
@@ -72,6 +77,7 @@ int			builtin_exit(t_shell *shell, char **args)
 		return (1);
 	}
 	add_to_history(shell->line.data, shell, 0);
+	delete_fc_folder();
 	if (close(shell->fd_op) == -1)
 		ft_dprintf(2, "Error on closing the tty fd\n");
 	return (exit_value(shell, args));
