@@ -52,6 +52,8 @@ static void		update_proc(t_shell *shell, pid_t pid, int status)
 	{
 		p->done = 1;
 		p->ret = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGINT)
+			shell->ctrlc = 1;
 	}
 	else if (WIFSTOPPED(status))
 	{
@@ -78,12 +80,12 @@ int				wait_job(t_shell *shell, t_job *job)
 	if (job_is_done(job))
 		free_job(shell, job);
 	else if (job->state == JOB_STOPPED)
-		report_job(shell, job, 0);
+		report_job(shell, job, 1 | 4 | 8);
 	job = shell->jobs;
 	while (job)
 	{
 		if (job_is_done(job))
-			job = report_job(shell, job, 0);
+			job = report_job(shell, job, 1 | 4 | 8);
 		else
 			job = job->next;
 	}

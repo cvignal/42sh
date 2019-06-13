@@ -30,7 +30,7 @@ static void	exec_internal(t_shell *shell, t_ast *instr,
 	if (!instr->job->pgid)
 		instr->job->pgid = instr->pid;
 	setpgid(instr->pid, instr->job->pgid);
-	if (!instr->job->async)
+	if (!instr->job->async && !shell->is_subshell)
 		tcsetpgrp(0, instr->job->pgid);
 	set_pipeline(shell, instr);
 	if (apply_redirs(shell, instr))
@@ -73,15 +73,15 @@ int			exec(t_shell *shell, t_ast *instr)
 	prgm = ((t_command *)instr->data)->args_value[0];
 	if (!(builtin = is_builtin(prgm))
 		&& !(bin_path = hbt_command(shell, prgm)))
-		return (instr->ret = do_error_handling(prgm), 0);
-	if (!builtin || instr->flags & CMD_FORK || instr->job->async)
 	{
-		if ((instr->pid = fork()) == -1)
-			return (-1);
+		instr->ret = do_error_handling(prgm);
+		return (0);
 	}
-	else
-		return (instr->ret = exec_builtin(shell, builtin, instr), 0);
-	if (instr->pid == 0)
+	if (builtin && !(instr->flags & CMD_FORK) && !instr->job->async)
+		instr->ret = exec_builtin(shell, builtin, instr);
+	else if ((instr->pid = fork()) == -1)
+		return (-1);
+	else if (instr->pid == 0)
 		exec_internal(shell, instr, bin_path, builtin);
 	register_proc(instr);
 	return (0);
@@ -103,7 +103,7 @@ int			exec_job(t_shell *shell, t_ast *node, t_job *job)
 	if (node->exec(shell, node))
 		return (-1);
 	if (!job && job2->proc)
-		node->ret = register_job(shell, job2);
+		set_ret(shell, node, register_job(shell, job2));
 	else if (!job)
 		free(job2);
 	return (0);

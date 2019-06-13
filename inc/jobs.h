@@ -66,7 +66,7 @@ int				wait_job(struct s_shell *shell, t_job *job);
 void			update_jobs(struct s_shell *shell);
 
 t_job			*report_job(struct s_shell *shell, t_job *job, int opts);
-
 t_job			*parse_jobspec(struct s_shell *shell, char *jobspec);
+char			*ast_to_string(struct s_ast *ast);
 
 #endif

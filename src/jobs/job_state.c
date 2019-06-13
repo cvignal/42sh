@@ -22,6 +22,7 @@ int		job_fg(t_shell *shell, t_job *job, int cont)
 
 	tcsetpgrp(0, job->pgid);
 	job_bg(job, cont);
+	job->async = 0;
 	ret = wait_job(shell, job);
 	tcsetpgrp(0, getpid());
 	return (ret);
@@ -51,7 +52,7 @@ int		job_is_stopped(t_job *j)
 	p = j->proc;
 	while (p)
 	{
-		if (!p->done && !p->stopped)
+		if (p->pid && !p->done && !p->stopped)
 			return (0);
 		p = p->next;
 	}
@@ -68,7 +69,7 @@ int		job_is_done(t_job *j)
 	p = j->proc;
 	while (p)
 	{
-		if (!p->done)
+		if (p->pid && !p->done)
 			return (0);
 		p = p->next;
 	}

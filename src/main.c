@@ -39,7 +39,6 @@ static void				exec_ast(t_shell *shell, t_token *tokens)
 		ast = shell->parser.ret;
 		exec_job(shell, ast, NULL);
 		close_everything(shell);
-		set_ret(shell, NULL, ast->ret);
 		ast->del(ast);
 		shell->parser.ret = NULL;
 	}

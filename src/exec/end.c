@@ -24,8 +24,10 @@ int		exec_end(t_shell *shell, t_ast *ast)
 	{
 		if (exec_job(shell, ast->left, NULL))
 			return (-1);
+		if (shell->ctrlc)
+			return (0);
 	}
 	if (ast->right)
-		exec_job(shell, ast->right, ast->job);
+		return (exec_job(shell, ast->right, ast->job));
 	return (0);
 }
