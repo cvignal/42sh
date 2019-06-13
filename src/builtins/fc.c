@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 17:11:37 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/13 15:35:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/13 16:30:03 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,20 @@ int		fc_exec_cmd(t_fc *cmd, t_shell *shell)
 int		fc_display(t_fc *cmd, t_shell *shell)
 {
 	int		i;
-	char	**multi_lines;
-	int		j;
 
 	i = cmd->i_first;
 	if (!shell->history || !shell->history->length)
 		return (0);
+	if (ft_strchr(cmd->flags, 'r'))
+		return (fc_display_reverse(cmd, shell));
 	while (i < shell->history->length && i <= cmd->i_last)
 	{
 		if (!ft_strchr(cmd->flags, 'n'))
 			ft_printf("%d", i);
 		if (ft_strchr(shell->history->data[i], '\n'))
 		{
-			if (!(multi_lines = ft_strsplit(shell->history->data[i], "\n")))
+			if (fc_display_multi(shell->history->data[i]))
 				return (1);
-			j = 0;
-			while (multi_lines[j])
-				ft_printf("\t%s\n", multi_lines[j++]);
-			ft_deltab(&multi_lines);
 		}
 		else
 			ft_printf("\t%s\n", shell->history->data[i]);

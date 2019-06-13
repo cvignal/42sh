@@ -1,4 +1,4 @@
-# **************************************************************************** #
+	# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/05/25 00:39:03 by marin            ###   ########.fr        #
+#    Updated: 2019/06/13 16:09:25 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRC		=									\
 	alt_shell.c								\
 	apply_redir_rw.c						\
 	apply_redirs.c							\
-	arg_file.c							\
+	arg_file.c								\
 	builtins/builtin_hash.c					\
 	builtins/builtins.c						\
 	builtins/cd.c							\
@@ -28,6 +28,7 @@ SRC		=									\
 	builtins/exec_builtin.c					\
 	builtins/exit.c							\
 	builtins/fc.c							\
+	builtins/fc_display.c					\
 	builtins/fc_exec.c						\
 	builtins/file_fc.c						\
 	builtins/idx_fc.c						\
