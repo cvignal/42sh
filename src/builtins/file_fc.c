@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:59:25 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/23 22:55:37 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/13 15:35:11 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,27 @@ int					fc_open_file(t_fc *cmd, t_shell *shell, t_tmpfile *file)
 	return (0);
 }
 
-int					fc_find_editor(t_fc *cmd, char **args)
+int					fc_find_editor(t_fc *cmd, char **args, t_shell *shell)
 {
+	char	*editor;
+
 	if (cmd->editor)
 	{
 		if (!(args[0] = ft_strdup(cmd->editor)))
 			return (1);
 	}
-	else
+	else if ((editor = (char *)get_var_value(get_var(shell->vars, "FCEDIT"))))
 	{
-		if (!(args[0] = ft_strdup("vim")))
+		if (!(args[0] = ft_strdup(editor)))
+			return (1);
+		if (!(cmd->editor = ft_strdup(editor)))
+			return (1);
+	}
+	else if ((editor = (char *)get_var_value(get_var(shell->vars, "EDITOR"))))
+	{
+		if (!(args[0] = ft_strdup(editor)))
+			return (1);
+		if (!(cmd->editor = ft_strdup(editor)))
 			return (1);
 	}
 	return (0);
@@ -84,9 +95,12 @@ int					fc_open_editor(t_fc *cmd, t_tmpfile *file, t_shell *shell)
 	char	**args;
 	int		ret;
 
+	if (ft_strchr(cmd->flags, 'e') && !cmd->editor)
+		return (usage_fc(1, 'e'));
 	if (!(args = (char**)malloc(sizeof(char*) * 3)))
 		return (1);
-	if (fc_find_editor(cmd, args))
+	ft_bzero(args, sizeof(*args) * 3);
+	if (fc_find_editor(cmd, args, shell))
 	{
 		ft_deltab(&args);
 		return (1);

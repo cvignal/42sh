@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 00:10:43 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/30 00:28:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/13 14:13:59 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static int	realloc_array(t_array *table, size_t size)
 
 int			ft_arraymerge(t_array *table, t_array *other)
 {
-	int		i;
-	
+	int	i;
+
 	if (table->length + other->length + 2 > table->alloc_size)
 	{
 		if (realloc_array(table, sizeof(*table->data)
