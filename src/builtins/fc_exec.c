@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 12:23:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/12 17:49:54 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/13 14:22:03 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		fc_switch_env(t_shell *new_shell, t_shell *shell)
 {
 	free_vars(&shell->vars);
 	shell->vars = copy_vars(new_shell->vars, 0);
+	free_vars(&new_shell->vars);
 	return (0);
 }
 

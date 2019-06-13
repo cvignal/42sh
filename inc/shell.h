@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/11 11:21:53 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/13 14:39:22 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,7 @@ int					change_dir(t_shell *shell, char *curpath, const char *dir
 ** fc
 */
 int					builtin_fc(t_shell *shell, char **args);
-int					usage_fc(void);
+int					usage_fc(int error, char c);
 int					fc_init_args(t_fc *cmd, char **args, t_shell *shell);
 void				fc_index(t_fc *cmd, t_shell *shell);
 void				free_fc(t_fc *cmd);
