@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:33:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/13 15:36:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/13 16:44:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	fc_parse_options(t_fc *cmd, char **args, int i)
 		if (!(cmd->editor = ft_strdup(args[i])))
 			return (1);
 	}
-	else if (ft_strchr(args[i], '='))
+	else if (ft_strchr(args[i], '=') && cmd->flags[0] == 's')
 	{
 		if (fc_cut_pattern(cmd, args[i]))
 			return (1);
