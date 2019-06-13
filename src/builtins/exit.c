@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/12 18:19:29 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/13 17:33:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <time.h>
 #include <dirent.h>
+#include <errno.h>
 
 #include "shell.h"
 #include "fill_line.h"
@@ -61,6 +62,7 @@ void		delete_fc_folder(void)
 			free(path);
 		}
 	}
+	closedir(dir);
 	rmdir("/tmp/folder_fc_builtin");
 }
 
