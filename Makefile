@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/13 16:09:25 by cvignal          ###   ########.fr        #
+#    Updated: 2019/06/16 18:46:05 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ SRC		=									\
 	exec/while.c							\
 	expansion/buffer.c						\
 	expansion/exp_ss.c						\
+	expansion/exp_hist.c					\
 	expansion/expr.c						\
 	expansion/home.c						\
 	expansion/init.c						\
@@ -89,6 +90,7 @@ SRC		=									\
 	expansion/lexer_methods_over.c			\
 	expansion/lexer_methods_proc_sub.c		\
 	expansion/lexer_methods_quotes.c		\
+	expansion/parsing_hist.c				\
 	expr/a.c								\
 	expr/b.c								\
 	expr/c.c								\
