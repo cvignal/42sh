@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 15:41:09 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/11 20:43:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/16 07:36:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,15 @@ void				ft_heap_sort(void *data, size_t content_size, size_t len,
 	t_heap_sort		hs;
 	int				i;
 
+	if (len == 0)
+		return ;
 	hs.data = data;
 	hs.content_size = content_size;
 	hs.len = len;
 	hs.cmp = cmp;
 	i = (len >> 1) + 1;
 	while (i-- > 0)
-		heapify(&hs, i, len - 1);
+		heapify(&hs, i, len);
 	i = len - 1;
 	while (i > 0)
 	{
