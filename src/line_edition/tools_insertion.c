@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 11:44:35 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/12 16:01:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/17 10:36:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	print_multi_lines(t_shell *shell, char buf)
 
 	t_puts("ce");
 	curs_col = pos_cursor_col(shell, shell->win.ws_col, 1);
-	ft_dprintf(shell->fd_op, "%c", buf);
+	ft_dprintf(shell->fd_op, "%c", (buf != 13 && buf != '\t') ? buf : '?');
 	t_puts("sc");
 	ft_dprintf(shell->fd_op, "%s", shell->line.data + shell->line.cursor);
 	t_puts("rc");
@@ -86,7 +86,7 @@ void		print_line(t_shell *shell, char buf)
 	{
 		curs_col = pos_cursor_col(shell, shell->win.ws_col, 1);
 		t_puts("im");
-		ft_dprintf(shell->fd_op, "%c", buf);
+		ft_dprintf(shell->fd_op, "%c", (buf != 13 && buf != '\t') ? buf : '?');
 		t_puts("ei");
 		if (curs_col == shell->win.ws_col)
 			t_puts("do");
