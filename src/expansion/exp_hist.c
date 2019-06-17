@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:18:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/17 11:31:49 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/17 12:29:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	find_event(char *str, t_array *history)
 
 	if (!history)
 		return (0);
-	if (ft_isdigit(str[0]) || str[0] == '-' || str[0] == '+')
+	if (ft_isdigit(str[0]) || str[0] == '-')
 	{
 		nb = ft_atoi(str);
 		if (nb < 0 && history->length + nb >= 0)
@@ -86,7 +86,7 @@ int			expand_history(t_shell *shell)
 		else if (shell->line.data[i] == '!' && !squote && !backslash)
 		{
 			if ((i = replace_exclamation_mark(shell, i)) == -1)
-				return (0);
+				return (1);
 		}
 		else if (backslash)
 			backslash = 0;

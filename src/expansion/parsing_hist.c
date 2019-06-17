@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 14:02:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/16 18:11:16 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/17 12:11:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,39 @@ static int	replace_in_line(t_line *line, char *buf, char *value, int i)
 	return (0);
 }
 
-int		replace_exclamation_mark(t_shell *shell, int i)
+static int	buffer_size(char *str, int i)
 {
-	int		j;
-	int		buf_size;
-	char	*buf;
+	int	j;
+	int	ret;
+	int	nb;
 
 	j = i + 1;
-	buf_size = 0;
-	while (shell->line.data[j] && shell->line.data[j] != ' '
-			&& !ft_strchr(META_CHARS, shell->line.data[j]))
+	nb = 0;
+	ret = 0;
+	if (str[j] && (ft_isdigit(str[j]) || str[j] == '-'))
 	{
-		buf_size++;
-		if (shell->line.data[j] == '!' && j == i + 1)
+		j++;
+		nb = 1;
+		ret++;
+	}
+	while (str[j] && str[j] != ' ' && !ft_strchr(META_CHARS, str[j]))
+	{
+		if (nb && !ft_isdigit(str[j]))
+			break ;
+		ret++;
+		if ((str[j] == '!' && j == i + 1))
 			break ;
 		j++;
 	}
+	return (ret);
+}
+
+int			replace_exclamation_mark(t_shell *shell, int i)
+{
+	int		buf_size;
+	char	*buf;
+
+	buf_size = buffer_size(shell->line.data, i);
 	if (!buf_size)
 		return (i);
 	if (!(buf = ft_strsub(shell->line.data, i, buf_size + 1)))
@@ -83,10 +100,10 @@ int		replace_exclamation_mark(t_shell *shell, int i)
 		return (-1);
 	}
 	ft_strdel(&buf);
-	return (i + buf_size);
+	return (i + buf_size - 1);
 }
 
-int		exp_replace_history(t_shell *shell, char *buf, int i)
+int			exp_replace_history(t_shell *shell, char *buf, int i)
 {
 	char	*value;
 
