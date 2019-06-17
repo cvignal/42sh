@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 11:44:35 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/17 10:36:24 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/17 11:34:08 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,26 @@
 #include "libft.h"
 #include "shell.h"
 #include "fill_line.h"
+
+void		print_line_bis(t_shell *shell)
+{
+	char	*str;
+	size_t	i;
+
+	str = shell->line.data;
+	if (!ft_strchr(str, '\t') && !ft_strchr(str, '\r'))
+		ft_dprintf(shell->fd_op, "%s", str);
+	else
+	{
+		i = 0;
+		while (str[i])
+		{
+			ft_dprintf(shell->fd_op, "%c", (str[i] != 13 && str[i] != '\t')
+					? str[i] : '?');
+			i++;
+		}
+	}
+}
 
 int			pos_in_special_line(t_shell *shell)
 {
@@ -53,7 +73,7 @@ int			pos_cursor_col(t_shell *shell, int width, int len)
 	else
 	{
 		if (ft_strnchr(shell->line.data, '\n', shell->line.cursor))
-			return (pos_in_special_line(shell)); 
+			return (pos_in_special_line(shell));
 		length = (int)shell->line.cursor;
 		length -= width - shell->prompt_len;
 		ret = length % width;

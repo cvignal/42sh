@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:18:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/05/15 14:25:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/17 11:31:49 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ int			expand_history(t_shell *shell)
 		i++;
 	}
 	clear_cmd_line(shell);
-	ft_dprintf(shell->fd_op, "%s", shell->line.data);
+	print_line_bis(shell);
 	return (0);
 }
