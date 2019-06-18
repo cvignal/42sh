@@ -69,6 +69,7 @@ int				wait_job(t_shell *shell, t_job *job)
 	int		status;
 
 	while (!job_is_stopped(job))
+	//while (shell->is_subshell ? !job_is_done(job) : !job_is_stopped(job))
 	{
 		if ((pid = waitpid(-1, &status, WUNTRACED)) < 0)
 			break ;

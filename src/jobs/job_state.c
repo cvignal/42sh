@@ -20,11 +20,13 @@ int		job_fg(t_shell *shell, t_job *job, int cont)
 {
 	int		ret;
 
-	tcsetpgrp(0, job->pgid);
+	if (!shell->is_subshell)
+		tcsetpgrp(0, job->pgid);
 	job_bg(job, cont);
 	job->async = 0;
 	ret = wait_job(shell, job);
-	tcsetpgrp(0, getpid());
+	if (!shell->is_subshell)
+		tcsetpgrp(0, getpid());
 	return (ret);
 }
 
