@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/19 14:43:06 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/19 14:52:37 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int						main(int ac, char **av, const char **environ)
 		else
 			exec_ast(&shell, tokens);
 		free_line(&shell.line);
-		raw_terminal_mode(&shell);
 	}
 	builtin_exit(&shell, NULL);
 }

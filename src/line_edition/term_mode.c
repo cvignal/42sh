@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 14:01:19 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/19 14:25:06 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/19 14:53:27 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int		init_termios(t_shell *shell)
 	if (tcgetattr(STDIN_FILENO, &term) == -1)
 		return (1);
 	ft_memcpy(&shell->rst_term, &term, sizeof(term));
-	term.c_lflag &= ~(ICANON | ECHO | ISIG | ECHONL);
-//	term.c_iflag &= ~(IXON | ICRNL);
+	term.c_lflag &= ~(ICANON | ECHO | ISIG);
+	term.c_iflag &= ~(IXON | ICRNL);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	ft_memcpy(&shell->raw_term, &term, sizeof(term));

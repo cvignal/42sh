@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 18:35:51 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/19 14:14:44 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/19 14:49:27 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	open_tty_fd(t_shell *shell)
 	shell->his_pos = shell->history->length;
 	shell->ctrld = 0;
 	shell->end_heredoc = 0;
-	raw_terminal_mode(shell);
 	new_fd = get_next_fd(shell);
 	if ((shell->fd_op = open(ttyname(0), O_WRONLY)) < 0)
 		return (1);
