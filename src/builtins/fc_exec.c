@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 12:23:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/13 14:22:03 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/19 12:46:14 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "libft.h"
 #include "fill_line.h"
 
-int		fc_switch_env(t_shell *new_shell, t_shell *shell)
+int			fc_switch_env(t_shell *new_shell, t_shell *shell)
 {
 	free_vars(&shell->vars);
 	shell->vars = copy_vars(new_shell->vars, 0);
@@ -25,15 +25,27 @@ int		fc_switch_env(t_shell *new_shell, t_shell *shell)
 	return (0);
 }
 
-int		fc_exec_line(char *str, t_shell *shell)
+static void	expand_history_sub(t_shell *shell, char *str)
+{
+	shell->line.data = str;
+	shell->line.len = ft_strlen(str);
+	shell->line.alloc_size = ft_strlen(str) + 1;
+	ft_dprintf(shell->fd_op, "%s%s%s\n", ORANGE, str, EOC);
+	if (expand_history(shell))
+	{
+		free_line(&shell->line);
+		shell->line.data = ft_strnew(0);
+	}
+}
+
+int			fc_exec_line(char *str, t_shell *shell)
 {
 	t_shell tmp_shell;
 	t_token	*tokens;
 
 	if (fc_init_shell(&tmp_shell, shell))
 		return (1);
-	tmp_shell.line.data = str;
-	ft_dprintf(shell->fd_op, "%s%s%s\n", ORANGE, str, EOC);
+	expand_history_sub(&tmp_shell, str);
 	if (!(tokens = lex(&tmp_shell, tmp_shell.line.data)))
 	{
 		free_shell(&tmp_shell);
@@ -45,7 +57,7 @@ int		fc_exec_line(char *str, t_shell *shell)
 	return (0);
 }
 
-int		fc_exec_file(char *name, t_shell *shell)
+int			fc_exec_file(char *name, t_shell *shell)
 {
 	int		fd;
 	char	*cmd;
@@ -58,8 +70,7 @@ int		fc_exec_file(char *name, t_shell *shell)
 		return (1);
 	while (get_next_line(fd, &cmd) > 0)
 	{
-		tmp_shell.line.data = cmd;
-		ft_dprintf(shell->fd_op, "%s%s%s\n", ORANGE, cmd, EOC);
+		expand_history_sub(&tmp_shell, cmd);
 		if ((tokens = lex(&tmp_shell, tmp_shell.line.data)))
 			fc_exec_ast(&tmp_shell, tokens);
 		free_line(&tmp_shell.line);

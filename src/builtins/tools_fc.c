@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:34:34 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/19 10:19:54 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/19 11:14:34 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	fc_exec_ast(t_shell *shell, t_token *tokens)
 		ast->del(ast);
 		shell->parser.ret = NULL;
 	}
+	add_to_history(shell->line.data, shell, 0);
 	reset_terminal_mode(shell);
 	raw_terminal_mode(shell);
 }
