@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/16 18:46:05 by cvignal          ###   ########.fr        #
+#    Updated: 2019/06/19 14:02:48 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -155,6 +155,7 @@ SRC		=									\
 	line_edition/parsing_auto.c				\
 	line_edition/rightkey.c					\
 	line_edition/switch_mode.c				\
+	line_edition/term_mode.c				\
 	line_edition/tools_auto.c				\
 	line_edition/tools_history.c			\
 	line_edition/tools_insertion.c			\

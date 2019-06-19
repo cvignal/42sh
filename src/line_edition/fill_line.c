@@ -6,76 +6,19 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/17 12:41:02 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/19 14:01:40 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <term.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include <curses.h>
-#include <sys/ioctl.h>
 
 #include "shell.h"
 #include "fill_line.h"
 #include "libft.h"
 
 int		g_fd_output = -1;
-
-int		check_validity(t_shell *shell)
-{
-	char	*name;
-	int		res;
-	char	*default_term[3];
-
-	if (shell->arg_file != NULL)
-		return (2);
-	if (!isatty(0))
-		return (1);
-	if (!(name = getenv("TERM")) || ft_strnequ(name, "dumb", 4))
-	{
-		default_term[0] = "TERM";
-		default_term[1] = "xterm-256color";
-		set_var(&shell->vars, default_term[0], default_term[1], 1);
-		name = default_term[1];
-	}
-	res = tgetent(NULL, name);
-	if (res <= 0)
-		return (1);
-	ioctl(0, TIOCGWINSZ, &shell->win);
-	shell->ctrlc = 0;
-	return (0);
-}
-
-void	raw_terminal_mode(t_shell *shell)
-{
-	struct termios term;
-
-	(void)shell;
-	if (tcgetattr(0, &term) == -1)
-		return ;
-	term.c_lflag &= ~(ICANON | ECHO | ISIG | ECHOCTL);
-	term.c_iflag &= ~(IXON | ICRNL);
-	term.c_cc[VMIN] = 1;
-	term.c_cc[VTIME] = 0;
-	if (tcsetattr(0, TCSANOW, &term) == -1)
-		return ;
-	tgetent(NULL, getenv("TERM"));
-}
-
-void	reset_terminal_mode(t_shell *shell)
-{
-	struct termios term;
-
-	(void)shell;
-	if (tcgetattr(0, &term) == -1)
-		return ;
-	term.c_lflag |= (ICANON | ECHO | ISIG | ECHOCTL);
-	term.c_iflag |= (IXON | ICRNL);
-	if (tcsetattr(0, TCSANOW, &term) == -1)
-		return ;
-}
 
 static int	return_value_input(t_shell *shell, int res)
 {

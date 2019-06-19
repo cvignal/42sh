@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/19 10:19:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/19 14:00:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <sys/types.h>
 # include <sys/ioctl.h>
+# include <term.h>
 
 # include "parser.h"
 # include "ast.h"
@@ -135,6 +136,8 @@ typedef struct		s_shell
 	int				fc_cmd;
 	int				fc_rec;
 	struct winsize	win;
+	struct termios	raw_term;
+	struct termios	rst_term;
 }					t_shell;
 
 struct s_redir;

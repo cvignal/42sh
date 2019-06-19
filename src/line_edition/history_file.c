@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 18:35:51 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/19 14:47:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/19 14:14:44 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int			open_history_file(t_shell *shell)
 	return (fd);
 }
 
-int			presence_of_date(char *str)
+static int	presence_of_date(char *str)
 {
 	int	i;
 
@@ -72,6 +72,7 @@ static int	open_tty_fd(t_shell *shell)
 	shell->pbpaste = NULL;
 	shell->output = NULL;
 	shell->current = NULL;
+	init_termios(shell);
 	return (0);
 }
 
