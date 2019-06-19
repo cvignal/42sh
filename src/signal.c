@@ -73,18 +73,23 @@ void	disable_signal(t_shell *shell)
 	if (shell->is_subshell)
 	{
 		signal(SIGINT, SIG_DFL);
+		signal(SIGCHLD, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGTERM, SIG_DFL);
 		signal(SIGTSTP, SIG_DFL);
+		signal(SIGTTIN, SIG_IGN);
+		signal(SIGTTOU, SIG_DFL);
 	}
 	else
 	{
 		signal(SIGINT, prompt_signal_handler);
 		signal(SIGTSTP, SIG_IGN);
+		signal(SIGCHLD, update_child);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGTERM, SIG_IGN);
+		signal(SIGTTIN, SIG_IGN);
+		signal(SIGTTOU, SIG_IGN);
 	}
-	signal(SIGCHLD, update_child);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
-	signal(SIGTTIN, SIG_IGN);
-	signal(SIGTTOU, SIG_IGN);
 }
 
 void	enable_signal(void)
