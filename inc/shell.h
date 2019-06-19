@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/16 18:51:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/19 10:19:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct		s_shell
 	int				prompt_len;
 	int				prompt_height;
 	int				fc_cmd;
+	int				fc_rec;
 	struct winsize	win;
 }					t_shell;
 

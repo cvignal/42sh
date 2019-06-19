@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 17:11:37 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/16 18:48:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/19 10:54:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		fc_exec_cmd(t_fc *cmd, t_shell *shell)
 	int		ret;
 
 	shell->fc_cmd = 1;
-	if (!shell->history || !shell->history->length)
+	if (!shell->history || !shell->history->length || shell->fc_rec)
 		return (0);
 	len = ft_strlen(shell->history->data[cmd->i_first]);
 	if (ft_strlen(cmd->old_p) && ft_strlen(cmd->new_p))
@@ -86,7 +86,7 @@ int		fc_edit(t_fc *cmd, t_shell *shell)
 	int			ret;
 
 	shell->fc_cmd = 1;
-	if (!shell->history || !shell->history->length)
+	if (!shell->history || !shell->history->length || shell->fc_rec)
 		return (0);
 	if (fc_open_file(cmd, shell, &file))
 		return (1);
