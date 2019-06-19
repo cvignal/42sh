@@ -30,7 +30,7 @@ static int	exec_async_subshell(t_shell *shell, t_ast *node)
 		exec_job(shell, node, NULL);
 		exit(node->ret);
 	}
-	if (!(node->job = ft_memalloc(sizeof(t_job))))
+	if (!(node->job = new_job()))
 		return (-1);
 	node->job->async = 1;
 	node->pid = pid;
@@ -43,7 +43,7 @@ static int	do_exec_async(t_shell *shell, t_ast *node)
 {
 	if (node->type == TT_AND ||node->type == TT_OR)
 		return (exec_async_subshell(shell, node));
-	if (!(node->job = ft_memalloc(sizeof(t_job))))
+	if (!(node->job = new_job()))
 		return (-1);
 	node->job->async = 1;
 	if (node->exec(shell, node))

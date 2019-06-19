@@ -15,6 +15,16 @@
 
 #include <unistd.h>
 
+t_job		*new_job()
+{
+	t_job *job;
+
+	if (!(job = ft_memalloc(sizeof(t_job))))
+		return (NULL);
+	job->notified = 1;
+	return (job);
+}
+
 int			register_job(t_shell *shell, t_job *job)
 {
 	t_job	*j;

@@ -43,6 +43,7 @@ static void		update_proc(t_shell *shell, pid_t pid, int status)
 
 	if (!(p = find_proc(shell, pid, &j)))
 		return ;
+	j->notified = 0;
 	if (WIFEXITED(status))
 	{
 		p->done = 1;
@@ -79,17 +80,21 @@ int				wait_job(t_shell *shell, t_job *job)
 	status = job->async ? 0 : job->last->ret;
 	if (job_is_done(job))
 		free_job(shell, job);
-	else if (job->state == JOB_STOPPED)
-		report_job(shell, job, 1 | 4 | 8);
+	return (status);
+}
+
+void			job_notify(t_shell *shell)
+{
+	t_job *job;
+
 	job = shell->jobs;
 	while (job)
 	{
-		if (job_is_done(job))
+		if (!job->notified)
 			job = report_job(shell, job, 1 | 4 | 8);
 		else
 			job = job->next;
 	}
-	return (status);
 }
 
 void			update_jobs(t_shell *shell)

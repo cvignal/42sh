@@ -97,7 +97,7 @@ int			exec_job(t_shell *shell, t_ast *node, t_job *job)
 	t_job	*job2;
 
 	job2 = job;
-	if (!job2 && !(job2 = ft_memalloc(sizeof(t_job))))
+	if (!job2 && !(job2 = new_job()))
 		return (-1);
 	node->job = job2;
 	if (node->exec(shell, node))

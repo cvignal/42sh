@@ -64,6 +64,7 @@ t_job		*report_job(t_shell *shell, t_job *job, int opts)
 {
 	t_job		*next;
 
+	job->notified = 1;
 	next = job->next;
 	if (opts & 1)
 		print_job_infos(shell, job);

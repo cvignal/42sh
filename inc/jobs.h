@@ -42,6 +42,7 @@ typedef struct	s_job
 	pid_t			pgid;
 	int				index;
 	int				async;
+	int				notified;
 	enum e_state	state;
 	struct s_job	*next;
 }				t_job;
@@ -51,6 +52,7 @@ struct s_shell;
 
 void			free_job(struct s_shell *shell, t_job *job);
 
+t_job			*new_job();
 t_job			*find_job(struct s_shell *shell, int index);
 
 int				register_proc(struct s_ast *ast);
@@ -65,6 +67,7 @@ int				job_is_done(t_job *j);
 int				wait_job(struct s_shell *shell, t_job *job);
 void			update_jobs(struct s_shell *shell);
 
+void			job_notify(struct s_shell *shell);
 t_job			*report_job(struct s_shell *shell, t_job *job, int opts);
 t_job			*parse_jobspec(struct s_shell *shell, char *jobspec);
 char			*ast_to_string(struct s_ast *ast);

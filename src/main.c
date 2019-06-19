@@ -68,6 +68,7 @@ int						main(int ac, char **av, const char **environ)
 			exec_ast(&shell, tokens);
 		free_line(&shell.line);
 		raw_terminal_mode(&shell);
+		job_notify(&shell);
 		print_prompt(&shell, tokens ? 0 : 1);
 	}
 	builtin_exit(&shell, NULL);
