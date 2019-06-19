@@ -6,12 +6,14 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 07:53:29 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/06 02:09:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/07 16:03:23 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
+
+# include "parser.h"
 
 # define PIPE_PARENT 0
 # define PIPE_NODE 1

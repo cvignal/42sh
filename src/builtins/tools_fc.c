@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:34:34 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/28 18:53:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/13 14:22:54 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ int		fc_init_shell(t_shell *shell, t_shell *old_shell)
 	shell->vars = copy_vars(old_shell->vars, 0);
 	shell->exec_vars = NULL;
 	shell->fd_op = old_shell->fd_op;
+	shell->prompt_len = 0;
+	shell->win = old_shell->win;
+	shell->history = old_shell->history;
 	return (0);
 }
 
@@ -83,9 +86,15 @@ int		fc_cut_pattern(t_fc *cmd, char *str)
 
 	len_new = ft_strlen(ft_strchr(str, '=') + 1);
 	len_old = ft_strlen(str) - len_new;
-	if (!(cmd->old_p = ft_strsub(str, 0, len_old - 1)))
-		return (1);
-	if (!(cmd->new_p = ft_strsub(str, len_old, len_new)))
+	if (!len_new)
+		cmd->new_p = ft_strnew(0);
+	else
+		cmd->new_p = ft_strsub(str, len_old, len_new);
+	if (!len_old)
+		cmd->old_p = ft_strnew(0);
+	else
+		cmd->old_p = ft_strsub(str, 0, len_old - 1);
+	if (!cmd->old_p || !cmd->new_p)
 		return (1);
 	return (0);
 }

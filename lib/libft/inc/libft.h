@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/30 00:14:15 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/12 15:57:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,6 @@ void				ft_replace_str(char *dst, char *src,
 char				*ft_replace_all(const char *src, char *old_p, char *new_p
 		, int flag);
 char				*ft_itoa(int value);
+char				*ft_strnchr(const char *s, int c, size_t len);
 
 #endif

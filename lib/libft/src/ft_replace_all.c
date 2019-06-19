@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 09:58:40 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/20 11:09:24 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/16 16:42:03 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,23 @@
 
 static size_t	ft_newlength(const char *str, char *old_p, char *new_p)
 {
-	size_t	ret;
-	size_t	diff;
+	size_t	cnt;
 	char	*cpy;
+	size_t	i;
 
-	ret = ft_strlen(str);
-	diff = ft_strlen(new_p) - ft_strlen(old_p);
+	cnt = 0;
 	cpy = (char *)str;
-	while (ft_strstr(cpy, old_p))
+	i = 0;
+	while (cpy[i])
 	{
-		ret += diff;
-		if (ft_strlen(cpy) > ft_strlen(ft_strstr(cpy, old_p)))
-			cpy = ft_strstr(cpy, old_p) + 1;
-		else
-			break ;
+		if (ft_strstr(cpy + i, old_p) == cpy + i)
+		{
+			cnt++;
+			i += ft_strlen(old_p) - 1;
+		}
+		i++;
 	}
-	return (ret);
+	return (i + cnt * (ft_strlen(new_p) - ft_strlen(old_p)));
 }
 
 char			*ft_replace_all(const char *str, char *old_p, char *new_p
@@ -39,20 +40,24 @@ char			*ft_replace_all(const char *str, char *old_p, char *new_p
 	char	*ret;
 	size_t	new_len;
 	char	*cpy;
+	size_t	i;
 
 	new_len = ft_newlength(str, old_p, new_p);
 	if (!(ret = ft_strnew(new_len)))
 		return (NULL);
 	cpy = (char *)str;
-	while (ft_strstr(cpy, old_p))
+	i = 0;
+	while (*cpy)
 	{
-		new_len = ft_strlen(cpy) - ft_strlen(ft_strstr(cpy, old_p));
-		ft_strncat(ret, cpy, new_len);
-		ft_strcat(ret, new_p);
-		cpy = ft_strstr(cpy, old_p) + ft_strlen(old_p);
+		if (ft_strstr(cpy, old_p) == cpy)
+		{
+			ft_strcpy(ret + i, new_p);
+			i += ft_strlen(new_p);
+			cpy += ft_strlen(old_p);
+		}
+		else
+			ret[i++] = *cpy++;
 	}
-	if (!ft_strequ(cpy, old_p))
-		ft_strcat(ret, cpy);
 	if (flag)
 		free((char *)str);
 	return (ret);

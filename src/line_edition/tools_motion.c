@@ -6,13 +6,14 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 11:28:55 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/12 17:43:45 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/12 15:46:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
 #include <curses.h>
 #include <sys/ioctl.h>
+#include <fcntl.h>
 
 #include "libft.h"
 #include "fill_line.h"
@@ -36,28 +37,14 @@ size_t	length_prev_line(t_shell *shell)
 			ret = 0;
 			k++;
 		}
+		else if ((j + shell->prompt_len) % shell->win.ws_col == 0)
+		{
+			ret = 1;
+			k++;
+		}
 	}
 	if (!k)
 		ret += shell->prompt_len + 1;
-	return (ret);
-}
-
-size_t	length_curr_line(t_shell *shell)
-{
-	size_t	ret;
-	size_t	j;
-
-	j = shell->line.cursor + 1;
-	ret = 0;
-	if (shell->line.data[j] == '\n')
-		return (0);
-	while (j < shell->line.len)
-	{
-		j++;
-		ret++;
-		if (shell->line.data[j] == '\n')
-			break ;
-	}
 	return (ret);
 }
 
@@ -66,7 +53,6 @@ void	clean_under_line(t_shell *shell)
 	t_curs			curs;
 	struct winsize	win;
 
-	ioctl(0, TIOCGWINSZ, &win);
 	t_puts("sc");
 	if (shell)
 	{
@@ -75,6 +61,7 @@ void	clean_under_line(t_shell *shell)
 	}
 	else
 	{
+		ioctl(0, TIOCGWINSZ, &win);
 		get_cursor_pos(&curs);
 		if (curs.line != win.ws_row)
 			t_puts("do");

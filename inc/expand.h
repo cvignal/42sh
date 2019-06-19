@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 20:02:41 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/16 17:25:52 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct			s_exp_ss
 struct s_exp_lexer;
 struct s_shell;
 struct s_redir;
+struct s_array;
 
 typedef int				(*t_exp_lexer_f)(struct s_shell *, char, int);
 
@@ -162,11 +163,10 @@ struct s_expr;
 int						expand_expr(struct s_shell *shell, struct s_expr *expr);
 
 /*
-** expansion/lexer_methods_hist.c
+** expansion/exp_hist.c
 */
-int						exp_lexer_cut_hist(struct s_shell *shell, char c
-		, int mask);
-int						exp_lexer_push_hist(struct s_shell *shell, char c
-		, int mask);
+int						replace_exclamation_mark(struct s_shell *shell, int i);
+int						exp_replace_history(struct s_shell *shell, char *buf, int i);
+char					*exp_find_cmd(struct s_array *history, char *buf);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:30:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/30 16:46:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/17 10:35:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,14 @@ int			ft_comp(char *word, char *name)
 	}
 }
 
+int			char_to_be_escaped(char c)
+{
+	return (c == ' ' || c == '"' || c == '|' || c == '\'' || c == '\n'
+			|| c == '\\' || c == '$' || c == '*' || c == ';' || c == '&'
+			|| c == '>' || c == '<' || c == '`' || c == '~' || c == '{'
+			|| c == '}' || c == '\t');
+}
+
 char		*ft_escape(char *name)
 {
 	char	*ret;
@@ -73,7 +81,7 @@ char		*ft_escape(char *name)
 	i = -1;
 	len = 0;
 	while (name[++i])
-		if (name[i] == ' ' || name[i] == '"' || name[i] == '\'')
+		if (char_to_be_escaped(name[i]))
 			len++;
 	len += i;
 	if (!(ret = ft_strnew(len)))
@@ -82,7 +90,7 @@ char		*ft_escape(char *name)
 	len = 0;
 	while (name[++i])
 	{
-		if (name[i] == ' ' || name[i] == '"' || name[i] == '\'')
+		if (char_to_be_escaped(name[i]))
 		{
 			ret[len++] = '\\';
 			ret[len++] = name[i];

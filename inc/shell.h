@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/25 00:08:12 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/16 18:51:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SHELL_H
 
 # include <sys/types.h>
+# include <sys/ioctl.h>
 
 # include "parser.h"
 # include "ast.h"
@@ -137,6 +138,7 @@ typedef struct		s_shell
 	struct s_job	*jobs;
 	struct s_job	*curr;
 	struct s_job	*prev;
+	struct winsize	win;
 }					t_shell;
 
 struct s_redir;
@@ -293,7 +295,7 @@ int					change_dir(t_shell *shell, char *curpath, const char *dir
 ** fc
 */
 int					builtin_fc(t_shell *shell, char **args);
-int					usage_fc(void);
+int					usage_fc(int error, char c);
 int					fc_init_args(t_fc *cmd, char **args, t_shell *shell);
 void				fc_index(t_fc *cmd, t_shell *shell);
 void				free_fc(t_fc *cmd);
@@ -306,6 +308,9 @@ void				fc_exec_ast(t_shell *shell, t_token *tokens);
 void				fc_free_shell(t_shell *shell);
 int					fc_init_shell(t_shell *shell, t_shell *old_shell);
 int					fc_find_cmd(char *str, t_array *history);
+int					fc_display(t_fc *cmd, t_shell *shell);
+int					fc_display_reverse(t_fc *cmd, t_shell *shell);
+int					fc_display_multi(char *str);
 
 /*
 ** signal.c

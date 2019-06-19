@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/05/25 13:43:47 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/16 18:45:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@
 # define RED "\e[1;31m"
 # define ARROW "\u2190"
 # define INV_COLOR "\e[7;m"
+# define ORANGE "\033[38;5;166m"
 # define HIST_SIZE_MAX 32768
 # define NOT_A_TTY "Line edition disabled\n"
 
@@ -124,7 +125,7 @@ int				ft_clearline(t_shell *shell);
 */
 int				ft_comp(char *word, char *name);
 char			*find_path(char *word);
-void			display_list(t_list *list);
+void			display_list(t_shell *shell, t_list *list);
 void			clean_under_line(t_shell *shell);
 char			*word_to_complete(t_line *line);
 void			ft_add_builtins(char *word, t_list **list);
@@ -134,7 +135,7 @@ char			*ft_escape(char *name);
 /*
 ** Tools for multi lines and cursor motion
 */
-int				nb_multi_lines(size_t len, int len_prompt);
+int				nb_multi_lines(t_shell *shell, size_t len, int len_prompt);
 void			clear_cmd_line(t_shell *shell);
 void			get_cursor_pos(t_curs *cursor);
 size_t			length_curr_line(t_shell *shell);
@@ -193,4 +194,5 @@ int				vm_homekey(t_shell *shell);
 int				vm_endkey(t_shell *shell);
 int				visual_mode(t_shell *shell);
 
+int				expand_history(t_shell *shell);
 #endif

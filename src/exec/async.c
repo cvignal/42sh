@@ -28,7 +28,7 @@ static int	exec_async_subshell(t_shell *shell, t_ast *node)
 		pid = getpid();
 		setpgid(pid, pid);
 		shell->is_subshell = 1;
-		disable_signal(shell);
+		enable_signal();
 		exec_job(shell, node, NULL);
 		exit(node->ret);
 	}
