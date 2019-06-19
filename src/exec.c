@@ -28,7 +28,7 @@ static void	exec_internal(t_shell *shell, t_ast *instr,
 
 	instr->pid = getpid();
 	if (!instr->job->pgid)
-		instr->job->pgid = instr->pid;
+		instr->job->pgid = shell->is_subshell ? getppid() : instr->pid;
 	setpgid(instr->pid, instr->job->pgid);
 	if (!instr->job->async && !shell->is_subshell)
 		tcsetpgrp(0, instr->job->pgid);

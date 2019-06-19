@@ -64,7 +64,6 @@ t_job		*report_job(t_shell *shell, t_job *job, int opts)
 {
 	t_job		*next;
 
-	job->notified = 1;
 	next = job->next;
 	if (opts & 1)
 		print_job_infos(shell, job);
@@ -79,6 +78,8 @@ t_job		*report_job(t_shell *shell, t_job *job, int opts)
 		print_pipeline(job);
 		if (job->state == JOB_DONE)
 			free_job(shell, job);
+		else
+			job->notified = 1;
 	}
 	ft_putchar('\n');
 	return (next);

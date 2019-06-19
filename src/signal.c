@@ -77,7 +77,7 @@ void	disable_signal(t_shell *shell)
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGTERM, SIG_DFL);
 		signal(SIGTSTP, SIG_DFL);
-		signal(SIGTTIN, SIG_IGN);
+		signal(SIGTTIN, SIG_DFL);
 		signal(SIGTTOU, SIG_DFL);
 	}
 	else

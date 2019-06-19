@@ -237,7 +237,7 @@ char					*ft_strcjoin_free(char *s1, const char c, char *s2, int flag);
 int					exec(t_shell *shell, t_ast *instr);
 pid_t				do_exec(t_shell *shell, char **argv);
 int					exec_job(t_shell *shell, t_ast *node, struct s_job *job);
-int					wait_loop(t_shell *shell, t_ast *ast); // TODO: remove
+int					wait_loop(t_shell *shell, t_ast *ast);
 
 /*
 ** path.c

@@ -13,6 +13,7 @@
 #include "jobs.h"
 #include "shell.h"
 #include <sys/wait.h>
+#include <unistd.h>
 
 static t_proc	*find_proc(t_shell *shell, pid_t pid, t_job **job)
 {
@@ -68,10 +69,12 @@ int				wait_job(t_shell *shell, t_job *job)
 {
 	pid_t	pid;
 	int		status;
+	int		options;
 
+	options = shell->is_subshell ? 0 : WUNTRACED;
 	while (!job_is_stopped(job))
 	{
-		if ((pid = waitpid(-1, &status, WUNTRACED)) < 0)
+		if ((pid = waitpid(-1, &status, options)) < 0)
 			break ;
 		update_proc(shell, pid, status);
 	}
