@@ -71,6 +71,7 @@ typedef struct			s_exp_ss
 struct s_exp_lexer;
 struct s_shell;
 struct s_redir;
+struct s_array;
 
 typedef int				(*t_exp_lexer_f)(struct s_shell *, char, int);
 
@@ -182,7 +183,7 @@ struct s_expr;
 int						expand_expr(struct s_shell *shell, struct s_expr *expr);
 
 /*
-** expansion/lexer_methods_hist.c
+** expansion/exp_hist.c
 */
 int						exp_lexer_cut_hist(struct s_shell *shell, char c
 		, int mask);
@@ -190,6 +191,9 @@ int						exp_lexer_push_hist(struct s_shell *shell, char c
 		, int mask);
 int						add_arg_to_array(t_exp_lexer *lexer, char c);
 
+int						replace_exclamation_mark(struct s_shell *shell, int i);
+int						exp_replace_history(struct s_shell *shell, char *buf, int i);
+char					*exp_find_cmd(struct s_array *history, char *buf);
 
 int						get_special_param_at(struct s_shell *shell);
 int						get_special_param_star(struct s_shell *shell);

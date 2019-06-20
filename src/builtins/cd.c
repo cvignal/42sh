@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 16:26:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/13 17:39:35 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@
 #include "libft.h"
 #include "fill_line.h"
 
-static int	exit_error(const char *file, const char *msg)
+static int	exit_error(char *file, const char *msg)
 {
 	if (file)
 		ft_dprintf(2, "%s: cd: %s: %s\n", EXEC_NAME, file, msg);
 	else
 		ft_dprintf(2, "%s: cd: %s\n", EXEC_NAME, msg);
+	free(file);
 	return (1);
 }
 
-static int	exit_error_cd(const char *file)
+static int	exit_error_cd(char *file)
 {
 	char	type;
 

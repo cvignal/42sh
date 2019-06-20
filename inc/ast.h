@@ -13,12 +13,10 @@
 #ifndef AST_H
 # define AST_H
 
+# include "parser.h"
+
 # define PIPE_PARENT 0
 # define PIPE_NODE 1
-
-# include <sys/types.h>
-
-# include "parser.h"
 
 typedef enum			e_ttype
 {

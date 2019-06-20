@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/08 17:25:00 by marin            ###   ########.fr        #
+#    Updated: 2019/06/20 19:44:06 by marin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,11 +26,12 @@ SRC		=						\
 	builtins/cd.c						\
 	builtins/echo.c						\
 	builtins/exec_builtin.c					\
-	builtins/exit.c						\
-	builtins/fc.c						\
-	builtins/fc_exec.c					\
-	builtins/file_fc.c					\
-	builtins/idx_fc.c					\
+	builtins/exit.c							\
+	builtins/fc.c							\
+	builtins/fc_display.c					\
+	builtins/fc_exec.c						\
+	builtins/file_fc.c						\
+	builtins/idx_fc.c						\
 	builtins/parsing_fc.c					\
 	builtins/setenv.c					\
 	builtins/tools_cd.c					\
@@ -79,7 +80,9 @@ SRC		=						\
 	expansion/exp_ss.c					\
 	expansion/special_param_join_args.c			\
 	expansion/expr.c					\
+	expansion/parsing_hist.c					\
 	expansion/home.c					\
+	expansion/exp_hist.c					\
 	expansion/init.c					\
 	expansion/lexer.c					\
 	expansion/lexer_methods.c				\

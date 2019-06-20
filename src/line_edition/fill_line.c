@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/05/14 21:25:54 by vagrant          ###   ########.fr       */
+/*   Updated: 2019/06/16 18:46:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int		check_validity(t_shell *shell)
 	res = tgetent(NULL, name);
 	if (res <= 0)
 		return (1);
+	ioctl(0, TIOCGWINSZ, &shell->win);
 	shell->ctrlc = 0;
 	return (0);
 }
@@ -99,6 +100,7 @@ int		fill_line(t_shell *shell)
 	if (!shell->line.alloc_size)
 		shell->line.data = ft_strdup("");
 	clean_under_line(shell);
+	expand_history(shell);
 	if (!shell->end_heredoc)
 		ft_dprintf(shell->fd_op, "\n");
 	return (res == -1 || shell->line.data == NULL);

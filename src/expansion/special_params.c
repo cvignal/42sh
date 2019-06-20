@@ -6,7 +6,7 @@
 /*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:35:55 by marin             #+#    #+#             */
-/*   Updated: 2019/06/08 17:35:26 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/20 20:10:02 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "expand.h"
 #include <unistd.h>
 
-//TODO: cleaning
 typedef struct		s_special_param
 {
 	char	*name;
