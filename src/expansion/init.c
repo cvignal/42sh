@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/05 23:22:00 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/13 13:19:07 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	set_exp_lexer_var_methods(t_exp_lexer *lexer)
 
 	i = 0;
 	while (i <= CHAR_MAX)
-	{
+	{	
 		if (i != '}')
 			lexer->methods[EXP_STATE_CURLY_EXP][i] = &exp_lexer_add_to_buff;
 		lexer->methods[EXP_STATE_SPECIAL_PARAM][i] = &exp_lexer_cut_special_param;

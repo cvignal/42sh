@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/04 21:10:19 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/08 17:39:35 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define EXP_LEXER_MASK_TILDE (1 << 6)
 # define EXP_LEXER_MASK_NO_MULTI_TILDE (1 << 7)
 # define EXP_LEXER_MASK_PROC_SUB (1 << 8)
+
 
 typedef enum			e_exp_state
 {
@@ -85,7 +86,7 @@ typedef struct			s_exp_lexer
 {
 	t_brace_expansion		brace_expansion;
 	t_exp_ss			*state;
-	int					split;
+	int				split;
 	t_array				ret;
 	const char			*ifs;
 	t_exp_lexer_f		methods[NUMBER_EXP_STATE][CHAR_MAX + 1];
@@ -189,4 +190,13 @@ int						exp_lexer_push_hist(struct s_shell *shell, char c
 		, int mask);
 int						add_arg_to_array(t_exp_lexer *lexer, char c);
 
+
+int						get_special_param_at(struct s_shell *shell);
+int						get_special_param_star(struct s_shell *shell);
+int						get_special_param_dollar(struct s_shell *shell);
+int						get_special_param_hash(struct s_shell *shell);
+int						get_special_param_zero(struct s_shell *shell);
+int						get_special_param_bang(struct s_shell *shell);
+int						get_special_param_qmark(struct s_shell *shell);
+char						*join_args(struct s_shell *shell, char separator);
 #endif
