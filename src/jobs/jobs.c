@@ -49,6 +49,7 @@ int			register_job(t_shell *shell, t_job *job)
 	if (!job->async)
 		return (job_fg(shell, job, 0));
 	report_job(shell, job, 1 | 2);
+	set_bg_pid(shell, job->last->pid);
 	job_bg(job, 0);
 	return (0);
 }

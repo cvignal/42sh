@@ -40,7 +40,7 @@ static int	exit_value(t_shell *shell, char **args)
 	}
 	else
 	{
-		ret = ft_atoi(get_var_value(get_var(shell->vars, SPECIAL_VAR_RET)));
+		ret = ft_atoi(get_var_value(get_var(shell->vars, SPECIAL_PARAM_QMARK)));
 		free_shell(shell);
 		exit(ret);
 	}

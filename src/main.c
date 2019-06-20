@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/25 13:41:42 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/14 10:16:21 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int						main(int ac, char **av, const char **environ)
 		return (free_shell(&shell));
 	parse_args(&shell, ac, av);
 	ret = check_validity(&shell);
-	set_special_var(&shell.vars, SPECIAL_VAR_RET, "0");
+	set_special_var(&shell.vars, SPECIAL_PARAM_BANG, "");
+	set_special_var(&shell.vars, SPECIAL_PARAM_QMARK, "0");
 	print_prompt(&shell, 0);
 	disable_signal(&shell);
 	while (!g_functions[ret].f(&shell))

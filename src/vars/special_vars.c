@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 07:03:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 18:47:20 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/05/26 22:08:54 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static const char	*g_special_vars[] =\
 {
-	SPECIAL_VAR_RET
+	SPECIAL_PARAM_BANG,
+	SPECIAL_PARAM_QMARK,
 };
 
 int			is_special_var(char name)
@@ -39,7 +40,18 @@ void		set_ret(t_shell *shell, t_ast *ast, int ret)
 		ast->ret = ret;
 	if ((ret_str = ft_itoa(ret)))
 	{
-		set_special_var(&shell->vars, SPECIAL_VAR_RET, ret_str);
+		set_special_var(&shell->vars, SPECIAL_PARAM_QMARK, ret_str);
+		free(ret_str);
+	}
+}
+
+void		set_bg_pid(t_shell *shell, pid_t pid)
+{
+	char	*ret_str;
+
+	if ((ret_str = ft_itoa(pid)))
+	{
+		set_special_var(&shell->vars, SPECIAL_PARAM_BANG, ret_str);
 		free(ret_str);
 	}
 }

@@ -26,7 +26,7 @@ static void	print_special_prompt(t_shell *shell, char *str)
 	{
 		ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
 			, EOC, !ft_strcmp(get_var_value(get_var(shell->vars,
-				SPECIAL_VAR_RET)), "0") ? GREEN : RED, str, EOC);
+				SPECIAL_PARAM_QMARK)), "0") ? GREEN : RED, str, EOC);
 		return ;
 	}
 	get_cursor_pos(&cursor);
@@ -34,7 +34,7 @@ static void	print_special_prompt(t_shell *shell, char *str)
 		ft_dprintf(shell->fd_op, "%s%%%s\n", INV_COLOR, EOC);
 	ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
 		, EOC, !ft_strcmp(get_var_value(get_var(shell->vars,
-			SPECIAL_VAR_RET)), "0") ? GREEN : RED, str, EOC);
+			SPECIAL_PARAM_QMARK)), "0") ? GREEN : RED, str, EOC);
 	if (shell->win.ws_col == 0)
 		return ;
 	else

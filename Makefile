@@ -1,4 +1,4 @@
-	# **************************************************************************** #
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/16 18:46:05 by cvignal          ###   ########.fr        #
+#    Updated: 2019/06/20 19:44:06 by marin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,61 +80,67 @@ SRC	=										\
 	exec/while.c							\
 	expansion/buffer.c						\
 	expansion/exp_ss.c						\
-	expansion/exp_hist.c					\
+	expansion/special_param_join_args.c		\
 	expansion/expr.c						\
+	expansion/parsing_hist.c				\
 	expansion/home.c						\
+	expansion/exp_hist.c					\
 	expansion/init.c						\
 	expansion/lexer.c						\
 	expansion/lexer_methods.c				\
 	expansion/lexer_methods_ari.c			\
+	expansion/lexer_methods_special_params.c		\
 	expansion/lexer_methods_dollar.c		\
 	expansion/lexer_methods_escaped.c		\
+	expansion/special_params.c				\
 	expansion/lexer_methods_over.c			\
 	expansion/lexer_methods_proc_sub.c		\
 	expansion/lexer_methods_quotes.c		\
-	expansion/parsing_hist.c				\
-	expr/a.c								\
-	expr/b.c								\
-	expr/c.c								\
-	expr/d.c								\
-	expr/desc.c								\
-	expr/e.c								\
-	expr/ef.c								\
-	expr/eq.c								\
-	expr/equal.c							\
-	expr/expression.c						\
-	expr/f.c								\
-	expr/g.c								\
-	expr/g_cap.c							\
-	expr/ge.c								\
-	expr/gt.c								\
-	expr/h.c								\
-	expr/k.c								\
-	expr/l_cap.c							\
-	expr/le.c								\
-	expr/lower.c							\
-	expr/lt.c								\
-	expr/n.c								\
-	expr/n_cap.c							\
-	expr/ne.c								\
-	expr/not_equal.c						\
-	expr/nt.c								\
-	expr/o_cap.c							\
-	expr/ot.c								\
-	expr/p.c								\
-	expr/r.c								\
-	expr/s.c								\
-	expr/s_cap.c							\
-	expr/sup.c								\
-	expr/t.c								\
-	expr/u.c								\
-	expr/v.c								\
-	expr/w.c								\
-	expr/x.c								\
-	fd.c									\
-	hash.c									\
-	hash_sanitize.c							\
-	heredoc.c								\
+	expansion/lexer_methods_curly_exp.c		\
+	expansion/special_params_expansion_1.c	\
+	expansion/special_params_expansion_2.c	\
+	expr/a.c						\
+	expr/b.c						\
+	expr/c.c						\
+	expr/d.c						\
+	expr/desc.c						\
+	expr/e.c						\
+	expr/ef.c						\
+	expr/eq.c						\
+	expr/equal.c					\
+	expr/expression.c				\
+	expr/f.c						\
+	expr/g.c						\
+	expr/g_cap.c					\
+	expr/ge.c						\
+	expr/gt.c						\
+	expr/h.c						\
+	expr/k.c						\
+	expr/l_cap.c					\
+	expr/le.c						\
+	expr/lower.c					\
+	expr/lt.c						\
+	expr/n.c						\
+	expr/n_cap.c					\
+	expr/ne.c						\
+	expr/not_equal.c				\
+	expr/nt.c						\
+	expr/o_cap.c					\
+	expr/ot.c						\
+	expr/p.c						\
+	expr/r.c						\
+	expr/s.c						\
+	expr/s_cap.c					\
+	expr/sup.c						\
+	expr/t.c						\
+	expr/u.c						\
+	expr/v.c						\
+	expr/w.c						\
+	expr/x.c						\
+	fd.c							\
+	hash.c							\
+	hash_sanitize.c					\
+	heredoc.c						\
 	history_research/algo_search.c			\
 	history_research/ctrl_keys.c			\
 	history_research/init_search.c			\
@@ -187,6 +193,7 @@ SRC	=										\
 	parser/lexer_act.c						\
 	parser/lexer_act_escaped.c				\
 	parser/lexer_act_meta.c					\
+      	parser/lexer_act_meta2.c			\
 	parser/lexer_act_over.c					\
 	parser/lexer_act_quote.c				\
 	parser/lss.c							\

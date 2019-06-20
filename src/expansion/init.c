@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/07 16:01:42 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/20 19:24:11 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ static void	set_exp_lexer_var_methods(t_exp_lexer *lexer)
 
 	i = 0;
 	while (i <= CHAR_MAX)
-	{
-		if (ft_isalnum(i) || i == '_' || is_special_var(i))
-			lexer->methods[EXP_STATE_VAR][i] = &exp_lexer_add_to_var;
+	{	
+		if (i != '}')
+			lexer->methods[EXP_STATE_CURLY_EXP][i] = &exp_lexer_add_to_buff;
+		lexer->methods[EXP_STATE_SPECIAL_PARAM][i] = &exp_lexer_cut_special_param;
+		if (ft_isalnum(i) || i == '_')
+			lexer->methods[EXP_STATE_VAR][i] = &exp_lexer_add_to_buff;
 		else
 			lexer->methods[EXP_STATE_VAR][i] = &exp_lexer_cut_var;
 		++i;
@@ -67,12 +70,18 @@ static void	set_exp_lexer_dollar(t_exp_lexer *lexer)
 	i = 0;
 	while (i <= CHAR_MAX)
 	{
-		if (ft_isalpha(i) || is_special_var(i) || i == '_')
+		if (is_special_param(i))
+			lexer->methods[EXP_STATE_DOLLAR][i] = &exp_lexer_set_special_param;
+		else if (ft_isalpha(i) || i == '_')
 			lexer->methods[EXP_STATE_DOLLAR][i] = &exp_lexer_set_var;
+		else if (i == '{')
+			lexer->methods[EXP_STATE_DOLLAR][i] = &exp_lexer_curly_expansion_start;
 		else
 			lexer->methods[EXP_STATE_DOLLAR][i] = &exp_lexer_dollar_fail;
 		++i;
 	}
+	lexer->methods[EXP_STATE_CURLY_EXP]['}'] = &exp_lexer_cut_var;
+	lexer->methods[EXP_STATE_CURLY_EXP]['{'] = &exp_lexer_curly_expansion_start;
 	lexer->methods[EXP_STATE_DOLLAR]['('] = &exp_lexer_set_proc_sub;
 	lexer->methods[EXP_STATE_PROC_SUB]['('] = &exp_lexer_set_ari;
 }
@@ -90,7 +99,7 @@ int			init_exp_lexer(t_exp_lexer *lexer)
 		lexer->methods[EXP_STATE_DQUOTE][i] = &exp_lexer_add_to_buff;
 		lexer->methods[EXP_STATE_ESCAPED][i] = &exp_lexer_pop_add_to_buff;
 		lexer->methods[EXP_STATE_ARI][i] = &exp_lexer_pop_ari;
-		lexer->methods[EXP_STATE_ARI_PAREN][i] = &exp_lexer_add_to_var;
+		lexer->methods[EXP_STATE_ARI_PAREN][i] = &exp_lexer_add_to_buff;
 		lexer->methods[EXP_STATE_TILDE][i] = &exp_lexer_add_to_buff;
 		lexer->methods[EXP_STATE_PROC_SUB][i] = &exp_lexer_add_to_buff;
 		++i;
