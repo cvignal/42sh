@@ -84,6 +84,7 @@ int			exec(t_shell *shell, t_ast *instr)
 	else if (instr->pid == 0)
 		exec_internal(shell, instr, bin_path, builtin);
 	register_proc(instr);
+	shell->last_cmd = builtin;
 	return (0);
 }
 

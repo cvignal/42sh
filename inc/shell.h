@@ -135,6 +135,7 @@ typedef struct		s_shell
 	int				prompt_height;
 	int				fc_cmd;
 	int				is_subshell;
+	void			*last_cmd;
 	struct s_job	*jobs;
 	struct s_job	*curr;
 	struct s_job	*prev;
