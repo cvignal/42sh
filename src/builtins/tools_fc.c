@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:34:34 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/19 11:14:34 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/19 15:37:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int		fc_init_shell(t_shell *shell, t_shell *old_shell)
 	shell->win = old_shell->win;
 	shell->history = old_shell->history;
 	shell->fc_rec = 1;
+	shell->rst_term = old_shell->rst_term;
+	shell->raw_term = old_shell->raw_term;
 	return (0);
 }
 
