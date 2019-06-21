@@ -13,6 +13,7 @@
 #include <stdlib.h>
 
 #include "shell.h"
+#include "jobs.h"
 #include "ast.h"
 
 int		exec_end(t_shell *shell, t_ast *ast)
@@ -21,22 +22,12 @@ int		exec_end(t_shell *shell, t_ast *ast)
 		return (0);
 	if (ast->left)
 	{
-		ast->left->exec(shell, ast->left);
-		wait_loop(shell, ast->left);
+		if (exec_job(shell, ast->left, NULL))
+			return (-1);
+		if (shell->ctrlc)
+			return (0);
 	}
 	if (ast->right)
-	{
-		ast->right->exec(shell, ast->right);
-		wait_loop(shell, ast->right);
-	}
-	return ((ast->ret = 0));
-}
-
-void	free_end(t_ast *ast)
-{
-	if (ast->left)
-		ast->left->del(ast->left);
-	if (ast->right)
-		ast->right->del(ast->right);
-	free_ast(ast);
+		return (exec_job(shell, ast->right, ast->job));
+	return (0);
 }

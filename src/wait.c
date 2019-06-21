@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 15:49:17 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/19 14:26:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/21 12:01:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static void	do_wait(t_shell *shell, t_ast *ast)
 	pid_t	pid;
 	int		crash;
 
-	if ((pid = waitpid(0, &status, 0)) > 0)
+	if ((pid = waitpid(-1, &status, 0)) > 0)
 	{
 		crash = print_crash_signal(status);
 		if (WIFEXITED(status) || WIFSIGNALED(status))

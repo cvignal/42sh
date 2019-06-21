@@ -22,10 +22,12 @@ static const t_builtin_desc	g_builtin_desc[] =\
 	{"exit", &builtin_exit},
 	{"fc", &builtin_fc},
 	{"hash", &builtin_hash},
-	{"setenv", &builtin_setenv},
+	{"fc", &builtin_fc},
+	{"jobs", &builtin_jobs},
+	{"fg", &builtin_fg},
+	{"bg", &builtin_bg},
 	{"type", &builtin_type},
 	{"unset", &builtin_unset},
-	{"unsetenv", &builtin_unsetenv}
 };
 
 t_builtin	is_builtin(char *cmd)

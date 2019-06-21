@@ -14,6 +14,7 @@
 
 #include "libft.h"
 #include "shell.h"
+#include "jobs.h"
 #include "fill_line.h"
 
 /*
@@ -60,6 +61,12 @@ void	prompt_signal_handler(int sig)
 	print_prompt(g_shell, 0);
 }
 
+void	update_child(int sig)
+{
+	(void)sig;
+	update_jobs(g_shell);
+}
+
 void	resize_window(int sig)
 {
 	(void)sig;
@@ -70,14 +77,14 @@ void	resize_window(int sig)
 	ioctl(0, TIOCGWINSZ, &g_shell->win);
 }
 
-
 void	disable_signal(t_shell *shell)
 {
 	g_shell = shell;
-	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, prompt_signal_handler);
-	signal(SIGTERM, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
+	signal(SIGCHLD, update_child);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTERM, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGWINCH, resize_window);
@@ -85,8 +92,9 @@ void	disable_signal(t_shell *shell)
 
 void	enable_signal(void)
 {
-	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
+	signal(SIGCHLD, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	signal(SIGTERM, SIG_DFL);
 	signal(SIGTSTP, SIG_DFL);
 	signal(SIGTTIN, SIG_DFL);

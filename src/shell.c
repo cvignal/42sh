@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/25 00:27:03 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/21 12:03:18 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <signal.h>
 
+#include "jobs.h"
 #include "shell.h"
 #include "libft.h"
 #include "fill_line.h"
@@ -94,6 +95,8 @@ int			free_shell(t_shell *shell)
 				free_hbt(shell->hash_table[i]);
 		free(shell->hash_table);
 	}
+	while (shell->jobs)
+		free_job(shell, shell->jobs);
 	free_shell_aux(shell);
 	reset_terminal_mode(shell);
 	return (1);

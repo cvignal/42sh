@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/19 14:00:56 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/21 11:59:27 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,15 @@
 # define MAX_PATH 1024
 # define VAR_MAX 1024
 # define SEARCH_MAX 128
-# define SPECIAL_VAR_RET "?"
+
+# define SPECIAL_PARAM_AT	"@"
+# define SPECIAL_PARAM_STAR	"*"
+# define SPECIAL_PARAM_ZERO	"0"
+# define SPECIAL_PARAM_BANG	"!"
+# define SPECIAL_PARAM_HASH	"#"
+# define SPECIAL_PARAM_DOLLAR	"$"
+# define SPECIAL_PARAM_QMARK	"?"
+# define SPECIAL_PARAM_HYPHEN	"-"
 
 # define REMOVE_VAR_ENV (1 << 0)
 # define REMOVE_VAR_LOCAL (1 << 1)
@@ -109,6 +117,7 @@ typedef struct		s_arg_file
 	int			fd;
 }			t_arg_file;
 
+struct s_job;
 typedef struct		s_shell
 {
 	t_lexer			lexer;
@@ -135,6 +144,11 @@ typedef struct		s_shell
 	int				prompt_height;
 	int				fc_cmd;
 	int				fc_rec;
+	int				is_subshell;
+	void			*last_cmd;
+	struct s_job	*jobs;
+	struct s_job	*curr;
+	struct s_job	*prev;
 	struct winsize	win;
 	struct termios	raw_term;
 	struct termios	rst_term;
@@ -177,7 +191,6 @@ typedef struct		s_command
 	char			**args_value;
 	size_t			alloc_size;
 	size_t			args_len;
-	pid_t			pid;
 }					t_command;
 
 typedef int			(*t_builtin)(t_shell *, char **);
@@ -213,6 +226,7 @@ typedef struct		s_tmpfile
 	int		fd;
 }					t_tmpfile;
 
+
 t_heredoc			*alloc_heredoc(void);
 int					add_to_heredoc(t_heredoc *heredoc, const char *line);
 int					heredoc_exit_error(t_heredoc *heredoc);
@@ -226,10 +240,18 @@ void				free_command(t_command *command);
 int					add_to_command(t_command *command, char *word);
 
 /*
+** utils.c
+*/
+int					fail(char *proc, char *err, char *message, int ret);
+int					do_error_handling(char *name);
+char					*ft_strcjoin_free(char *s1, const char c, char *s2, int flag);
+
+/*
 ** exec.c
 */
-pid_t				exec(t_shell *shell, t_ast *instr);
+int					exec(t_shell *shell, t_ast *instr);
 pid_t				do_exec(t_shell *shell, char **argv);
+int					exec_job(t_shell *shell, t_ast *node, struct s_job *job);
 int					wait_loop(t_shell *shell, t_ast *ast);
 
 /*
@@ -249,6 +271,13 @@ int					init_shell(t_shell *shell, const char **environ);
 int					add_to_line(t_line *line, char buf);
 int					free_line(t_line *line);
 
+
+/*
+** builtins/
+*/
+int					is_special_param(char name);
+int					expand_special_params(t_shell *shell, char name);
+
 /*
 ** builtins/
 */
@@ -262,6 +291,11 @@ int					builtin_setenv(t_shell *shell, char **args);
 int					builtin_type(t_shell *shell, char **args);
 int					builtin_unset(t_shell *shell, char **args);
 int					builtin_unsetenv(t_shell *shell, char **args);
+int					builtin_echo(t_shell *shell, char **args);
+int					builtin_exit(t_shell *shell, char **args);
+int					builtin_jobs(t_shell *shell, char **args);
+int					builtin_fg(t_shell *shell, char **args);
+int					builtin_bg(t_shell *shell, char **args);
 int					exec_builtin(t_shell *shell, t_builtin builtin,
 		t_ast *instr);
 t_builtin			is_builtin(char *cmd);
@@ -312,16 +346,14 @@ void				free_cmd(struct s_ast *ast);
 void				set_pipeline_ret(t_ast *ast);
 int					exec_pipeline(t_shell *shell, struct s_ast *ast);
 void				free_pipeline(struct s_ast *ast);
+int					exec_async(t_shell *shell, struct s_ast *ast);
 int					exec_end(t_shell *shell, struct s_ast *ast);
 void				free_end(struct s_ast *ast);
 int					exec_cmd(t_shell *shell, struct s_ast *ast);
 void				free_cmd(struct s_ast *ast);
 int					exec_end(t_shell *shell, struct s_ast *ast);
-void				free_end(struct s_ast *ast);
 int					exec_or(t_shell *shell, struct s_ast *ast);
-void				free_or(struct s_ast *ast);
 int					exec_and(t_shell *shell, struct s_ast *ast);
-void				free_and(struct s_ast *ast);
 int					exec_expr(t_shell *shell, struct s_ast *ast);
 void				free_expr(struct s_ast *ast);
 int					exec_if(t_shell *shell, struct s_ast *ast);
@@ -497,6 +529,7 @@ int					set_special_var(t_var **vars, const char *name,
 		const char *value);
 int					is_special_var(char name);
 void				set_ret(t_shell *shell, t_ast *current, int ret);
+void				set_bg_pid(t_shell *shell, pid_t pid);
 
 /*
 **	parser/rules_redir_comp_generic.c

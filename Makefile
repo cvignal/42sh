@@ -1,4 +1,4 @@
-	# **************************************************************************** #
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/19 14:02:48 by cvignal          ###   ########.fr        #
+#    Updated: 2019/06/21 11:58:25 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,232 +16,248 @@
 #### FILE STRUCTURE ####
 NAME	:=	42sh
 
-SRC		=									\
-	alt_shell.c								\
-	apply_redir_rw.c						\
-	apply_redirs.c							\
-	arg_file.c								\
-	builtins/builtin_hash.c					\
-	builtins/builtins.c						\
-	builtins/cd.c							\
-	builtins/echo.c							\
-	builtins/exec_builtin.c					\
-	builtins/exit.c							\
-	builtins/fc.c							\
-	builtins/fc_display.c					\
-	builtins/fc_exec.c						\
-	builtins/file_fc.c						\
-	builtins/idx_fc.c						\
-	builtins/parsing_fc.c					\
-	builtins/setenv.c						\
-	builtins/tools_cd.c						\
-	builtins/tools_fc.c						\
-	builtins/tools_hash.c					\
-	builtins/tools_type.c					\
-	builtins/trim_path.c					\
-	builtins/type.c							\
-	builtins/unset.c						\
-	builtins/unsetenv.c						\
-	command.c								\
-	env.c									\
-	exec.c									\
-	exec/and.c								\
-	exec/arithmetic/and.c					\
-	exec/arithmetic/cmp_eq.c				\
-	exec/arithmetic/cmp_inf.c				\
-	exec/arithmetic/cmp_inf_eq.c			\
-	exec/arithmetic/cmp_not_eq.c			\
-	exec/arithmetic/cmp_sup.c				\
-	exec/arithmetic/cmp_sup_eq.c			\
-	exec/arithmetic/del.c					\
-	exec/arithmetic/div.c					\
-	exec/arithmetic/eq.c					\
-	exec/arithmetic/fail.c					\
-	exec/arithmetic/mod.c					\
-	exec/arithmetic/or.c					\
-	exec/arithmetic/plus.c					\
-	exec/arithmetic/plus_plus.c				\
-	exec/arithmetic/prod.c					\
-	exec/arithmetic/statement.c				\
-	exec/arithmetic/sub.c					\
-	exec/arithmetic/sub_sub.c				\
-	exec/arithmetic/usub.c					\
-	exec/arithmetic/utils.c					\
-	exec/arithmetic/value.c					\
-	exec/cmd.c								\
-	exec/else.c								\
-	exec/end.c								\
-	exec/expr.c								\
-	exec/if.c								\
-	exec/or.c								\
-	exec/pipeline.c							\
-	exec/while.c							\
-	expansion/buffer.c						\
-	expansion/exp_ss.c						\
-	expansion/exp_hist.c					\
-	expansion/expr.c						\
-	expansion/home.c						\
-	expansion/init.c						\
-	expansion/lexer.c						\
-	expansion/lexer_methods.c				\
-	expansion/lexer_methods_ari.c			\
-	expansion/lexer_methods_dollar.c		\
-	expansion/lexer_methods_escaped.c		\
-	expansion/lexer_methods_over.c			\
-	expansion/lexer_methods_proc_sub.c		\
-	expansion/lexer_methods_quotes.c		\
-	expansion/parsing_hist.c				\
-	expr/a.c								\
-	expr/b.c								\
-	expr/c.c								\
-	expr/d.c								\
-	expr/desc.c								\
-	expr/e.c								\
-	expr/ef.c								\
-	expr/eq.c								\
-	expr/equal.c							\
-	expr/expression.c						\
-	expr/f.c								\
-	expr/g.c								\
-	expr/g_cap.c							\
-	expr/ge.c								\
-	expr/gt.c								\
-	expr/h.c								\
-	expr/k.c								\
-	expr/l_cap.c							\
-	expr/le.c								\
-	expr/lower.c							\
-	expr/lt.c								\
-	expr/n.c								\
-	expr/n_cap.c							\
-	expr/ne.c								\
-	expr/not_equal.c						\
-	expr/nt.c								\
-	expr/o_cap.c							\
-	expr/ot.c								\
-	expr/p.c								\
-	expr/r.c								\
-	expr/s.c								\
-	expr/s_cap.c							\
-	expr/sup.c								\
-	expr/t.c								\
-	expr/u.c								\
-	expr/v.c								\
-	expr/w.c								\
-	expr/x.c								\
-	fd.c									\
-	hash.c									\
-	hash_sanitize.c							\
-	heredoc.c								\
-	history_research/algo_search.c			\
-	history_research/ctrl_keys.c			\
-	history_research/init_search.c			\
-	history_research/move_keys.c			\
-	history_research/other_movekeys.c		\
-	history_research/tools_hs.c				\
-	line_edition/autocompletion.c			\
-	line_edition/backspace.c				\
-	line_edition/cursor.c					\
-	line_edition/delete.c					\
-	line_edition/display_auto.c				\
-	line_edition/fill_line.c				\
-	line_edition/fn_keys.c					\
-	line_edition/history.c					\
-	line_edition/history_file.c				\
-	line_edition/leftkey.c					\
-	line_edition/line.c						\
-	line_edition/line_keys.c				\
-	line_edition/other_keys.c				\
-	line_edition/parsing_auto.c				\
-	line_edition/rightkey.c					\
-	line_edition/switch_mode.c				\
-	line_edition/term_mode.c				\
-	line_edition/tools_auto.c				\
-	line_edition/tools_history.c			\
-	line_edition/tools_insertion.c			\
-	line_edition/tools_keys.c				\
-	line_edition/tools_motion.c				\
-	line_edition/tools_path.c				\
-	main.c									\
-	parser/arithmetic/init.c				\
-	parser/arithmetic/lexer_actions.c		\
-	parser/arithmetic/lexer_actions_paren.c	\
-	parser/arithmetic/set_unary.c			\
-	parser/arithmetic/type.c				\
-	parser/assignement.c					\
-	parser/ast.c							\
-	parser/ast_token.c						\
-	parser/free_token.c						\
-	parser/init_lexer.c						\
-	parser/init_parser.c					\
-	parser/input_queue.c					\
-	parser/keyword.c						\
-	parser/lexer.c							\
-	parser/lexer_act.c						\
-	parser/lexer_act_escaped.c				\
-	parser/lexer_act_meta.c					\
-	parser/lexer_act_over.c					\
-	parser/lexer_act_quote.c				\
-	parser/lss.c							\
-	parser/op_prop.c						\
-	parser/parser.c							\
-	parser/parser_rules.c					\
-	parser/pss.c							\
-	parser/rules.c							\
-	parser/rules_ari.c						\
-	parser/rules_ari_decrementation.c		\
-	parser/rules_ari_incrementation.c		\
-	parser/rules_ari_mangle.c				\
-	parser/rules_ari_op.c					\
-	parser/rules_ari_usub.c					\
-	parser/rules_expr.c						\
-	parser/rules_if.c						\
-	parser/rules_if_nocd.c					\
-	parser/rules_logic.c					\
-	parser/rules_parenthesis.c				\
-	parser/rules_pipe.c						\
-	parser/rules_redir.c					\
-	parser/rules_redir_close.c				\
-	parser/rules_redir_l_comp.c				\
-	parser/rules_redir_r_both.c				\
-	parser/rules_redir_r_comp.c				\
-	parser/rules_redir_read_write.c			\
-	parser/rules_shift.c					\
-	parser/rules_shunting_yard.c			\
-	parser/rules_statement.c				\
-	parser/rules_syntax_error.c				\
-	parser/rules_while.c					\
-	parser/shunting_yard.c					\
-	parser/token.c							\
-	parser/token_type.c						\
-	parser/token_type_desc.c				\
-	parser/tools_shunting_yard.c			\
-	parser/utils.c							\
-	path.c									\
-	pipeline.c								\
-	prompt.c								\
-	propagate_pipe.c						\
-	redir.c									\
-	redir_close.c							\
-	redir_internal.c						\
-	redir_l_comp.c							\
-	redir_r_both.c							\
-	redir_r_comp.c							\
-	redir_reset.c							\
-	redir_rw.c								\
-	shell.c									\
-	signal.c								\
-	tools_fd.c								\
-	tools_heredoc.c							\
-	vars/special_vars.c						\
-	vars/var.c								\
-	vars/var_create.c						\
-	vars/var_utils.c						\
-	visual_mode/visual_mode.c				\
-	visual_mode/vm_copy.c					\
-	visual_mode/vm_cut.c					\
-	visual_mode/vm_leftkey.c				\
-	visual_mode/vm_rightkey.c				\
+SRC	=												\
+	alt_shell.c								        \
+	apply_redir_rw.c						        \
+	apply_redirs.c							        \
+	arg_file.c								        \
+	builtins/builtin_hash.c					        \
+	builtins/builtins.c						        \
+	builtins/cd.c							        \
+	builtins/echo.c							        \
+	builtins/exec_builtin.c					        \
+	builtins/exit.c							        \
+	builtins/fc.c							        \
+	builtins/fc_display.c					        \
+	builtins/fc_exec.c						        \
+	builtins/file_fc.c						        \
+	builtins/idx_fc.c						        \
+	builtins/jobs.c							        \
+	builtins/parsing_fc.c					        \
+	builtins/setenv.c						        \
+	builtins/tools_cd.c						        \
+	builtins/tools_fc.c						        \
+	builtins/tools_hash.c					        \
+	builtins/tools_type.c					        \
+	builtins/trim_path.c					        \
+	builtins/type.c							        \
+	builtins/unset.c						        \
+	builtins/unsetenv.c						        \
+	command.c								        \
+	env.c									        \
+	exec.c									        \
+	exec/and.c								        \
+	exec/arithmetic/and.c					        \
+	exec/arithmetic/cmp_eq.c				        \
+	exec/arithmetic/cmp_inf.c				        \
+	exec/arithmetic/cmp_inf_eq.c			        \
+	exec/arithmetic/cmp_not_eq.c			        \
+	exec/arithmetic/cmp_sup.c				        \
+	exec/arithmetic/cmp_sup_eq.c			        \
+	exec/arithmetic/del.c					        \
+	exec/arithmetic/div.c					        \
+	exec/arithmetic/eq.c					        \
+	exec/arithmetic/fail.c					        \
+	exec/arithmetic/mod.c					        \
+	exec/arithmetic/or.c					        \
+	exec/arithmetic/plus.c					        \
+	exec/arithmetic/plus_plus.c				        \
+	exec/arithmetic/prod.c					        \
+	exec/arithmetic/statement.c				        \
+	exec/arithmetic/sub.c					        \
+	exec/arithmetic/sub_sub.c				        \
+	exec/arithmetic/usub.c					        \
+	exec/arithmetic/utils.c					        \
+	exec/arithmetic/value.c					        \
+	exec/async.c							        \
+	exec/cmd.c								        \
+	exec/else.c								        \
+	exec/end.c								        \
+	exec/expr.c								        \
+	exec/if.c								        \
+	exec/or.c								        \
+	exec/pipeline.c							        \
+	exec/while.c							        \
+	expansion/buffer.c						        \
+	expansion/exp_ss.c						        \
+	expansion/special_param_join_args.c		        \
+	expansion/expr.c						        \
+	expansion/parsing_hist.c				        \
+	expansion/home.c						        \
+	expansion/exp_hist.c					        \
+	expansion/init.c						        \
+	expansion/lexer.c						        \
+	expansion/lexer_methods.c				        \
+	expansion/lexer_methods_ari.c			        \
+	expansion/lexer_methods_special_params.c		\
+	expansion/lexer_methods_dollar.c				\
+	expansion/lexer_methods_escaped.c		        \
+	expansion/special_params.c				        \
+	expansion/lexer_methods_over.c			        \
+	expansion/lexer_methods_proc_sub.c		        \
+	expansion/lexer_methods_quotes.c		        \
+	expansion/lexer_methods_curly_exp.c		        \
+	expansion/special_params_expansion_1.c	        \
+	expansion/special_params_expansion_2.c	        \
+	expr/a.c										\
+	expr/b.c						                \
+	expr/c.c						                \
+	expr/d.c						                \
+	expr/desc.c						                \
+	expr/e.c						                \
+	expr/ef.c						                \
+	expr/eq.c						                \
+	expr/equal.c					                \
+	expr/expression.c				                \
+	expr/f.c						                \
+	expr/g.c						                \
+	expr/g_cap.c					                \
+	expr/ge.c						                \
+	expr/gt.c						                \
+	expr/h.c						                \
+	expr/k.c						                \
+	expr/l_cap.c					                \
+	expr/le.c						                \
+	expr/lower.c					                \
+	expr/lt.c						                \
+	expr/n.c						                \
+	expr/n_cap.c					                \
+	expr/ne.c						                \
+	expr/not_equal.c				                \
+	expr/nt.c						                \
+	expr/o_cap.c					                \
+	expr/ot.c						                \
+	expr/p.c						                \
+	expr/r.c						                \
+	expr/s.c						                \
+	expr/s_cap.c					                \
+	expr/sup.c						                \
+	expr/t.c						                \
+	expr/u.c						                \
+	expr/v.c						                \
+	expr/w.c						                \
+	expr/x.c						                \
+	fd.c							                \
+	hash.c							                \
+	hash_sanitize.c					                \
+	heredoc.c						                \
+	history_research/algo_search.c					\
+	history_research/ctrl_keys.c			        \
+	history_research/init_search.c			        \
+	history_research/move_keys.c			        \
+	history_research/other_movekeys.c		        \
+	history_research/tools_hs.c				        \
+	jobs/job_print.c						        \
+	jobs/job_string.c						        \
+	jobs/job_state.c						        \
+	jobs/job_wait.c							        \
+	jobs/jobs.c								        \
+	jobs/utils.c							        \
+	line_edition/autocompletion.c			        \
+	line_edition/backspace.c				        \
+	line_edition/cursor.c					        \
+	line_edition/delete.c					        \
+	line_edition/display_auto.c				        \
+	line_edition/fill_line.c				        \
+	line_edition/fn_keys.c					        \
+	line_edition/history.c					        \
+	line_edition/history_file.c				        \
+	line_edition/leftkey.c					        \
+	line_edition/line.c						        \
+	line_edition/line_keys.c				        \
+	line_edition/other_keys.c				        \
+	line_edition/parsing_auto.c				        \
+	line_edition/rightkey.c					        \
+	line_edition/switch_mode.c				        \
+	line_edition/term_mode.c				        \
+	line_edition/tools_auto.c				        \
+	line_edition/tools_history.c			        \
+	line_edition/tools_insertion.c			        \
+	line_edition/tools_keys.c				        \
+	line_edition/tools_motion.c				        \
+	line_edition/tools_path.c				        \
+	main.c									        \
+	parser/arithmetic/init.c				        \
+	parser/arithmetic/lexer_actions.c		        \
+	parser/arithmetic/lexer_actions_paren.c	        \
+	parser/arithmetic/set_unary.c			        \
+	parser/arithmetic/type.c				        \
+	parser/assignement.c					        \
+	parser/ast.c							        \
+	parser/ast_token.c						        \
+	parser/free_token.c						        \
+	parser/init_lexer.c						        \
+	parser/init_parser.c					        \
+	parser/input_queue.c					        \
+	parser/keyword.c						        \
+	parser/lexer.c							        \
+	parser/lexer_act.c						        \
+	parser/lexer_act_escaped.c				        \
+	parser/lexer_act_meta.c					        \
+      	parser/lexer_act_meta2.c			        \
+	parser/lexer_act_over.c					        \
+	parser/lexer_act_quote.c				        \
+	parser/lss.c							        \
+	parser/op_prop.c						        \
+	parser/parser.c							        \
+	parser/parser_rules.c					        \
+	parser/pss.c							        \
+	parser/rules.c							        \
+	parser/rules_ari.c						        \
+	parser/rules_ari_decrementation.c		        \
+	parser/rules_ari_incrementation.c		        \
+	parser/rules_ari_mangle.c				        \
+	parser/rules_ari_op.c					        \
+	parser/rules_ari_usub.c					        \
+	parser/rules_expr.c						        \
+	parser/rules_if.c						        \
+	parser/rules_if_nocd.c					        \
+	parser/rules_logic.c					        \
+	parser/rules_parenthesis.c				        \
+	parser/rules_pipe.c						        \
+	parser/rules_redir.c					        \
+	parser/rules_redir_close.c				        \
+	parser/rules_redir_l_comp.c				        \
+	parser/rules_redir_r_both.c				        \
+	parser/rules_redir_r_comp.c				        \
+	parser/rules_redir_read_write.c			        \
+	parser/rules_shift.c					        \
+	parser/rules_shunting_yard.c			        \
+	parser/rules_statement.c				        \
+	parser/rules_syntax_error.c				        \
+	parser/rules_while.c					        \
+	parser/shunting_yard.c					        \
+	parser/token.c							        \
+	parser/token_type.c						        \
+	parser/token_type_desc.c				        \
+	parser/tools_shunting_yard.c			        \
+	parser/utils.c							        \
+	path.c									        \
+	pipeline.c								        \
+	prompt.c								        \
+	propagate_pipe.c						        \
+	redir.c									        \
+	redir_close.c							        \
+	redir_internal.c						        \
+	redir_l_comp.c							        \
+	redir_r_both.c							        \
+	redir_r_comp.c							        \
+	redir_reset.c							        \
+	redir_rw.c								        \
+	shell.c									        \
+	signal.c								        \
+	tools_fd.c								        \
+	tools_heredoc.c							        \
+	utils.c									        \
+	vars/special_vars.c						        \
+	vars/var.c								        \
+	vars/var_create.c						        \
+	vars/var_utils.c						        \
+	visual_mode/visual_mode.c				        \
+	visual_mode/vm_copy.c					        \
+	visual_mode/vm_cut.c					        \
+	visual_mode/vm_leftkey.c				        \
+	visual_mode/vm_rightkey.c				        \
 	wait.c
 
 SRCDIR	:=	src
@@ -271,7 +287,7 @@ include $(LIBFT_PATH)/include.mk
 CC		?=	cc
 
 INCFLAG	:= -I $(INCDIR) $(LIB_INC)
-WFLAGS	?=	-Wall -Wextra -Werror 
+WFLAGS	?=	-Wall -Wextra -Werror -g
 CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG)
 
 DEPGEN	:=	$(CC)
@@ -318,7 +334,7 @@ all:		$(NAME)
 # Program linkage
 $(NAME):	$(OBJ) | $(LIBFT_PATH)/$(LIBFT)
 	@ echo $(ONGOINGCOL)[...]$(COLRESET)"	: "$@$(MOVELINE)
-	@ $(LD) -o $(NAME) $(OBJ) $(LDFLAG) &> $(TMP) && \
+	@ $(LD) -o $(NAME) $(OBJ) $(LDFLAG) > $(TMP) && \
 		(echo $(CLEARLINE)$(LINKCOLOR)[shell]$(COLRESET)"	: created"  ; \
 			cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP)) || \
 		(echo $(CLEARLINE)$(KOCOLOR)[KO]$(COLRESET)"	: linkage fail" ; \
@@ -327,7 +343,7 @@ $(NAME):	$(OBJ) | $(LIBFT_PATH)/$(LIBFT)
 # Compilation and .d generation
 $(OBJDIR)/%.o:		$(SRCDIR)/%.c | $(OBJDIR) $(DEPDIR)
 	@ echo $(ONGOINGCOL)[...]$(COLRESET)"	: "$@$(MOVELINE)
-	@ $(CC) -c $< $(CFLAGS) -o  $@ &> $(TMP) && \
+	@ $(CC) -c $< $(CFLAGS) -o  $@ > $(TMP) && \
 		(echo $(CLEARLINE)$(COMPCOLOR)[OK]$(COLRESET)"	: "$@ ; \
 			cat $(TMP) | sed -e "s/^/    /g") || \
 		(echo $(CLEARLINE)$(KOCOLOR)[KO]$(COLRESET)"	: "$@ ; \
@@ -367,8 +383,8 @@ ffcheck:	$(NAME)
 		grep -Ev \
 			`cat .function_whitelist.txt | \
 			sed -e 's/^/\^_?/g' | sed -e 's/$$/|/g' | \
-			tr -d '\n' | sed 's/|$$//g'` &> $(TMP) ; \
-		wc -l < $(TMP) | grep -e '^\s*\0$$' &> /dev/null && \
+			tr -d '\n' | sed 's/|$$//g'` > $(TMP) ; \
+		wc -l < $(TMP) | grep -e '^\s*\0$$' > /dev/null && \
 	echo $(BGREEN)[func]$(COLRESET)"	: no forbiden functions found" || \
 	(echo $(RED)[func]$(COLRESET)"	: forbiden functions found" ; \
 		cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP))
@@ -376,7 +392,7 @@ ffcheck:	$(NAME)
 #### NORM ####
 norm:
 	@ norminette $(SRC) $(INCDIR) | \
-		(! grep -E -B 1 "(^Warning|^Error)" &> $(TMP)) && \
+		(! grep -E -B 1 "(^Warning|^Error)" > $(TMP)) && \
 		echo $(CYAN)[NORM]$(COLRESET)"	: pass, it's ok for now" || \
 		(echo $(RED)[NORM]$(COLRESET)"	: you failed miserably !" ; \
 		cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP))
@@ -410,14 +426,14 @@ rtest:	lre
 
 #### LOCAL (Don't recompile lib) ####
 lclean:
-	@ rm -r $(OBJDIR) &> /dev/null && \
+	@ rm -r $(OBJDIR) > /dev/null && \
 		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" obj ; (exit 0)
-	@ rm -r $(DEPDIR) &> /dev/null && \
+	@ rm -r $(DEPDIR) > /dev/null && \
 		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" dep ; (exit 0)
 	@ rm -rfd 21sh.dSYM
 
 lfclean: lclean
-	@ rm $(NAME) &> /dev/null && \
+	@ rm $(NAME) > /dev/null && \
 		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" $(NAME) ; (exit 0)
 
 lre: lfclean all
