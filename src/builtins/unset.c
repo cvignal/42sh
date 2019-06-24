@@ -6,9 +6,11 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 02:50:43 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/11 03:50:30 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 22:33:40 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <unistd.h>
 
 #include "shell.h"
 #include "libft.h"
@@ -38,15 +40,25 @@ static int	handle_options(const char *arg, int *options)
 static int	builtin_unset_internal(t_shell *shell, char **args, int i,
 		int options)
 {
+	int	err;
+
 	(void)options;
+	err = 0;
 	while (args[i])
 	{
-		remove_var(&shell->vars, args[i], REMOVE_VAR_ENV | REMOVE_VAR_LOCAL);
+		if (!check_var(args[i]))
+			remove_var(&shell->vars, args[i], REMOVE_VAR_ENV | REMOVE_VAR_LOCAL);
+		else
+		{
+			err = 1;
+			ft_dprintf(STDERR_FILENO, "%s: unset: %s is not a valid identifier\n",
+					EXEC_NAME, args[i]);
+		}
 		if (!ft_strcmp(args[1], "PATH"))
 			sanitize_hash(shell);
 		++i;
 	}
-	return (0);
+	return (err);
 }
 
 int			builtin_unset(t_shell *shell, char **args)
