@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/24 18:52:02 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 19:42:46 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 21:37:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static const t_test_desc	g_test_desc_unary[] =
 	{"-g", &expr_g},
 	{"-h", &expr_h},
 	{"-L", &expr_l_cap},
-	{"-n", NULL},
+	{"-n", &expr_n},
 	{"-p", &expr_p},
 	{"-r", &expr_r},
 	{"-S", &expr_s_cap},
@@ -33,7 +33,7 @@ static const t_test_desc	g_test_desc_unary[] =
 	{"-u", &expr_u},
 	{"-w", &expr_w},
 	{"-x", &expr_x},
-	{"-z", NULL}
+	{"-z", &expr_n}
 };
 
 static const t_test_desc	g_test_desc_binary[] =
