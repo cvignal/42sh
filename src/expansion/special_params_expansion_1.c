@@ -6,7 +6,7 @@
 /*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 17:18:50 by marin             #+#    #+#             */
-/*   Updated: 2019/06/24 08:40:43 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/24 21:54:19 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ int	get_special_param_num(t_shell *shell, char name)
 	arg_num = name - '0';
 	if (shell->arg_file)
 		argv = arg_num < shell->arg_file->argc ?
-			shell->arg_file->argv[arg_num] : NULL;
+			shell->arg_file->argv[arg_num] : "";
 	else
-		argv = arg_num == 0 ? "42sh" : NULL;
+		argv = arg_num == 0 ? "42sh" : "";
 	return (add_string_to_exp_buff(&shell->exp_lexer, argv));
 }
