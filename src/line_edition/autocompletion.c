@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/30 15:56:32 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/11 11:25:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	add_and_display(t_list *list, char *word, t_shell *shell)
 
 	if (list && list->next)
 	{
-		display_list(list);
+		display_list(shell, list);
 		ft_strdel(&word);
 		return ;
 	}

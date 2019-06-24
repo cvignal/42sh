@@ -58,7 +58,7 @@ t_ast		*alloc_ast(void *data, t_ttype type, t_exec exec, t_free del)
 	new_node->type = type;
 	new_node->exec = exec;
 	new_node->del = del;
-	new_node->pid = -1;
+	new_node->pid = 0;
 	new_node->ret = 0;
 	new_node->redir_list = NULL;
 	new_node->right = NULL;

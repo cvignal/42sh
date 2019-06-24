@@ -6,15 +6,21 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:33:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/10 07:35:28 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/13 16:44:41 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "libft.h"
 
-int			usage_fc(void)
+int			usage_fc(int error, char c)
 {
+	if (!error)
+		ft_dprintf(2, "%s: fc: -%c: invalid option or option mix\n"
+				, EXEC_NAME, c);
+	if (error == 1)
+		ft_dprintf(2, "%s: fc: -e: option requires an argument\n"
+				, EXEC_NAME);
 	ft_dprintf(2, "%s%s%s%s\n", FC_0, FC_1, FC_2, FC_3);
 	return (-1);
 }
@@ -41,7 +47,7 @@ static int	fc_parse_options(t_fc *cmd, char **args, int i)
 		if (!(cmd->editor = ft_strdup(args[i])))
 			return (1);
 	}
-	else if (ft_strchr(args[i], '='))
+	else if (ft_strchr(args[i], '=') && cmd->flags[0] == 's')
 	{
 		if (fc_cut_pattern(cmd, args[i]))
 			return (1);
@@ -67,6 +73,8 @@ static int	fc_parse_flags(t_fc *cmd, char **args)
 	i = 1;
 	while (args[i] && !ft_strequ(args[i], "--"))
 	{
+		if (args[i][0] == '-' && ft_isdigit(args[i][1]))
+			break ;
 		if (args[i][0] == '-')
 		{
 			j = 1;
@@ -75,11 +83,7 @@ static int	fc_parse_flags(t_fc *cmd, char **args)
 				if (fc_valid_option(args[i], j, cmd->flags))
 					cmd->flags[ft_strlen(cmd->flags)] = args[i][j];
 				else
-				{
-					ft_dprintf(2, "%s: fc: -%c: invalid option or option mix\n"
-							, EXEC_NAME, args[i][j]);
-					return (usage_fc());
-				}
+					return (usage_fc(0, args[i][j]));
 				j++;
 			}
 		}

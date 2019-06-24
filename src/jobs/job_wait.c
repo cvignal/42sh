@@ -13,6 +13,7 @@
 #include "jobs.h"
 #include "shell.h"
 #include <sys/wait.h>
+#include <unistd.h>
 
 static t_proc	*find_proc(t_shell *shell, pid_t pid, t_job **job)
 {
@@ -43,6 +44,7 @@ static void		update_proc(t_shell *shell, pid_t pid, int status)
 
 	if (!(p = find_proc(shell, pid, &j)))
 		return ;
+	j->notified = 0;
 	if (WIFEXITED(status))
 	{
 		p->done = 1;
@@ -52,6 +54,8 @@ static void		update_proc(t_shell *shell, pid_t pid, int status)
 	{
 		p->done = 1;
 		p->ret = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGINT)
+			shell->ctrlc = 1;
 	}
 	else if (WIFSTOPPED(status))
 	{
@@ -65,10 +69,12 @@ int				wait_job(t_shell *shell, t_job *job)
 {
 	pid_t	pid;
 	int		status;
+	int		options;
 
+	options = shell->is_subshell ? 0 : WUNTRACED;
 	while (!job_is_stopped(job))
 	{
-		if ((pid = waitpid(-1, &status, WUNTRACED)) < 0)
+		if ((pid = waitpid(-1, &status, options)) < 0)
 			break ;
 		update_proc(shell, pid, status);
 	}
@@ -77,17 +83,21 @@ int				wait_job(t_shell *shell, t_job *job)
 	status = job->async ? 0 : job->last->ret;
 	if (job_is_done(job))
 		free_job(shell, job);
-	else if (job->state == JOB_STOPPED)
-		report_job(shell, job, 0);
+	return (status);
+}
+
+void			job_notify(t_shell *shell)
+{
+	t_job *job;
+
 	job = shell->jobs;
 	while (job)
 	{
-		if (job_is_done(job))
-			job = report_job(shell, job, 0);
+		if (!job->notified)
+			job = report_job(shell, job, 1 | 4 | 8);
 		else
 			job = job->next;
 	}
-	return (status);
 }
 
 void			update_jobs(t_shell *shell)

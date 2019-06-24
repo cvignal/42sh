@@ -6,7 +6,7 @@
 /*   By: cvignal <cvignal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 13:50:27 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/23 12:46:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/19 14:21:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,27 @@ void	update_child(int sig)
 	update_jobs(g_shell);
 }
 
+void	resize_window(int sig)
+{
+	(void)sig;
+	t_puts("cl");
+	print_prompt(g_shell, 0);
+	if (g_shell->line.data)
+		print_line_bis(g_shell);
+	ioctl(0, TIOCGWINSZ, &g_shell->win);
+}
+
 void	disable_signal(t_shell *shell)
 {
 	g_shell = shell;
 	signal(SIGINT, prompt_signal_handler);
+	signal(SIGTSTP, SIG_IGN);
 	signal(SIGCHLD, update_child);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTERM, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
+	signal(SIGWINCH, resize_window);
 }
 
 void	enable_signal(void)
@@ -88,4 +99,5 @@ void	enable_signal(void)
 	signal(SIGTSTP, SIG_DFL);
 	signal(SIGTTIN, SIG_DFL);
 	signal(SIGTTOU, SIG_DFL);
+	signal(SIGWINCH, SIG_DFL);
 }

@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 16:13:43 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/30 16:48:28 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/11 10:50:54 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@ static void	print_special_prompt(t_shell *shell, char *str)
 {
 	t_curs			cursor;
 	int				n;
-	struct winsize	win;
 
 	if (ioctl(0, FIONREAD, &n) == 0 && n > 0)
 	{
 		ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
 			, EOC, !ft_strcmp(get_var_value(get_var(shell->vars,
-				SPECIAL_VAR_RET)), "0") ? GREEN : RED, str, EOC);
+				SPECIAL_PARAM_QMARK)), "0") ? GREEN : RED, str, EOC);
 		return ;
 	}
 	get_cursor_pos(&cursor);
@@ -35,14 +34,13 @@ static void	print_special_prompt(t_shell *shell, char *str)
 		ft_dprintf(shell->fd_op, "%s%%%s\n", INV_COLOR, EOC);
 	ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
 		, EOC, !ft_strcmp(get_var_value(get_var(shell->vars,
-			SPECIAL_VAR_RET)), "0") ? GREEN : RED, str, EOC);
-	ioctl(0, TIOCGWINSZ, &win);
-	if (win.ws_col == 0)
+			SPECIAL_PARAM_QMARK)), "0") ? GREEN : RED, str, EOC);
+	if (shell->win.ws_col == 0)
 		return ;
 	else
 	{
-		shell->prompt_len = (ft_strlen(str) + 7) % win.ws_col;
-		shell->prompt_height = (ft_strlen(str) + 7) / win.ws_col;
+		shell->prompt_len = (ft_strlen(str) + 7) % shell->win.ws_col;
+		shell->prompt_height = (ft_strlen(str) + 7) / shell->win.ws_col;
 	}
 }
 

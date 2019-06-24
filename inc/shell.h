@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/11 16:49:53 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 17:23:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define SHELL_H
 
 # include <sys/types.h>
+# include <sys/ioctl.h>
+# include <term.h>
 
 # include "parser.h"
 # include "ast.h"
@@ -47,7 +49,15 @@
 # define MAX_PATH 1024
 # define VAR_MAX 1024
 # define SEARCH_MAX 128
-# define SPECIAL_VAR_RET "?"
+
+# define SPECIAL_PARAM_AT	"@"
+# define SPECIAL_PARAM_STAR	"*"
+# define SPECIAL_PARAM_ZERO	"0"
+# define SPECIAL_PARAM_BANG	"!"
+# define SPECIAL_PARAM_HASH	"#"
+# define SPECIAL_PARAM_DOLLAR	"$"
+# define SPECIAL_PARAM_QMARK	"?"
+# define SPECIAL_PARAM_HYPHEN	"-"
 
 # define REMOVE_VAR_ENV (1 << 0)
 # define REMOVE_VAR_LOCAL (1 << 1)
@@ -134,9 +144,15 @@ typedef struct		s_shell
 	int				prompt_len;
 	int				prompt_height;
 	int				fc_cmd;
+	int				fc_rec;
+	int				is_subshell;
+	void			*last_cmd;
 	struct s_job	*jobs;
 	struct s_job	*curr;
 	struct s_job	*prev;
+	struct winsize	win;
+	struct termios	raw_term;
+	struct termios	rst_term;
 }					t_shell;
 
 struct s_redir;
@@ -237,7 +253,7 @@ char					*ft_strcjoin_free(char *s1, const char c, char *s2, int flag);
 int					exec(t_shell *shell, t_ast *instr);
 pid_t				do_exec(t_shell *shell, char **argv);
 int					exec_job(t_shell *shell, t_ast *node, struct s_job *job);
-int					wait_loop(t_shell *shell, t_ast *ast); // TODO: remove
+int					wait_loop(t_shell *shell, t_ast *ast);
 
 /*
 ** path.c
@@ -255,6 +271,13 @@ int					init_shell(t_shell *shell, const char **environ);
 */
 int					add_to_line(t_line *line, char buf);
 int					free_line(t_line *line);
+
+
+/*
+** builtins/
+*/
+int					is_special_param(char name);
+int					expand_special_params(t_shell *shell, char name);
 
 /*
 ** builtins/
@@ -294,7 +317,7 @@ t_var				*vars_to_array(t_var *vars);
 ** fc
 */
 int					builtin_fc(t_shell *shell, char **args);
-int					usage_fc(void);
+int					usage_fc(int error, char c);
 int					fc_init_args(t_fc *cmd, char **args, t_shell *shell);
 void				fc_index(t_fc *cmd, t_shell *shell);
 void				free_fc(t_fc *cmd);
@@ -307,6 +330,9 @@ void				fc_exec_ast(t_shell *shell, t_token *tokens);
 void				fc_free_shell(t_shell *shell);
 int					fc_init_shell(t_shell *shell, t_shell *old_shell);
 int					fc_find_cmd(char *str, t_array *history);
+int					fc_display(t_fc *cmd, t_shell *shell);
+int					fc_display_reverse(t_fc *cmd, t_shell *shell);
+int					fc_display_multi(char *str);
 
 /*
 ** signal.c
@@ -505,6 +531,7 @@ int					set_special_var(t_var **vars, const char *name,
 		const char *value);
 int					is_special_var(char name);
 void				set_ret(t_shell *shell, t_ast *current, int ret);
+void				set_bg_pid(t_shell *shell, pid_t pid);
 
 /*
 **	parser/rules_redir_comp_generic.c

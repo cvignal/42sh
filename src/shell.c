@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:48:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/10 22:11:37 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 17:22:44 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int			free_shell(t_shell *shell)
 	while (shell->jobs)
 		free_job(shell, shell->jobs);
 	free_shell_aux(shell);
-	reset_terminal_mode();
+	reset_terminal_mode(shell);
 	return (1);
 }
 

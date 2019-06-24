@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/11 16:23:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 17:30:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ char				*ft_replace_all(const char *src, char *old_p, char *new_p
 		, int flag);
 char				*ft_itoa(int value);
 void				ft_vswap(void *a, void *b, size_t content_size);
-void				ft_heap_sort(void *data, size_t content_size, size_t len,
+void				ft_quicksort(void *data, size_t content_size, size_t len,
 		int (*cmp)(void *, void*));
+char				*ft_strnchr(const char *s, int c, size_t len);
 
 #endif

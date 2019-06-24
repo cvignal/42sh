@@ -11,21 +11,46 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "shell.h"
 #include "jobs.h"
 #include "ast.h"
 
-static int	do_async(t_shell *shell, t_ast *node)
+static int	exec_async_subshell(t_shell *shell, t_ast *node)
 {
-	if (!(node->job = ft_memalloc(sizeof(t_job))))
+	pid_t pid;
+
+	if ((pid = fork()) == -1)
+		return (-1);
+	if (pid == 0)
+	{
+		pid = getpid();
+		setpgid(pid, pid);
+		shell->is_subshell = 1;
+		enable_signal();
+		exec_job(shell, node, NULL);
+		exit(node->ret);
+	}
+	if (!(node->job = new_job()))
 		return (-1);
 	node->job->async = 1;
-	node->ret = node->exec(shell, node);
-	if (node->job->proc)
-		node->ret = register_job(shell, node->job);
-	else
-		free(node->job);
+	node->pid = pid;
+	register_proc(node);
+	node->ret = register_job(shell, node->job);
+	return (0);
+}
+
+static int	do_exec_async(t_shell *shell, t_ast *node)
+{
+	if (node->type == TT_AND ||node->type == TT_OR)
+		return (exec_async_subshell(shell, node));
+	if (!(node->job = new_job()))
+		return (-1);
+	node->job->async = 1;
+	if (node->exec(shell, node))
+		return (-1);
+	set_ret(shell, node, register_job(shell, node->job));
 	return (0);
 }
 
@@ -33,15 +58,16 @@ int			exec_async(t_shell *shell, t_ast *ast)
 {
 	if (shell->ctrlc)
 		return (0);
-	if (ast->left)
+	if (!ast->left)
 	{
-		do_async(shell, ast->left);
-		exec_job(shell, ast->right, ast->job);
+		ast->left = ast->right;
+		ast->right = NULL;
 	}
-	else if (ast->right)
-	{
-		ast->job->async = 1;
-		exec_job(shell, ast->right, ast->job);
-	}
+	if (do_exec_async(shell, ast->left))
+		return (-1);
+	if (shell->ctrlc)
+		return (0);
+	if (ast->right)
+		return (exec_job(shell, ast->right, ast->job));
 	return (0);
 }

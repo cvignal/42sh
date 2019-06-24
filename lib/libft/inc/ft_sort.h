@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end.c                                              :+:      :+:    :+:   */
+/*   ft_sort.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/15 09:46:52 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/03 00:21:51 by gchainet         ###   ########.fr       */
+/*   Created: 2019/06/24 17:30:23 by gchainet          #+#    #+#             */
+/*   Updated: 2019/06/24 17:30:34 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#ifndef FT_SORT_H
+# define FT_SORT_H
 
-#include "shell.h"
-#include "jobs.h"
-#include "ast.h"
-
-int		exec_end(t_shell *shell, t_ast *ast)
+typedef struct		s_sort
 {
-	if (shell->ctrlc)
-		return (0);
-	if (ast->left)
-	{
-		if (exec_job(shell, ast->left, NULL))
-			return (-1);
-		if (shell->ctrlc)
-			return (0);
-	}
-	if (ast->right)
-		return (exec_job(shell, ast->right, ast->job));
-	return (0);
-}
+	int				(*cmp)(void *, void *);
+	void			*data;
+	size_t			content_size;
+	size_t			len;
+}					t_sort;
+
+#endif

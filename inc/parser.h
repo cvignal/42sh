@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 18:03:52 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/04 14:47:11 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 17:24:07 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef enum			e_lstate
 	LSTATE_ARI_ID,
 	LSTATE_ARI_OP,
 	LSTATE_PAREN,
+	LSTATE_CURLY,
 	LSTATE_ESCAPED,
 	NUMBER_LSTATE
 }						t_lstate;
@@ -193,6 +194,8 @@ int						lexer_add_meta(struct s_shell *shell,
 int						lexer_try_meta(struct s_shell *shell,
 		t_token *token, char c);
 int						lexer_push_paren(struct s_shell *shell,
+		t_token *token, char c);
+int						lexer_push_curly(struct s_shell *shell,
 		t_token *token, char c);
 int						lexer_pop_paren(struct s_shell *shell,
 		t_token *token, char c);

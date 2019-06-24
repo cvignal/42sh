@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 17:11:37 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/11 14:00:19 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/19 10:54:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,13 @@ int		fc_exec_cmd(t_fc *cmd, t_shell *shell)
 	int		ret;
 
 	shell->fc_cmd = 1;
-	if (!shell->history || !shell->history->length)
+	if (!shell->history || !shell->history->length || shell->fc_rec)
 		return (0);
 	len = ft_strlen(shell->history->data[cmd->i_first]);
-	if (cmd->old_p && cmd->new_p)
+	if (ft_strlen(cmd->old_p) && ft_strlen(cmd->new_p))
 		len += ft_imax(0, ft_strlen(cmd->new_p) - ft_strlen(cmd->old_p));
+	else if (!ft_strlen(cmd->old_p) && ft_strlen(cmd->new_p))
+		len *= ft_strlen(cmd->new_p);
 	if (!(cpy = ft_strnew(len)))
 		return (1);
 	if (cmd->old_p)
@@ -50,29 +52,26 @@ int		fc_exec_cmd(t_fc *cmd, t_shell *shell)
 	else
 		ft_strcpy(cpy, shell->history->data[cmd->i_first]);
 	ret = fc_exec_line(cpy, shell);
-	free(cpy);
 	return (ret);
 }
 
 int		fc_display(t_fc *cmd, t_shell *shell)
 {
 	int		i;
-	char	**multi_lines;
-	int		j;
 
 	i = cmd->i_first;
+	if (!shell->history || !shell->history->length)
+		return (0);
+	if (ft_strchr(cmd->flags, 'r'))
+		return (fc_display_reverse(cmd, shell));
 	while (i < shell->history->length && i <= cmd->i_last)
 	{
 		if (!ft_strchr(cmd->flags, 'n'))
 			ft_printf("%d", i);
 		if (ft_strchr(shell->history->data[i], '\n'))
 		{
-			if (!(multi_lines = ft_strsplit(shell->history->data[i], "\n")))
+			if (fc_display_multi(shell->history->data[i]))
 				return (1);
-			j = 0;
-			while (multi_lines[j])
-				ft_printf("\t%s\n", multi_lines[j++]);
-			ft_deltab(&multi_lines);
 		}
 		else
 			ft_printf("\t%s\n", shell->history->data[i]);
@@ -87,6 +86,8 @@ int		fc_edit(t_fc *cmd, t_shell *shell)
 	int			ret;
 
 	shell->fc_cmd = 1;
+	if (!shell->history || !shell->history->length || shell->fc_rec)
+		return (0);
 	if (fc_open_file(cmd, shell, &file))
 		return (1);
 	if (fc_open_editor(cmd, &file, shell))
@@ -109,6 +110,7 @@ int		builtin_fc(t_shell *shell, char **args)
 	int		ret;
 
 	ft_bzero(&cmd, sizeof(cmd));
+	ret = 0;
 	if (fc_init_args(&cmd, args, shell))
 	{
 		free_fc(&cmd);

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 00:50:40 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/11 16:56:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 17:31:35 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ t_var		*vars_to_array(t_var *vars)
 		ft_memcpy(res + i++, vars, sizeof(*vars));
 		vars = vars->next;
 	}
-	ft_heap_sort(res, sizeof(*res), len, &var_cmp);
+	ft_quicksort(res, sizeof(*res), len, &var_cmp);
 	return (res);
 }

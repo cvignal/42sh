@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/10 23:11:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 17:23:13 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static void				exec_ast(t_shell *shell, t_token *tokens)
 	parse(shell, tokens);
 	if (shell->parser.ret_status == PARSER_COMPLETE)
 	{
+		reset_terminal_mode(shell);
 		ast = shell->parser.ret;
 		exec_job(shell, ast, NULL);
 		close_everything(shell);
-		set_ret(shell, NULL, ast->ret);
 		ast->del(ast);
 		shell->parser.ret = NULL;
 	}
@@ -58,21 +58,19 @@ int						main(int ac, char **av, const char **environ)
 		return (free_shell(&shell));
 	parse_args(&shell, ac, av);
 	ret = check_validity(&shell);
-	set_special_var(&shell.vars, SPECIAL_VAR_RET, "0");
+	set_special_var(&shell.vars, SPECIAL_PARAM_BANG, "");
+	set_special_var(&shell.vars, SPECIAL_PARAM_QMARK, "0");
 	print_prompt(&shell, 0);
 	disable_signal(&shell);
 	while (!g_functions[ret].f(&shell))
 	{
-		reset_terminal_mode();
 		if (!(tokens = lex(&shell, shell.line.data)))
-		{
 			add_to_history(shell.line.data, &shell, 1);
-			print_prompt(&shell, 1);
-		}
 		else
 			exec_ast(&shell, tokens);
 		free_line(&shell.line);
-		raw_terminal_mode(&shell);
+		job_notify(&shell);
+		print_prompt(&shell, tokens ? 0 : 1);
 	}
 	builtin_exit(&shell, NULL);
 }
