@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/08 17:39:35 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/24 08:31:30 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,12 +195,12 @@ int						replace_exclamation_mark(struct s_shell *shell, int i);
 int						exp_replace_history(struct s_shell *shell, char *buf, int i);
 char					*exp_find_cmd(struct s_array *history, char *buf);
 
-int						get_special_param_at(struct s_shell *shell);
-int						get_special_param_star(struct s_shell *shell);
-int						get_special_param_dollar(struct s_shell *shell);
-int						get_special_param_hash(struct s_shell *shell);
-int						get_special_param_zero(struct s_shell *shell);
-int						get_special_param_bang(struct s_shell *shell);
-int						get_special_param_qmark(struct s_shell *shell);
+int						get_special_param_at(struct s_shell *shell, char name);
+int						get_special_param_star(struct s_shell *shell, char name);
+int						get_special_param_dollar(struct s_shell *shell, char name);
+int						get_special_param_hash(struct s_shell *shell, char name);
+int						get_special_param_num(struct s_shell *shell, char name);
+int						get_special_param_bang(struct s_shell *shell, char name);
+int						get_special_param_qmark(struct s_shell *shell, char name);
 char						*join_args(struct s_shell *shell, char separator);
 #endif
