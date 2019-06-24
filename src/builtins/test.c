@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/24 18:37:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 19:43:39 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 21:56:45 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,7 @@ int		builtin_test(t_shell *shell, char **args)
 		return (builtin_test_three_op(shell, args));
 	else if (args_len == 5)
 		return (builtin_test_four_op(shell, args));
+	else
+		return (1);
 	return (0);
 }
