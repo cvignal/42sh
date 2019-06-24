@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/01 21:15:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:37:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,9 @@ int			exec_job(t_shell *shell, t_ast *node, t_job *job)
 	node->job = job2;
 	if (node->exec(shell, node))
 		return (-1);
-	if (!job && job2->proc)
+	if (shell->last_cmd)
+		set_ret(shell, node, node->ret);
+	else if (!job && job2->proc)
 		set_ret(shell, node, register_job(shell, job2));
 	else if (!job)
 		free(job2);

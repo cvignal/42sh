@@ -1,0 +1,700 @@
+src/line_edition/autocompletion.c:	i = shell->vars;
+src/line_edition/autocompletion.c:	if (!shell->line.len)
+src/line_edition/autocompletion.c:	if ((type = is_a_command(&shell->line)) == 1)
+src/line_edition/autocompletion.c:		if (!(word = word_to_complete(&shell->line)))
+src/line_edition/autocompletion.c:			word = ft_strdup(shell->line.data);
+src/line_edition/autocompletion.c:		word = word_to_complete(&shell->line);
+src/line_edition/history.c:	while (nb_multi_lines(shell, shell->line.cursor, shell->prompt_len) > 0)
+src/line_edition/history.c:	if (ft_strchr(shell->line.data, '\n'))
+src/line_edition/history.c:		while (shell->line.cursor > 0)
+src/line_edition/history.c:	nb = shell->prompt_height;
+src/line_edition/history.c:	if (!shell->ctrld)
+src/line_edition/history.c:		print_prompt(shell, shell->output ? 1 : 0);
+src/line_edition/history.c:	if (!shell->history || !shell->history->length)
+src/line_edition/history.c:	if (shell->his_pos < shell->history->length)
+src/line_edition/history.c:		shell->his_pos++;
+src/line_edition/history.c:	free_line(&shell->line);
+src/line_edition/history.c:	if (shell->his_pos < shell->history->length)
+src/line_edition/history.c:		ft_addchar(shell, shell->history->data[shell->his_pos], 1);
+src/line_edition/history.c:	if (!shell->history || !shell->history->length)
+src/line_edition/history.c:	if (shell->his_pos > 0)
+src/line_edition/history.c:		shell->his_pos--;
+src/line_edition/history.c:	if (shell->his_pos == shell->history->length - 1)
+src/line_edition/history.c:		if (!(g_save_line = ft_strdup(shell->line.data)))
+src/line_edition/history.c:	free_line(&shell->line);
+src/line_edition/history.c:	ft_addchar(shell, shell->history->data[shell->his_pos], 1);
+src/line_edition/other_keys.c:	while (shell->line.cursor > 0)
+src/line_edition/other_keys.c:	while (shell->line.cursor < shell->line.len)
+src/line_edition/delete.c:	if (shell->line.cursor < shell->line.len)
+src/line_edition/delete.c:		shell->line.len--;
+src/line_edition/delete.c:		if (nb_multi_lines(shell, shell->line.cursor + 1, shell->prompt_len)
+src/line_edition/delete.c:				|| shell->line.data[shell->line.cursor] == '\n')
+src/line_edition/delete.c:			ft_dprintf(shell->fd_op, "%s", shell->line.data
+src/line_edition/delete.c:					+ shell->line.cursor + 1);
+src/line_edition/delete.c:		ft_del_char(shell->line.data, shell->line.cursor);
+src/line_edition/delete.c:	if (shell->line.cursor < shell->line.len)
+src/line_edition/delete.c:		while (shell->line.cursor != shell->line.len)
+src/line_edition/tools_history.c:	if (*multi_line && !shell->prev_cmd_state)
+src/line_edition/tools_history.c:		len = shell->history->length - 1;
+src/line_edition/tools_history.c:		ft_strdel(&shell->history->data[len]);
+src/line_edition/tools_history.c:		if (!(shell->history->data[len] = ft_strdup(*multi_line)))
+src/line_edition/tools_history.c:	if (ft_arrayadd(shell->history, str))
+src/line_edition/tools_history.c:	if (*multi_line && shell->prev_cmd_state)
+src/line_edition/tools_history.c:	shell->prev_cmd_state = 0;
+src/line_edition/tools_history.c:		len = shell->history->length - 1;
+src/line_edition/tools_history.c:		ft_strdel(&shell->history->data[len]);
+src/line_edition/tools_history.c:		if (!(shell->history->data[len] = ft_strdup(*multi_line)))
+src/line_edition/tools_history.c:		if (ft_arrayadd(shell->history, str))
+src/line_edition/tools_history.c:	if (check_validity(shell) || shell->fc_cmd)
+src/line_edition/tools_history.c:		shell->fc_cmd = 0;
+src/line_edition/tools_keys.c:			if (add_to_line(&shell->line, buf[i]))
+src/line_edition/line_keys.c:	width = shell->win.ws_col;
+src/line_edition/line_keys.c:	width = shell->win.ws_col;
+src/line_edition/line_keys.c:	cursor_nb = nb_multi_lines(shell, shell->line.cursor, shell->prompt_len);
+src/line_edition/line_keys.c:			back_to_startline(shell->prompt_len);
+src/line_edition/line_keys.c:		if (shell->line.cursor < (size_t)width)
+src/line_edition/line_keys.c:			shell->line.cursor = 0;
+src/line_edition/line_keys.c:			shell->line.cursor -= width;
+src/line_edition/line_keys.c:	width = shell->win.ws_col;
+src/line_edition/line_keys.c:	line_nb = nb_multi_lines(shell, shell->line.len, shell->prompt_len);
+src/line_edition/line_keys.c:	cursor_nb = nb_multi_lines(shell, shell->line.cursor, shell->prompt_len);
+src/line_edition/line_keys.c:		down_one_line(shell->line, width, shell->prompt_len
+src/line_edition/line_keys.c:		shell->line.cursor += width;
+src/line_edition/line_keys.c:		if (shell->line.cursor > shell->line.len)
+src/line_edition/line_keys.c:			shell->line.cursor = shell->line.len;
+src/line_edition/display_auto.c:	table[0] = shell->win.ws_col / (max_len + 1);
+src/line_edition/display_auto.c:		if (cursor->line + 1 > shell->win.ws_row)
+src/line_edition/display_auto.c:	if (table[3] + cursor.line > shell->win.ws_row)
+src/line_edition/display_auto.c:		nb = table[3] + cursor.line - shell->win.ws_row + 1;
+src/line_edition/history_file.c:	shell->prev_cmd_state = 0;
+src/line_edition/history_file.c:	shell->his_pos = shell->history->length;
+src/line_edition/history_file.c:	shell->ctrld = 0;
+src/line_edition/history_file.c:	shell->end_heredoc = 0;
+src/line_edition/history_file.c:	if ((shell->fd_op = open(ttyname(0), O_WRONLY)) < 0)
+src/line_edition/history_file.c:	if (dup2(shell->fd_op, new_fd) == -1)
+src/line_edition/history_file.c:	if (close(shell->fd_op) == -1)
+src/line_edition/history_file.c:	shell->fd_op = new_fd;
+src/line_edition/history_file.c:	shell->pbpaste = NULL;
+src/line_edition/history_file.c:	shell->output = NULL;
+src/line_edition/history_file.c:	shell->current = NULL;
+src/line_edition/history_file.c:	if (!(shell->history = (t_array*)malloc(sizeof(t_array))))
+src/line_edition/history_file.c:	ft_bzero(shell->history, sizeof(t_array));
+src/line_edition/history_file.c:			&& shell->history->length < HIST_SIZE_MAX)
+src/line_edition/history_file.c:			if (concat_cmd(shell->history, line))
+src/line_edition/history_file.c:				&& ft_arrayadd(shell->history, line + 13))
+src/line_edition/backspace.c:	if (shell->line.cursor > 0)
+src/line_edition/backspace.c:		shell->line.len--;
+src/line_edition/backspace.c:		curs = shell->line.cursor - 1;
+src/line_edition/backspace.c:		shell->line.cursor = 0;
+src/line_edition/backspace.c:		if (curs < shell->line.len)
+src/line_edition/backspace.c:			ft_del_char(shell->line.data, curs);
+src/line_edition/backspace.c:			shell->line.data[shell->line.len] = 0;
+src/line_edition/backspace.c:		while (shell->line.cursor < curs)
+src/line_edition/tools_insertion.c:	str = shell->line.data;
+src/line_edition/tools_insertion.c:		ft_dprintf(shell->fd_op, "%s", str);
+src/line_edition/tools_insertion.c:			ft_dprintf(shell->fd_op, "%c", (str[i] != 13 && str[i] != '\t')
+src/line_edition/tools_insertion.c:	while (i < (int)shell->line.cursor)
+src/line_edition/tools_insertion.c:		if (shell->line.data[i] == '\n')
+src/line_edition/tools_insertion.c:		ret += shell->prompt_len;
+src/line_edition/tools_insertion.c:	if (!nb_multi_lines(shell, shell->line.cursor - len, shell->prompt_len))
+src/line_edition/tools_insertion.c:		ret = shell->prompt_len + shell->line.cursor;
+src/line_edition/tools_insertion.c:		if (ft_strnchr(shell->line.data, '\n', shell->line.cursor))
+src/line_edition/tools_insertion.c:		length = (int)shell->line.cursor;
+src/line_edition/tools_insertion.c:		length -= width - shell->prompt_len;
+src/line_edition/tools_insertion.c:	curs_col = pos_cursor_col(shell, shell->win.ws_col, 1);
+src/line_edition/tools_insertion.c:	ft_dprintf(shell->fd_op, "%c", (buf != 13 && buf != '\t') ? buf : '?');
+src/line_edition/tools_insertion.c:	ft_dprintf(shell->fd_op, "%s", shell->line.data + shell->line.cursor);
+src/line_edition/tools_insertion.c:	if (curs_col == shell->win.ws_col)
+src/line_edition/tools_insertion.c:	if (!nb_multi_lines(shell, shell->line.len, shell->prompt_len)
+src/line_edition/tools_insertion.c:			|| shell->line.len == shell->line.cursor)
+src/line_edition/tools_insertion.c:		curs_col = pos_cursor_col(shell, shell->win.ws_col, 1);
+src/line_edition/tools_insertion.c:		ft_dprintf(shell->fd_op, "%c", (buf != 13 && buf != '\t') ? buf : '?');
+src/line_edition/tools_insertion.c:		if (curs_col == shell->win.ws_col)
+src/line_edition/tools_motion.c:	while (shell->line.cursor > 0 && j < shell->line.cursor - 1)
+src/line_edition/tools_motion.c:		if (shell->line.data[j] == '\n')
+src/line_edition/tools_motion.c:		else if ((j + shell->prompt_len) % shell->win.ws_col == 0)
+src/line_edition/tools_motion.c:		ret += shell->prompt_len + 1;
+src/line_edition/tools_motion.c:		while (shell->line.cursor < shell->line.len)
+src/line_edition/rightkey.c:	if (shell->line.cursor < shell->line.len)
+src/line_edition/rightkey.c:		c = shell->line.data[shell->line.cursor];
+src/line_edition/rightkey.c:		shell->line.cursor++;
+src/line_edition/rightkey.c:		curs_col = pos_cursor_col(shell, shell->win.ws_col, 0);
+src/line_edition/rightkey.c:		t_puts(shell->win.ws_col == curs_col ? "do" : "nd");
+src/line_edition/term_mode.c:	ft_memcpy(&shell->rst_term, &term, sizeof(term));
+src/line_edition/term_mode.c:	ft_memcpy(&shell->raw_term, &term, sizeof(term));
+src/line_edition/term_mode.c:	if (shell->arg_file != NULL)
+src/line_edition/term_mode.c:		set_var(&shell->vars, default_term[0], default_term[1], 1);
+src/line_edition/term_mode.c:	ioctl(0, TIOCGWINSZ, &shell->win);
+src/line_edition/term_mode.c:	shell->ctrlc = 0;
+src/line_edition/term_mode.c:	if (tcsetattr(STDIN_FILENO, TCSANOW, &shell->raw_term) == -1)
+src/line_edition/term_mode.c:	if (tcsetattr(STDIN_FILENO, TCSANOW, &shell->rst_term) == -1)
+src/line_edition/fill_line.c:	if (!shell->line.alloc_size)
+src/line_edition/fill_line.c:		shell->line.data = ft_strdup("");
+src/line_edition/fill_line.c:		free_line(&shell->line);
+src/line_edition/fill_line.c:		shell->line.data = ft_strnew(0);
+src/line_edition/fill_line.c:	if (!shell->end_heredoc)
+src/line_edition/fill_line.c:		ft_dprintf(shell->fd_op, "\n");
+src/line_edition/fill_line.c:	return (res == -1 || shell->line.data == NULL);
+src/line_edition/fill_line.c:	if (shell->history)
+src/line_edition/fill_line.c:		shell->his_pos = shell->history->length;
+src/line_edition/fn_keys.c:	i = shell->line.cursor;
+src/line_edition/fn_keys.c:	if (shell->line.cursor < shell->line.len)
+src/line_edition/fn_keys.c:		while (shell->line.data[i] != ' ' && i < shell->line.len)
+src/line_edition/fn_keys.c:		while (shell->line.data[i] == ' ' && i < shell->line.len)
+src/line_edition/fn_keys.c:	i = shell->line.cursor;
+src/line_edition/fn_keys.c:	if (shell->line.cursor > 0)
+src/line_edition/fn_keys.c:		while (shell->line.data[i] != ' ' && i > 0)
+src/line_edition/fn_keys.c:		while (shell->line.data[i] == ' ' && i > 0)
+src/line_edition/fn_keys.c:		while (shell->line.data[i] != ' ' && i > 0)
+src/line_edition/fn_keys.c:		if (shell->line.cursor > 0)
+src/line_edition/fn_keys.c:	if (!shell->ctrld && shell->line.len == 0 && !shell->output
+src/line_edition/fn_keys.c:			&& !shell->current)
+src/line_edition/fn_keys.c:	if (shell->line.len == 0)
+src/line_edition/fn_keys.c:		shell->end_heredoc = shell->ctrld;
+src/line_edition/fn_keys.c:		if (!shell->ctrld)
+src/line_edition/fn_keys.c:			clean_exit_lexer(&shell->lexer, &shell->output,
+src/line_edition/fn_keys.c:					&shell->current, NULL);
+src/line_edition/fn_keys.c:		shell->prev_cmd_state = 1;
+src/line_edition/fn_keys.c:	if (!shell->ctrld)
+src/line_edition/fn_keys.c:		clean_exit_lexer(&shell->lexer, &shell->output, &shell->current, NULL);
+src/line_edition/fn_keys.c:	free_line(&shell->line);
+src/line_edition/fn_keys.c:	ft_dprintf(shell->fd_op, "\n");
+src/line_edition/fn_keys.c:	if (shell->ctrld)
+src/line_edition/fn_keys.c:		shell->end_heredoc = 2;
+src/line_edition/fn_keys.c:	shell->prev_cmd_state = 1;
+src/line_edition/fn_keys.c:	return (shell->end_heredoc);
+src/line_edition/fn_keys.c:	if (shell->line.len)
+src/line_edition/fn_keys.c:		ft_dprintf(shell->fd_op, "%s", shell->line.data);
+src/line_edition/switch_mode.c:	if (shell->pbpaste)
+src/line_edition/switch_mode.c:		ft_addchar(shell, shell->pbpaste, 0);
+src/line_edition/leftkey.c:	if (shell->line.cursor > 0
+src/line_edition/leftkey.c:			&& shell->line.data[shell->line.cursor - 1] == '\n')
+src/line_edition/leftkey.c:		tputs(tgoto(tgetstr("cm", NULL), shell->win.ws_col - 1
+src/line_edition/leftkey.c:	curs = shell->line.cursor;
+src/line_edition/leftkey.c:	if (shell->line.cursor > 0)
+src/line_edition/leftkey.c:		if (nb_multi_lines(shell, shell->line.len + 1, shell->prompt_len)
+src/line_edition/leftkey.c:				&& shell->line.data[curs - 1] != '\n')
+src/line_edition/leftkey.c:		shell->line.cursor--;
+src/line_edition/leftkey.c:		if (shell->line.data[curs - 1] == '\n')
+src/pipeline.c:	fd = shell->used_fd;
+src/jobs/job_print.c:	if (job == shell->curr)
+src/jobs/job_print.c:	else if (job == shell->prev)
+src/jobs/job_wait.c:	j = shell->jobs;
+src/jobs/job_wait.c:			shell->ctrlc = 1;
+src/jobs/job_wait.c:	options = shell->is_subshell ? 0 : WUNTRACED;
+src/jobs/job_wait.c:	job = shell->jobs;
+src/jobs/job_wait.c:	j = shell->jobs;
+src/jobs/job_wait.c:	shell->curr = NULL;
+src/jobs/job_wait.c:	shell->prev = NULL;
+src/jobs/job_wait.c:		if (j->state == JOB_STOPPED || !shell->curr)
+src/jobs/job_wait.c:			shell->prev = shell->curr;
+src/jobs/job_wait.c:			shell->curr = j;
+src/jobs/job_wait.c:		else if (!shell->prev)
+src/jobs/job_wait.c:			shell->prev = j;
+src/jobs/jobs.c:	if (!(j = shell->jobs))
+src/jobs/jobs.c:		shell->jobs = job;
+src/jobs/job_state.c:	if (!shell->is_subshell)
+src/jobs/job_state.c:	if (!shell->is_subshell)
+src/jobs/utils.c:	if ((j = shell->jobs) == job)
+src/jobs/utils.c:		shell->jobs = job->next;
+src/jobs/utils.c:	j = shell->jobs;
+src/jobs/utils.c:		return (shell->curr);
+src/jobs/utils.c:		return (shell->prev);
+src/shell.c:	if ((shlvl = get_var(shell->vars, "SHLVL")) && shlvl->exported)
+src/shell.c:	set_var(&shell->vars, "SHLVL", new_value, 1);
+src/shell.c:	if (!shell->history)
+src/shell.c:	while (i < shell->history->length)
+src/shell.c:		ft_strdel(&shell->history->data[i]);
+src/shell.c:	if (shell->history->data)
+src/shell.c:		free(shell->history->data);
+src/shell.c:	if (shell->history)
+src/shell.c:		free(shell->history);
+src/shell.c:	lss_pop(&shell->lexer);
+src/shell.c:	pss_pop(&shell->parser);
+src/shell.c:	fd = shell->used_fd;
+src/shell.c:	free_token_list(shell->output);
+src/shell.c:	free_token_list(shell->current);
+src/shell.c:	if (shell->parser.ret)
+src/shell.c:		shell->parser.ret->del(shell->parser.ret);
+src/shell.c:		shell->parser.ret = NULL;
+src/shell.c:	exp_ss_pop(&shell->exp_lexer);
+src/shell.c:	free_vars(&shell->vars);
+src/shell.c:	free_line(&shell->line);
+src/shell.c:	if (shell->hash_table)
+src/shell.c:			if (shell->hash_table[i])
+src/shell.c:				free_hbt(shell->hash_table[i]);
+src/shell.c:		free(shell->hash_table);
+src/shell.c:	while (shell->jobs)
+src/shell.c:		free_job(shell, shell->jobs);
+src/shell.c:	shell->arg_file = NULL;
+src/shell.c:	if (init_lexer(&shell->lexer) || init_parser(&shell->parser)
+src/shell.c:			|| init_exp_lexer(&shell->exp_lexer))
+src/shell.c:	shell->hash_table = malloc(sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
+src/shell.c:	if (!shell->hash_table)
+src/shell.c:	ft_bzero(shell->hash_table, sizeof(*shell->hash_table) * HASH_TABLE_SIZE);
+src/shell.c:	ft_bzero(&shell->line, sizeof(shell->line));
+src/shell.c:	if (environ[0] && !(shell->vars = copy_env(environ)))
+src/shell.c:		free_vars(&shell->vars);
+src/hash.c:	path = find_command(shell->vars, bin);
+src/hash.c:	return (get_hbt_elem(shell, shell->hash_table + get_hash_index(elem),
+src/expansion/lexer.c:	shell->exp_lexer.split = 0;
+src/expansion/lexer.c:	ft_bzero(&shell->exp_lexer.ret, sizeof(shell->exp_lexer.ret));
+src/expansion/lexer.c:	ft_bzero(&shell->exp_lexer.state->buffer,
+src/expansion/lexer.c:			sizeof(shell->exp_lexer.state->buffer));
+src/expansion/lexer.c:	ifs = get_var_value(get_var(shell->vars, "IFS"));
+src/expansion/lexer.c:	shell->exp_lexer.ifs = ifs;
+src/expansion/lexer.c:		ret = shell->exp_lexer.methods[shell->exp_lexer.state->state]
+src/expansion/lexer.c:			return (clean_exit(&shell->exp_lexer));
+src/expansion/lexer.c:	if (shell->exp_lexer.state->buffer.buffer)
+src/expansion/lexer.c:		if (ft_arrayadd(&shell->exp_lexer.ret, shell->exp_lexer.state->buffer.buffer))
+src/expansion/lexer.c:			free(shell->exp_lexer.state->buffer.buffer);
+src/expansion/lexer.c:		free(shell->exp_lexer.state->buffer.buffer);
+src/expansion/lexer.c:	if (shell->exp_lexer.ret.data)
+src/expansion/lexer.c:		res = shell->exp_lexer.ret.data[0];
+src/expansion/lexer.c:		free(shell->exp_lexer.ret.data);
+src/expansion/lexer.c:		ft_arraymerge(&result, &shell->exp_lexer.ret);
+src/expansion/lexer.c:		free(shell->exp_lexer.ret.data);
+src/expansion/lexer_methods_escaped.c:	shell->exp_lexer.split = 0;
+src/expansion/lexer_methods_escaped.c:	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_ESCAPED))
+src/expansion/lexer_methods_escaped.c:	exp_ss_pop(&shell->exp_lexer);
+src/expansion/lexer_methods_escaped.c:	exp_ss_pop(&shell->exp_lexer);
+src/expansion/lexer_methods_dollar.c:	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_DOLLAR))
+src/expansion/lexer_methods_dollar.c:	free(exp_ss_pop(&shell->exp_lexer));
+src/expansion/lexer_methods_dollar.c:	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_VAR))
+src/expansion/lexer_methods_dollar.c:	free(exp_ss_pop(&shell->exp_lexer));
+src/expansion/lexer_methods_dollar.c:	if (add_char_to_exp_buff(&shell->exp_lexer, '$'))
+src/expansion/lexer_methods_proc_sub.c:	free(exp_ss_pop(&shell->exp_lexer));
+src/expansion/lexer_methods_proc_sub.c:	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_PROC_SUB))
+src/expansion/lexer_methods_proc_sub.c:	free(exp_ss_pop(&shell->exp_lexer));
+src/expansion/lexer_methods.c:	if (add_char_to_exp_buff(&shell->exp_lexer, c))
+src/expansion/lexer_methods.c:	if (add_char_to_exp_buff(&shell->exp_lexer, c))
+src/expansion/lexer_methods.c:	tmp = exp_ss_pop(&shell->exp_lexer);
+src/expansion/lexer_methods.c:	if (add_string_to_exp_buff(&shell->exp_lexer, tmp))
+src/expansion/lexer_methods.c:	if (add_char_to_exp_buff(&shell->exp_lexer, c))
+src/expansion/lexer_methods.c:	else if ((value = get_var_value(get_var(shell->vars , name))))
+src/expansion/lexer_methods.c:		if (add_string_to_exp_buff(&shell->exp_lexer, value))
+src/expansion/lexer_methods.c:	ret = shell->exp_lexer.state->state == EXP_STATE_VAR ? 0 : EXP_LEXER_RET_CONT;
+src/expansion/lexer_methods.c:	name = exp_ss_pop(&shell->exp_lexer);
+src/expansion/lexer_methods.c:	if (shell->exp_lexer.state->state == EXP_STATE_WORD
+src/expansion/lexer_methods.c:		shell->exp_lexer.split = 1;
+src/expansion/lexer_methods.c:	if (shell->exp_lexer.state->state == EXP_STATE_WORD)
+src/expansion/lexer_methods.c:		shell->exp_lexer.split = 0;
+src/expansion/lexer_methods.c:		shell->exp_lexer.split = 1;
+src/expansion/lexer_methods.c:	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_VAR))
+src/expansion/lexer_methods_ari.c:	free(exp_ss_pop(&shell->exp_lexer));
+src/expansion/lexer_methods_ari.c:	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_ARI)
+src/expansion/lexer_methods_ari.c:	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_ARI_PAREN))
+src/expansion/lexer_methods_ari.c:	if (add_char_to_exp_buff(&shell->exp_lexer, c))
+src/expansion/lexer_methods_ari.c:	tmp = exp_ss_pop(&shell->exp_lexer);
+src/expansion/lexer_methods_ari.c:	if (add_string_to_exp_buff(&shell->exp_lexer, tmp))
+src/expansion/lexer_methods_ari.c:	if (add_char_to_exp_buff(&shell->exp_lexer, c))
+src/expansion/lexer_methods_ari.c:	ast = shell->parser.ret;
+src/expansion/lexer_methods_ari.c:		add_string_to_exp_buff(&shell->exp_lexer, ast->data);
+src/expansion/lexer_methods_ari.c:	if (pss_push(&shell->parser, PS_ARI))
+src/expansion/lexer_methods_ari.c:	if (shell->exp_lexer.state->state == EXP_STATE_WORD
+src/expansion/lexer_methods_ari.c:		shell->exp_lexer.split = 1;
+src/expansion/lexer_methods_ari.c:		add_string_to_exp_buff(&shell->exp_lexer, "0");
+src/expansion/lexer_methods_ari.c:	shell->exp_lexer.split = 0;
+src/expansion/lexer_methods_ari.c:	if (lss_push(&shell->lexer, LSTATE_ARI_NONE))
+src/expansion/lexer_methods_ari.c:	stmt = exp_ss_pop(&shell->exp_lexer);
+src/expansion/lexer_methods_ari.c:	lss_pop(&shell->lexer);
+src/expansion/lexer_methods_special_params.c:	free(exp_ss_pop(&shell->exp_lexer));
+src/expansion/lexer_methods_special_params.c:	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_SPECIAL_PARAM))
+src/expansion/lexer_methods_special_params.c:	if (add_char_to_exp_buff(&shell->exp_lexer, c))
+src/expansion/lexer_methods_special_params.c:	name = exp_ss_pop(&shell->exp_lexer);
+src/expansion/lexer_methods_special_params.c:	if (shell->exp_lexer.state->state == EXP_STATE_WORD
+src/expansion/lexer_methods_special_params.c:		shell->exp_lexer.split = 1;
+src/expansion/lexer_methods_special_params.c:	if (shell->exp_lexer.state->state == EXP_STATE_WORD)
+src/expansion/lexer_methods_special_params.c:		shell->exp_lexer.split = 0;
+src/expansion/home.c:		return (get_var_value(get_var(shell->vars, "HOME")));
+src/expansion/home.c:			  && shell->exp_lexer.state->buffer.pos
+src/expansion/home.c:			  && shell->exp_lexer.state->buffer.buffer\
+src/expansion/home.c:			  [shell->exp_lexer.state->buffer.pos - 1] == ':')
+src/expansion/home.c:			 || (!shell->exp_lexer.ret.length
+src/expansion/home.c:				 && !shell->exp_lexer.state->buffer.pos)))
+src/expansion/home.c:		if (exp_ss_push(&shell->exp_lexer, EXP_STATE_TILDE))
+src/expansion/home.c:	else if (add_char_to_exp_buff(&shell->exp_lexer, c))
+src/expansion/home.c:	buffer = exp_ss_pop(&shell->exp_lexer);
+src/expansion/home.c:		if (add_string_to_exp_buff(&shell->exp_lexer, home))
+src/expansion/home.c:		if (add_char_to_exp_buff(&shell->exp_lexer, '~'))
+src/expansion/home.c:			if (add_string_to_exp_buff(&shell->exp_lexer, buffer))
+src/expansion/special_params_expansion_1.c:	if (shell->arg_file)
+src/expansion/special_params_expansion_1.c:		if (shell->exp_lexer.split)
+src/expansion/special_params_expansion_1.c:			while (i < shell->arg_file->argc)
+src/expansion/special_params_expansion_1.c:				if (add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++])
+src/expansion/special_params_expansion_1.c:				 ||add_string_to_exp_buff(&shell->exp_lexer, shell->exp_lexer.ifs))
+src/expansion/special_params_expansion_1.c:			while (i < shell->arg_file->argc)
+src/expansion/special_params_expansion_1.c:				if (add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++]))
+src/expansion/special_params_expansion_1.c:				if (i != shell->arg_file->argc)
+src/expansion/special_params_expansion_1.c:					add_arg_to_array(&shell->exp_lexer, 0);
+src/expansion/special_params_expansion_1.c:	if (shell->arg_file)
+src/expansion/special_params_expansion_1.c:		if (shell->exp_lexer.split)
+src/expansion/special_params_expansion_1.c:			while (i < shell->arg_file->argc)
+src/expansion/special_params_expansion_1.c:				if (add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++])
+src/expansion/special_params_expansion_1.c:				|| add_string_to_exp_buff(&shell->exp_lexer, shell->exp_lexer.ifs))
+src/expansion/special_params_expansion_1.c:			if (!(ret = join_args(shell, shell->exp_lexer.ifs[0])))
+src/expansion/special_params_expansion_1.c:			else if (add_string_to_exp_buff(&shell->exp_lexer, ret))
+src/expansion/special_params_expansion_1.c:	if (add_string_to_exp_buff(&shell->exp_lexer, pid_str)){
+src/expansion/special_params_expansion_1.c:	if (!(argc_str = ft_itoa(shell->arg_file ? shell->arg_file->argc - 1: 0)))
+src/expansion/special_params_expansion_1.c:	if (add_string_to_exp_buff(&shell->exp_lexer, argc_str))
+src/expansion/special_params_expansion_1.c:	prog_name = shell->arg_file ? shell->arg_file->argv[0] : "42sh";
+src/expansion/special_params_expansion_1.c:	return (add_string_to_exp_buff(&shell->exp_lexer, prog_name));
+src/expansion/lexer_methods_quotes.c:	shell->exp_lexer.split = 0;
+src/expansion/lexer_methods_quotes.c:	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_SQUOTE))
+src/expansion/lexer_methods_quotes.c:	shell->exp_lexer.split = 0;
+src/expansion/lexer_methods_quotes.c:	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_DQUOTE))
+src/expansion/lexer_methods_quotes.c:	value = exp_ss_pop(&shell->exp_lexer);
+src/expansion/lexer_methods_quotes.c:		if (add_string_to_exp_buff(&shell->exp_lexer, value))
+src/expansion/lexer_methods_quotes.c:		if (add_char_to_exp_buff(&shell->exp_lexer, 0))
+src/expansion/lexer_methods_quotes.c:		--shell->exp_lexer.state->buffer.pos;
+src/expansion/lexer_methods_quotes.c:		shell->exp_lexer.split = 1;
+src/expansion/exp_hist.c:	while (shell->line.data[i])
+src/expansion/exp_hist.c:		if (shell->line.data[i] == '\\' && !backslash)
+src/expansion/exp_hist.c:		else if (shell->line.data[i] == '\'' && !squote && !backslash)
+src/expansion/exp_hist.c:		else if (shell->line.data[i] == '\'' && squote && !backslash)
+src/expansion/exp_hist.c:		else if (shell->line.data[i] == '!' && !squote && !backslash)
+src/expansion/exp_hist.c:	if (shell->fc_rec)
+src/expansion/lexer_methods_curly_exp.c:	free(exp_ss_pop(&shell->exp_lexer));
+src/expansion/lexer_methods_curly_exp.c:	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_CURLY_EXP))
+src/expansion/special_params_expansion_2.c:	value = get_var_value(get_var(shell->vars , SPECIAL_PARAM_BANG));
+src/expansion/special_params_expansion_2.c:	return (add_string_to_exp_buff(&shell->exp_lexer, value));
+src/expansion/special_params_expansion_2.c:	value = get_var_value(get_var(shell->vars , SPECIAL_PARAM_QMARK));
+src/expansion/special_params_expansion_2.c:	return (add_string_to_exp_buff(&shell->exp_lexer, value));
+src/expansion/parsing_hist.c:	buf_size = buffer_size(shell->line.data, i);
+src/expansion/parsing_hist.c:	if (!(buf = ft_strsub(shell->line.data, i, buf_size + 1)))
+src/expansion/parsing_hist.c:	if (!(value = exp_find_cmd(shell->history, buf + 1)))
+src/expansion/parsing_hist.c:		shell->fc_cmd = 1;
+src/expansion/parsing_hist.c:	if (replace_in_line(&shell->line, buf, value, i))
+src/expansion/special_param_join_args.c:	size = shell->arg_file->argc;
+src/expansion/special_param_join_args.c:	while (i < shell->arg_file->argc)
+src/expansion/special_param_join_args.c:		size += ft_strlen(shell->arg_file->argv[i++]);
+src/expansion/special_param_join_args.c:	while (i < shell->arg_file->argc)
+src/expansion/special_param_join_args.c:		ft_strcat(ret, shell->arg_file->argv[i++]);
+src/expansion/special_param_join_args.c:		if (i != shell->arg_file->argc)
+src/signal.c:	if (g_shell->line.data)
+src/signal.c:	ioctl(0, TIOCGWINSZ, &g_shell->win);
+src/history_research/tools_hs.c:	ft_dprintf(shell->fd_op, "%c", c);
+src/history_research/tools_hs.c:	if (shell->his_pos == shell->history->length)
+src/history_research/tools_hs.c:	if (shell->his_pos < 0)
+src/history_research/tools_hs.c:		shell->his_pos = 0;
+src/history_research/tools_hs.c:	ft_addchar(shell, shell->history->data[shell->his_pos], 1);
+src/history_research/tools_hs.c:	while (shell->line.cursor > shell->line.curs_search)
+src/history_research/init_search.c:	len = ft_strlen(shell->line.search);
+src/history_research/init_search.c:	shell->line.search[len - 1] = 0;
+src/history_research/init_search.c:	if (shell->line.len_search < len)
+src/history_research/init_search.c:	shell->line.len_search--;
+src/history_research/init_search.c:	shell->his_pos = shell->history->length - 1;
+src/history_research/init_search.c:			shell->line.search[ft_strlen(shell->line.search)] = buf[i];
+src/history_research/init_search.c:	ft_dprintf(shell->fd_op, "(reverse-i-search)`': ");
+src/history_research/init_search.c:	ft_bzero(shell->line.search, SEARCH_MAX);
+src/history_research/init_search.c:	ft_strdel(&shell->pbpaste);
+src/history_research/init_search.c:			&& shell->line.len_search < SEARCH_MAX)
+src/history_research/algo_search.c:	ft_dprintf(shell->fd_op, "(reverse-i-search)`%.*s': "
+src/history_research/algo_search.c:			, shell->line.len_search + 1, shell->line.search);
+src/history_research/algo_search.c:	ft_dprintf(shell->fd_op, "%s", shell->history->data[i]);
+src/history_research/algo_search.c:	shell->line.curs_search = ft_strlen(shell->history->data[i]) - 1 - len;
+src/history_research/algo_search.c:	shell->line.len_search++;
+src/history_research/algo_search.c:	shell->his_pos = i;
+src/history_research/algo_search.c:	i = shell->his_pos - flag;
+src/history_research/algo_search.c:	if (i == shell->history->length)
+src/history_research/algo_search.c:	shell->line.curs_search = 0;
+src/history_research/algo_search.c:		if ((res = ft_strrstr(shell->history->data[i], shell->line.search)))
+src/arg_file.c:	if ((shell->arg_file = malloc(sizeof(t_arg_file))) == NULL)
+src/arg_file.c:	shell->arg_file->filename = av[0];
+src/arg_file.c:	shell->arg_file->argv = av;
+src/arg_file.c:	shell->arg_file->argc = ac;
+src/arg_file.c:	if (!access(shell->arg_file->filename, F_OK))
+src/arg_file.c:		if (!access(shell->arg_file->filename, R_OK))
+src/arg_file.c:			if ((shell->arg_file->fd = open(shell->arg_file->filename, O_RDONLY)) != -1)
+src/arg_file.c:	shell->fd_op = 1;
+src/arg_file.c:	shell->ctrlc = 0;
+src/arg_file.c:	if (get_next_line(shell->arg_file->fd, &line) <= 0)
+src/arg_file.c:	shell->line.data = line;
+src/arg_file.c:	shell->line.len = ft_strlen(line);
+src/arg_file.c:	shell->history = NULL;
+src/exec/pipeline.c:	if (shell->ctrlc)
+src/exec/cmd.c:	if ((found = get_var(shell->vars, name)))
+src/exec/cmd.c:		if (!(shell->exec_vars = copy_vars(shell->vars, 0)))
+src/exec/cmd.c:		if (set_assignements(shell, ast, &shell->exec_vars))
+src/exec/cmd.c:		free_vars(&shell->exec_vars);
+src/exec/cmd.c:		shell->exec_vars = shell->vars;
+src/exec/cmd.c:		shell->exec_vars = NULL;
+src/exec/cmd.c:	if (shell->ctrlc)
+src/exec/cmd.c:		if (set_assignements(shell, ast, &shell->vars))
+src/exec/arithmetic/value.c:	ast = shell->parser.ret;
+src/exec/arithmetic/value.c:	if (lss_push(&shell->lexer, LSTATE_ARI_NONE))
+src/exec/arithmetic/value.c:	lss_pop(&shell->lexer);
+src/exec/arithmetic/value.c:	shell->parser.ret = NULL;
+src/exec/arithmetic/value.c:	if (pss_push(&shell->parser, PS_ARI))
+src/exec/arithmetic/value.c:		set_rec_lvl(shell->parser.ret, rec_lvl + 1);
+src/exec/arithmetic/value.c:		if ((var = get_var_value(get_var(shell->vars, ast->data))))
+src/exec/arithmetic/sub_sub.c:	if ((var = get_var(shell->vars, ast->right->data)))
+src/exec/arithmetic/sub_sub.c:	set_var(&shell->vars, ast->right->data, res, var ? var->exported : 0);
+src/exec/arithmetic/sub_sub.c:	if ((var = get_var(shell->vars, ast->right->data)))
+src/exec/arithmetic/sub_sub.c:	set_var(&shell->vars, ast->right->data, res, var ? var->exported : 0);
+src/exec/arithmetic/statement.c:	shell->parser.ret->exec(shell, shell->parser.ret);
+src/exec/arithmetic/statement.c:	ast->ret = shell->parser.ret->ret;
+src/exec/arithmetic/statement.c:	shell->parser.ret->del(shell->parser.ret);
+src/exec/arithmetic/statement.c:	if (lss_push(&shell->lexer, LSTATE_ARI_NONE))
+src/exec/arithmetic/statement.c:	lss_pop(&shell->lexer);
+src/exec/arithmetic/statement.c:	shell->parser.ret = NULL;
+src/exec/arithmetic/statement.c:	if (pss_push(&shell->parser, PS_ARI))
+src/exec/arithmetic/eq.c:		if (set_var(&shell->vars, ast->left->data, ast->right->data, 0))
+src/exec/arithmetic/plus_plus.c:	if ((var = get_var(shell->vars, ast->right->data)))
+src/exec/arithmetic/plus_plus.c:	set_var(&shell->vars, ast->right->data, res, var ? var->exported : 0);
+src/exec/arithmetic/plus_plus.c:	if ((var = get_var(shell->vars, ast->right->data)))
+src/exec/arithmetic/plus_plus.c:	set_var(&shell->vars, ast->right->data, res, var ? var->exported : 0);
+src/exec/if.c:	if (shell->ctrlc)
+src/exec/expr.c:	if (shell->ctrlc)
+src/exec/while.c:	if (shell->ctrlc)
+src/exec/or.c:	if (shell->ctrlc)
+src/exec/async.c:		shell->is_subshell = 1;
+src/exec/async.c:	if (shell->ctrlc)
+src/exec/async.c:	if (shell->ctrlc)
+src/exec/end.c:	if (shell->ctrlc)
+src/exec/end.c:		if (shell->ctrlc)
+src/exec/and.c:	if (shell->ctrlc)
+src/exec/else.c:	if (shell->ctrlc)
+src/alt_shell.c:	shell->fd_op = 1;
+src/alt_shell.c:	shell->ctrlc = 0;
+src/alt_shell.c:	shell->line.data = line;
+src/alt_shell.c:	shell->line.len = ft_strlen(line);
+src/alt_shell.c:	shell->history = NULL;
+src/alt_shell.c:	shell->history = NULL;
+src/alt_shell.c:	shell->fd_op = 1;
+src/visual_mode/vm_leftkey.c:	while (shell->line.cursor > 0)
+src/visual_mode/vm_leftkey.c:	curs = shell->line.cursor;
+src/visual_mode/vm_leftkey.c:		tputs(tgoto(tgetstr("cm", NULL), shell->win.ws_col - 1, cursor.line - 2)
+src/visual_mode/vm_leftkey.c:	if (shell->line.cursor <= shell->line.select_curs)
+src/visual_mode/vm_leftkey.c:		ft_dprintf(shell->fd_op, "%s%c%s", INV_COLOR
+src/visual_mode/vm_leftkey.c:			, shell->line.data[curs - 1], EOC);
+src/visual_mode/vm_leftkey.c:		ft_dprintf(shell->fd_op, "%c", shell->line.data[curs - 1]);
+src/visual_mode/vm_leftkey.c:	shell->line.cursor--;
+src/visual_mode/vm_leftkey.c:	curs = shell->line.cursor;
+src/visual_mode/vm_leftkey.c:	if (curs == 0 || shell->line.data[curs - 1] == '\n')
+src/visual_mode/vm_leftkey.c:	if (nb_multi_lines(shell, shell->line.len + 1, shell->prompt_len)
+src/visual_mode/vm_leftkey.c:			&& shell->line.data[curs - 1] != '\n')
+src/visual_mode/vm_leftkey.c:	shell->line.cursor--;
+src/visual_mode/vm_leftkey.c:	if (shell->line.cursor <= shell->line.select_curs)
+src/visual_mode/vm_leftkey.c:		ft_dprintf(shell->fd_op, "%s%c%s", INV_COLOR
+src/visual_mode/vm_leftkey.c:				, shell->line.data[curs - 1], EOC);
+src/visual_mode/vm_leftkey.c:		ft_dprintf(shell->fd_op, "%c", shell->line.data[curs - 1]);
+src/visual_mode/visual_mode.c:	if (shell->line.cursor < shell->line.len)
+src/visual_mode/visual_mode.c:		ft_dprintf(shell->fd_op, "%s%c%s", INV_COLOR
+src/visual_mode/visual_mode.c:			, shell->line.data[shell->line.cursor], EOC);
+src/visual_mode/visual_mode.c:	shell->line.select_curs = shell->line.cursor;
+src/visual_mode/visual_mode.c:	if (shell->line.data)
+src/visual_mode/visual_mode.c:		ft_dprintf(g_fd_output, "%s", shell->line.data);
+src/visual_mode/visual_mode.c:	shell->line.cursor = shell->line.len;
+src/visual_mode/vm_copy.c:	if (shell->line.cursor > shell->line.select_curs)
+src/visual_mode/vm_copy.c:		begin = shell->line.select_curs;
+src/visual_mode/vm_copy.c:		end = shell->line.cursor + 1;
+src/visual_mode/vm_copy.c:		begin = shell->line.cursor;
+src/visual_mode/vm_copy.c:		end = shell->line.select_curs + 1;
+src/visual_mode/vm_copy.c:	if (shell->pbpaste)
+src/visual_mode/vm_copy.c:		ft_strdel(&shell->pbpaste);
+src/visual_mode/vm_copy.c:	if (!(shell->pbpaste = ft_strsub(shell->line.data, begin, end - begin)))
+src/visual_mode/vm_cut.c:	if (shell->line.cursor > shell->line.select_curs)
+src/visual_mode/vm_cut.c:		while (shell->line.cursor >= shell->line.select_curs)
+src/visual_mode/vm_cut.c:		while (shell->line.cursor <= shell->line.select_curs)
+src/visual_mode/vm_cut.c:			shell->line.select_curs--;
+src/visual_mode/vm_rightkey.c:	while (shell->line.cursor < shell->line.len)
+src/visual_mode/vm_rightkey.c:	if (shell->line.cursor == shell->line.len
+src/visual_mode/vm_rightkey.c:			|| shell->line.data[shell->line.cursor] == '\n')
+src/visual_mode/vm_rightkey.c:	shell->line.cursor++;
+src/visual_mode/vm_rightkey.c:	c = shell->line.data[shell->line.cursor - 1];
+src/visual_mode/vm_rightkey.c:	curs_col = pos_cursor_col(shell, shell->win.ws_col, 0);
+src/visual_mode/vm_rightkey.c:	if (shell->line.select_curs < shell->line.cursor)
+src/visual_mode/vm_rightkey.c:		ft_dprintf(shell->fd_op, "%s%c%s", INV_COLOR, c, EOC);
+src/visual_mode/vm_rightkey.c:		ft_dprintf(shell->fd_op, "%c", c);
+src/visual_mode/vm_rightkey.c:	if (curs_col == shell->win.ws_col)
+src/exec.c:		instr->job->pgid = shell->is_subshell ? getppid() : instr->pid;
+src/exec.c:	if (!instr->job->async && !shell->is_subshell)
+src/exec.c:	exit(execve(path, args, build_env(shell->exec_vars)));
+src/exec.c:	if (!(bin_path = find_command(shell->vars, argv[0])))
+src/exec.c:		exit(execve(bin_path, argv, build_env(shell->exec_vars)));
+src/exec.c:	shell->last_cmd = builtin;
+src/expr/v.c:	if (get_var(shell->vars, args[1]))
+src/prompt.c:		ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
+src/prompt.c:			, EOC, !ft_strcmp(get_var_value(get_var(shell->vars,
+src/prompt.c:		ft_dprintf(shell->fd_op, "%s%%%s\n", INV_COLOR, EOC);
+src/prompt.c:	ft_dprintf(shell->fd_op, "%s%s%s %s[ %s ]%s ", YELLOW, "\xE2\x86\xAA"
+src/prompt.c:		, EOC, !ft_strcmp(get_var_value(get_var(shell->vars,
+src/prompt.c:	if (shell->win.ws_col == 0)
+src/prompt.c:		shell->prompt_len = (ft_strlen(str) + 7) % shell->win.ws_col;
+src/prompt.c:		shell->prompt_height = (ft_strlen(str) + 7) / shell->win.ws_col;
+src/prompt.c:	if (!shell->parser.pss || shell->parser.pss->status == PARSER_MORE_INPUT
+src/prompt.c:		shell->prompt_len = 2;
+src/prompt.c:		ft_dprintf(shell->fd_op, "%s ", INCOMPLETE_INPUT_PROMPT);
+src/main.c:	if (shell->parser.ret_status == PARSER_COMPLETE)
+src/main.c:		ast = shell->parser.ret;
+src/main.c:		shell->parser.ret = NULL;
+src/main.c:	else if (shell->parser.ret_status == PARSER_ERROR)
+src/main.c:	add_to_history(shell->line.data, shell, 0);
+src/parser/parser.c:	shell->parser.pss->status = PARSER_EMPTY;
+src/parser/parser.c:	shell->parser.input_queue = tokens;
+src/parser/parser.c:	while (shell->parser.input_queue)
+src/parser/parser.c:		if ((ret = reduce(&shell->parser)) == 1)
+src/parser/parser.c:			return ((shell->parser.ret_status = clean_exit(&shell->parser)));
+src/parser/parser.c:			return ((shell->parser.ret_status = clean_exit(&shell->parser)));
+src/parser/parser.c:	if (shell->parser.pss->status == PARSER_MORE_INPUT)
+src/parser/parser.c:		return ((shell->parser.ret_status = PARSER_MORE_INPUT));
+src/parser/parser.c:	if (shell->parser.pss->state != PS_NONE)
+src/parser/parser.c:		return ((shell->parser.ret_status = get_return(&shell->parser)));
+src/parser/parser.c:	while (shell->parser.pss->op_stack)
+src/parser/parser.c:		add_to_ast_token_list(&shell->parser.pss->output_queue,
+src/parser/parser.c:				pop_ast_token(&shell->parser.pss->op_stack));
+src/parser/parser.c:	return ((shell->parser.ret_status = get_return(&shell->parser)));
+src/parser/lexer.c:			ret = shell->lexer.lexer_actions[shell->lexer.lss->state]
+src/parser/lexer.c:				[(int)input[pos]](shell, shell->current, input[pos]);
+src/parser/lexer.c:			if (handle_ret(&shell->lexer, ret, &shell->current, &shell->output))
+src/parser/lexer.c:			clean_exit_lexer(&shell->lexer, &shell->output, &shell->current
+src/parser/lexer.c:	return (get_return(&shell->output));
+src/parser/arithmetic/lexer_actions.c:	if (lss_push(&shell->lexer, state))
+src/parser/arithmetic/lexer_actions.c:	lss_pop(&shell->lexer);
+src/parser/arithmetic/lexer_actions.c:	lss_pop(&shell->lexer);
+src/parser/arithmetic/lexer_actions_paren.c:		lss_pop(&shell->lexer);
+src/parser/lexer_act_escaped.c:	if (lss_push(&shell->lexer, LSTATE_ESCAPED))
+src/parser/lexer_act_escaped.c:	lss_pop(&shell->lexer);
+src/parser/lexer_act_over.c:	lss_pop(&shell->lexer);
+src/parser/lexer_act_quote.c:	if (lss_push(&shell->lexer, LSTATE_SQUOTE))
+src/parser/lexer_act_quote.c:	if (lss_push(&shell->lexer, LSTATE_DQUOTE))
+src/parser/lexer_act_quote.c:	lss_pop(&shell->lexer);
+src/parser/lexer_act_meta.c:	type = get_token_type(token, shell->lexer.lss->state);
+src/parser/lexer_act_meta.c:		lss_pop(&shell->lexer);
+src/parser/lexer_act_meta.c:	if (lss_push(&shell->lexer, LSTATE_META))
+src/parser/lexer_act_meta.c:	if (lss_push(&shell->lexer, LSTATE_PAREN))
+src/parser/lexer_act_meta.c:	lss_pop(&shell->lexer);
+src/parser/lexer_act_meta.c:	if (shell->lexer.lss->state == LSTATE_NONE)
+src/parser/lexer_act_meta.c:		lss_pop(&shell->lexer);
+src/parser/lexer_act_meta.c:	if ((type = get_token_type(token, shell->lexer.lss->state)) != TT_WORD)
+src/parser/lexer_act_meta.c:		shell->lexer.lss->state = LSTATE_META;
+src/parser/lexer_act_meta.c:	lss_pop(&shell->lexer);
+src/parser/lexer_act.c:	lss_pop(&shell->lexer);
+src/parser/lexer_act.c:	if (lss_push(&shell->lexer, LSTATE_WORD))
+src/parser/lexer_act.c:	lss_pop(&shell->lexer);
+src/parser/lexer_act_meta2.c:	if (lss_push(&shell->lexer, LSTATE_CURLY))
+src/tools_fd.c:		shell->used_fd = hf_fd;
+src/tools_fd.c:		shell->used_fd = tty_fd;
+src/tools_fd.c:		shell->used_fd = NULL;
+src/fd.c:	iter = shell->used_fd;
+src/fd.c:	iter = shell->used_fd;
+src/fd.c:		shell->used_fd = new_fd;
+src/fd.c:	iter = shell->used_fd;
+src/fd.c:			shell->used_fd = next;
+src/fd.c:	while (shell->used_fd)
+src/fd.c:		next = shell->used_fd->next;
+src/fd.c:		if (shell->used_fd->fd == shell->fd_op)
+src/fd.c:			tty_fd = shell->used_fd;
+src/fd.c:			close(shell->used_fd->fd);
+src/fd.c:			free(shell->used_fd);
+src/fd.c:		shell->used_fd = next;
+src/fd.c:		shell->used_fd = tty_fd;
+src/builtins/exit.c:		ret = ft_atoi(get_var_value(get_var(shell->vars, SPECIAL_PARAM_QMARK)));
+src/builtins/exit.c:	if (shell->last_cmd != builtin_exit)
+src/builtins/exit.c:		job = shell->jobs;
+src/builtins/exit.c:	add_to_history(shell->line.data, shell, 0);
+src/builtins/exit.c:	if (close(shell->fd_op) == -1)
+src/builtins/fc.c:	shell->fc_cmd = 1;
+src/builtins/fc.c:	if (!shell->history || !shell->history->length || shell->fc_rec)
+src/builtins/fc.c:	len = ft_strlen(shell->history->data[cmd->i_first]);
+src/builtins/fc.c:		ft_replace_str(cpy, shell->history->data[cmd->i_first],
+src/builtins/fc.c:		ft_strcpy(cpy, shell->history->data[cmd->i_first]);
+src/builtins/fc.c:	if (!shell->history || !shell->history->length)
+src/builtins/fc.c:	while (i < shell->history->length && i <= cmd->i_last)
+src/builtins/fc.c:		if (ft_strchr(shell->history->data[i], '\n'))
+src/builtins/fc.c:			if (fc_display_multi(shell->history->data[i]))
+src/builtins/fc.c:			ft_printf("\t%s\n", shell->history->data[i]);
+src/builtins/fc.c:	shell->fc_cmd = 1;
+src/builtins/fc.c:	if (!shell->history || !shell->history->length || shell->fc_rec)
+src/builtins/set.c:	var = shell->exec_vars;
+src/builtins/idx_fc.c:			cmd->i_first = fc_find_cmd(cmd->first, shell->history);
+src/builtins/idx_fc.c:			cmd->i_first = shell->history->length - 1;
+src/builtins/idx_fc.c:			cmd->i_first = fc_find_cmd(cmd->first, shell->history);
+src/builtins/idx_fc.c:				cmd->i_first = shell->history->length >= 15
+src/builtins/idx_fc.c:					? shell->history->length - 15 : 0;
+src/builtins/idx_fc.c:				cmd->i_first = shell->history->length - 1;
+src/builtins/idx_fc.c:			cmd->i_last = fc_find_cmd(cmd->last, shell->history);
+src/builtins/idx_fc.c:					, 'l') ? shell->history->length - 1 : cmd->i_first;
+src/builtins/tools_fc.c:		ast = shell->parser.ret;
+src/builtins/tools_fc.c:		shell->parser.ret = NULL;
+src/builtins/tools_fc.c:	add_to_history(shell->line.data, shell, 0);
+src/builtins/tools_fc.c:	free_line(&shell->line);
+src/builtins/tools_fc.c:	lss_pop(&shell->lexer);
+src/builtins/tools_fc.c:	pss_pop(&shell->parser);
+src/builtins/tools_fc.c:	fd = shell->used_fd;
+src/builtins/tools_fc.c:	free_token_list(shell->output);
+src/builtins/tools_fc.c:	free_token_list(shell->current);
+src/builtins/tools_fc.c:	if (shell->parser.ret)
+src/builtins/tools_fc.c:		shell->parser.ret->del(shell->parser.ret);
+src/builtins/tools_fc.c:		shell->parser.ret = NULL;
+src/builtins/tools_fc.c:	exp_ss_pop(&shell->exp_lexer);
+src/builtins/tools_fc.c:	if (init_lexer(&shell->lexer) || init_parser(&shell->parser)
+src/builtins/tools_fc.c:			|| init_exp_lexer(&shell->exp_lexer))
+src/builtins/tools_fc.c:	shell->hash_table = old_shell->hash_table;
+src/builtins/tools_fc.c:	if (!(shell->used_fd = (t_fd *)malloc(sizeof(t_fd))))
+src/builtins/tools_fc.c:	shell->used_fd->fd = old_shell->fd_op;
+src/builtins/tools_fc.c:	shell->used_fd->is_pipe = 0;
+src/builtins/tools_fc.c:	shell->used_fd->next = NULL;
+src/builtins/tools_fc.c:	ft_bzero(&shell->line, sizeof(shell->line));
+src/builtins/tools_fc.c:	shell->vars = copy_vars(old_shell->vars, 0);
+src/builtins/tools_fc.c:	shell->exec_vars = NULL;
+src/builtins/tools_fc.c:	shell->fd_op = old_shell->fd_op;
+src/builtins/tools_fc.c:	shell->prompt_len = 0;
+src/builtins/tools_fc.c:	shell->win = old_shell->win;
+src/builtins/tools_fc.c:	shell->history = old_shell->history;
+src/builtins/tools_fc.c:	shell->fc_rec = 1;
+src/builtins/tools_fc.c:	shell->rst_term = old_shell->rst_term;
+src/builtins/tools_fc.c:	shell->raw_term = old_shell->raw_term;
+src/builtins/builtin_hash.c:	if (!shell->hash_table)
+src/builtins/builtin_hash.c:		if (shell->hash_table[i])
+src/builtins/builtin_hash.c:			print_rec_tree(shell->hash_table[i]);
+src/builtins/builtin_hash.c:	if (!shell->hash_table)
+src/builtins/builtin_hash.c:		if (shell->hash_table[i])
+src/builtins/builtin_hash.c:			free_hbt(shell->hash_table[i]);
+src/builtins/builtin_hash.c:			shell->hash_table[i] = NULL;
+src/builtins/builtin_hash.c:	if (i && shell->hash_table)
+src/builtins/jobs.c:		j = shell->jobs;
+src/builtins/jobs.c:		if (!(target = shell->curr))
+src/builtins/jobs.c:		if (!(target = shell->curr))
+src/builtins/tools_type.c:					&& (cmd = find_command(shell->exec_vars, args[i])))
+src/builtins/tools_type.c:		else if ((cmd = find_command(shell->exec_vars, args[i])))
+src/builtins/tools_type.c:			if (ft_strchr(flags, 'a') && (cmd = find_command(shell->exec_vars,
+src/builtins/tools_type.c:		else if ((cmd = find_command(shell->exec_vars, args[i])))
+src/builtins/tools_cd.c:	if ((path = get_var_value(get_var(shell->exec_vars, "CDPATH"))))
+src/builtins/fc_display.c:		if (ft_strchr(shell->history->data[i], '\n'))
+src/builtins/fc_display.c:			if (fc_display_multi(shell->history->data[i]))
+src/builtins/fc_display.c:			ft_printf("\t%s\n", shell->history->data[i]);
+src/builtins/unset.c:		remove_var(&shell->vars, args[i], REMOVE_VAR_ENV | REMOVE_VAR_LOCAL);
+src/builtins/type.c:			if (ft_strchr(flags, 'a') && (cmd = find_command(shell->exec_vars,
+src/builtins/type.c:		else if ((cmd = find_command(shell->exec_vars, args[i])))
+src/builtins/fc_exec.c:	free_vars(&shell->vars);
+src/builtins/fc_exec.c:	shell->vars = copy_vars(new_shell->vars, 0);
+src/builtins/fc_exec.c:	free_vars(&new_shell->vars);
+src/builtins/fc_exec.c:	shell->line.data = str;
+src/builtins/fc_exec.c:	shell->line.len = ft_strlen(str);
+src/builtins/fc_exec.c:	shell->line.alloc_size = ft_strlen(str) + 1;
+src/builtins/fc_exec.c:	ft_dprintf(shell->fd_op, "%s%s%s\n", ORANGE, str, EOC);
+src/builtins/fc_exec.c:		free_line(&shell->line);
+src/builtins/fc_exec.c:		shell->line.data = ft_strnew(0);
+src/builtins/file_fc.c:	if (!(file->name = fc_generate_hash(cmd, shell->history)))
+src/builtins/file_fc.c:	while (i < shell->history->length && i <= cmd->i_last)
+src/builtins/file_fc.c:		ft_dprintf(file->fd, "%s\n", shell->history->data[i++]);
+src/builtins/file_fc.c:	else if ((editor = (char *)get_var_value(get_var(shell->vars, "FCEDIT"))))
+src/builtins/file_fc.c:	else if ((editor = (char *)get_var_value(get_var(shell->vars, "EDITOR"))))
+src/builtins/export.c:		print_env_dec(shell->exec_vars);
+src/builtins/export.c:				ret = set_var_full(&shell->vars, args[i], 1);
+src/builtins/export.c:			else if ((var = get_var(shell->vars, args[i])))
+src/builtins/export.c:				ret = set_var(&shell->vars, args[i], NULL, 1);
+src/builtins/cd.c:	if (!(pwd = ft_strdup(get_var_value(get_var(shell->exec_vars, "PWD")))))
+src/builtins/cd.c:	set_var(&shell->vars, "OLDPWD", pwd, 1);
+src/builtins/cd.c:		set_var(&shell->vars, "PWD", pwd, 1);
+src/builtins/cd.c:		set_var(&shell->vars, "PWD", curpath, 1);
+src/builtins/cd.c:		if (!(pwd = ft_strdup(get_var_value(get_var(shell->exec_vars, "PWD")))))
+src/builtins/cd.c:		if (!(dir = get_var_value(get_var(shell->exec_vars, "OLDPWD"))))
+src/builtins/cd.c:	if (!(dir = get_var_value(get_var(shell->exec_vars, "HOME"))))
+src/hash_sanitize.c:		cmd = find_command(shell->vars, node->bin);
+src/hash_sanitize.c:		sanitize_hash_entry(shell, shell->hash_table[i++]);
+src/redir_internal.c:		shell->ctrlc = 1;
+src/vars/special_vars.c:		set_special_var(&shell->vars, SPECIAL_PARAM_QMARK, ret_str);
+src/vars/special_vars.c:		set_special_var(&shell->vars, SPECIAL_PARAM_BANG, ret_str);

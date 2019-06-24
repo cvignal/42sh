@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 17:23:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:02:21 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,6 +288,7 @@ int					builtin_exit(t_shell *shell, char **args);
 int					builtin_export(t_shell *shell, char **args);
 int					builtin_hash(t_shell *shell, char **args);
 int					builtin_type(t_shell *shell, char **args);
+int					builtin_test(t_shell *shell, char **args);
 int					builtin_unset(t_shell *shell, char **args);
 int					builtin_set(t_shell *shell, char **args);
 int					builtin_unsetenv(t_shell *shell, char **args);

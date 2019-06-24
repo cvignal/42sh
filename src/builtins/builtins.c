@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 12:07:42 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/10 22:12:23 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:02:11 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static const t_builtin_desc	g_builtin_desc[] =\
 	{"jobs", &builtin_jobs},
 	{"set", &builtin_set},
 	{"type", &builtin_type},
+	{"test", &builtin_test},
 	{"unset", &builtin_unset}
 };
 
