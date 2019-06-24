@@ -10,7 +10,7 @@ pipeline {
       steps {
         sh 'rm -rf 42shtester'
         sh 'gem install --user-install diffy'
-        sh 'git clone https://gitea.xanar.net/Shamoka/42shtester'
+        sh 'git clone https://github.com/Shamoka/42shtester.git'
       }
     }
     stage('test simple_quote') {
@@ -103,6 +103,11 @@ pipeline {
         stage('test signal') {
           steps {
             sh './42shtester/42shtester.rb 42sh signal'
+          }
+        }
+        stage('test test') {
+          steps {
+            sh './42shtester/42shtester.rb 42sh test'
           }
         }
       }
