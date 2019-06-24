@@ -6,7 +6,7 @@
 /*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 17:18:50 by marin             #+#    #+#             */
-/*   Updated: 2019/06/20 20:10:32 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/24 21:54:19 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 #include "expand.h"
 #include <unistd.h>
 
-int	get_special_param_at(t_shell *shell)
+int	get_special_param_at(t_shell *shell, char name)
 {
 	int	i;
 
+	(void) name;
 	i = 1;
 	if (shell->arg_file)
 	{
@@ -42,13 +43,14 @@ int	get_special_param_at(t_shell *shell)
 	return 0;
 }
 
-int	get_special_param_star(t_shell *shell)
+int	get_special_param_star(t_shell *shell, char name)
 {
 	char	*ret;
 	int	i;
 	int	retval;
 
 	retval = 0;
+	(void)name;
 	if (shell->arg_file)
 	{
 		i = 1;
@@ -71,10 +73,11 @@ int	get_special_param_star(t_shell *shell)
 	return (retval);
 }
 
-int	get_special_param_dollar(t_shell *shell)
+int	get_special_param_dollar(t_shell *shell, char name)
 {
 	char *pid_str;
 
+	(void)name;
 	if (!(pid_str = ft_itoa(getpid())))
 		return (1);
 	if (add_string_to_exp_buff(&shell->exp_lexer, pid_str)){
@@ -85,10 +88,11 @@ int	get_special_param_dollar(t_shell *shell)
 	return (0);
 }
 
-int	get_special_param_hash(t_shell *shell)
+int	get_special_param_hash(t_shell *shell, char name)
 {
 	char *argc_str;
 	
+	(void)name;
 	if (!(argc_str = ft_itoa(shell->arg_file ? shell->arg_file->argc - 1: 0)))
 		return (1);
 	if (add_string_to_exp_buff(&shell->exp_lexer, argc_str))
@@ -100,10 +104,16 @@ int	get_special_param_hash(t_shell *shell)
 	return (0);
 }
 
-int	get_special_param_zero(t_shell *shell)
+int	get_special_param_num(t_shell *shell, char name)
 {
-	const char	*prog_name;
+	const char	*argv;
+	int		arg_num;
 
-	prog_name = shell->arg_file ? shell->arg_file->argv[0] : "42sh";
-	return (add_string_to_exp_buff(&shell->exp_lexer, prog_name));
+	arg_num = name - '0';
+	if (shell->arg_file)
+		argv = arg_num < shell->arg_file->argc ?
+			shell->arg_file->argv[arg_num] : "";
+	else
+		argv = arg_num == 0 ? "42sh" : "";
+	return (add_string_to_exp_buff(&shell->exp_lexer, argv));
 }

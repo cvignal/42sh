@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 19:02:21 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 23:06:45 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,15 @@
 # define SPECIAL_PARAM_AT	"@"
 # define SPECIAL_PARAM_STAR	"*"
 # define SPECIAL_PARAM_ZERO	"0"
+# define SPECIAL_PARAM_ONE	"1"
+# define SPECIAL_PARAM_TWO	"2"
+# define SPECIAL_PARAM_THREE	"3"
+# define SPECIAL_PARAM_FOUR	"4"	 
+# define SPECIAL_PARAM_FIVE	"5"
+# define SPECIAL_PARAM_SIX	"6"
+# define SPECIAL_PARAM_SEVEN	"7"
+# define SPECIAL_PARAM_EIGHT	"8"
+# define SPECIAL_PARAM_NINE	"9"
 # define SPECIAL_PARAM_BANG	"!"
 # define SPECIAL_PARAM_HASH	"#"
 # define SPECIAL_PARAM_DOLLAR	"$"

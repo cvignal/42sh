@@ -68,6 +68,7 @@ int			register_proc(t_ast *ast)
 		ast->job->pgid = ast->pid;
 	if (ast->pid)
 		setpgid(ast->pid, ast->job->pgid);
+	(*p)->ret = ast->ret;
 	(*p)->pid = ast->pid;
 	(*p)->name = ast_to_string(ast);
 	return (0);
