@@ -74,7 +74,7 @@ int			exec(t_shell *shell, t_ast *instr)
 	if (!(builtin = is_builtin(prgm))
 		&& !(bin_path = hbt_command(shell, prgm)))
 		instr->ret = do_error_handling(prgm);
-	if (builtin && !(instr->flags & CMD_FORK) && !instr->job->async)
+	else if (builtin && !(instr->flags & CMD_FORK) && !instr->job->async)
 		instr->ret = exec_builtin(shell, builtin, instr);
 	else if ((instr->pid = fork()) == -1)
 		return (-1);
