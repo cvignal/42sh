@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 17:23:13 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 17:35:14 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static void				exec_ast(t_shell *shell, t_token *tokens)
 	else if (shell->parser.ret_status == PARSER_ERROR)
 		set_ret(shell, NULL, 2);
 	add_to_history(shell->line.data, shell, 0);
-	print_prompt(shell, 0);
 }
 
 int						main(int ac, char **av, const char **environ)
