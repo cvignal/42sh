@@ -6,59 +6,46 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/24 18:52:02 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 19:01:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:42:46 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "test.h"
-
-static int				test_debug_unary(t_shell *shell, char **args)
-{
-	(void)shell;
-	ft_printf("unary %s %s\n", args[1], args[2]);
-	return (0);
-}
-
-static int				test_debug_binary(t_shell *shell, char **args)
-{
-	(void)shell;
-	ft_printf("binary %s %s %s\n", args[1], args[2], args[3]);
-	return (0);
-}
+#include "expr.h"
 
 static const t_test_desc	g_test_desc_unary[] =
 {
-	{"-b", &test_debug_unary},
-	{"-c", &test_debug_unary},
-	{"-d", &test_debug_unary},
-	{"-e", &test_debug_unary},
-	{"-f", &test_debug_unary},
-	{"-g", &test_debug_unary},
-	{"-h", &test_debug_unary},
-	{"-L", &test_debug_unary},
-	{"-n", &test_debug_unary},
-	{"-p", &test_debug_unary},
-	{"-r", &test_debug_unary},
-	{"-S", &test_debug_unary},
-	{"-s", &test_debug_unary},
-	{"-t", &test_debug_unary},
-	{"-u", &test_debug_unary},
-	{"-w", &test_debug_unary},
-	{"-x", &test_debug_unary},
-	{"-z", &test_debug_unary}
+	{"-b", &expr_b},
+	{"-c", &expr_c},
+	{"-d", &expr_d},
+	{"-e", &expr_e},
+	{"-f", &expr_f},
+	{"-g", &expr_g},
+	{"-h", &expr_h},
+	{"-L", &expr_l_cap},
+	{"-n", NULL},
+	{"-p", &expr_p},
+	{"-r", &expr_r},
+	{"-S", &expr_s_cap},
+	{"-s", &expr_s},
+	{"-t", &expr_t},
+	{"-u", &expr_u},
+	{"-w", &expr_w},
+	{"-x", &expr_x},
+	{"-z", NULL}
 };
 
 static const t_test_desc	g_test_desc_binary[] =
 {
-	{"==", &test_debug_binary},
-	{"!=", &test_debug_binary},
-	{"-eq", &test_debug_binary},
-	{"-ne", &test_debug_binary},
-	{"-gt", &test_debug_binary},
-	{"-ge", &test_debug_binary},
-	{"-lt", &test_debug_binary},
-	{"-le", &test_debug_binary}
+	{"==", &expr_equal},
+	{"!=", &expr_not_equal},
+	{"-eq", &expr_eq},
+	{"-ne", &expr_ne},
+	{"-gt", &expr_gt},
+	{"-ge", &expr_ge},
+	{"-lt", &expr_lt},
+	{"-le", &expr_le}
 };
 
 t_test_op				get_unary_op(char *s)

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/24 18:37:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 19:03:14 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:43:39 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	builtin_test_two_op(t_shell *shell, char **args)
 	{
 		op = get_unary_op(args[1]);
 		if (op)
-			return (op(shell, args));
+			return (op(shell, args + 1));
 		return (1);
 	}
 }
@@ -44,7 +44,7 @@ static int	builtin_test_three_op(t_shell *shell, char **args)
 	{
 		op = get_binary_op(args[2]);
 		if (op)
-			return (op(shell, args));
+			return (op(shell, args + 1));
 		return (1);
 	}
 }
