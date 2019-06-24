@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 00:50:40 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 17:31:35 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 22:20:59 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 static int	var_cmp(void *a, void *b)
 {
-	return (ft_strcmp( ((t_var *)a)->var, ((t_var *)b)->var));
+	return (ft_strcmp(((t_var *)a)->var, ((t_var *)b)->var));
 }
 
 t_var		*vars_to_array(t_var *vars)
