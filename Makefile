@@ -6,460 +6,143 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/24 08:35:56 by marin            ###   ########.fr        #
+#    Updated: 2019/06/26 14:32:14 by marin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#############################
-#         VARIABLES         #
-#############################
-#### FILE STRUCTURE ####
-NAME	:=	42sh
+SRC	=	alt_shell.c apply_redir_rw.c apply_redirs.c arg_file.c		\
+		command.c env.c	exec.c	main.c	fd.c hash.c hash_sanitize.c	\
+		heredoc.c path.c pipeline.c prompt.c propagate_pipe.c redir.c	\
+		redir_close.c redir_internal.c redir_l_comp.c redir_r_both.c	\
+		redir_r_comp.c redir_reset.c redir_rw.c shell.c signal.c	\
+		tools_fd.c tools_heredoc.c utils.c wait.c			\
 
-SRC	=												\
-	alt_shell.c								        \
-	apply_redir_rw.c						        \
-	apply_redirs.c							        \
-	arg_file.c								        \
-	builtins/builtin_hash.c					        \
-	builtins/builtins.c						        \
-	builtins/cd.c							        \
-	builtins/echo.c							        \
-	builtins/exec_builtin.c					        \
-	builtins/exit.c							        \
-	builtins/fc.c							        \
-	builtins/fc_display.c					        \
-	builtins/fc_exec.c						        \
-	builtins/file_fc.c						        \
-	builtins/idx_fc.c						        \
-	builtins/jobs.c							        \
-	builtins/parsing_fc.c					        \
-	builtins/setenv.c						        \
-	builtins/tools_cd.c						        \
-	builtins/tools_fc.c						        \
-	builtins/tools_hash.c					        \
-	builtins/tools_type.c					        \
-	builtins/trim_path.c					        \
-	builtins/type.c							        \
-	builtins/unset.c						        \
-	builtins/unsetenv.c						        \
-	command.c								        \
-	env.c									        \
-	exec.c									        \
-	exec/and.c								        \
-	exec/arithmetic/and.c					        \
-	exec/arithmetic/cmp_eq.c				        \
-	exec/arithmetic/cmp_inf.c				        \
-	exec/arithmetic/cmp_inf_eq.c			        \
-	exec/arithmetic/cmp_not_eq.c			        \
-	exec/arithmetic/cmp_sup.c				        \
-	exec/arithmetic/cmp_sup_eq.c			        \
-	exec/arithmetic/del.c					        \
-	exec/arithmetic/div.c					        \
-	exec/arithmetic/eq.c					        \
-	exec/arithmetic/fail.c					        \
-	exec/arithmetic/mod.c					        \
-	exec/arithmetic/or.c					        \
-	exec/arithmetic/plus.c					        \
-	exec/arithmetic/plus_plus.c				        \
-	exec/arithmetic/prod.c					        \
-	exec/arithmetic/statement.c				        \
-	exec/arithmetic/sub.c					        \
-	exec/arithmetic/sub_sub.c				        \
-	exec/arithmetic/usub.c					        \
-	exec/arithmetic/utils.c					        \
-	exec/arithmetic/value.c					        \
-	exec/async.c							        \
-	exec/cmd.c								        \
-	exec/else.c								        \
-	exec/end.c								        \
-	exec/expr.c								        \
-	exec/if.c								        \
-	exec/or.c								        \
-	exec/pipeline.c							        \
-	exec/while.c							        \
-	expansion/buffer.c						        \
-	expansion/exp_ss.c						        \
-	expansion/special_param_join_args.c		        \
-	expansion/expr.c						        \
-	expansion/parsing_hist.c				        \
-	expansion/home.c						        \
-	expansion/exp_hist.c					        \
-	expansion/init.c						        \
-	expansion/lexer.c						        \
-	expansion/lexer_methods.c				        \
-	expansion/lexer_methods_ari.c			        \
-	expansion/lexer_methods_special_params.c		\
-	expansion/lexer_methods_dollar.c				\
-	expansion/lexer_methods_escaped.c		        \
-	expansion/special_params.c				        \
-	expansion/lexer_methods_over.c			        \
-	expansion/lexer_methods_proc_sub.c		        \
-	expansion/lexer_methods_quotes.c		        \
-	expansion/lexer_methods_curly_exp.c		        \
-	expansion/special_params_expansion_1.c	        \
-	expansion/special_params_expansion_2.c	        \
-	expr/a.c										\
-	expr/b.c						                \
-	expr/c.c						                \
-	expr/d.c						                \
-	expr/desc.c						                \
-	expr/e.c						                \
-	expr/ef.c						                \
-	expr/eq.c						                \
-	expr/equal.c					                \
-	expr/expression.c				                \
-	expr/f.c						                \
-	expr/g.c						                \
-	expr/g_cap.c					                \
-	expr/ge.c						                \
-	expr/gt.c						                \
-	expr/h.c						                \
-	expr/k.c						                \
-	expr/l_cap.c					                \
-	expr/le.c						                \
-	expr/lower.c					                \
-	expr/lt.c						                \
-	expr/n.c						                \
-	expr/n_cap.c					                \
-	expr/ne.c						                \
-	expr/not_equal.c				                \
-	expr/nt.c						                \
-	expr/o_cap.c					                \
-	expr/ot.c						                \
-	expr/p.c						                \
-	expr/r.c						                \
-	expr/s.c						                \
-	expr/s_cap.c					                \
-	expr/sup.c						                \
-	expr/t.c						                \
-	expr/u.c						                \
-	expr/v.c						                \
-	expr/w.c						                \
-	expr/x.c						                \
-	fd.c							                \
-	hash.c							                \
-	hash_sanitize.c					                \
-	heredoc.c						                \
-	history_research/algo_search.c					\
-	history_research/ctrl_keys.c			        \
-	history_research/init_search.c			        \
-	history_research/move_keys.c			        \
-	history_research/other_movekeys.c		        \
-	history_research/tools_hs.c				        \
-	jobs/job_print.c						        \
-	jobs/job_string.c						        \
-	jobs/job_state.c						        \
-	jobs/job_wait.c							        \
-	jobs/jobs.c								        \
-	jobs/utils.c							        \
-	line_edition/autocompletion.c			        \
-	line_edition/backspace.c				        \
-	line_edition/cursor.c					        \
-	line_edition/delete.c					        \
-	line_edition/display_auto.c				        \
-	line_edition/fill_line.c				        \
-	line_edition/fn_keys.c					        \
-	line_edition/history.c					        \
-	line_edition/history_file.c				        \
-	line_edition/leftkey.c					        \
-	line_edition/line.c						        \
-	line_edition/line_keys.c				        \
-	line_edition/other_keys.c				        \
-	line_edition/parsing_auto.c				        \
-	line_edition/rightkey.c					        \
-	line_edition/switch_mode.c				        \
-	line_edition/term_mode.c				        \
-	line_edition/tools_auto.c				        \
-	line_edition/tools_history.c			        \
-	line_edition/tools_insertion.c			        \
-	line_edition/tools_keys.c				        \
-	line_edition/tools_motion.c				        \
-	line_edition/tools_path.c				        \
-	main.c									        \
-	parser/arithmetic/init.c				        \
-	parser/arithmetic/lexer_actions.c		        \
-	parser/arithmetic/lexer_actions_paren.c	        \
-	parser/arithmetic/set_unary.c			        \
-	parser/arithmetic/type.c				        \
-	parser/assignement.c					        \
-	parser/ast.c							        \
-	parser/ast_token.c						        \
-	parser/free_token.c						        \
-	parser/init_lexer.c						        \
-	parser/init_parser.c					        \
-	parser/input_queue.c					        \
-	parser/keyword.c						        \
-	parser/lexer.c							        \
-	parser/lexer_act.c						        \
-	parser/lexer_act_escaped.c				        \
-	parser/lexer_act_meta.c					        \
-      	parser/lexer_act_meta2.c			        \
-	parser/lexer_act_over.c					        \
-	parser/lexer_act_quote.c				        \
-	parser/lss.c							        \
-	parser/op_prop.c						        \
-	parser/parser.c							        \
-	parser/parser_rules.c					        \
-	parser/pss.c							        \
-	parser/rules.c							        \
-	parser/rules_ari.c						        \
-	parser/rules_ari_decrementation.c		        \
-	parser/rules_ari_incrementation.c		        \
-	parser/rules_ari_mangle.c				        \
-	parser/rules_ari_op.c					        \
-	parser/rules_ari_usub.c					        \
-	parser/rules_expr.c						        \
-	parser/rules_if.c						        \
-	parser/rules_if_nocd.c					        \
-	parser/rules_logic.c					        \
-	parser/rules_parenthesis.c				        \
-	parser/rules_pipe.c						        \
-	parser/rules_redir.c					        \
-	parser/rules_redir_close.c				        \
-	parser/rules_redir_l_comp.c				        \
-	parser/rules_redir_r_both.c				        \
-	parser/rules_redir_r_comp.c				        \
-	parser/rules_redir_read_write.c			        \
-	parser/rules_shift.c					        \
-	parser/rules_shunting_yard.c			        \
-	parser/rules_statement.c				        \
-	parser/rules_syntax_error.c				        \
-	parser/rules_while.c					        \
-	parser/shunting_yard.c					        \
-	parser/token.c							        \
-	parser/token_type.c						        \
-	parser/token_type_desc.c				        \
-	parser/tools_shunting_yard.c			        \
-	parser/utils.c							        \
-	path.c									        \
-	pipeline.c								        \
-	prompt.c								        \
-	propagate_pipe.c						        \
-	redir.c									        \
-	redir_close.c							        \
-	redir_internal.c						        \
-	redir_l_comp.c							        \
-	redir_r_both.c							        \
-	redir_r_comp.c							        \
-	redir_reset.c							        \
-	redir_rw.c								        \
-	shell.c									        \
-	signal.c								        \
-	tools_fd.c								        \
-	tools_heredoc.c							        \
-	utils.c									        \
-	vars/special_vars.c						        \
-	vars/var.c								        \
-	vars/var_create.c						        \
-	vars/var_utils.c						        \
-	visual_mode/visual_mode.c				        \
-	visual_mode/vm_copy.c					        \
-	visual_mode/vm_cut.c					        \
-	visual_mode/vm_leftkey.c				        \
-	visual_mode/vm_rightkey.c				        \
-	wait.c
+SRC	+=	$(addprefix builtins/, 					\
+		builtin_hash.c builtins.c cd.c echo.c exec_builtin.c	\
+		exit.c	fc.c fc_display.c fc_exec.c file_fc.c idx_fc.c  \
+		jobs.c parsing_fc.c setenv.c tools_cd.c	tools_fc.c	\
+		tools_hash.c tools_type.c trim_path.c type.c unset.c	\
+		unsetenv.c					        \
+		)
+SRC	+=	$(addprefix exec/,					\
+		and.c async.c cmd.c else.c end.c expr.c if.c	or.c 	\
+		pipeline.c while.c					\
+		$(addprefix arithmetic/,					\
+			and.c cmp_eq.c cmp_inf.c cmp_inf_eq.c cmp_not_eq.c cmp_sup.c		\
+			cmp_sup_eq.c del.c div.c eq.c fail.c mod.c or.c plus.c plus_plus.c 	\
+			prod.c statement.c sub.c sub_sub.c usub.c utils.c value.c		\
+			)							\
+		)
 
-SRCDIR	:=	src
-OBJDIR	:=	obj
-DEPDIR	:=	dep
-INCDIR	:=	inc
-LIBDIR	:=	lib
+SRC	+=	$(addprefix expansion/,							\
+		buffer.c exp_ss.c special_param_join_args.c expr.c			\
+		parsing_hist.c home.c exp_hist.c init.c lexer.c				\
+		lexer_methods.c lexer_methods_ari.c lexer_methods_special_params.c	\
+		lexer_methods_dollar.c lexer_methods_escaped.c special_params.c		\
+		lexer_methods_over.c lexer_methods_proc_sub.c lexer_methods_quotes.c	\
+		lexer_methods_curly_exp.c special_params_expansion_1.c			\
+		special_params_expansion_2.c						\
+		)
 
-# File used as a command output buffer
-TMP		:=	.tmp.txt
+SRC	+=	$(addprefix expr/,						\
+		a.c b.c c.c d.c desc.c e.c ef.c eq.c equal.c			\
+		expression.c f.c g.c g_cap.c ge.c gt.c h.c k.c			\
+		l_cap.c le.c lower.c lt.c n.c n_cap.c ne.c not_equal.c		\
+		nt.c o_cap.c ot.c p.c r.c s.c s_cap.c sup.c t.c			\
+		u.c v.c w.c x.c							\
+		)
 
-## *LOCA is the list of all subdirectory in a directory
-SRCLOCA	:=	$(shell find $(SRCDIR) -type d)
-OBJLOCA	:=	$(subst $(SRCDIR), $(OBJDIR), $(SRCLOCA))
-DEPLOCA	:=	$(subst $(SRCDIR), $(DEPDIR), $(SRCLOCA))
+SRC	+=	$(addprefix history_research/,				\
+		algo_search.c ctrl_keys.c init_search.c move_keys.c	\
+		other_movekeys.c tools_hs.c				\
+		)
+SRC	+=	$(addprefix jobs/,					\
+		job_print.c job_string.c job_state.c job_wait.c		\
+		jobs.c utils.c						\
+		)
+SRC	+=	$(addprefix line_edition/,					\
+		autocompletion.c backspace.c cursor.c delete.c display_auto.c	\
+		fill_line.c fn_keys.c history.c history_file.c leftkey.c	\
+		line.c line_keys.c other_keys.c parsing_auto.c rightkey.c	\
+		switch_mode.c term_mode.c tools_auto.c tools_history.c		\
+		tools_insertion.c tools_keys.c tools_motion.c tools_path.c	\
+		)
+SRC	+=	$(addprefix parser/,								\
+		ast.c ast_token.c free_token.c init_lexer.c init_parser.c				\
+		input_queue.c keyword.c lexer.c lexer_act.c lexer_act_escaped.c				\
+		lexer_act_meta.c lexer_act_meta2.c lexer_act_over.c lexer_act_quote.c			\
+		lss.c op_prop.c parser.c parser_rules.c pss.c rules.c rules_ari.c			\
+		rules_ari_decrementation.c rules_ari_incrementation.c rules_ari_mangle.c		\
+		rules_ari_op.c rules_ari_usub.c rules_expr.c rules_if.c rules_if_nocd.c			\
+		rules_logic.c rules_parenthesis.c rules_pipe.c rules_redir.c rules_redir_close.c	\
+		rules_redir_l_comp.c rules_redir_r_both.c rules_redir_r_comp.c				\
+		rules_redir_read_write.c rules_shift.c rules_shunting_yard.c rules_statement.c		\
+		rules_syntax_error.c rules_while.c shunting_yard.c token.c token_type.c			\
+		token_type_desc.c tools_shunting_yard.c utils.c assignement.c				\
+		$(addprefix arithmetic/,								\
+			init.c lexer_actions.c lexer_actions_paren.c set_unary.c			\
+			type.c										\
+		)											\
+		)
 
-OBJ		:=	$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
-DEP		:=	$(addprefix $(DEPDIR)/, $(SRC:.c=.d))
-SRC		:=	$(addprefix $(SRCDIR)/, $(SRC))
+SRC	+=	$(addprefix vars/,			\
+		special_vars.c var.c var_create.c var_utils.c	\
+		)
+	
+SRC	+=	$(addprefix visual_mode/,			\
+		visual_mode.c vm_copy.c vm_cut.c vm_leftkey.c	\
+		vm_rightkey.c					\
+		)
 
-#### LIBRARY ####
-# Libft
-LIBFT_PATH	:= $(LIBDIR)/libft
-include $(LIBFT_PATH)/include.mk
+NAME		:=	42sh
 
-#### COMPILER ####
-CC		?=	cc
+LIBFTDIR	:=	lib/libft
+SRCDIR		:=	src
+INCDIR		:=	inc
+OBJDIR		:=	obj
+DEPDIR		:=	dep
 
-INCFLAG	:= -I $(INCDIR) $(LIB_INC)
-WFLAGS	?=	-Wall -Wextra -Werror -g
-CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG)
 
-DEPGEN	:=	$(CC)
-DEPFLAG	:=	-MM $(INCFLAG)
+CC		:=	cc
+LD		:=	cc
+DEPGEN		:=	cc
+RM		:=	rm -rf
 
-LD		:=	$(CC)
-LDFLAG	:=	$(LIB_LINK) -ltermcap
+CFLAGS		:=	-Wall -Werror -Wextra -ggdb
+LDFLAGS		:=	-L $(LIBFTDIR) -lft -ltermcap
+IFLAGS		:=	-I $(INCDIR) -I $(LIBFTDIR)/$(INCDIR)
+DFLAGS		:=	-MM $(IFLAGS)
 
-# Fill the variable if the command exist, note &> does not work
-CLANG_INSTALLED	:= $(shell which clang > /dev/null 2> /dev/null && echo yes)
+OBJ			:=	$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
+DEP			:=	$(addprefix $(DEPDIR)/, $(SRC:.c=.d))
+SRC			:=	$(addprefix $(SRCDIR)/, $(SRC))
 
-#############################
-#          COLORS           #
-#############################
-ifdef TERM
-RED			:=	"\033[1;31m"
-GREEN		:=	"\033[0;32m"
-BGREEN		:=	"\033[1;32m"
-BLUE		:=	"\033[0;34m"
-YELLOW		:=	"\033[0;33m"
-PURPLE		:=	"\033[0;35m"
-CYAN		:=	"\033[0;36m"
-GREY		:=	"\033[0;37m"
-# When printed reset the color
-COLRESET	:=	"\033[0m"
-endif
+$(NAME):	 $(DEPDIR) $(OBJDIR) $(OBJ)
+	make -C $(LIBFTDIR)
+	$(LD) -o $(NAME) $(OBJ) $(LDFLAGS) 
 
-COMPCOLOR	:=	$(GREEN)
-LINKCOLOR	:=	$(PURPLE)
-ONGOINGCOL	:=	$(YELLOW)
-KOCOLOR		:=	$(RED)
-RMCOLOR		:=	$(GREY)
 
-MOVELINE	:=	"\033[1A"
-CLEARLINE	:=	"\033[K"
+$(OBJDIR)/%.o:	$(SRCDIR)/%.c
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+	$(DEPGEN) $(DFLAGS) -c $< -MQ $@ > $(subst $(SRCDIR), $(DEPDIR), $(<:.c=.d))
 
-#############################
-#           RULES           #
-#############################
-#### COMPILE ####
-# Standard rule used when just calling $> make
+$(OBJDIR):
+	mkdir -p $(dir $(OBJ)) $(dir $(DEP))
+
+$(DEPDIR):
+	mkdir -p $(DEPDIR)
+
 all:		$(NAME)
 
-# Program linkage
-$(NAME):	$(OBJ) | $(LIBFT_PATH)/$(LIBFT)
-	@ echo $(ONGOINGCOL)[...]$(COLRESET)"	: "$@$(MOVELINE)
-	@ $(LD) -o $(NAME) $(OBJ) $(LDFLAG) > $(TMP) && \
-		(echo $(CLEARLINE)$(LINKCOLOR)[shell]$(COLRESET)"	: created"  ; \
-			cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP)) || \
-		(echo $(CLEARLINE)$(KOCOLOR)[KO]$(COLRESET)"	: linkage fail" ; \
-			cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP) ; exit 1)
+clean:
+	$(RM) $(OBJDIR)
+	$(RM) $(DEPDIR)
 
-# Compilation and .d generation
-$(OBJDIR)/%.o:		$(SRCDIR)/%.c | $(OBJDIR) $(DEPDIR)
-	@ echo $(ONGOINGCOL)[...]$(COLRESET)"	: "$@$(MOVELINE)
-	@ $(CC) -c $< $(CFLAGS) -o  $@ > $(TMP) && \
-		(echo $(CLEARLINE)$(COMPCOLOR)[OK]$(COLRESET)"	: "$@ ; \
-			cat $(TMP) | sed -e "s/^/    /g") || \
-		(echo $(CLEARLINE)$(KOCOLOR)[KO]$(COLRESET)"	: "$@ ; \
-			cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP) ; exit 1)
-	@ $(DEPGEN) -c $< $(DEPFLAG) -MQ $@ \
-		> $(subst $(SRCDIR), $(DEPDIR), $(<:.c=.d))
+fclean:		clean
+	$(RM) $(NAME)
 
-# Lib Compilation
-$(LIBFT_PATH)/$(LIBFT):
-	@ echo $(ONGOINGCOL)[...]$(COLRESET)"	: "$@$(MOVELINE)
-	@ $(MAKE) -C $(LIBFT_PATH) --no-print-directory > $(TMP) 2> $(TMP) && \
-		(echo $(CLEARLINE)$(CYAN)[OK]$(COLRESET)"	: "$@ ; rm $(TMP)) || \
-		(echo $(CLEARLINE)$(KOCOLOR)[KO]$(COLRESET)"	: "$@ ; \
-			cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP) ; exit 1)
+re:			fclean $(NAME)
 
-# Dir created to store .d and .o
-$(OBJDIR):
-	@ mkdir -p $(OBJLOCA)
-$(DEPDIR):
-	@ mkdir -p $(DEPLOCA)
-
-# Recompile with as much warning as possible
-warn:	WFLAGS := -Wall -Wextra -ansi -Wpedantic -Wno-vla
-# If clang is installed also add this exclusive warning
-ifdef CLANG_INSTALLED
-warn:	CC := clang
-warn:	WFLAGS += -Weverything
-endif
-warn:	lre
-
-#### FORBIDEN FUNCTION ####
-# Check forbiden funcion call
-# All functions listed in .function_whitelist.txt are authorised
-ffcheck:	$(NAME)
-	@ nm -u $(NAME) | \
-		sed -e 's/^\s*U\s//g' | grep -Ev '^\s*w\s|^__|dyld_stub_binder' | \
-		grep -Ev \
-			`cat .function_whitelist.txt | \
-			sed -e 's/^/\^_?/g' | sed -e 's/$$/|/g' | \
-			tr -d '\n' | sed 's/|$$//g'` > $(TMP) ; \
-		wc -l < $(TMP) | grep -e '^\s*\0$$' > /dev/null && \
-	echo $(BGREEN)[func]$(COLRESET)"	: no forbiden functions found" || \
-	(echo $(RED)[func]$(COLRESET)"	: forbiden functions found" ; \
-		cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP))
-
-#### NORM ####
-norm:
-	@ norminette $(SRC) $(INCDIR) | \
-		(! grep -E -B 1 "(^Warning|^Error)" > $(TMP)) && \
-		echo $(CYAN)[NORM]$(COLRESET)"	: pass, it's ok for now" || \
-		(echo $(RED)[NORM]$(COLRESET)"	: you failed miserably !" ; \
-		cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP))
-
-sure: warn ffcheck norm
-
-#### DEBUGING ####
-# Change warning flag to debug and local recompile
-debug:	WFLAGS	+= -g3 -ggdb
-debug:	all
-
-rdebug:	WFLAGS	+= -g3 -ggdb
-rdebug:	lre
-
-fsan:	WFLAGS	:= -g -fsanitize=address
-fsan:	LDFLAG	+= -fsanitize=address
-fsan:	all
-
-rfsan:	WFLAGS	:= -g -fsanitize=address
-fsan:	LDFLAG	+= -fsanitize=address
-rfsan:	lre
-
-#### TESTS ####
-# Use when you have some error and just want to rest
-test:	WFLAGS :=
-test:	all
-
-# Test with everything recompile
-rtest:	WFLAGS :=
-rtest:	lre
-
-#### LOCAL (Don't recompile lib) ####
-lclean:
-	@ rm -r $(OBJDIR) > /dev/null && \
-		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" obj ; (exit 0)
-	@ rm -r $(DEPDIR) > /dev/null && \
-		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" dep ; (exit 0)
-	@ rm -rfd 21sh.dSYM
-
-lfclean: lclean
-	@ rm $(NAME) > /dev/null && \
-		echo $(RMCOLOR)[CLR]$(COLRESET)"	:" $(NAME) ; (exit 0)
-
-lre: lfclean all
-
-#### MANDATORY ####
-clean: lclean
-	@ rm -f $(TMP)
-	@ $(MAKE) -C $(LIBFT_PATH) --no-print-directory clean
-
-fclean:	lfclean
-	@ $(MAKE) -C $(LIBFT_PATH) --no-print-directory fclean
-
-re:		fclean all
-
-#############################
-#          SETTING          #
-#############################
-# Add rule to phony if they are not based on actual files.
-.PHONY: all clean fclean re
-.PHONY: callg ffcheck norm sure
-.PHONY: debug warn test rtest
-.PHONY: lclean lfclean lre
-
-#############################
-#         DEPENDENCY        #
-#############################
-# Include all custom dependency rules created in .d's
-# the '-' prevent error in case of non existing files
 -include $(DEP)
+
+.PHONY:	clean fclean re

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/01 21:15:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/24 22:18:37 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int			exec(t_shell *shell, t_ast *instr)
 	char		*bin_path;
 	t_builtin	builtin;
 
+	bin_path = NULL;
 	prgm = ((t_command *)instr->data)->args_value[0];
 	if (!(builtin = is_builtin(prgm))
 		&& !(bin_path = hbt_command(shell, prgm)))
