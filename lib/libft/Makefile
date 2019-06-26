@@ -5,16 +5,10 @@
 #                                                     +:+ +:+         +:+      #
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/12/20 14:14:18 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/24 17:29:54 by gchainet         ###   ########.fr        #
+#    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
+#    Updated: 2019/06/26 15:38:36 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-#############################
-#         VARIABLES         #
-#############################
-#### FILE STRUCTURE ####
-NAME    :=      libft.a
 
 SRC			= ft_memset.c										\
 			  ft_bzero.c										\
@@ -150,187 +144,53 @@ SRC			= ft_memset.c										\
 			  ft_quicksort.c									\
 			  ft_strnchr.c
 
-SRCDIR  :=      src
-OBJDIR  :=      obj
-DEPDIR  :=      dep
-INCDIR  :=      inc
-LIBDIR  :=      lib
+NAME		:=	libft.a
 
-# File used as a command output buffer
-TMP             :=      .tmp.txt
-#
-## *LOCA is the list of all subdirectory in a directory
-SRCLOCA	:=      $(shell find $(SRCDIR) -type d)
-OBJLOCA	:=      $(subst $(SRCDIR), $(OBJDIR), $(SRCLOCA))
-DEPLOCA	:=      $(subst $(SRCDIR), $(DEPDIR), $(SRCLOCA))
+SRCDIR		:=	src
+INCDIR		:=	inc
+OBJDIR		:=	obj
+DEPDIR		:=	dep
 
-OBJ		:=      $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
-DEP		:=      $(addprefix $(DEPDIR)/, $(SRC:.c=.d))
-SRC		:=      $(addprefix $(SRCDIR)/, $(SRC))
+CC		:=	cc
+AR			=	ar
+DEPGEN		:=	cc
+RANLIB		=	ranlib
+RM		:=	rm -rf
 
-#### LIBRARY ####
-include include.mk
+CFLAGS		:=	-Wall -Werror -Wextra -ggdb
+IFLAGS		:=	-I $(INCDIR)
+DFLAGS		:=	-MM $(IFLAGS)
 
-#### COMPILER ####
-CC              ?=      cc
+OBJ			:=	$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
+DEP			:=	$(addprefix $(DEPDIR)/, $(SRC:.c=.d))
+SRC			:=	$(addprefix $(SRCDIR)/, $(SRC))
 
-INCFLAG := -I $(INCDIR)
-STDFLAG ?=      -std=c99
-WFLAGS  ?=      -Wall -Wextra -Werror
-CFLAGS  =       $(WFLAGS) $(INCFLAG) $(STDFLAG)
+SUBDIRS		:=	$(dir $(DEP)) $(dir $(OBJ))
 
-DEPGEN  :=      $(CC)
-DEPFLAG :=      -MM $(INCFLAG)
-
-LD		:=      $(CC)
-LDFLAG	:=      $(LIB_LINK)
-
-# Fill the variable if the command exist, note &> does not work
-CLANG_INSTALLED := $(shell which clang > /dev/null 2> /dev/null && echo yes)
-
-#############################
-#          COLORS           #
-#############################
-ifdef TERM
-	RED             :=      "\033[1;31m"
-	GREEN           :=      "\033[0;32m"
-	BGREEN          :=      "\033[1;32m"
-	BLUE            :=      "\033[0;34m"
-	YELLOW          :=      "\033[0;33m"
-	PURPLE          :=      "\033[0;35m"
-	CYAN            :=      "\033[0;36m"
-	GREY            :=      "\033[0;37m"
-	# When printed reset the color
-	COLRESET        :=      "\033[0m"
-endif
-
-COMPCOLOR       :=      $(GREEN)
-LINKCOLOR       :=      $(PURPLE)
-ONGOINGCOL      :=      $(YELLOW)
-KOCOLOR         :=      $(RED)
-RMCOLOR         :=      $(GREY)
-
-MOVELINE        :=      "\033[1A"
-CLEARLINE       :=      "\033[K"
-
-#############################
-#           RULES           #
-#############################
-#### COMPILE ####
-# Standard rule used when just calling $> make
-all:            $(NAME)
-
-# Program linkage
-$(NAME):        $(OBJ)
-	@ echo $(ONGOINGCOL)[...]$(COLRESET)"   : "$@$(MOVELINE)
-	@ ar rcs $(NAME) $(OBJ)  &> $(TMP) && \
-		(echo $(CLEARLINE)$(LINKCOLOR)[$(NAME)]$(COLRESET)"     : created"  ; \
-		cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP)) || \
-		(echo $(CLEARLINE)$(KOCOLOR)[KO]$(COLRESET)"    : linkage fail" ; \
-		cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP) ; exit 1)
-
-# Compilation and .d generation
-$(OBJDIR)/%.o:          $(SRCDIR)/%.c | $(OBJDIR) $(DEPDIR)
-	@ echo $(ONGOINGCOL)[...]$(COLRESET)"   : "$@$(MOVELINE)
-	@ $(CC) -c $< $(CFLAGS) -o  $@ &> $(TMP) && \
-		(echo $(CLEARLINE)$(COMPCOLOR)[OK]$(COLRESET)"  : "$@ ; \
-		cat $(TMP) | sed -e "s/^/    /g") || \
-		(echo $(CLEARLINE)$(KOCOLOR)[KO]$(COLRESET)"    : "$@ ; \
-		cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP) ; exit 1)
-	@ $(DEPGEN) -c $< $(DEPFLAG) -MQ $@ \
-		> $(subst $(SRCDIR), $(DEPDIR), $(<:.c=.d))
+$(NAME):	 $(SUBDIRS) $(OBJ)
+	$(AR) rc $(NAME) $(OBJ)
+	$(RANLIB) $(NAME)
 
 
-# Dir created to store .d and .o
-$(OBJDIR):
-	@ mkdir -p $(OBJLOCA)
-$(DEPDIR):
-	@ mkdir -p $(DEPLOCA)
+$(OBJDIR)/%.o:	$(SRCDIR)/%.c
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+	$(DEPGEN) $(DFLAGS) -c $< -MQ $@ > $(subst $(SRCDIR), $(DEPDIR), $(<:.c=.d))
 
-# Recompile with as much warning as possible
-warn:   WFLAGS := -Wall -Wextra -ansi -Wpedantic -Wno-vla
-# If clang is installed also add this exclusive warning
-ifdef CLANG_INSTALLED
-warn:   CC := clang
-warn:   WFLAGS += -Weverything
-endif
-warn:   lre
+%/:
+	mkdir -p $@
 
-#### FORBIDEN FUNCTION ####
-# Check forbiden funcion call
-# All functions listed in .function_whitelist.txt are authorised
-ffcheck:        $(NAME)
-	@ nm -u $(NAME) | \
-		sed -e 's/^\s*U\s//g' | grep -Ev '^\s*w\s|^__|dyld_stub_binder' | \
-		grep -Ev \
-		`cat .function_whitelist.txt | \
-		sed -e 's/^/\^_?/g' | sed -e 's/$$/|/g' | \
-		tr -d '\n' | sed 's/|$$//g'` &> $(TMP) ; \
-		wc -l < $(TMP) | grep -e '^\s*\0$$' &> /dev/null && \
-		echo $(BGREEN)[func]$(COLRESET)"        : no forbiden functions found" || \
-		(echo $(RED)[func]$(COLRESET)"  : forbiden functions found" ; \
-		cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP))
+all:		$(NAME)
 
-#### NORM ####
-norm:
-	@ norminette $(SRC) $(INCDIR) | \
-		(! grep -E -B 1 "(^Warning|^Error)" &> $(TMP)) && \
-		echo $(CYAN)[NORM]$(COLRESET)"  : pass, it's ok for now" || \
-		(echo $(RED)[NORM]$(COLRESET)"  : you failed miserably !" ; \
-		cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP))
+clean:
+	$(RM) $(OBJDIR)
+	$(RM) $(DEPDIR)
 
-sure: warn ffcheck norm
+fclean:		clean
+	$(RM) $(NAME)
 
-#### DEBUGING ####
-# Change warning flag to debug and local recompile
-debug:  WFLAGS := -g -ggdb
-debug:  all
+re:			fclean 
+	make $(NAME)
 
-rdebug: WFLAGS := -g -ggdb
-rdebug: lre
-
-#### TESTS ####
-# Use when you have some error and just want to rest
-test:   WFLAGS :=
-test:   all
-
-# Test with everything recompile
-rtest:  WFLAGS :=
-rtest:  lre
-
-#### LOCAL (Don't recompile lib) ####
-lclean:
-	@ rm -r $(OBJDIR) &> /dev/null && \
-		echo $(RMCOLOR)[CLR]$(COLRESET)"        :" obj ; (exit 0)
-	@ rm -r $(DEPDIR) &> /dev/null && \
-		echo $(RMCOLOR)[CLR]$(COLRESET)"        :" dep ; (exit 0)
-
-lfclean: lclean
-	@ rm $(NAME) &> /dev/null && \
-		echo $(RMCOLOR)[CLR]$(COLRESET)"        :" $(NAME) ; (exit 0)
-
-lre: lfclean all
-
-#### MANDATORY ####
-clean: lclean
-	@ rm -f $(TMP)
-
-fclean:	lfclean
-
-re:		fclean all
-
-#############################
-#          SETTING          #
-#############################
-# Add rule to phony if they are not based on actual files.
-.PHONY: all clean fclean re
-.PHONY: callg ffcheck norm sure
-.PHONY: debug warn test rtest
-.PHONY: lclean lfclean lre
-
-#############################
-#         DEPENDENCY        #
-#############################
-# Include all custom dependency rules created in .d's
-# the '-' prevent error in case of non existing files
 -include $(DEP)
+
+.PHONY:	clean fclean re
