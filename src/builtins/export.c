@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 23:20:53 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/26 16:13:07 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/26 18:15:29 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int			builtin_export(t_shell *shell, char **args)
 	if ((i = args_parser(args)) < 0)
 		return (1);
 	if (!args[i])
-		print_env_dec(shell->exec_vars);
+		print_env_dec(shell->vars);
 	else
 	{
 		while (args[i])

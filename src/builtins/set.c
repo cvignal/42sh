@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 00:53:07 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/26 16:08:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/26 18:17:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int			builtin_set(t_shell *shell, char **args)
 	t_var	*var;
 
 	(void)args;
-	var = shell->exec_vars;
+	var = shell->vars;
 	while (var)
 	{
 		if (!is_special_param(var->var[0]))
