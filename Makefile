@@ -6,15 +6,9 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/26 08:11:51 by marin            ###   ########.fr        #
+#    Updated: 2019/06/26 14:11:40 by marin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-#############################
-#         VARIABLES         #
-#############################
-#### FILE STRUCTURE ####
-NAME	:=	42sh
 
 SRC	=	alt_shell.c apply_redir_rw.c apply_redirs.c arg_file.c		\
 		command.c env.c	exec.c	main.c	fd.c hash.c hash_sanitize.c	\
@@ -37,7 +31,6 @@ SRC	+=	$(addprefix exec/,					\
 			and.c cmp_eq.c cmp_inf.c cmp_inf_eq.c cmp_not_eq.c cmp_sup.c		\
 			cmp_sup_eq.c del.c div.c eq.c fail.c mod.c or.c plus.c plus_plus.c 	\
 			prod.c statement.c sub.c sub_sub.c usub.c utils.c value.c		\
-
 			)							\
 		)
 
@@ -56,152 +49,101 @@ SRC	+=	$(addprefix expr/,						\
 		expression.c f.c g.c g_cap.c ge.c gt.c h.c k.c			\
 		l_cap.c le.c lower.c lt.c n.c n_cap.c ne.c not_equal.c		\
 		nt.c o_cap.c ot.c p.c r.c s.c s_cap.c sup.c t.c			\
-		u.c v.c w.c x.c
+		u.c v.c w.c x.c							\
 		)
 
 SRC	+=	$(addprefix history_research/,				\
 		algo_search.c ctrl_keys.c init_search.c move_keys.c	\
 		other_movekeys.c tools_hs.c				\
 		)
-SRC	+=	$(addprefix jobs/,i					\
+SRC	+=	$(addprefix jobs/,					\
 		job_print.c job_string.c job_state.c job_wait.c		\
 		jobs.c utils.c						\
 		)
-	line_edition/autocompletion.c
-	line_edition/backspace.c
-	line_edition/cursor.c
-	line_edition/delete.c
-	line_edition/display_auto.c
-	line_edition/fill_line.c
-	line_edition/fn_keys.c
-	line_edition/history.c
-	line_edition/history_file.c
-	line_edition/leftkey.c
-	line_edition/line.c
-	line_edition/line_keys.c
-	line_edition/other_keys.c
-	line_edition/parsing_auto.c
-	line_edition/rightkey.c
-	line_edition/switch_mode.c
-	line_edition/term_mode.c
-	line_edition/tools_auto.c
-	line_edition/tools_history.c
-	line_edition/tools_insertion.c
-	line_edition/tools_keys.c
-	line_edition/tools_motion.c
-	line_edition/tools_path.c
-	parser/arithmetic/init.c
-	parser/arithmetic/lexer_actions.c
-	parser/arithmetic/lexer_actions_paren.c
-	parser/arithmetic/set_unary.c
-	parser/arithmetic/type.c
-	parser/assignement.c
-	parser/ast.c
-	parser/ast_token.c
-	parser/free_token.c
-	parser/init_lexer.c
-	parser/init_parser.c
-	parser/input_queue.c
-	parser/keyword.c
-	parser/lexer.c
-	parser/lexer_act.c
-	parser/lexer_act_escaped.c
-	parser/lexer_act_meta.c
-      	parser/lexer_act_meta2.c
-	parser/lexer_act_over.c
-	parser/lexer_act_quote.c
-	parser/lss.c
-	parser/op_prop.c
-	parser/parser.c
-	parser/parser_rules.c
-	parser/pss.c
-	parser/rules.c
-	parser/rules_ari.c
-	parser/rules_ari_decrementation.c
-	parser/rules_ari_incrementation.c
-	parser/rules_ari_mangle.c
-	parser/rules_ari_op.c
-	parser/rules_ari_usub.c
-	parser/rules_expr.c
-	parser/rules_if.c
-	parser/rules_if_nocd.c
-	parser/rules_logic.c
-	parser/rules_parenthesis.c
-	parser/rules_pipe.c
-	parser/rules_redir.c
-	parser/rules_redir_close.c
-	parser/rules_redir_l_comp.c
-	parser/rules_redir_r_both.c
-	parser/rules_redir_r_comp.c
-	parser/rules_redir_read_write.c
-	parser/rules_shift.c
-	parser/rules_shunting_yard.c
-	parser/rules_statement.c
-	parser/rules_syntax_error.c
-	parser/rules_while.c
-	parser/shunting_yard.c
-	parser/token.c
-	parser/token_type.c
-	parser/token_type_desc.c
-	parser/tools_shunting_yard.c
-	parser/utils.c
-	vars/special_vars.c
-	vars/var.c
-	vars/var_create.c
-	vars/var_utils.c
-	visual_mode/visual_mode.c
-	visual_mode/vm_copy.c
-	visual_mode/vm_cut.c
-	visual_mode/vm_leftkey.c
-	visual_mode/vm_rightkey.c
+SRC	+=	$(addprefix line_edition/,					\
+		autocompletion.c backspace.c cursor.c delete.c display_auto.c	\
+		fill_line.c fn_keys.c history.c history_file.c leftkey.c	\
+		line.c line_keys.c other_keys.c parsing_auto.c rightkey.c	\
+		switch_mode.c term_mode.c tools_auto.c tools_history.c		\
+		tools_insertion.c tools_keys.c tools_motion.c tools_path.c	\
+		)
+SRC	+=	$(addprefix parser/,								\
+		ast.c ast_token.c free_token.c init_lexer.c init_parser.c				\
+		input_queue.c keyword.c lexer.c lexer_act.c lexer_act_escaped.c				\
+		lexer_act_meta.c lexer_act_meta2.c lexer_act_over.c lexer_act_quote.c			\
+		lss.c op_prop.c parser.c parser_rules.c pss.c rules.c rules_ari.c			\
+		rules_ari_decrementation.c rules_ari_incrementation.c rules_ari_mangle.c		\
+		rules_ari_op.c rules_ari_usub.c rules_expr.c rules_if.c rules_if_nocd.c			\
+		rules_logic.c rules_parenthesis.c rules_pipe.c rules_redir.c rules_redir_close.c	\
+		rules_redir_l_comp.c rules_redir_r_both.c rules_redir_r_comp.c				\
+		rules_redir_read_write.c rules_shift.c rules_shunting_yard.c rules_statement.c		\
+		rules_syntax_error.c rules_while.c shunting_yard.c token.c token_type.c			\
+		token_type_desc.c tools_shunting_yard.c utils.c assignement.c				\
+		$(addprefix arithmetic/,								\
+			init.c lexer_actions.c lexer_actions_paren.c set_unary.c			\
+			type.c										\
+		)											\
+		)
 
-SRCDIR	:=	src
-OBJDIR	:=	obj
-DEPDIR	:=	dep
-INCDIR	:=	inc
-LIBDIR	:=	lib
+SRC	+=	$(addprefix vars/,			\
+		special_vars.c var.c var_create.c var_utils.c	\
+		)
+	
+SRC	+=	$(addprefix visual_mode/,			\
+		visual_mode.c vm_copy.c vm_cut.c vm_leftkey.c	\
+		vm_rightkey.c					\
+		)
 
-## *LOCA is the list of all subdirectory in a directory
-SRCLOCA	:=	$(shell find $(SRCDIR) -type d)
-OBJLOCA	:=	$(subst $(SRCDIR), $(OBJDIR), $(SRCLOCA))
-DEPLOCA	:=	$(subst $(SRCDIR), $(DEPDIR), $(SRCLOCA))
+NAME		:=	42sh
 
-OBJ		:=	$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
-DEP		:=	$(addprefix $(DEPDIR)/, $(SRC:.c=.d))
-SRC		:=	$(addprefix $(SRCDIR)/, $(SRC))
-
-#### LIBRARY ####
-# Libft
-LIBFT_PATH	:= $(LIBDIR)/libft
-include $(LIBFT_PATH)/include.mk
-
-#### COMPILER ####
-CC		?=	cc
-
-INCFLAG	:= -I $(INCDIR) $(LIB_INC)
-WFLAGS	?=	-Wall -Wextra -Werror -g
-CFLAGS	=	$(WFLAGS) $(INCFLAG) $(STDFLAG)
-
-DEPGEN	:=	$(CC)
-DEPFLAG	:=	-MM $(INCFLAG)
-
-LD		:=	$(CC)
-LDFLAG	:=	$(LIB_LINK) -ltermcap
-
-# Fill the variable if the command exist, note &> does not work
-CLANG_INSTALLED	:= $(shell which clang > /dev/null 2> /dev/null && echo yes)
+LIBFTDIR	:=	lib/libft
+SRCDIR		:=	src
+INCDIR		:=	inc
+OBJDIR		:=	obj
+DEPDIR		:=	dep
 
 
-# Program linkage
-$(NAME):	$(OBJ) | $(LIBFT_PATH)/$(LIBFT)
+CC		:=	cc
+LD		:=	cc
+DEPGEN		:=	cc
+RM		:=	rm -rf
 
-$(OBJDIR)/%.o:		$(SRCDIR)/%.c | $(OBJDIR) $(DEPDIR)
+CFLAGS		:=	-Wall -Werror -Wextra -ggdb
+LDFLAGS		:=	-L $(LIBFTDIR) -lft -ltermcap
+IFLAGS		:=	-I $(INCDIR) -I $(LIBFTDIR)/$(INCDIR)
+DFLAGS		:=	-MM $(IFLAGS)
 
-# Lib Compilation
-$(LIBFT_PATH)/$(LIBFT):
-	@ echo $(ONGOINGCOL)[...]$(COLRESET)"	: "$@$(MOVELINE)
-	@ $(MAKE) -C $(LIBFT_PATH) --no-print-directory > $(TMP) 2> $(TMP) &&
-		(echo $(CLEARLINE)$(CYAN)[OK]$(COLRESET)"	: "$@ ; rm $(TMP)) || \
-		(echo $(CLEARLINE)$(KOCOLOR)[KO]$(COLRESET)"	: "$@ ; \
-			cat $(TMP) | sed -e "s/^/    /g" ; rm $(TMP) ; exit 1)
+OBJ			:=	$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
+DEP			:=	$(addprefix $(DEPDIR)/, $(SRC:.c=.d))
+SRC			:=	$(addprefix $(SRCDIR)/, $(SRC))
 
+$(NAME):	 $(DEPDIR) $(OBJDIR) $(OBJ)
+	make -C $(LIBFTDIR)
+	$(LD) -o $(NAME) $(OBJ) $(LDFLAGS) 
+
+
+$(OBJDIR)/%.o:	$(SRCDIR)/%.c
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+	$(DEPGEN) $(DFLAGS) -c $< -MQ $@ > $(subst $(SRCDIR), $(DEPDIR), $(<:.c=.d))
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+	mkdir -p $(dir $(OBJ))
+
+$(DEPDIR):
+	mkdir -p $(DEPDIR)
+
+all:		$(NAME)
+
+clean:
+	$(RM) $(OBJDIR)
+	$(RM) $(DEPDIR)
+
+fclean:		clean
+	$(RM) $(NAME)
+
+re:			fclean $(NAME)
+
+-include $(DEP)
+
+.PHONY:	clean fclean re
