@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/26 16:06:12 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/26 16:13:24 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,6 +324,7 @@ int					change_dir(t_shell *shell, char *curpath, const char *dir
 		, int option);
 int					env_cmp(void *a, void *b);
 t_var				*vars_to_array(t_var *vars);
+int					is_export_special_char(char c);
 
 /*
 ** fc

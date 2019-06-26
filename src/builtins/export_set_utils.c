@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 00:50:40 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 22:20:59 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/26 16:12:52 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,22 @@
 static int	var_cmp(void *a, void *b)
 {
 	return (ft_strcmp(((t_var *)a)->var, ((t_var *)b)->var));
+}
+
+int			is_export_special_char(char c)
+{
+	unsigned int	i;
+	size_t			len;
+
+	len = ft_strlen(QUOTABLE_CHARS);
+	i = 0;
+	while (i < len)
+	{
+		if (c == QUOTABLE_CHARS[i])
+			return (1);
+		++i;
+	}
+	return (0);
 }
 
 t_var		*vars_to_array(t_var *vars)
