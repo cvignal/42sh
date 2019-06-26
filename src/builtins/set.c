@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 00:53:07 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/04 01:15:09 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/26 15:57:19 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	print_var_set(const char *var)
 					|| ft_strchr(var + pos, '"'))
 				ft_printf("'%s'\n", var + pos + 1);
 			else
-				ft_printf("%s\n", var + pos);
+				ft_printf("%s\n", var + pos + 1);
 			return ;
 		}
 		++pos;
@@ -45,7 +45,7 @@ int			builtin_set(t_shell *shell, char **args)
 	var = shell->exec_vars;
 	while (var)
 	{
-		if (var->set)
+		if (!is_special_param(var->var[0]))
 			print_var_set(var->var);
 		var = var->next;
 	}
