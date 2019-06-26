@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/26 14:45:35 by marin            ###   ########.fr        #
+#    Updated: 2019/06/26 15:29:16 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,6 @@ INCDIR		:=	inc
 OBJDIR		:=	obj
 DEPDIR		:=	dep
 
-
 CC		:=	cc
 LD		:=	cc
 DEPGEN		:=	cc
@@ -117,17 +116,18 @@ OBJ			:=	$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 DEP			:=	$(addprefix $(DEPDIR)/, $(SRC:.c=.d))
 SRC			:=	$(addprefix $(SRCDIR)/, $(SRC))
 
-$(NAME):	 make_dirs $(OBJ)
+SUBDIRS		:=	$(dir $(DEP)) $(dir $(OBJ))
+
+$(NAME):	 $(SUBDIRS) $(OBJ)
 	make -C $(LIBFTDIR)
 	$(LD) -o $(NAME) $(OBJ) $(LDFLAGS) 
-
 
 $(OBJDIR)/%.o:	$(SRCDIR)/%.c
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 	$(DEPGEN) $(DFLAGS) -c $< -MQ $@ > $(subst $(SRCDIR), $(DEPDIR), $(<:.c=.d))
 
-make_dirs:
-	mkdir -p $(dir $(OBJ)) $(dir $(DEP))
+%/:
+	mkdir -p $@
 
 all:		$(NAME)
 
