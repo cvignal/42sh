@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 08:11:37 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/26 16:41:03 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 
 # define SYNTAX_ERROR_MSG "syntax error"
 # define MEMORY_ERROR_MSG "unable to allocate memory"
+# define PERMISSION_DENIED_ERROR_MSG "permission denied"
+# define NO_SUCH_FILE_ERROR_MSG "No such file or directory"
 # define COMMAND_NOT_FOUND_MSG "command not found"
 # define ERR_CHAR_VAR "invalid characters in var name"
 # define ERR_LEN_VAR "variable too long"

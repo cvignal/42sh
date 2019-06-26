@@ -6,7 +6,7 @@
 /*   By: vagrant </var/spool/mail/vagrant>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 21:34:02 by vagrant           #+#    #+#             */
-/*   Updated: 2019/05/25 13:45:11 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/26 16:52:49 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,12 @@ void	set_shell_input_file(t_shell *shell, int ac, char **av)
 		{
 			if ((shell->arg_file->fd = open(shell->arg_file->filename, O_RDONLY)) != -1)
 				return;
-			//TODO permission denied message	
-			ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
-			exit(127);
 		}
-		//TODO: file not found message 
-		ft_dprintf(STDERR_FILENO, "%s: %s\n", EXEC_NAME, MEMORY_ERROR_MSG);
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", EXEC_NAME, shell->arg_file->filename, PERMISSION_DENIED_ERROR_MSG) ;
 		exit(127);
 	}
+	ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", EXEC_NAME, shell->arg_file->filename, NO_SUCH_FILE_ERROR_MSG);
+	exit(127);
 }
 
 void	parse_args(t_shell *shell, int ac, char **av)
