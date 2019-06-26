@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/26 14:28:44 by marin            ###   ########.fr        #
+#    Updated: 2019/06/26 14:32:14 by marin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,7 +127,7 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c
 	$(DEPGEN) $(DFLAGS) -c $< -MQ $@ > $(subst $(SRCDIR), $(DEPDIR), $(<:.c=.d))
 
 $(OBJDIR):
-	mkdir -p $(OBJDIR) $(dir $(OBJ)) $(dir $(DEP))
+	mkdir -p $(dir $(OBJ)) $(dir $(DEP))
 
 $(DEPDIR):
 	mkdir -p $(DEPDIR)
