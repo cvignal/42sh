@@ -110,6 +110,11 @@ pipeline {
             sh './42shtester/42shtester.rb 42sh test'
           }
         }
+        stage('test correction') {
+          steps {
+            sh './42shtester/42shtester.rb 42sh correction'
+          }
+        }
       }
     }
   }
