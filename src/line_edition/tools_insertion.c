@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 11:44:35 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/17 11:34:08 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/24 22:15:39 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int			pos_in_special_line(t_shell *shell)
 
 	i = 0;
 	ret = 0;
+	k = 0;
 	while (i < (int)shell->line.cursor)
 	{
 		if (shell->line.data[i] == '\n')
