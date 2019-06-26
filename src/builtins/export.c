@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 23:20:53 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/11 19:07:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/26 16:10:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	print_escaped_special(const char *var, unsigned int *begin,
 		unsigned int *end)
 {
 	if (*end != *begin)
-		write(STDOUT_FILENO, var + *begin, *end - *begin - 1);
+		write(STDOUT_FILENO, var + *begin, *end - *begin);
 	write(STDOUT_FILENO, "\\", 1);
 	*begin = *end;
 }

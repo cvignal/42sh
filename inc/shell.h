@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 23:06:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/26 16:06:12 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define EXEC_NAME "42sh"
 # define PROMPT "$>"
 # define INCOMPLETE_INPUT_PROMPT ">"
+
+# define QUOTABLE_CHARS "|&;<>()$`\\\"' \t\n"
 
 # define SYNTAX_ERROR_MSG "syntax error"
 # define MEMORY_ERROR_MSG "unable to allocate memory"
