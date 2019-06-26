@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 23:36:00 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/26 15:33:44 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,12 @@ int			exec(t_shell *shell, t_ast *instr)
 	char		*bin_path;
 	t_builtin	builtin;
 
+	bin_path = NULL;
 	prgm = ((t_command *)instr->data)->args_value[0];
 	if (!(builtin = is_builtin(prgm))
 		&& !(bin_path = hbt_command(shell, prgm)))
 		instr->ret = do_error_handling(prgm);
-	if (builtin && !(instr->flags & CMD_FORK) && !instr->job->async)
+	else if (builtin && !(instr->flags & CMD_FORK) && !instr->job->async)
 		instr->ret = exec_builtin(shell, builtin, instr);
 	else if ((instr->pid = fork()) == -1)
 		return (-1);
