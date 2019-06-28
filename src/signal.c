@@ -6,7 +6,7 @@
 /*   By: cvignal <cvignal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 13:50:27 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/28 08:52:44 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/28 08:57:27 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static t_shell	*g_shell = NULL;
 void	prompt_signal_handler(int sig)
 {
 	(void)sig;
-	ft_putstr("\n");
 	g_shell->ctrlc = 1;
 }
 

@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/28 08:51:58 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/28 08:56:49 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int						main(int ac, char **av, const char **environ)
 	set_special_var(&shell.vars, SPECIAL_PARAM_BANG, "");
 	set_special_var(&shell.vars, SPECIAL_PARAM_QMARK, "0");
 	print_prompt(&shell, 0);
+	disable_signal(&shell);
 	while (!g_functions[ret].f(&shell))
 	{
 		disable_signal(&shell);
