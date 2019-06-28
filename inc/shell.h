@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/26 16:41:03 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/28 14:37:49 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,8 +253,9 @@ int					add_to_command(t_command *command, char *word);
 /*
 ** utils.c
 */
-int					fail(char *proc, char *err, char *message, int ret);
-int					do_error_handling(char *name);
+int					fail(const char *proc, const char *err,
+	   const char *message, int ret);
+int					do_error_handling(const char *name);
 char					*ft_strcjoin_free(char *s1, const char c, char *s2, int flag);
 
 /*
