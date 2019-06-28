@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 17:06:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/03/05 16:42:25 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/28 08:44:44 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,7 @@ int			open_file(t_shell *shell, const char *file, int mode, int perm)
 	else
 		fd = open(file, mode);
 	if (fd < 0)
-	{
-		ft_dprintf(2, "%s: %s: unable to open file \n", EXEC_NAME, file);
 		return (-1);
-	}
 	if (fd < 10)
 	{
 		new_fd = get_next_fd(shell);
