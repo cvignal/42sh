@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 14:01:19 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/19 14:53:27 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/28 08:51:36 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int		check_validity(t_shell *shell)
 	if (res <= 0)
 		return (1);
 	ioctl(0, TIOCGWINSZ, &shell->win);
-	shell->ctrlc = 0;
 	return (0);
 }
 

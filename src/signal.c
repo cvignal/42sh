@@ -6,7 +6,7 @@
 /*   By: cvignal <cvignal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 13:50:27 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/19 14:21:57 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/06/28 20:57:26 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ static t_shell	*g_shell = NULL;
 void	prompt_signal_handler(int sig)
 {
 	(void)sig;
-	ft_putstr("\n");
-	print_prompt(g_shell, 0);
+	g_shell->ctrlc = 1;
 }
 
 void	update_child(int sig)
@@ -79,8 +78,12 @@ void	resize_window(int sig)
 
 void	disable_signal(t_shell *shell)
 {
+	struct sigaction	sa;
+
 	g_shell = shell;
-	signal(SIGINT, prompt_signal_handler);
+	ft_bzero(&sa, sizeof(sa));
+	sa.sa_handler = prompt_signal_handler;
+	sigaction(SIGINT, &sa, NULL);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGCHLD, update_child);
 	signal(SIGQUIT, SIG_IGN);

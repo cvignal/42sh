@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   jobs.c                                             :+:      :+:    :+:   */
+/*   job_string.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:52:57 by agrouard          #+#    #+#             */
-/*   Updated: 2018/12/12 09:54:33 by agrouard         ###   ########.fr       */
+/*   Updated: 2019/06/28 19:26:56 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char *redir_to_string(t_redir *redir)
 		str = ft_strjoin_free(str, redir->target, 1);
 	else if (redir->type == TT_REDIR_L_COMP ||
 			redir->type == TT_REDIR_R_COMP)
-		str = ft_strjoin_free(str, ft_itoa(redir->fd), 1 | 2);
+		str = ft_strjoin_free(str, ft_itoa(redir->out), 1 | 2);
 	return (str);
 }
 
