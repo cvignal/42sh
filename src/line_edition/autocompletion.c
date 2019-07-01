@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/07/01 16:35:34 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/01 17:06:29 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	ft_add_var(char *word, t_list **list, t_shell *shell)
 	char	*cpy;
 
 	i = shell->vars;
-	if ((cpy = ft_strstr(word, "${")))
+	if (*word && (cpy = ft_strstr(word, "${")))
 		cpy += 2;
 	else
 		cpy = ft_strchr(word, '$') + 1;
@@ -144,7 +144,6 @@ int			ft_tab(t_shell *shell)
 	{
 		if (!(word = word_to_complete(&shell->line, 1)))
 			return (0);
-		ft_dprintf(fd, "|%s|\n", word);
 		ft_add_exec(word, &list);
 	}
 	else
