@@ -6,7 +6,7 @@
 /*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 14:57:18 by marin             #+#    #+#             */
-/*   Updated: 2019/06/03 21:55:35 by marin            ###   ########.fr       */
+/*   Updated: 2019/07/01 17:42:56 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ int	exp_lexer_cut_special_param(struct s_shell *shell, char c, int mask)
 			return (EXP_LEXER_RET_ERROR);
 	if (shell->exp_lexer.state->state == EXP_STATE_WORD)
 		shell->exp_lexer.split = 0;
+	free(name);
 	return (0);
 }
