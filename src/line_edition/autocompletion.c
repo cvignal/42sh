@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 14:15:01 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/11 11:25:47 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/01 16:35:34 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,13 @@ static void	add_and_display(t_list *list, char *word, t_shell *shell)
 	if (ft_strchr(word, '/'))
 		to_add = str + ft_strlen(ft_strrchr(word, '/') + 1);
 	else
-		to_add = str + ft_strlen(word) - (ft_strchr(word, '$') != NULL);
+	{
+		to_add = str + ft_strlen(word);
+		if ((ft_strstr(word, "${")))
+			to_add -= 2;
+		else if (ft_strchr(word, '$'))
+			to_add--;
+	}
 	ft_addchar(shell, to_add, 1);
 	ft_strdel(&word);
 }
@@ -74,14 +80,19 @@ static void	ft_add_var(char *word, t_list **list, t_shell *shell)
 	t_list	*new;
 	t_var	*i;
 	char	*name;
+	char	*cpy;
 
 	i = shell->vars;
+	if ((cpy = ft_strstr(word, "${")))
+		cpy += 2;
+	else
+		cpy = ft_strchr(word, '$') + 1;
 	while (i)
 	{
 		if (!(name = ft_strdup(i->var)))
 			return ;
 		name[ft_strlen(name) - ft_strlen(ft_strchr(name, '='))] = 0;
-		if (ft_comp(ft_strchr(word, '$') + 1, name))
+		if (ft_comp(cpy, name))
 		{
 			if (!(new = ft_lstnew(name, ft_strlen(name) + 1)))
 				return ;
@@ -131,13 +142,14 @@ int			ft_tab(t_shell *shell)
 	clean_under_line(NULL);
 	if ((type = is_a_command(&shell->line)) == 1)
 	{
-		if (!(word = word_to_complete(&shell->line)))
-			word = ft_strdup(shell->line.data);
+		if (!(word = word_to_complete(&shell->line, 1)))
+			return (0);
+		ft_dprintf(fd, "|%s|\n", word);
 		ft_add_exec(word, &list);
 	}
 	else
 	{
-		word = word_to_complete(&shell->line);
+		word = word_to_complete(&shell->line, 0);
 		!type ? ft_add_files(word, &list) : ft_add_var(word, &list, shell);
 	}
 	add_and_display(list, word, shell);
