@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:52:57 by agrouard          #+#    #+#             */
-/*   Updated: 2018/12/12 09:54:33 by agrouard         ###   ########.fr       */
+/*   Updated: 2019/07/05 15:19:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <unistd.h>
 
-t_job		*new_job()
+t_job		*new_job(void)
 {
 	t_job *job;
 
@@ -73,4 +73,3 @@ int			register_proc(t_ast *ast)
 	(*p)->name = ast_to_string(ast);
 	return (0);
 }
-

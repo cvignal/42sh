@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 14:02:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/17 12:11:56 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/05 15:16:33 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static int	replace_in_line(t_line *line, char *buf, char *value, int i)
 	ft_memmove(line->data + i + add_len, line->data + i + old_len,
 			line->len - i - old_len);
 	if (old_len > add_len)
-		ft_bzero(line->data + i + add_len + line->len - i - old_len, old_len - add_len); 
+		ft_bzero(line->data + i + add_len + line->len - i - old_len
+				, old_len - add_len);
 	ft_strncpy(line->data + i, value, add_len);
 	line->len += add_len;
 	return (0);

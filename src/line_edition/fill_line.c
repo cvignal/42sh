@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/21 12:00:33 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/05 15:16:58 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	return_value_input(t_shell *shell, int res)
 	return (res == -1 || shell->line.data == NULL);
 }
 
-int		fill_line(t_shell *shell)
+int			fill_line(t_shell *shell)
 {
 	char			buf[9];
 	int				ret;

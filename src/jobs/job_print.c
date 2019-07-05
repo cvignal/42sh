@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:52:57 by agrouard          #+#    #+#             */
-/*   Updated: 2018/12/12 09:54:33 by agrouard         ###   ########.fr       */
+/*   Updated: 2019/07/05 15:18:56 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <signal.h>
 
-static void		print_job_infos(t_shell *shell, t_job *job)
+static void	print_job_infos(t_shell *shell, t_job *job)
 {
 	ft_printf("[%d]", job->index);
 	if (job == shell->curr)
@@ -46,7 +46,7 @@ static void	print_job_state(t_job *job)
 	}
 }
 
-static void print_pipeline(t_job *job)
+static void	print_pipeline(t_job *job)
 {
 	t_proc		*p;
 

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 01:27:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 22:24:02 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 15:37:39 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static inline void	*addr(t_sort *sort, unsigned int n)
 	return (sort->data + n * sort->content_size);
 }
 
-int				partition(t_sort *sort, int first, int last, int pivot)
+int					partition(t_sort *sort, int first, int last, int pivot)
 {
 	int	i;
 	int	j;
@@ -39,7 +39,7 @@ int				partition(t_sort *sort, int first, int last, int pivot)
 	return (j);
 }
 
-void			ft_quicksort_internal(t_sort *sort, int first, int last)
+void				ft_quicksort_internal(t_sort *sort, int first, int last)
 {
 	unsigned int	pivot;
 
@@ -52,8 +52,8 @@ void			ft_quicksort_internal(t_sort *sort, int first, int last)
 	}
 }
 
-void			ft_quicksort(void *data, size_t content_size, size_t len,
-		int	(*cmp)(void *, void *))
+void				ft_quicksort(void *data, size_t content_size, size_t len
+		, int (*cmp)(void *, void *))
 {
 	t_sort	sort;
 

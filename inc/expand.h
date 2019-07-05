@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/05 14:23:21 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/05 15:22:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ typedef struct			s_exp_lexer
 typedef struct			s_special_param
 {
 	char	*name;
-	int		(*f)(t_shell *, char);
+	int		(*f)(struct s_shell *, char);
 }						t_special_param;
 
 /*

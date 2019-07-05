@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:46:05 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 17:22:55 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 15:21:12 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,10 @@ static void	init_lexer_basics(t_lexer *lexer)
 	lexer->lexer_actions[LSTATE_CURLY]['\\'] = &lexer_push_escaped;
 	lexer->lexer_actions[LSTATE_META]['\\'] = &lexer_cut;
 	lexer->lexer_actions[LSTATE_DQUOTE]['\\'] = &lexer_push_escaped;
+	init_lexer_meta(lexer, LSTATE_NONE, &lexer_create_meta);
+	init_lexer_meta(lexer, LSTATE_META, &lexer_add_meta);
+	init_lexer_meta(lexer, LSTATE_WORD, &lexer_try_meta);
+	lexer->lexer_actions[LSTATE_NONE]['{'] = &lexer_create;
 }
 
 int			init_lexer(t_lexer *lexer)
@@ -91,10 +95,6 @@ int			init_lexer(t_lexer *lexer)
 	init_lexer_quote(lexer);
 	init_lexer_zero(lexer);
 	init_lexer_basics(lexer);
-	init_lexer_meta(lexer, LSTATE_NONE, &lexer_create_meta);
-	init_lexer_meta(lexer, LSTATE_META, &lexer_add_meta);
-	init_lexer_meta(lexer, LSTATE_WORD, &lexer_try_meta);
-	lexer->lexer_actions[LSTATE_NONE]['{'] = &lexer_create;
 	lexer->lexer_actions[LSTATE_NONE]['('] = &lexer_create;
 	lexer->lexer_actions[LSTATE_WORD]['('] = &lexer_push_paren;
 	lexer->lexer_actions[LSTATE_WORD]['{'] = &lexer_push_curly;

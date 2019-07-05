@@ -6,14 +6,14 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:52:57 by agrouard          #+#    #+#             */
-/*   Updated: 2019/06/28 19:26:56 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 15:19:23 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "jobs.h"
 #include "shell.h"
 
-static char *redir_to_string(t_redir *redir)
+static char	*redir_to_string(t_redir *redir)
 {
 	static char *chars[] = {"<", "<&-", "<&", "<<",
 		">", ">&", ">&-", ">&", ">>", "<>"};
@@ -46,7 +46,7 @@ static char	*simple_to_string(t_ast *ast)
 	while (redir)
 	{
 		str = ft_strcjoin_free(str, ' ', redir_to_string(redir), 1 | 2);
-		redir = redir->next;		
+		redir = redir->next;
 	}
 	return (str);
 }

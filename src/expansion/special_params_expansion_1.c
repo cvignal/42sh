@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_params_expansion_1.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
+/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/08 17:18:50 by marin             #+#    #+#             */
-/*   Updated: 2019/06/24 21:54:19 by marin            ###   ########.fr       */
+/*   Created: 2019/07/05 15:08:57 by cvignal           #+#    #+#             */
+/*   Updated: 2019/07/05 15:25:15 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,47 @@
 #include "expand.h"
 #include <unistd.h>
 
-int	get_special_param_at(t_shell *shell, char name)
+static int	cond_fail(t_shell *shell, int *i)
+{
+	return (add_string_to_exp_buff(&shell->exp_lexer
+				, shell->arg_file->argv[*i++])
+			|| add_string_to_exp_buff(&shell->exp_lexer, shell->exp_lexer.ifs));
+}
+
+int			get_special_param_at(t_shell *shell, char name)
 {
 	int	i;
 
-	(void) name;
+	(void)name;
 	i = 1;
 	if (shell->arg_file)
 	{
 		if (shell->exp_lexer.split)
 		{
 			while (i < shell->arg_file->argc)
-				if (add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++])
-				 ||add_string_to_exp_buff(&shell->exp_lexer, shell->exp_lexer.ifs))
+				if (cond_fail(shell, &i))
 					return (1);
 		}
 		else
 		{
 			while (i < shell->arg_file->argc)
 			{
-				if (add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++]))
+				if (add_string_to_exp_buff(&shell->exp_lexer
+							, shell->arg_file->argv[i++]))
 					return (1);
 				if (i != shell->arg_file->argc)
 					add_arg_to_array(&shell->exp_lexer, 0);
 			}
 		}
 	}
-	return 0;
+	return (0);
 }
 
-int	get_special_param_star(t_shell *shell, char name)
+int			get_special_param_star(t_shell *shell, char name)
 {
 	char	*ret;
-	int	i;
-	int	retval;
+	int		i;
+	int		retval;
 
 	retval = 0;
 	(void)name;
@@ -57,8 +64,7 @@ int	get_special_param_star(t_shell *shell, char name)
 		if (shell->exp_lexer.split)
 			while (i < shell->arg_file->argc)
 			{
-				if (add_string_to_exp_buff(&shell->exp_lexer, shell->arg_file->argv[i++])
-				|| add_string_to_exp_buff(&shell->exp_lexer, shell->exp_lexer.ifs))
+				if (cond_fail(shell, &i))
 					retval = 1;
 			}
 		else
@@ -71,49 +77,4 @@ int	get_special_param_star(t_shell *shell, char name)
 		}
 	}
 	return (retval);
-}
-
-int	get_special_param_dollar(t_shell *shell, char name)
-{
-	char *pid_str;
-
-	(void)name;
-	if (!(pid_str = ft_itoa(getpid())))
-		return (1);
-	if (add_string_to_exp_buff(&shell->exp_lexer, pid_str)){
-		free(pid_str);
-		return (1);
-	}
-	free(pid_str);
-	return (0);
-}
-
-int	get_special_param_hash(t_shell *shell, char name)
-{
-	char *argc_str;
-	
-	(void)name;
-	if (!(argc_str = ft_itoa(shell->arg_file ? shell->arg_file->argc - 1: 0)))
-		return (1);
-	if (add_string_to_exp_buff(&shell->exp_lexer, argc_str))
-	{
-		free(argc_str);
-		return (1);
-	}
-	free(argc_str);
-	return (0);
-}
-
-int	get_special_param_num(t_shell *shell, char name)
-{
-	const char	*argv;
-	int		arg_num;
-
-	arg_num = name - '0';
-	if (shell->arg_file)
-		argv = arg_num < shell->arg_file->argc ?
-			shell->arg_file->argv[arg_num] : "";
-	else
-		argv = arg_num == 0 ? "42sh" : "";
-	return (add_string_to_exp_buff(&shell->exp_lexer, argv));
 }

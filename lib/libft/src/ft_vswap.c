@@ -6,13 +6,23 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 16:18:48 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 22:25:12 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 15:39:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_vswap(void *a, void *b, size_t content_size)
+static void	iter_vswap(void *a, void *b, int i)
+{
+	((unsigned char *)a)[i] = ((unsigned char *)a)[i]
+		^ ((unsigned char *)b)[i];
+	((unsigned char *)b)[i] = ((unsigned char *)b)[i]
+		^ ((unsigned char *)a)[i];
+	((unsigned char *)a)[i] = ((unsigned char *)a)[i]
+		^ ((unsigned char *)b)[i];
+}
+
+void		ft_vswap(void *a, void *b, size_t content_size)
 {
 	int	i;
 
@@ -33,12 +43,5 @@ void	ft_vswap(void *a, void *b, size_t content_size)
 	}
 	else
 		while (++i < (int)content_size)
-		{
-			((unsigned char *)a)[i] = ((unsigned char *)a)[i]
-				^ ((unsigned char *)b)[i];
-			((unsigned char *)b)[i] = ((unsigned char *)b)[i]
-				^ ((unsigned char *)a)[i];
-			((unsigned char *)a)[i] = ((unsigned char *)a)[i]
-				^ ((unsigned char *)b)[i];
-		}
+			iter_vswap(a, b, i);
 }

@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/05 10:18:58 by marin            ###   ########.fr       */
+/*   Updated: 2019/07/05 15:33:58 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static const t_readline	g_functions[3] =\
 {
 	{0, &fill_line},
 	{1, &alt_fill_line},
-	{2, &read_from_file} 
+	{2, &read_from_file}
 };
 
 static void				exec_ast(t_shell *shell, t_token *tokens)
