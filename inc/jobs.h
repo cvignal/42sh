@@ -52,8 +52,7 @@ struct s_shell;
 
 void			free_job(struct s_shell *shell, t_job *job);
 
-t_job			*new_job();
-t_job			*find_job(struct s_shell *shell, int index);
+t_job			*new_job(void);
 
 int				register_proc(struct s_ast *ast);
 int				register_job(struct s_shell *shell, t_job *job);
