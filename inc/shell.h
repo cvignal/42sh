@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/05 10:17:53 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/05 10:50:06 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,20 @@
 # define VAR_MAX 1024
 # define SEARCH_MAX 128
 
-# define SPECIAL_PARAM_AT	"@"
-# define SPECIAL_PARAM_STAR	"*"
-# define SPECIAL_PARAM_ZERO	"0"
-# define SPECIAL_PARAM_ONE	"1"
-# define SPECIAL_PARAM_TWO	"2"
+# define SPECIAL_PARAM_AT		"@"
+# define SPECIAL_PARAM_STAR		"*"
+# define SPECIAL_PARAM_ZERO		"0"
+# define SPECIAL_PARAM_ONE		"1"
+# define SPECIAL_PARAM_TWO		"2"
 # define SPECIAL_PARAM_THREE	"3"
-# define SPECIAL_PARAM_FOUR	"4"	 
-# define SPECIAL_PARAM_FIVE	"5"
-# define SPECIAL_PARAM_SIX	"6"
+# define SPECIAL_PARAM_FOUR		"4"
+# define SPECIAL_PARAM_FIVE		"5"
+# define SPECIAL_PARAM_SIX		"6"
 # define SPECIAL_PARAM_SEVEN	"7"
 # define SPECIAL_PARAM_EIGHT	"8"
-# define SPECIAL_PARAM_NINE	"9"
-# define SPECIAL_PARAM_BANG	"!"
-# define SPECIAL_PARAM_HASH	"#"
+# define SPECIAL_PARAM_NINE		"9"
+# define SPECIAL_PARAM_BANG		"!"
+# define SPECIAL_PARAM_HASH		"#"
 # define SPECIAL_PARAM_DOLLAR	"$"
 # define SPECIAL_PARAM_QMARK	"?"
 # define SPECIAL_PARAM_HYPHEN	"-"
@@ -130,9 +130,9 @@ typedef struct		s_arg_file
 {
 	char			**argv;
 	char			*filename;
-	int			argc;
-	int			fd;
-}			t_arg_file;
+	int				argc;
+	int				fd;
+}					t_arg_file;
 
 struct s_job;
 typedef struct		s_shell
@@ -243,7 +243,6 @@ typedef struct		s_tmpfile
 	int		fd;
 }					t_tmpfile;
 
-
 t_heredoc			*alloc_heredoc(void);
 int					add_to_heredoc(t_heredoc *heredoc, const char *line);
 int					heredoc_exit_error(t_heredoc *heredoc);
@@ -259,10 +258,11 @@ int					add_to_command(t_command *command, char *word);
 /*
 ** utils.c
 */
-int					fail(const char *proc, const char *err,
-	   const char *message, int ret);
+int					fail(const char *proc, const char *err
+		, const char *message, int ret);
 int					do_error_handling(const char *name);
-char					*ft_strcjoin_free(char *s1, const char c, char *s2, int flag);
+char				*ft_strcjoin_free(char *s1, const char c
+		, char *s2, int flag);
 
 /*
 ** exec.c
@@ -288,7 +288,6 @@ int					init_shell(t_shell *shell, const char **environ);
 */
 int					add_to_line(t_line *line, char buf);
 int					free_line(t_line *line);
-
 
 /*
 ** builtins/

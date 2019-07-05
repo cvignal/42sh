@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 23:06:54 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 10:47:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 # define EXP_LEXER_MASK_TILDE (1 << 6)
 # define EXP_LEXER_MASK_NO_MULTI_TILDE (1 << 7)
 # define EXP_LEXER_MASK_PROC_SUB (1 << 8)
-
 
 typedef enum			e_exp_state
 {
@@ -80,14 +79,14 @@ typedef struct			s_brace_expansion
 	char	*expression;
 	void	(*f)(struct s_shell *shell, struct s_brace_expansion);
 	char	**argv;
-	int	argc;
-}				t_brace_expansion;
+	int		argc;
+}						t_brace_expansion;
 
 typedef struct			s_exp_lexer
 {
-	t_brace_expansion		brace_expansion;
+	t_brace_expansion	brace_expansion;
 	t_exp_ss			*state;
-	int				split;
+	int					split;
 	t_array				ret;
 	const char			*ifs;
 	t_exp_lexer_f		methods[NUMBER_EXP_STATE][CHAR_MAX + 1];
@@ -128,20 +127,20 @@ int						exp_lexer_pop_pass(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_pop_add_to_buff(struct s_shell *shell, char c
 		, int mask);
-int						exp_lexer_cut_special_param(struct s_shell *shell, char c
-		, int mask);
-int						exp_lexer_add_to_var(struct s_shell *shell, char c
-		, int mask);
-int						exp_lexer_set_special_param(struct s_shell *shell, char c
-		, int mask);
+int						exp_lexer_cut_special_param(struct s_shell *shell
+		, char c, int mask);
+int						exp_lexer_add_to_var(struct s_shell *shell
+		, char c, int mask);
+int						exp_lexer_set_special_param(struct s_shell *shell
+		, char c, int mask);
 int						exp_lexer_cut_var(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_push_var(struct s_shell *shell, char c
 		, int mask);
-int						exp_lexer_curly_expansion_stop(struct s_shell *shell, char c
-		, int mask);
-int						exp_lexer_curly_expansion_start(struct s_shell *shell, char c
-		, int mask);
+int						exp_lexer_curly_expansion_stop(struct s_shell *shell
+		, char c, int mask);
+int						exp_lexer_curly_expansion_start(struct s_shell *shell
+		, char c, int mask);
 int						exp_lexer_push_squote(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_push_dquote(struct s_shell *shell, char c
@@ -196,15 +195,21 @@ int						exp_lexer_push_hist(struct s_shell *shell, char c
 int						add_arg_to_array(t_exp_lexer *lexer, char c);
 
 int						replace_exclamation_mark(struct s_shell *shell, int i);
-int						exp_replace_history(struct s_shell *shell, char *buf, int i);
+int						exp_replace_history(struct s_shell *shell, char *buf
+		, int i);
 char					*exp_find_cmd(struct s_array *history, char *buf);
 
 int						get_special_param_at(struct s_shell *shell, char name);
-int						get_special_param_star(struct s_shell *shell, char name);
-int						get_special_param_dollar(struct s_shell *shell, char name);
-int						get_special_param_hash(struct s_shell *shell, char name);
+int						get_special_param_star(struct s_shell *shell
+		, char name);
+int						get_special_param_dollar(struct s_shell *shell
+		, char name);
+int						get_special_param_hash(struct s_shell *shell
+		, char name);
 int						get_special_param_num(struct s_shell *shell, char name);
-int						get_special_param_bang(struct s_shell *shell, char name);
-int						get_special_param_qmark(struct s_shell *shell, char name);
-char						*join_args(struct s_shell *shell, char separator);
+int						get_special_param_bang(struct s_shell *shell
+		, char name);
+int						get_special_param_qmark(struct s_shell *shell
+		, char name);
+char					*join_args(struct s_shell *shell, char separator);
 #endif

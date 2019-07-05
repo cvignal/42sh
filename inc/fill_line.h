@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/07/01 14:52:20 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/05 10:44:54 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ int				read_from_file(t_shell *shell);
 ** Arg file tools
 */
 
-void				set_shell_input_file(t_shell *shell, int ac, char **av);
-void				parse_args(t_shell *shell, int ac, char **av);
-void				parse_args(t_shell *shell, int ac, char **av);
+void			set_shell_input_file(t_shell *shell, int ac, char **av);
+void			parse_args(t_shell *shell, int ac, char **av);
+void			parse_args(t_shell *shell, int ac, char **av);
 /*
 ** Special keys
 */
@@ -195,6 +195,6 @@ int				vm_rightkey(t_shell *shell);
 int				vm_homekey(t_shell *shell);
 int				vm_endkey(t_shell *shell);
 int				visual_mode(t_shell *shell);
-
 int				expand_history(t_shell *shell);
+
 #endif
