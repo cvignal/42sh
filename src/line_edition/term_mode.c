@@ -54,6 +54,8 @@ int		check_validity(t_shell *shell)
 	if (res <= 0)
 		return (1);
 	ioctl(0, TIOCGWINSZ, &shell->win);
+	setpgid(0, 0);
+	tcsetpgrp(0, getpid());
 	shell->ctrlc = 0;
 	return (0);
 }
