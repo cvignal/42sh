@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/26 15:38:36 by gchainet         ###   ########.fr        #
+#    Updated: 2019/07/05 16:27:26 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -167,7 +167,7 @@ SRC			:=	$(addprefix $(SRCDIR)/, $(SRC))
 
 SUBDIRS		:=	$(dir $(DEP)) $(dir $(OBJ))
 
-$(NAME):	 $(SUBDIRS) $(OBJ)
+$(NAME):	 make_dirs $(OBJ)
 	$(AR) rc $(NAME) $(OBJ)
 	$(RANLIB) $(NAME)
 
@@ -176,8 +176,8 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 	$(DEPGEN) $(DFLAGS) -c $< -MQ $@ > $(subst $(SRCDIR), $(DEPDIR), $(<:.c=.d))
 
-%/:
-	mkdir -p $@
+make_dirs:
+	@mkdir -p $(SUBDIRS)
 
 all:		$(NAME)
 

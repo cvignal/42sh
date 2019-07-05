@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 14:41:08 by cvignal           #+#    #+#             */
-/*   Updated: 2019/07/05 15:16:58 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/05 16:12:30 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ static int	return_value_input(t_shell *shell, int res)
 	if (!shell->line.alloc_size)
 		shell->line.data = ft_strdup("");
 	clean_under_line(shell);
-	if (expand_history(shell))
-	{
-		free_line(&shell->line);
-		shell->line.data = ft_strnew(0);
-	}
+	if (!shell->ctrld)
+		if (expand_history(shell))
+		{
+			free_line(&shell->line);
+			shell->line.data = ft_strnew(0);
+		}
 	if (!shell->end_heredoc)
 		ft_dprintf(shell->fd_op, "\n");
 	return (res == -1 || shell->line.data == NULL);
