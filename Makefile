@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/26 15:35:02 by gchainet         ###   ########.fr        #
+#    Updated: 2019/07/05 10:39:47 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,7 +104,7 @@ DEPDIR		:=	dep
 
 CC		:=	cc
 LD		:=	cc
-DEPGEN		:=	cc
+DEPGEN	:=	cc
 RM		:=	rm -rf
 
 CFLAGS		:=	-Wall -Werror -Wextra -ggdb
@@ -118,7 +118,7 @@ SRC			:=	$(addprefix $(SRCDIR)/, $(SRC))
 
 SUBDIRS		:=	$(dir $(DEP)) $(dir $(OBJ))
 
-$(NAME):	 $(SUBDIRS) $(OBJ)
+$(NAME):	 make_dirs $(OBJ)
 	make -C $(LIBFTDIR)
 	$(LD) -o $(NAME) $(OBJ) $(LDFLAGS) 
 
@@ -126,8 +126,8 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 	$(DEPGEN) $(DFLAGS) -c $< -MQ $@ > $(subst $(SRCDIR), $(DEPDIR), $(<:.c=.d))
 
-%/:
-	mkdir -p $@
+make_dirs:
+	mkdir -p $(SUBDIRS)
 
 all:		$(NAME)
 

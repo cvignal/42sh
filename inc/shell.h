@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/30 21:37:38 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 10:17:53 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@
 # define STATE_WRITE 0
 # define STATE_SLASH 1
 # define STATE_DOT 2
+
+# define SIGNAL_SIGINT (1 << 0)
+# define SIGNAL_OTHER (1 << 1)
 
 typedef struct		s_curs
 {
@@ -480,7 +483,7 @@ void				sanitize_hash(t_shell *shell);
 */
 void				prompt_signal_handler(int sig);
 void				disable_signal(t_shell *shell);
-void				enable_signal(void);
+void				enable_signal(int mask);
 
 /*
 ** fd.c

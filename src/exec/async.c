@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:46:52 by agrouard          #+#    #+#             */
-/*   Updated: 2019/04/28 18:47:51 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 01:04:43 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	exec_async_subshell(t_shell *shell, t_ast *node)
 		pid = getpid();
 		setpgid(pid, pid);
 		shell->is_subshell = 1;
-		enable_signal();
+		enable_signal(SIGNAL_SIGINT | SIGNAL_OTHER);
 		exec_job(shell, node, NULL);
 		exit(node->ret);
 	}

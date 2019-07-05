@@ -6,7 +6,7 @@
 /*   By: cvignal <cvignal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 13:50:27 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/28 20:57:26 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 01:05:10 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,18 @@ void	disable_signal(t_shell *shell)
 	signal(SIGWINCH, resize_window);
 }
 
-void	enable_signal(void)
+void	enable_signal(int mask)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGCHLD, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTERM, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
-	signal(SIGTTIN, SIG_DFL);
-	signal(SIGTTOU, SIG_DFL);
-	signal(SIGWINCH, SIG_DFL);
+	if (mask & SIGNAL_SIGINT)
+		signal(SIGINT, SIG_DFL);
+	if (mask & SIGNAL_OTHER)
+	{
+		signal(SIGCHLD, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGTERM, SIG_DFL);
+		signal(SIGTSTP, SIG_DFL);
+		signal(SIGTTIN, SIG_DFL);
+		signal(SIGTTOU, SIG_DFL);
+		signal(SIGWINCH, SIG_DFL);
+	}
 }

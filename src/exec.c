@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/30 21:37:15 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 10:17:23 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	exec_internal(t_shell *shell, t_ast *instr,
 	char 	**args;
 	char	*path;
 
-	enable_signal();
+	enable_signal(SIGNAL_SIGINT);
 	if (prepare_redirs(shell, instr))
 		exit(1);
 	instr->pid = getpid();
@@ -36,6 +36,7 @@ static void	exec_internal(t_shell *shell, t_ast *instr,
 	setpgid(instr->pid, instr->job->pgid);
 	if (!instr->job->async && !shell->is_subshell)
 		tcsetpgrp(0, instr->job->pgid);
+	enable_signal(SIGNAL_OTHER);
 	set_pipeline(shell, instr);
 	if (apply_redirs(shell, instr))
 	{
