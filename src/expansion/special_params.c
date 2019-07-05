@@ -3,23 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   special_params.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
+/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/25 14:35:55 by marin             #+#    #+#             */
-/*   Updated: 2019/06/24 08:32:31 by marin            ###   ########.fr       */
+/*   Created: 2019/07/05 14:22:42 by cvignal           #+#    #+#             */
+/*   Updated: 2019/07/05 14:24:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "expand.h"
 #include <unistd.h>
-
-typedef struct		s_special_param
-{
-	char	*name;
-	int	(*f)(t_shell *, char);
-}			t_special_param;
-
 
 static const t_special_param	g_special_params[16] = \
 {
@@ -41,7 +34,7 @@ static const t_special_param	g_special_params[16] = \
 	{SPECIAL_PARAM_HASH, &get_special_param_hash},
 };
 
-int			is_special_param(char name)
+int	is_special_param(char name)
 {
 	unsigned int	i;
 

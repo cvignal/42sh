@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/24 18:37:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 21:56:45 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 11:59:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	builtin_test_four_op(t_shell *shell, char **args)
 	return (1);
 }
 
-int		builtin_test(t_shell *shell, char **args)
+int			builtin_test(t_shell *shell, char **args)
 {
 	size_t	args_len;
 

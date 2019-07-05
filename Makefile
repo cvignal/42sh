@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/07/05 10:42:00 by cvignal          ###   ########.fr        #
+#    Updated: 2019/07/05 13:31:31 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRC	+=	$(addprefix expansion/,							\
 		lexer_methods_dollar.c lexer_methods_escaped.c special_params.c		\
 		lexer_methods_over.c lexer_methods_proc_sub.c lexer_methods_quotes.c	\
 		lexer_methods_curly_exp.c special_params_expansion_1.c			\
-		special_params_expansion_2.c						\
+		special_params_expansion_2.c utils_lexer.c						\
 		)
 
 SRC	+=	$(addprefix expr/,						\
@@ -127,7 +127,7 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c
 	$(DEPGEN) $(DFLAGS) -c $< -MQ $@ > $(subst $(SRCDIR), $(DEPDIR), $(<:.c=.d))
 
 make_dirs:
-	mkdir -p $(SUBDIRS)
+	@mkdir -p $(SUBDIRS)
 
 debug:
 	$(CFLAGS += -ggdb)

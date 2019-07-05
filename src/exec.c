@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/05 10:17:23 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/05 12:20:00 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 static void	exec_internal(t_shell *shell, t_ast *instr,
 	const char *prgm, t_builtin builtin)
 {
-	char 	**args;
+	char	**args;
 	char	*path;
 
 	enable_signal(SIGNAL_SIGINT);

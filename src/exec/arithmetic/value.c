@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 01:53:07 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/01 14:35:50 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 12:08:17 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*get_ari_value(t_shell *shell, const char *input, int rec_lvl)
 	return (NULL);
 }
 
-int	exec_ari_value(t_shell *shell, t_ast *ast)
+int			exec_ari_value(t_shell *shell, t_ast *ast)
 {
 	const char	*var;
 	char		*value;

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 23:58:18 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/01 14:39:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 12:07:44 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ static void	exec_complete_ari(t_shell *shell, t_ast *ast)
 	shell->parser.ret->del(shell->parser.ret);
 }
 
+static int	error_lexer(char *expanded)
+{
+	free(expanded);
+	return (1);
+}
+
 int			exec_ari_statement(t_shell *shell, t_ast *ast)
 {
 	t_token	*tokens;
@@ -36,10 +42,7 @@ int			exec_ari_statement(t_shell *shell, t_ast *ast)
 					EXP_LEXER_MASK_ALL)))
 		return (0);
 	if (error || !(tokens = lex(shell, expanded)))
-	{
-		free(expanded);
-		return (1);
-	}
+		return (error_lexer(expanded));
 	set_unary(tokens);
 	free(expanded);
 	lss_pop(&shell->lexer);

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/05 10:47:55 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/05 14:23:21 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,12 @@ typedef struct			s_exp_lexer
 	t_exp_lexer_f		methods[NUMBER_EXP_STATE][CHAR_MAX + 1];
 }						t_exp_lexer;
 
+typedef struct			s_special_param
+{
+	char	*name;
+	int		(*f)(t_shell *, char);
+}						t_special_param;
+
 /*
 ** expansion/init.c
 */
@@ -113,6 +119,9 @@ char					*expand_no_split(struct s_shell *shell, char *arg,
 		int *error, int mask);
 int						expand_redirs(struct s_shell *shell,
 		struct s_redir *list, int mask);
+int						clean_exit_exp_lexer(t_exp_lexer *lexer);
+void					reset_exp_lexer(struct s_shell *shell);
+int						expand_main(struct s_shell *shell, char *arg, int mask);
 
 /*
 ** expansion/buffer.c

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 23:20:53 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/26 18:15:29 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 11:58:47 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	args_parser(char **args)
 			ft_dprintf(STDERR_FILENO,
 					"%s: export: %s invalid option\n",
 					EXEC_NAME, args[i]);
-			ft_dprintf(STDERR_FILENO, 
+			ft_dprintf(STDERR_FILENO,
 					"%s: usage: export [-p] [NAME[=VALUE] ...]\n",
 					EXEC_NAME);
 			return (-1);

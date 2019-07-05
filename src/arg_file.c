@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_file.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vagrant </var/spool/mail/vagrant>          +#+  +:+       +#+        */
+/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/14 21:34:02 by vagrant           #+#    #+#             */
-/*   Updated: 2019/06/26 16:52:49 by marin            ###   ########.fr       */
+/*   Created: 2019/07/05 11:56:23 by cvignal           #+#    #+#             */
+/*   Updated: 2019/07/05 11:58:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,16 @@ void	set_shell_input_file(t_shell *shell, int ac, char **av)
 	{
 		if (!access(shell->arg_file->filename, R_OK))
 		{
-			if ((shell->arg_file->fd = open(shell->arg_file->filename, O_RDONLY)) != -1)
-				return;
+			if ((shell->arg_file->fd = open(shell->arg_file->filename
+							, O_RDONLY)) != -1)
+				return ;
 		}
-		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", EXEC_NAME, shell->arg_file->filename, PERMISSION_DENIED_ERROR_MSG) ;
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", EXEC_NAME
+				, shell->arg_file->filename, PERMISSION_DENIED_ERROR_MSG);
 		exit(127);
 	}
-	ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", EXEC_NAME, shell->arg_file->filename, NO_SUCH_FILE_ERROR_MSG);
+	ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", EXEC_NAME
+			, shell->arg_file->filename, NO_SUCH_FILE_ERROR_MSG);
 	exit(127);
 }
 
@@ -47,11 +50,12 @@ void	parse_args(t_shell *shell, int ac, char **av)
 
 	i = 1;
 	while (i < ac && *av[i] == '-')
-		i++; // will deal with shell params later
+		i++;
 	if (ac != i)
 		set_shell_input_file(shell, ac - i, &av[i]);
 }
-int	read_from_file(t_shell *shell)
+
+int		read_from_file(t_shell *shell)
 {
 	char	*line;
 

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:35:26 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/06 01:22:27 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 12:29:55 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int					exp_lexer_push_tilde(t_shell *shell, char c, int mask)
 	(void)c;
 	if (mask & EXP_LEXER_MASK_TILDE &&
 			((!(mask & EXP_LEXER_MASK_NO_MULTI_TILDE)
-			  && shell->exp_lexer.state->buffer.pos
-			  && shell->exp_lexer.state->buffer.buffer\
-			  [shell->exp_lexer.state->buffer.pos - 1] == ':')
-			 || (!shell->exp_lexer.ret.length
-				 && !shell->exp_lexer.state->buffer.pos)))
+			&& shell->exp_lexer.state->buffer.pos
+			&& shell->exp_lexer.state->buffer.buffer\
+			[shell->exp_lexer.state->buffer.pos - 1] == ':')
+			|| (!shell->exp_lexer.ret.length
+				&& !shell->exp_lexer.state->buffer.pos)))
 	{
 		if (exp_ss_push(&shell->exp_lexer, EXP_STATE_TILDE))
 			return (EXP_LEXER_RET_ERROR);

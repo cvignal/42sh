@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:14:35 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/03 11:25:30 by marin            ###   ########.fr       */
+/*   Updated: 2019/07/05 12:19:40 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	realloc_exp_buff(t_exp_buff *buffer, size_t new_size)
 	return (0);
 }
 
-int	add_arg_to_array(t_exp_lexer *lexer, char c)
+int			add_arg_to_array(t_exp_lexer *lexer, char c)
 {
 	t_exp_buff	*buffer;
 	int			ret;

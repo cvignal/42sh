@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:46:52 by agrouard          #+#    #+#             */
-/*   Updated: 2019/07/05 01:04:43 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 12:19:23 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	exec_async_subshell(t_shell *shell, t_ast *node)
 
 static int	do_exec_async(t_shell *shell, t_ast *node)
 {
-	if (node->type == TT_AND ||node->type == TT_OR)
+	if (node->type == TT_AND || node->type == TT_OR)
 		return (exec_async_subshell(shell, node));
 	if (!(node->job = new_job()))
 		return (-1);

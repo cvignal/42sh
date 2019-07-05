@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 09:43:54 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/30 21:37:06 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 12:18:21 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ static int	expand_var(t_shell *shell, t_var *var, t_var **dst, int export)
 	t_var	*found;
 
 	error = 0;
-	name = malloc(sizeof(*name) * (var->len_name + 1));
-	if (!name)
+	if (!(name = ft_strndup(var->var, var->len_name)))
 		return (1);
-	ft_strncpy(name, var->var, var->len_name);
 	name[var->len_name] = 0;
 	value = ft_strchr(var->var, '=') + 1;
 	expanded = expand_no_split(shell, value, &error,

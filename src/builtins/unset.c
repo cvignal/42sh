@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 02:50:43 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 22:33:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 12:00:24 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,13 @@ static int	builtin_unset_internal(t_shell *shell, char **args, int i,
 	while (args[i])
 	{
 		if (!check_var(args[i]))
-			remove_var(&shell->vars, args[i], REMOVE_VAR_ENV | REMOVE_VAR_LOCAL);
+			remove_var(&shell->vars, args[i], REMOVE_VAR_ENV
+					| REMOVE_VAR_LOCAL);
 		else
 		{
 			err = 1;
-			ft_dprintf(STDERR_FILENO, "%s: unset: %s is not a valid identifier\n",
-					EXEC_NAME, args[i]);
+			ft_dprintf(STDERR_FILENO, "%s: unset: %s is not \
+					a valid identifier\n", EXEC_NAME, args[i]);
 		}
 		if (!ft_strcmp(args[1], "PATH"))
 			sanitize_hash(shell);

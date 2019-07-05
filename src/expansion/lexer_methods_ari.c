@@ -6,25 +6,13 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/27 22:34:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 20:01:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/05 12:45:31 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "expand.h"
 #include "arithmetic.h"
-
-int			exp_lexer_set_ari(t_shell *shell, char c, int mask)
-{
-	if (!(mask & EXP_LEXER_MASK_ARI))
-		return (exp_lexer_dollar_fail(shell, c, mask));
-	free(exp_ss_pop(&shell->exp_lexer));
-	if (exp_ss_push(&shell->exp_lexer, EXP_STATE_ARI)
-			|| exp_lexer_push_ari_paren(shell, c, mask) & EXP_LEXER_RET_ERROR
-			|| exp_lexer_push_ari_paren(shell, c, mask) & EXP_LEXER_RET_ERROR)
-		return (EXP_LEXER_RET_ERROR);
-	return (EXP_LEXER_RET_CONT);
-}
 
 int			exp_lexer_push_ari_paren(t_shell *shell, char c, int mask)
 {

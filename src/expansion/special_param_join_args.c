@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_param_join_args.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marin </var/spool/mail/marin>              +#+  +:+       +#+        */
+/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/08 17:09:43 by marin             #+#    #+#             */
-/*   Updated: 2019/06/08 17:11:31 by marin            ###   ########.fr       */
+/*   Created: 2019/07/05 14:15:28 by cvignal           #+#    #+#             */
+/*   Updated: 2019/07/05 14:16:04 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ static int	args_malloc_size(t_shell *shell)
 	return (size);
 }
 
-char	*join_args(t_shell *shell, char separator)
+char		*join_args(t_shell *shell, char separator)
 {
 	char	*ret;
-	int	ret_size;
-	int	i;
+	int		ret_size;
+	int		i;
 
 	i = 1;
 	ret_size = args_malloc_size(shell);
@@ -43,6 +43,5 @@ char	*join_args(t_shell *shell, char separator)
 		if (i != shell->arg_file->argc)
 			ft_strncat(ret, &separator, 1);
 	}
-	return ret;
-
+	return (ret);
 }

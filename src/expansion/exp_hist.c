@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:18:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/19 11:17:30 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/05 12:35:13 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,15 @@ char		*exp_find_cmd(t_array *history, char *buf)
 	return (history->data[idx]);
 }
 
+static int	return_expand(t_shell *shell)
+{
+	if (shell->fc_rec)
+		return (0);
+	clear_cmd_line(shell);
+	print_line_bis(shell);
+	return (0);
+}
+
 int			expand_history(t_shell *shell)
 {
 	int	i;
@@ -92,9 +101,5 @@ int			expand_history(t_shell *shell)
 			backslash = 0;
 		i++;
 	}
-	if (shell->fc_rec)
-		return (0);
-	clear_cmd_line(shell);
-	print_line_bis(shell);
-	return (0);
+	return (return_expand(shell));
 }
