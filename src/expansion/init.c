@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:26:10 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/20 19:24:11 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/24 17:23:25 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	set_exp_lexer_other(t_exp_lexer *lexer)
 	lexer->methods[EXP_STATE_ARI_PAREN]['$'] = &exp_lexer_push_dollar;
 	lexer->methods[EXP_STATE_DQUOTE]['"'] = &exp_lexer_pop_quote;
 	lexer->methods[EXP_STATE_SQUOTE]['\''] = &exp_lexer_pop_quote;
-	lexer->methods[EXP_STATE_ESCAPED]['\n'] = &exp_lexer_pop_quote;
+	lexer->methods[EXP_STATE_ESCAPED]['\n'] = &exp_lexer_pop_pass;
 	lexer->methods[EXP_STATE_WORD][0] = &exp_lexer_over;
 	lexer->methods[EXP_STATE_SQUOTE][0] = &exp_lexer_error;
 	lexer->methods[EXP_STATE_DQUOTE][0] = &exp_lexer_error;
@@ -54,7 +54,7 @@ static void	set_exp_lexer_other(t_exp_lexer *lexer)
 	lexer->methods[EXP_STATE_VAR][0] = &exp_lexer_cut_var;
 	lexer->methods[EXP_STATE_ARI][0] = &exp_lexer_pop_ari;
 	lexer->methods[EXP_STATE_ARI_PAREN][0] = &exp_lexer_error;
-	lexer->methods[EXP_STATE_ESCAPED][0] = &exp_lexer_error;
+	lexer->methods[EXP_STATE_ESCAPED][0] = &exp_lexer_pop_escaped;
 	lexer->methods[EXP_STATE_TILDE][0] = &exp_lexer_pop_tilde;
 	lexer->methods[EXP_STATE_PROC_SUB][0] = &exp_lexer_error;
 	lexer->methods[EXP_STATE_WORD]['~'] = &exp_lexer_push_tilde;

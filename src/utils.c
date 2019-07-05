@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by agrouard          #+#    #+#             */
-/*   Updated: 2019/04/22 19:39:29 by agrouard         ###   ########.fr       */
+/*   Updated: 2019/06/28 14:37:29 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-int	fail(char *proc, char *err, char *message, int ret)
+int	fail(const char *proc, const char *err, const char *message, int ret)
 {
 	if (err)
 		ft_dprintf(2, "%s: %s: %s\n", proc, err, message);
@@ -26,7 +26,7 @@ int	fail(char *proc, char *err, char *message, int ret)
 	return (ret);
 }
 
-int	do_error_handling(char *name)
+int	do_error_handling(const char *name)
 {
 	struct stat info;
 

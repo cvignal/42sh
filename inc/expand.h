@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/24 08:31:30 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/24 23:06:54 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ int						add_string_to_exp_buff(t_exp_lexer *lexer,
 
 int						exp_lexer_add_to_buff(struct s_shell *shell, char c
 		, int mask);
+int						exp_lexer_pop_pass(struct s_shell *shell, char c
+		, int mask);
 int						exp_lexer_pop_add_to_buff(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_cut_special_param(struct s_shell *shell, char c
@@ -147,6 +149,8 @@ int						exp_lexer_push_dquote(struct s_shell *shell, char c
 int						exp_lexer_pop_quote(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_push_escaped(struct s_shell *shell, char c
+		, int mask);
+int						exp_lexer_pop_escaped(struct s_shell *shell, char c
 		, int mask);
 int						exp_lexer_push_dollar(struct s_shell *shell, char c
 		, int mask);

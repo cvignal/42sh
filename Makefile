@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/06/26 15:29:16 by gchainet         ###   ########.fr        #
+#    Updated: 2019/06/26 15:35:02 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ SRC	=	alt_shell.c apply_redir_rw.c apply_redirs.c arg_file.c		\
 SRC	+=	$(addprefix builtins/, 					\
 		builtin_hash.c builtins.c cd.c echo.c exec_builtin.c	\
 		exit.c	fc.c fc_display.c fc_exec.c file_fc.c idx_fc.c  \
-		jobs.c parsing_fc.c setenv.c tools_cd.c	tools_fc.c	\
+		jobs.c parsing_fc.c tools_cd.c	tools_fc.c	\
 		tools_hash.c tools_type.c trim_path.c type.c unset.c	\
-		unsetenv.c					        \
+		set.c export.c export_set_utils.c test.c test_ops.c	\
 		)
 SRC	+=	$(addprefix exec/,					\
 		and.c async.c cmd.c else.c end.c expr.c if.c	or.c 	\

@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/26 16:41:03 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/30 21:37:38 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define EXEC_NAME "42sh"
 # define PROMPT "$>"
 # define INCOMPLETE_INPUT_PROMPT ">"
+
+# define QUOTABLE_CHARS "|&;<>()$`\\\"' \t\n"
 
 # define SYNTAX_ERROR_MSG "syntax error"
 # define MEMORY_ERROR_MSG "unable to allocate memory"
@@ -117,6 +119,7 @@ typedef struct		s_var
 	size_t			len_value;
 	size_t			alloc_size;
 	int				exported;
+	int				set;
 	struct s_var	*next;
 }					t_var;
 
@@ -253,8 +256,9 @@ int					add_to_command(t_command *command, char *word);
 /*
 ** utils.c
 */
-int					fail(char *proc, char *err, char *message, int ret);
-int					do_error_handling(char *name);
+int					fail(const char *proc, const char *err,
+	   const char *message, int ret);
+int					do_error_handling(const char *name);
 char					*ft_strcjoin_free(char *s1, const char c, char *s2, int flag);
 
 /*
@@ -294,13 +298,13 @@ int					expand_special_params(t_shell *shell, char name);
 */
 int					builtin_cd(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
-int					builtin_env_get_opts(char **args, t_var **tmp_env);
-int					builtin_env(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
+int					builtin_export(t_shell *shell, char **args);
 int					builtin_hash(t_shell *shell, char **args);
-int					builtin_setenv(t_shell *shell, char **args);
 int					builtin_type(t_shell *shell, char **args);
+int					builtin_test(t_shell *shell, char **args);
 int					builtin_unset(t_shell *shell, char **args);
+int					builtin_set(t_shell *shell, char **args);
 int					builtin_unsetenv(t_shell *shell, char **args);
 int					builtin_echo(t_shell *shell, char **args);
 int					builtin_exit(t_shell *shell, char **args);
@@ -321,6 +325,9 @@ int					canonic_path(t_shell *shell, char *curpath, const char *dir
 		, int option);
 int					change_dir(t_shell *shell, char *curpath, const char *dir
 		, int option);
+int					env_cmp(void *a, void *b);
+t_var				*vars_to_array(t_var *vars);
+int					is_export_special_char(char c);
 
 /*
 ** fc

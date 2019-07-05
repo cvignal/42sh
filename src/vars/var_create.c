@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 02:02:04 by gchainet          #+#    #+#             */
-/*   Updated: 2019/05/02 01:47:10 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/04 00:18:00 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int				set_var(t_var **vars, const char *name, const char *value,
 	else
 		concat_var(var, name, value);
 	var->exported = exported;
+	var->set = value ? 1 : 0;
 	return (0);
 }
 
