@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 16:40:31 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/21 11:58:59 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/01 14:52:20 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int				ft_comp(char *word, char *name);
 char			*find_path(char *word);
 void			display_list(t_shell *shell, t_list *list);
 void			clean_under_line(t_shell *shell);
-char			*word_to_complete(t_line *line);
+char			*word_to_complete(t_line *line, int flag);
 void			ft_add_builtins(char *word, t_list **list);
 int				is_a_command(t_line *line);
 char			*ft_escape(char *name);
