@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/07/05 10:39:47 by cvignal          ###   ########.fr        #
+#    Updated: 2019/07/05 10:42:00 by cvignal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,7 +107,7 @@ LD		:=	cc
 DEPGEN	:=	cc
 RM		:=	rm -rf
 
-CFLAGS		:=	-Wall -Werror -Wextra -ggdb
+CFLAGS		:=	-Wall -Werror -Wextra
 LDFLAGS		:=	-L $(LIBFTDIR) -lft -ltermcap
 IFLAGS		:=	-I $(INCDIR) -I $(LIBFTDIR)/$(INCDIR)
 DFLAGS		:=	-MM $(IFLAGS)
@@ -128,6 +128,10 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c
 
 make_dirs:
 	mkdir -p $(SUBDIRS)
+
+debug:
+	$(CFLAGS += -ggdb)
+	make all
 
 all:		$(NAME)
 
