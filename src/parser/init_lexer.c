@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 10:46:05 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/08 15:29:59 by marin            ###   ########.fr       */
+/*   Updated: 2019/06/24 17:22:55 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	init_lexer_zero(t_lexer *lexer)
 	lexer->lexer_actions[LSTATE_NONE][0] = &lexer_over;
 	lexer->lexer_actions[LSTATE_DQUOTE][0] = &lexer_more_input_nl;
 	lexer->lexer_actions[LSTATE_SQUOTE][0] = &lexer_more_input_nl;
-	lexer->lexer_actions[LSTATE_ESCAPED][0] = &lexer_more_input;
+	lexer->lexer_actions[LSTATE_ESCAPED][0] = &lexer_more_input_escaped;
 	lexer->lexer_actions[LSTATE_PAREN][0] = &lexer_more_input;
 	lexer->lexer_actions[LSTATE_CURLY][0] = &lexer_more_input;
 	lexer->lexer_actions[LSTATE_META][0] = &lexer_cut;

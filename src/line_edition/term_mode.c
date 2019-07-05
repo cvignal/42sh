@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 14:01:19 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/19 14:53:27 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/05 10:16:31 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int		check_validity(t_shell *shell)
 	if (res <= 0)
 		return (1);
 	ioctl(0, TIOCGWINSZ, &shell->win);
+	setpgid(0, 0);
+	tcsetpgrp(0, getpid());
 	shell->ctrlc = 0;
 	return (0);
 }
@@ -72,4 +74,3 @@ int		reset_terminal_mode(t_shell *shell)
 		return (1);
 	return (0);
 }
-

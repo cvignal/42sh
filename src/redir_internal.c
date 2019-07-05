@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/30 01:31:18 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/06/28 08:49:16 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	prepare_redirs(t_shell *shell, t_ast *instr)
 	{
 		if (!redir->applied && redir->redir_act(shell, instr, redir))
 		{
-			ft_dprintf(2, "%s: redirection failed\n", EXEC_NAME);
+			if (!shell->ctrlc)
+				ft_dprintf(2, "%s: redirection failed\n", EXEC_NAME);
 			return (1);
 		}
 		redir->applied = 1;

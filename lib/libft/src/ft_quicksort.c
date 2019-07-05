@@ -3,43 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   ft_quicksort.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/22 19:07:57 by cvignal           #+#    #+#             */
-/*   Updated: 2019/01/29 16:47:37 by cvignal          ###   ########.fr       */
+/*   Created: 2019/06/17 01:27:36 by gchainet          #+#    #+#             */
+/*   Updated: 2019/06/24 22:24:02 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "ft_sort.h"
 
-static void	ft_swap(char **array, int p1, int p2)
+static inline void	*addr(t_sort *sort, unsigned int n)
 {
-	char	*tmp;
-
-	tmp = array[p1];
-	array[p1] = array[p2];
-	array[p2] = tmp;
+	return (sort->data + n * sort->content_size);
 }
 
-void		quicksort(char **array, int first, int last)
+int				partition(t_sort *sort, int first, int last, int pivot)
 {
-	char	*pivot;
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
-	if (last - first > 1)
+	ft_vswap(addr(sort, pivot), addr(sort, last), sort->content_size);
+	j = first;
+	i = first;
+	while (i <= last - 1)
 	{
-		pivot = array[last];
-		i = first;
-		j = first;
-		while (i < last)
+		if (sort->cmp(addr(sort, i), addr(sort, last)) <= 0)
 		{
-			if (ft_strcmp(array[i], pivot) < 0)
-				ft_swap(array, i, j++);
-			++i;
+			ft_vswap(addr(sort, i), addr(sort, j), sort->content_size);
+			++j;
 		}
-		ft_swap(array, last, j);
-		quicksort(array, first, j - 1);
-		quicksort(array, j + 1, last);
+		++i;
 	}
+	ft_vswap(addr(sort, last), addr(sort, j), sort->content_size);
+	return (j);
+}
+
+void			ft_quicksort_internal(t_sort *sort, int first, int last)
+{
+	unsigned int	pivot;
+
+	if (first < last)
+	{
+		pivot = last;
+		pivot = partition(sort, first, last, pivot);
+		ft_quicksort_internal(sort, first, pivot - 1);
+		ft_quicksort_internal(sort, pivot, last);
+	}
+}
+
+void			ft_quicksort(void *data, size_t content_size, size_t len,
+		int	(*cmp)(void *, void *))
+{
+	t_sort	sort;
+
+	sort.cmp = cmp;
+	sort.data = data;
+	sort.content_size = content_size;
+	sort.len = len;
+	if (len)
+		ft_quicksort_internal(&sort, 0, (int)len - 1);
 }
