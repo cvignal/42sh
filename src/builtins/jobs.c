@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:21:25 by agrouard          #+#    #+#             */
-/*   Updated: 2018/12/12 09:28:44 by agrouard         ###   ########.fr       */
+/*   Updated: 2019/07/06 14:29:54 by agrouard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int		builtin_bg(t_shell *shell, char **argv)
 	t_job	*target;
 
 	if (check_validity(shell))
-		return (fail("fg", NULL, "no job control", 1));
+		return (fail("bg", NULL, "no job control", 1));
 	update_jobs(shell);
 	target = NULL;
 	if (argv[1] == NULL)

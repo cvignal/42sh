@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:52:57 by agrouard          #+#    #+#             */
-/*   Updated: 2018/12/12 09:56:37 by agrouard         ###   ########.fr       */
+/*   Updated: 2019/07/06 16:56:22 by agrouard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ int				wait_job(t_shell *shell, t_job *job)
 	int		status;
 	int		options;
 
-	options = shell->is_subshell ? 0 : WUNTRACED;
+	options = WNOHANG | (shell->is_subshell ? 0 : WUNTRACED);
 	while (!job_is_stopped(job))
 	{
-		if ((pid = waitpid(-1, &status, options)) < 0)
-			break ;
+		if ((pid = waitpid(-1, &status, options)) <= 0)
+			continue;
 		update_proc(shell, pid, status);
 	}
 	while ((pid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)

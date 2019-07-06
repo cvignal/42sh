@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/07/05 13:31:31 by cvignal          ###   ########.fr        #
+#    Updated: 2019/07/06 15:27:04 by marin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,7 +107,7 @@ LD		:=	cc
 DEPGEN	:=	cc
 RM		:=	rm -rf
 
-CFLAGS		:=	-Wall -Werror -Wextra
+CFLAGS		:=	-Wall -Werror -Wextra -g3
 LDFLAGS		:=	-L $(LIBFTDIR) -lft -ltermcap
 IFLAGS		:=	-I $(INCDIR) -I $(LIBFTDIR)/$(INCDIR)
 DFLAGS		:=	-MM $(IFLAGS)
