@@ -12,6 +12,7 @@
 
 #include "jobs.h"
 #include "shell.h"
+#include "fill_line.h"
 
 #include <unistd.h>
 
@@ -70,6 +71,8 @@ int		builtin_fg(t_shell *shell, char **argv)
 {
 	t_job	*target;
 
+	if (check_validity(shell))
+		return (fail("fg", NULL, "no job control", 1));
 	update_jobs(shell);
 	target = NULL;
 	if (argv[1] == NULL)
@@ -92,6 +95,8 @@ int		builtin_bg(t_shell *shell, char **argv)
 {
 	t_job	*target;
 
+	if (check_validity(shell))
+		return (fail("fg", NULL, "no job control", 1));
 	update_jobs(shell);
 	target = NULL;
 	if (argv[1] == NULL)
