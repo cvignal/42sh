@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/05 15:22:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/06 15:42:59 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,15 @@ typedef struct			s_special_param
 	char	*name;
 	int		(*f)(struct s_shell *, char);
 }						t_special_param;
+
+typedef struct			s_pars_hist
+{
+	int	backslash;
+	int	squote;
+	int	arit;
+	int	idx;
+}						t_pars_hist;
+
 
 /*
 ** expansion/init.c
@@ -203,7 +212,8 @@ int						exp_lexer_push_hist(struct s_shell *shell, char c
 		, int mask);
 int						add_arg_to_array(t_exp_lexer *lexer, char c);
 
-int						replace_exclamation_mark(struct s_shell *shell, int i);
+int						replace_exclamation_mark(struct s_shell *shell, int i
+		, int flag);
 int						exp_replace_history(struct s_shell *shell, char *buf
 		, int i);
 char					*exp_find_cmd(struct s_array *history, char *buf);

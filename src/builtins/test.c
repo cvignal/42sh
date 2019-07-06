@@ -6,12 +6,21 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/24 18:37:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/05 11:59:04 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/06 16:43:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "test.h"
+
+static int	exit_error(char *msg, char *arg)
+{
+	ft_dprintf(2, "%s: test: ", EXEC_NAME);
+	if (arg)
+		ft_dprintf(2, "%s: ", arg);
+	ft_dprintf(2, "%s\n", msg);
+	return (1);
+}
 
 static int	builtin_test_one_op(t_shell *shell, char **args)
 {
@@ -30,7 +39,7 @@ static int	builtin_test_two_op(t_shell *shell, char **args)
 		op = get_unary_op(args[1]);
 		if (op)
 			return (op(shell, args + 1));
-		return (1);
+		return (exit_error("unary operator expected", args[1]));
 	}
 }
 
@@ -45,15 +54,8 @@ static int	builtin_test_three_op(t_shell *shell, char **args)
 		op = get_binary_op(args[2]);
 		if (op)
 			return (op(shell, args + 1));
-		return (1);
+		return (exit_error("binary operator expected", args[1]));
 	}
-}
-
-static int	builtin_test_four_op(t_shell *shell, char **args)
-{
-	if (!ft_strcmp(args[1], "!"))
-		return (!builtin_test_three_op(shell, args + 1));
-	return (1);
 }
 
 int			builtin_test(t_shell *shell, char **args)
@@ -71,9 +73,7 @@ int			builtin_test(t_shell *shell, char **args)
 		return (builtin_test_two_op(shell, args));
 	else if (args_len == 4)
 		return (builtin_test_three_op(shell, args));
-	else if (args_len == 5)
-		return (builtin_test_four_op(shell, args));
 	else
-		return (1);
+		return (exit_error("too many arguments", NULL));
 	return (0);
 }
