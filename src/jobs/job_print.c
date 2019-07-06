@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:52:57 by agrouard          #+#    #+#             */
-/*   Updated: 2019/07/06 17:42:48 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/07 01:40:57 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	print_msg_sig(int ret)
 
 static void	print_job_state(t_job *job)
 {
-	const static char	*status[] = {"None", "Running", "Stopped", "Done"};
+	static const char	*status[] = {"None", "Running", "Stopped", "Done"};
 
 	ft_printf(" %s", status[job->state]);
 	if (job->state == JOB_DONE && job->last->ret)
