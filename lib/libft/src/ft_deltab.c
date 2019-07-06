@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 16:03:41 by cvignal           #+#    #+#             */
-/*   Updated: 2019/03/09 15:02:48 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/06 16:23:01 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**ft_deltab(char ***table)
 	int	i;
 
 	i = 0;
-	while ((*table)[i])
+	while (*table != NULL && (*table)[i])
 	{
 		ft_strdel(&((*table)[i]));
 		i++;
