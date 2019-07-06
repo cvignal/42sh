@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/13 17:33:56 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/06 13:18:51 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,29 @@
 #include "fill_line.h"
 #include "libft.h"
 
-static int	exit_value(t_shell *shell, char **args)
+static int	exit_value(t_shell *shell, char *args)
 {
 	int		ret;
+	char	*a;
 
-	if (args && args[1] && !ft_isdigit(args[1][0]) && args[1][0] != '-'
-			&& args[1][0] != '+')
-	{
-		free_shell(shell);
-		exit(255);
-	}
-	if (args && args[1])
-	{
-		ret = ft_atoi(args[1]);
-		free_shell(shell);
-		exit(ret);
-	}
+	if (!args)
+		ret = ft_atoi(get_var_value(get_var(shell->vars, SPECIAL_PARAM_QMARK)));
 	else
 	{
-		ret = ft_atoi(get_var_value(get_var(shell->vars, SPECIAL_PARAM_QMARK)));
-		free_shell(shell);
-		exit(ret);
+		a = args;
+		if (*args == '-' || *args == '+')
+			a = args + 1;
+		if ((ret = parse_number(a)) == -1 || *a == 0)
+		{
+			ret = 2;
+			ft_dprintf(2, "%s: exit: %s: numeric argument required\n"
+					, EXEC_NAME, args);
+		}
+		else
+			ret = ft_atoi(args);
 	}
+	free_shell(shell);
+	exit(ret);
 }
 
 void		delete_fc_folder(void)
@@ -105,5 +106,5 @@ int			builtin_exit(t_shell *shell, char **args)
 	delete_fc_folder();
 	if (close(shell->fd_op) == -1)
 		ft_dprintf(2, "Error on closing the tty fd\n");
-	return (exit_value(shell, args));
+	return (exit_value(shell, args[1]));
 }
