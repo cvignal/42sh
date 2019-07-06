@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/06 12:17:40 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/06 12:38:25 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,8 @@ typedef struct		s_tmpfile
 t_heredoc			*alloc_heredoc(void);
 int					add_to_heredoc(t_heredoc *heredoc, const char *line);
 int					heredoc_exit_error(t_heredoc *heredoc);
-int					read_heredoc(t_heredoc *heredoc, t_redir *redir, t_shell *shell);
+int					read_heredoc(t_heredoc *heredoc, t_redir *redir
+		, t_shell *shell);
 int					init_heredoc(t_shell *shell, t_shell *tmp_shell);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:52:57 by agrouard          #+#    #+#             */
-/*   Updated: 2019/07/05 15:19:48 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/06 12:35:59 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,10 @@ t_job		*new_job(void)
 	return (job);
 }
 
-int			register_job(t_shell *shell, t_job *job)
+static void	add_to_shell(t_shell *shell, t_job *job)
 {
 	t_job	*j;
 
-	if (!job->proc)
-	{
-		free_job(shell, job);
-		return (0);
-	}
 	if (!(j = shell->jobs))
 	{
 		shell->jobs = job;
@@ -47,6 +42,16 @@ int			register_job(t_shell *shell, t_job *job)
 		j->next = job;
 		job->index = j->index + 1;
 	}
+}
+
+int			register_job(t_shell *shell, t_job *job)
+{
+	if (!job->proc)
+	{
+		free_job(shell, job);
+		return (0);
+	}
+	add_to_shell(shell, job);
 	if (!job->async)
 		return (job_fg(shell, job, 0));
 	if (!check_validity(shell))
