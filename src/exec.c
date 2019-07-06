@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/05 12:20:00 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/06 15:53:42 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ int			exec(t_shell *shell, t_ast *instr)
 
 	prgm = ((t_command *)instr->data)->args_value[0];
 	builtin = is_builtin(prgm);
-	hbt_command(shell, prgm);
+	if (!builtin)
+		hbt_command(shell, prgm);
 	if (builtin && !(instr->flags & CMD_FORK) && !instr->job->async)
 		instr->ret = exec_builtin(shell, builtin, instr);
 	else if ((instr->pid = fork()) == -1)

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/06 13:18:51 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/06 14:27:43 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,5 @@ int			builtin_exit(t_shell *shell, char **args)
 	delete_fc_folder();
 	if (close(shell->fd_op) == -1)
 		ft_dprintf(2, "Error on closing the tty fd\n");
-	return (exit_value(shell, args[1]));
+	return (exit_value(shell, args ? args[1] : NULL));
 }

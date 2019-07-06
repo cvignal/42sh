@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 14:02:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/07/05 15:16:33 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/06 15:43:34 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,13 @@ static int	buffer_size(char *str, int i)
 	return (ret);
 }
 
-int			replace_exclamation_mark(t_shell *shell, int i)
+int			replace_exclamation_mark(t_shell *shell, int i, int flag)
 {
 	int		buf_size;
 	char	*buf;
 
+	if (flag && shell->line.data[i + 1] == '=')
+		return (i);
 	buf_size = buffer_size(shell->line.data, i);
 	if (!buf_size)
 		return (i);
