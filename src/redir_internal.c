@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 11:43:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/28 08:49:16 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/06 12:05:19 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	redir_ll(t_shell *shell, t_ast *instr, t_redir *redir)
 	(void)instr;
 	if (!(heredoc = alloc_heredoc()))
 		return (1);
-	if ((ret = read_heredoc(heredoc, redir)) == 1)
+	if ((ret = read_heredoc(heredoc, redir, shell)) == 1)
 		return (heredoc_exit_error(heredoc));
 	else if (ret == 2)
 		shell->ctrlc = 1;
