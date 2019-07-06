@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:55:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/04/28 07:54:34 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/06 15:59:38 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,28 @@ int				clean_exit_lexer(t_lexer *lexer, t_token **list
 	return (1);
 }
 
-static int		handle_ret(t_lexer *lexer, int ret, t_token **current,
+static int		handle_ret(t_shell *shell, int ret, t_token **current,
 		t_token **output)
 {
 	if (ret & (1 << LEXER_RET_ERROR))
-		return (clean_exit_lexer(lexer, output, current, SYNTAX_ERROR_MSG));
+		return (clean_exit_lexer(&(shell->lexer), output, current, SYNTAX_ERROR_MSG));
 	if (ret & (1 << LEXER_RET_CREATE))
 	{
 		if (!(*current = alloc_token()))
-			return (clean_exit_lexer(lexer, output, current, MEMORY_ERROR_MSG));
+			return (clean_exit_lexer(&(shell->lexer), output, current, MEMORY_ERROR_MSG));
 		(*current)->type = TT_WORD;
 	}
 	if (ret & (1 << LEXER_RET_CUT))
 	{
-		(*current)->type = get_token_type(*current, lexer->lss->state);
+		(*current)->type = get_token_type(*current, (&(shell->lexer))->lss->state);
 		add_to_token_list(output, *current);
 		*current = NULL;
 	}
 	if (ret & (1 << LEXER_RET_MORE_INPUT))
+	{
+		shell->more_input = 1;	
 		return (1);
+	}
 	return (0);
 }
 
@@ -95,7 +98,7 @@ t_token			*lex(t_shell *shell, const char *input)
 		{
 			ret = shell->lexer.lexer_actions[shell->lexer.lss->state]
 				[(int)input[pos]](shell, shell->current, input[pos]);
-			if (handle_ret(&shell->lexer, ret, &shell->current, &shell->output))
+			if (handle_ret(shell, ret, &shell->current, &shell->output))
 				return (NULL);
 			pos += !!(ret & (1 << LEXER_RET_CONT));
 		}

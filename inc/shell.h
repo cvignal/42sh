@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/06 12:38:25 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/06 15:59:16 by marin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ typedef struct		s_shell
 	int				fc_cmd;
 	int				fc_rec;
 	int				is_subshell;
+	int				more_input;
 	void			*last_cmd;
 	struct s_job	*jobs;
 	struct s_job	*curr;
