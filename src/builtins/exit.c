@@ -92,7 +92,7 @@ int			builtin_exit(t_shell *shell, char **args)
 {
 	size_t	arg_count;
 
-	if (verif_children(shell))
+	if (!check_validity(shell) && verif_children(shell))
 		return (1);
 	arg_count = 0;
 	while (args && args[arg_count])

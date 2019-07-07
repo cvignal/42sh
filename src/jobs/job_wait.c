@@ -12,6 +12,8 @@
 
 #include "jobs.h"
 #include "shell.h"
+#include "fill_line.h"
+
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -95,6 +97,8 @@ void			job_notify(t_shell *shell)
 {
 	t_job *job;
 
+	if (check_validity(shell))
+		return;
 	job = shell->jobs;
 	while (job)
 	{
