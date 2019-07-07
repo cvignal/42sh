@@ -144,53 +144,47 @@ SRC			= ft_memset.c										\
 			  ft_quicksort.c									\
 			  ft_strnchr.c
 
+INC			:=	ft_printf.h ft_sort.h libft.h
+
 NAME		:=	libft.a
 
 SRCDIR		:=	src
 INCDIR		:=	inc
 OBJDIR		:=	obj
-DEPDIR		:=	dep
 
 CC		:=	cc
 AR			=	ar
-DEPGEN		:=	cc
 RANLIB		=	ranlib
-RM		:=	rm -rf
 
-CFLAGS		:=	-Wall -Werror -Wextra -ggdb
+CFLAGS		:=	-Wall -Werror -Wextra -g3
 IFLAGS		:=	-I $(INCDIR)
-DFLAGS		:=	-MM $(IFLAGS)
 
 OBJ			:=	$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
-DEP			:=	$(addprefix $(DEPDIR)/, $(SRC:.c=.d))
 SRC			:=	$(addprefix $(SRCDIR)/, $(SRC))
+INC			:=	$(addprefix $(INCDIR)/, $(INC))
 
-SUBDIRS		:=	$(dir $(DEP)) $(dir $(OBJ))
 
-$(NAME):	 make_dirs $(OBJ)
+all: $(NAME)
+
+$(NAME): $(OBJ)
 	$(AR) rc $(NAME) $(OBJ)
 	$(RANLIB) $(NAME)
 
-
-$(OBJDIR)/%.o:	$(SRCDIR)/%.c
+$(OBJDIR)/%.o:	$(SRCDIR)/%.c $(INC)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
-	$(DEPGEN) $(DFLAGS) -c $< -MQ $@ > $(subst $(SRCDIR), $(DEPDIR), $(<:.c=.d))
 
-make_dirs:
-	@mkdir -p $(SUBDIRS)
+$(OBJ): | $(OBJDIR)
 
-all:		$(NAME)
+$(OBJDIR):
+	mkdir -p $(dir $(OBJ))
 
 clean:
-	$(RM) $(OBJDIR)
-	$(RM) $(DEPDIR)
+	rm -rf $(OBJDIR)
 
-fclean:		clean
-	$(RM) $(NAME)
+fclean: clean
+	rm -f $(NAME)
 
-re:			fclean 
-	make $(NAME)
-
--include $(DEP)
+re: fclean 
+	make -j4
 
 .PHONY:	clean fclean re

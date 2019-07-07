@@ -94,7 +94,8 @@ SRC	+=	$(addprefix visual_mode/,			\
 		vm_rightkey.c					\
 		)
 
-INC = inc/*.h
+INC	:=	arithmetic.h ast.h expand.h expr.h fill_line.h	\
+		jobs.h parser.h shell.h sig_msg.h test.h
 
 
 NAME	:=	42sh
@@ -110,9 +111,10 @@ CFLAGS		:=	-Wall -Werror -Wextra -g3
 LDFLAGS		:=	-L $(LIBFTDIR) -lft -ltermcap
 IFLAGS		:=	-I $(INCDIR) -I $(LIBFTDIR)/$(INCDIR)
 
-
 OBJ			:=	$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 SRC			:=	$(addprefix $(SRCDIR)/, $(SRC))
+INC			:=	$(addprefix $(INCDIR)/, $(INC))
+
 
 all: $(NAME)
 
