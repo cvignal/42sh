@@ -23,6 +23,7 @@ typedef struct	s_proc
 	int				ret;
 	int				done;
 	int				stopped;
+	int				status;
 	struct s_proc	*next;
 
 }				t_proc;
@@ -67,7 +68,7 @@ int				wait_job(struct s_shell *shell, t_job *job);
 void			update_jobs(struct s_shell *shell);
 
 void			job_notify(struct s_shell *shell);
-t_job			*report_job(struct s_shell *shell, t_job *job, int opts);
+t_job			*report_job(struct s_shell *shell, t_job *job, int opts, int fd);
 int				parse_number(char *str);
 t_job			*parse_jobspec(struct s_shell *shell, char *jobspec);
 char			*ast_to_string(struct s_ast *ast);

@@ -16,70 +16,87 @@
 
 #include <unistd.h>
 #include <signal.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 static const t_sig_msg	g_signal_msg[] = {
-	{.sig = SIGHUP, .rtn = 129, .msg = "Hangup: 1"},
-	{.sig = SIGINT, .rtn = 130, .msg = ""},
-	{.sig = SIGQUIT, .rtn = 131, .msg = "Quit: 3"},
-	{.sig = SIGILL, .rtn = 132, .msg = "Illegal instruction: 4"},
-	{.sig = SIGTRAP, .rtn = 133, .msg = "Trace/BPT trap: 5"},
-	{.sig = SIGABRT, .rtn = 134, .msg = "Abort trap: 6"},
-	{.sig = SIGFPE, .rtn = 136, .msg = "Floating point exception: 8"},
-	{.sig = SIGKILL, .rtn = 137, .msg = "Killed: 9"},
-	{.sig = SIGBUS, .rtn = 138, .msg = "Bus error: 10"},
-	{.sig = SIGSEGV, .rtn = 139, .msg = "Segmentation fault: 11"},
-	{.sig = SIGSYS, .rtn = 140, .msg = "Bad system call: 12"},
-	{.sig = SIGPIPE, .rtn = 141, .msg = ""},
-	{.sig = SIGALRM, .rtn = 142, .msg = "Alarm clock: 14"},
-	{.sig = SIGTERM, .rtn = 143, .msg = "Terminated: 15"},
-	{.sig = SIGURG, .rtn = 0, .msg = ""},
-	{.sig = SIGXCPU, .rtn = 152, .msg = "Cputime limit exceeded: 24"},
-	{.sig = SIGXFSZ, .rtn = 153, .msg = "Filesize limit exceeded: 25"},
-	{.sig = SIGVTALRM, .rtn = 142, .msg = "Alarm clock: 14"},
-	{.sig = SIGPROF, .rtn = 155, .msg = "Profiling timer expired: 27"},
-	{.sig = SIGUSR1, .rtn = 158, .msg = "User defined signal 1: 30"},
-	{.sig = SIGUSR2, .rtn = 159, .msg = "User defined signal 2: 31"},
+	{.sig = SIGHUP, .msg = "Hangup"},
+	{.sig = SIGINT, .msg = ""},
+	{.sig = SIGQUIT, .msg = "Quit"},
+	{.sig = SIGILL, .msg = "Illegal instruction"},
+	{.sig = SIGTRAP, .msg = "BPT trace/trap"},
+	{.sig = SIGABRT, .msg = "Aborted"},
+	{.sig = SIGBUS, .msg = "Bus error"},
+	{.sig = SIGFPE, .msg = "Floating point exception"},
+	{.sig = SIGKILL, .msg = "Killed"},
+	{.sig = SIGUSR1, .msg = "User defined signal 1"},
+	{.sig = SIGSEGV, .msg = "Segmentation fault"},
+	{.sig = SIGUSR2, .msg = "User defined signal 2"},
+	{.sig = SIGPIPE, .msg = "Broken pipe"},
+	{.sig = SIGALRM, .msg = "Alarm clock"},
+	{.sig = SIGTERM, .msg = "Terminated"},
+	{.sig = SIGSTOP, .msg = "Signal"},
+	{.sig = SIGTSTP, .msg = ""},
+	{.sig = SIGTTIN, .msg = "tty input"},
+	{.sig = SIGTTOU, .msg = "tty output"},
+	{.sig = SIGURG, .msg = ""},
+	{.sig = SIGXCPU, .msg = "Cpu time limit exceeded"},
+	{.sig = SIGXFSZ, .msg = "Filesize limit exceeded"},
+	{.sig = SIGVTALRM, .msg = "Virtual timer expired"},
+	{.sig = SIGPROF, .msg = "Profiling timer expired"},
+	{.sig = SIGIO, .msg = "I/O possible"},
+	{.sig = SIGPWR, .msg = "Power failure iminent"},
+	{.sig = SIGSYS, .msg = "Bad system call"},
 	{.msg = NULL}
 };
 
 
-static void	print_job_infos(t_shell *shell, t_job *job)
+static void	print_job_infos(t_shell *shell, t_job *job, int fd)
 {
-	ft_printf("[%d]", job->index);
+	ft_dprintf(fd, "[%d]", job->index);
 	if (job == shell->curr)
-		ft_putchar('+');
+		ft_putchar_fd('+', fd);
 	else if (job == shell->prev)
-		ft_putchar('-');
+		ft_putchar_fd('-', fd);
 	else
-		ft_putchar(' ');
-	ft_putchar(' ');
+		ft_putchar_fd(' ', fd);
+	ft_putchar_fd(' ', fd);
 }
 
-static void	print_msg_sig(int ret)
+static const char	*get_sig_msg(int sig)
 {
 	size_t	i;
 
 	i = 0;
-	while (g_signal_msg[i].msg != NULL)
+	while (g_signal_msg[i].msg)
 	{
-		if (g_signal_msg[i].rtn == ret - 128)
-			ft_dprintf(2, "%s%s\n", g_signal_msg[i].msg);
+		if (g_signal_msg[i].sig == sig)
+			return g_signal_msg[i].msg;
 		i++;
+	}
+	return ("");
+}
+
+static void	print_job_state(t_job *job, int fd)
+{
+	static const char	*status[] = {"None", "Running", "Stopped", "Done"};
+	int			s;
+
+	s = job->last->status;
+	if (WIFSIGNALED(s))
+		ft_dprintf(fd, "%s%s", get_sig_msg(WTERMSIG(s)),
+			WCOREDUMP(s) ? "\t(core dumped)" : "");
+	else
+	{
+		ft_dprintf(fd, " %s", status[job->state]);
+		if (job->state == JOB_DONE && job->last->ret)
+			ft_dprintf(fd, "(%d)", job->last->ret);
+		if (WIFSTOPPED(s) && *get_sig_msg(WSTOPSIG(s)))
+			ft_dprintf(fd, "(%s)", get_sig_msg(WSTOPSIG(s)));
 	}
 }
 
-static void	print_job_state(t_job *job)
-{
-	const static char	*status[] = {"None", "Running", "Stopped", "Done"};
-
-	ft_printf(" %s", status[job->state]);
-	if (job->state == JOB_DONE && job->last->ret)
-		ft_printf("(%d)", job->last->ret);
-	if (job->state == JOB_STOPPED)
-		print_msg_sig(job->last->ret);
-}
-
-static void	print_pipeline(t_job *job)
+static void	print_pipeline(t_job *job, int fd)
 {
 	t_proc		*p;
 
@@ -88,32 +105,31 @@ static void	print_pipeline(t_job *job)
 	while (p->next)
 	{
 		p = p->next;
-		ft_putstr(" | ");
-		ft_putstr(p->name);
+		ft_dprintf(fd, "| %s", p->name);
 	}
 }
 
-t_job		*report_job(t_shell *shell, t_job *job, int opts)
+t_job		*report_job(t_shell *shell, t_job *job, int opts, int fd)
 {
 	t_job		*next;
 
 	next = job->next;
 	if (opts & 1)
-		print_job_infos(shell, job);
+		print_job_infos(shell, job, fd);
 	if (opts & 2)
-		ft_printf("%d", job->pgid);
+		ft_dprintf(fd, "%d", job->pgid);
 	if (opts & 4)
-		print_job_state(job);
+		print_job_state(job, fd);
 	if (opts & 4 && opts & 8)
-		ft_printf("\t\t");
+		ft_dprintf(fd, "\t\t");
 	if (opts & 8)
 	{
-		print_pipeline(job);
+		print_pipeline(job, fd);
 		if (job->state == JOB_DONE)
 			free_job(shell, job);
 		else
 			job->notified = 1;
 	}
-	ft_putchar('\n');
+	ft_putchar_fd('\n', fd);
 	return (next);
 }

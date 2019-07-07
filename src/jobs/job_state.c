@@ -35,6 +35,7 @@ void	job_bg(t_job *job, int cont)
 	t_proc	*p;
 
 	job->state = JOB_RUNNING;
+	job->async = 1;
 	if (cont && kill(-job->pgid, SIGCONT) < 0)
 		ft_putendl_fd(EXEC_NAME": failed to send SIGCONT to job", 2);
 	p = job->proc;

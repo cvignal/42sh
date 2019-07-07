@@ -22,7 +22,6 @@ typedef struct	s_sig_msg
 {
 	pid_t			sig;
 	const char		*msg;
-	unsigned char	rtn;
 }				t_sig_msg;
 
 #endif
