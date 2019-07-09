@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/09 10:49:16 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 11:04:11 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ typedef struct			s_pars_hist
 	int	idx;
 	int	dquote;
 }						t_pars_hist;
-
 
 /*
 ** expansion/init.c
