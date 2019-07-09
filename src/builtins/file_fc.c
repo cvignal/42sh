@@ -92,6 +92,8 @@ int					fc_find_editor(t_fc *cmd, char **args, t_shell *shell)
 	{
 		if (!(args[0] = ft_strdup("vim")))
 			return (1);
+		if (!(cmd->editor = ft_strdup(args[0])))
+			return (1);
 	}
 	return (0);
 }
@@ -109,6 +111,5 @@ int					fc_open_editor(t_fc *cmd, t_tmpfile *file, t_shell *shell)
 		return (1);
 	if (!(str = ft_strjoin_free(str, file->name, 1)))
 		return (1);
-	fc_exec_line(str, shell, 1);
-	return (0);
+	return (fc_exec_line(str, shell, 1));
 }

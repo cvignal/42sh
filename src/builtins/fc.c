@@ -90,16 +90,8 @@ int		fc_edit(t_fc *cmd, t_shell *shell)
 		return (0);
 	if (fc_open_file(cmd, shell, &file))
 		return (1);
-	if (fc_open_editor(cmd, &file, shell))
-	{
-		unlink(file.name);
-		free(file.name);
-		return (1);
-	}
-	if (cmd->editor)
+	if (!(ret = fc_open_editor(cmd, &file, shell)) && cmd->editor)
 		ret = fc_exec_file(file.name, shell);
-	else
-		ret = 0;
 	unlink(file.name);
 	free(file.name);
 	return (ret);

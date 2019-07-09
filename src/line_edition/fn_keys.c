@@ -69,10 +69,6 @@ int	ft_prevword(t_shell *shell)
 
 int	ft_ctrld(t_shell *shell)
 {
-	char *args[2];
-
-	args[0] = "0";
-	args[1] = NULL;
 	shell->more_input = 0;
 	if (!shell->ctrld && shell->line.len == 0 && !shell->output
 			&& !shell->current)

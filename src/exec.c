@@ -51,25 +51,6 @@ static void	exec_internal(t_shell *shell, t_ast *instr,
 	exit(execve(path, args, build_env(shell->exec_vars)));
 }
 
-pid_t		do_exec(t_shell *shell, char **argv)
-{
-	int			status;
-	pid_t		pid;
-	char		*bin_path;
-
-	if (!(bin_path = find_command(shell->vars, argv[0])))
-		return (do_error_handling(argv[0]));
-	if ((pid = fork()) == -1)
-		return (-1);
-	if (pid == 0)
-		exit(execve(bin_path, argv, build_env(shell->exec_vars)));
-	free(bin_path);
-	wait(&status);
-	if (WIFEXITED(status) || WIFSIGNALED(status))
-		return (0);
-	return (WEXITSTATUS(status));
-}
-
 int			exec(t_shell *shell, t_ast *instr)
 {
 	char		*prgm;
