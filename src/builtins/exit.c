@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/09 14:17:00 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 17:27:39 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,6 @@ static int	exit_value(t_shell *shell, char *args)
 	exit(ret);
 }
 
-void		delete_fc_folder(void)
-{
-	DIR				*dir;
-	struct dirent	*dirent;
-	char			*path;
-
-	if (!(dir = opendir("/tmp/folder_fc_builtin")))
-		return ;
-	while ((dirent = readdir(dir)))
-	{
-		if (!ft_strequ(dirent->d_name, ".") && !ft_strequ(dirent->d_name, ".."))
-		{
-			path = ft_strjoin("/tmp/folder_fc_builtin/", dirent->d_name);
-			unlink(path);
-			free(path);
-		}
-	}
-	closedir(dir);
-	rmdir("/tmp/folder_fc_builtin");
-}
-
 static int	verif_children(t_shell *shell)
 {
 	t_job *job;
@@ -104,7 +83,6 @@ int			builtin_exit(t_shell *shell, char **args)
 		return (1);
 	}
 	add_to_history(shell->line.data, shell, 0);
-	delete_fc_folder();
 	if (close(shell->fd_op) == -1)
 		ft_dprintf(2, "Error on closing the tty fd\n");
 	return (exit_value(shell, args ? args[1] : NULL));
