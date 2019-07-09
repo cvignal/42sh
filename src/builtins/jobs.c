@@ -54,13 +54,13 @@ int		builtin_jobs(t_shell *shell, char **argv)
 	{
 		j = shell->jobs;
 		while (j)
-			j = report_job(shell, j, opts);
+			j = report_job(shell, j, opts, STDOUT_FILENO);
 	}
 	while (argv[i])
 	{
 		j = parse_jobspec(shell, argv[i++]);
 		if (j)
-			report_job(shell, j, opts);
+			report_job(shell, j, opts, STDOUT_FILENO);
 		else
 			ret = fail("jobs", argv[i - 1], "no such job", 1);
 	}
@@ -87,7 +87,7 @@ int		builtin_fg(t_shell *shell, char **argv)
 	}
 	if (job_is_done(target))
 		return (fail("fg", NULL, "job has terminated", 1));
-	report_job(shell, target, 8);
+	report_job(shell, target, 8, STDOUT_FILENO);
 	return (job_fg(shell, target, 1));
 }
 
@@ -111,7 +111,7 @@ int		builtin_bg(t_shell *shell, char **argv)
 	}
 	if (job_is_done(target))
 		return (fail("bg", NULL, "job has terminated", 1));
-	report_job(shell, target, 1 | 8);
+	report_job(shell, target, 1 | 8, STDOUT_FILENO);
 	job_bg(target, 1);
 	return (0);
 }

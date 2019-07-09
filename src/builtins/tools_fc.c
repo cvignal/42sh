@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:34:34 by cvignal           #+#    #+#             */
-/*   Updated: 2019/07/06 14:53:53 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 16:59:35 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "fill_line.h"
 
-void	fc_exec_ast(t_shell *shell, t_token *tokens)
+void	fc_exec_ast(t_shell *shell, t_token *tokens, int flag)
 {
 	t_ast	*ast;
 
@@ -27,7 +27,8 @@ void	fc_exec_ast(t_shell *shell, t_token *tokens)
 		ast->del(ast);
 		shell->parser.ret = NULL;
 	}
-	add_to_history(shell->line.data, shell, 0);
+	if (!flag)
+		add_to_history(shell->line.data, shell, 0);
 	reset_terminal_mode(shell);
 	raw_terminal_mode(shell);
 }
@@ -80,6 +81,7 @@ int		fc_init_shell(t_shell *shell, t_shell *old_shell)
 	shell->fc_rec = 1;
 	shell->rst_term = old_shell->rst_term;
 	shell->raw_term = old_shell->raw_term;
+	shell->jobs = old_shell->jobs;
 	return (0);
 }
 

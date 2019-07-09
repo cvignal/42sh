@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 07:14:15 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/05 15:33:58 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 13:11:33 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void				exec_ast(t_shell *shell, t_token *tokens)
 		close_everything(shell);
 		ast->del(ast);
 		shell->parser.ret = NULL;
+		shell->more_input = 0;
 	}
 	else if (shell->parser.ret_status == PARSER_ERROR)
 		set_ret(shell, NULL, 2);

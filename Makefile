@@ -94,57 +94,49 @@ SRC	+=	$(addprefix visual_mode/,			\
 		vm_rightkey.c					\
 		)
 
-NAME		:=	42sh
+INC	:=	arithmetic.h ast.h expand.h expr.h fill_line.h	\
+		jobs.h parser.h shell.h sig_msg.h test.h
 
+
+NAME	:=	42sh
 LIBFTDIR	:=	lib/libft
 SRCDIR		:=	src
 INCDIR		:=	inc
 OBJDIR		:=	obj
-DEPDIR		:=	dep
 
 CC		:=	cc
 LD		:=	cc
-DEPGEN	:=	cc
-RM		:=	rm -rf
 
 CFLAGS		:=	-Wall -Werror -Wextra -g3
 LDFLAGS		:=	-L $(LIBFTDIR) -lft -ltermcap
 IFLAGS		:=	-I $(INCDIR) -I $(LIBFTDIR)/$(INCDIR)
-DFLAGS		:=	-MM $(IFLAGS)
 
 OBJ			:=	$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
-DEP			:=	$(addprefix $(DEPDIR)/, $(SRC:.c=.d))
 SRC			:=	$(addprefix $(SRCDIR)/, $(SRC))
+INC			:=	$(addprefix $(INCDIR)/, $(INC))
 
-SUBDIRS		:=	$(dir $(DEP)) $(dir $(OBJ))
 
-$(NAME):	 make_dirs $(OBJ)
-	make -C $(LIBFTDIR)
-	$(LD) -o $(NAME) $(OBJ) $(LDFLAGS) 
+all: $(NAME)
 
-$(OBJDIR)/%.o:	$(SRCDIR)/%.c
+$(NAME): $(OBJ)
+	$(MAKE) -j4 -C $(LIBFTDIR)
+	$(LD) $(OBJ) -o $(NAME) $(LDFLAGS)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INC)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
-	$(DEPGEN) $(DFLAGS) -c $< -MQ $@ > $(subst $(SRCDIR), $(DEPDIR), $(<:.c=.d))
 
-make_dirs:
-	@mkdir -p $(SUBDIRS)
+$(OBJ): | $(OBJDIR)
 
-debug:
-	$(CFLAGS += -ggdb)
-	make all
-
-all:		$(NAME)
+$(OBJDIR):
+	mkdir -p $(dir $(OBJ))
 
 clean:
-	$(RM) $(OBJDIR)
-	$(RM) $(DEPDIR)
+	rm -rf $(OBJDIR)
 
-fclean:		clean
-	$(RM) $(NAME)
+fclean: clean
+	rm -f $(NAME)
 
-re:			fclean 
-	make $(NAME)
-
--include $(DEP)
+re: fclean 
+	make -j4
 
 .PHONY:	clean fclean re
