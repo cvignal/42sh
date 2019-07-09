@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:52:57 by agrouard          #+#    #+#             */
-/*   Updated: 2019/07/06 17:42:48 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 10:20:01 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static const t_sig_msg	g_signal_msg[] = {
 	{.sig = SIGVTALRM, .msg = "Virtual timer expired"},
 	{.sig = SIGPROF, .msg = "Profiling timer expired"},
 	{.sig = SIGIO, .msg = "I/O possible"},
-	{.sig = SIGPWR, .msg = "Power failure iminent"},
 	{.sig = SIGSYS, .msg = "Bad system call"},
 	{.msg = NULL}
 };

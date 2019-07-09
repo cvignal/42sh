@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:18:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/07/06 15:50:33 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 10:48:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,11 @@ static int	main_loop(t_shell *shell, char *str, t_pars_hist *flags)
 		flags->arit = 1;
 	else if (ft_strnequ(str + flags->idx, "))", 2) && flags->arit)
 		flags->arit = 0;
+	else if (c == '"' && !flags->backslash)
+		flags->dquote = flags->dquote ? 0 : 1;
 	else if (c == '!' && !flags->squote && !flags->backslash)
 	{
-		if ((flags->idx = replace_exclamation_mark(shell, flags->idx, flags->arit)) == -1)
+		if ((flags->idx = replace_exclamation_mark(shell, flags)) == -1)
 			return (1);
 	}
 	else if (flags->backslash)

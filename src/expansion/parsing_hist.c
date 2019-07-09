@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 14:02:21 by cvignal           #+#    #+#             */
-/*   Updated: 2019/07/06 15:43:34 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 10:57:49 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	replace_in_line(t_line *line, char *buf, char *value, int i)
 	return (0);
 }
 
-static int	buffer_size(char *str, int i)
+static int	buffer_size(char *str, int i, int flag)
 {
 	int	j;
 	int	ret;
@@ -73,7 +73,8 @@ static int	buffer_size(char *str, int i)
 		nb = 1;
 		ret++;
 	}
-	while (str[j] && str[j] != ' ' && !ft_strchr(META_CHARS, str[j]))
+	while (str[j] && str[j] != ' ' && (flag ? str[j] != '"' : 1)
+			&& !ft_strchr(META_CHARS, str[j]))
 	{
 		if (nb && !ft_isdigit(str[j]))
 			break ;
@@ -85,25 +86,25 @@ static int	buffer_size(char *str, int i)
 	return (ret);
 }
 
-int			replace_exclamation_mark(t_shell *shell, int i, int flag)
+int			replace_exclamation_mark(t_shell *shell, t_pars_hist *flags)
 {
 	int		buf_size;
 	char	*buf;
 
-	if (flag && shell->line.data[i + 1] == '=')
-		return (i);
-	buf_size = buffer_size(shell->line.data, i);
+	if (flags->arit && shell->line.data[flags->idx + 1] == '=')
+		return (flags->idx);
+	buf_size = buffer_size(shell->line.data, flags->idx, flags->dquote);
 	if (!buf_size)
-		return (i);
-	if (!(buf = ft_strsub(shell->line.data, i, buf_size + 1)))
+		return (flags->idx);
+	if (!(buf = ft_strsub(shell->line.data, flags->idx, buf_size + 1)))
 		return (-1);
-	if ((buf_size = exp_replace_history(shell, buf, i)) == -1)
+	if ((buf_size = exp_replace_history(shell, buf, flags->idx)) == -1)
 	{
 		ft_strdel(&buf);
 		return (-1);
 	}
 	ft_strdel(&buf);
-	return (i + buf_size - 1);
+	return (flags->idx + buf_size - 1);
 }
 
 int			exp_replace_history(t_shell *shell, char *buf, int i)
