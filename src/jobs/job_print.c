@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:52:57 by agrouard          #+#    #+#             */
-/*   Updated: 2019/07/09 10:20:01 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 11:02:35 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ static const t_sig_msg	g_signal_msg[] = {
 	{.msg = NULL}
 };
 
-
-static void	print_job_infos(t_shell *shell, t_job *job, int fd)
+static void			print_job_infos(t_shell *shell, t_job *job, int fd)
 {
 	ft_dprintf(fd, "[%d]", job->index);
 	if (job == shell->curr)
@@ -70,16 +69,16 @@ static const char	*get_sig_msg(int sig)
 	while (g_signal_msg[i].msg)
 	{
 		if (g_signal_msg[i].sig == sig)
-			return g_signal_msg[i].msg;
+			return (g_signal_msg[i].msg);
 		i++;
 	}
 	return ("");
 }
 
-static void	print_job_state(t_job *job, int fd)
+static void			print_job_state(t_job *job, int fd)
 {
 	static const char	*status[] = {"None", "Running", "Stopped", "Done"};
-	int			s;
+	int					s;
 
 	s = job->last->status;
 	if (WIFSIGNALED(s))
@@ -95,7 +94,7 @@ static void	print_job_state(t_job *job, int fd)
 	}
 }
 
-static void	print_pipeline(t_job *job, int fd)
+static void			print_pipeline(t_job *job, int fd)
 {
 	t_proc		*p;
 
@@ -108,7 +107,7 @@ static void	print_pipeline(t_job *job, int fd)
 	}
 }
 
-t_job		*report_job(t_shell *shell, t_job *job, int opts, int fd)
+t_job				*report_job(t_shell *shell, t_job *job, int opts, int fd)
 {
 	t_job		*next;
 

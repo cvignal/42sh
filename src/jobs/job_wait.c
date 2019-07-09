@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:52:57 by agrouard          #+#    #+#             */
-/*   Updated: 2019/07/06 16:56:22 by agrouard         ###   ########.fr       */
+/*   Updated: 2019/07/09 11:02:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void			job_notify(t_shell *shell)
 	t_job *job;
 
 	if (check_validity(shell))
-		return;
+		return ;
 	job = shell->jobs;
 	while (job)
 	{
