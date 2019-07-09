@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 16:24:09 by cvignal           #+#    #+#             */
-/*   Updated: 2019/07/09 11:35:06 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 14:24:15 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,14 @@ int	ft_ctrld(t_shell *shell)
 
 	args[0] = "0";
 	args[1] = NULL;
+	shell->more_input = 0;
 	if (!shell->ctrld && shell->line.len == 0 && !shell->output
 			&& !shell->current)
-		builtin_exit(shell, args);
-	if (shell->line.len == 0)
+	{
+		ft_addchar(shell, "exit", 0);
+		return (1);
+	}
+	else if (shell->line.len == 0)
 	{
 		shell->end_heredoc = shell->ctrld;
 		if (!shell->ctrld)
@@ -95,6 +99,7 @@ int	ft_ctrlc(t_shell *shell)
 	free_line(&shell->line);
 	ft_dprintf(shell->fd_op, "\n");
 	set_ret(shell, NULL, 1);
+	shell->more_input = 0;
 	if (shell->ctrld)
 		shell->end_heredoc = 2;
 	else

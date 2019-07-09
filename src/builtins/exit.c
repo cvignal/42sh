@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 08:45:36 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/06 14:27:43 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 14:17:00 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	exit_value(t_shell *shell, char *args)
 	int		ret;
 	char	*a;
 
+	reset_terminal_mode(shell);
 	if (!args)
 		ret = ft_atoi(get_var_value(get_var(shell->vars, SPECIAL_PARAM_QMARK)));
 	else
