@@ -6,7 +6,7 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:52:57 by agrouard          #+#    #+#             */
-/*   Updated: 2019/07/09 21:08:31 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/10 00:39:44 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,7 @@ static const char	*get_sig_msg(int sig)
 static void			print_job_state(t_job *job, int fd)
 {
 	static const char	*status[] = {"None", "Running", "Stopped", "Done"};
-<<<<<<< HEAD
-=======
 	int					s;
->>>>>>> master
 
 	s = job->last->status;
 	if (WIFSIGNALED(s))
