@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:59:25 by cvignal           #+#    #+#             */
-/*   Updated: 2019/07/09 17:24:40 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/10 14:49:18 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,7 @@ int					fc_find_editor(t_fc *cmd, char **args, t_shell *shell)
 	}
 	else
 	{
-		if (!(args[0] = ft_strdup("vim")))
-			return (1);
-		if (!(cmd->editor = ft_strdup(args[0])))
+		if (!(args[0] = ft_strdup("ed")))
 			return (1);
 	}
 	return (0);
