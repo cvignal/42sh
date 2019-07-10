@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 12:18:42 by cvignal           #+#    #+#             */
-/*   Updated: 2019/04/17 14:48:41 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/10 17:19:53 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ static char	*expand_tilde(char *word, char *ret)
 
 char		*find_path(char *word)
 {
-	char	pwd[BUFF_SIZE];
+	char	pwd[MAX_PATH];
 	char	*ret;
 
-	getcwd(pwd, BUFF_SIZE);
+	getcwd(pwd, MAX_PATH);
 	ret = ft_strjoin(pwd, "/");
 	if (!word)
 		return (ret);
