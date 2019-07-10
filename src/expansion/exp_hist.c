@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:18:50 by cvignal           #+#    #+#             */
-/*   Updated: 2019/07/05 12:35:13 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 10:48:48 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,6 @@ static int	find_event(char *str, t_array *history)
 	return (-1);
 }
 
-static void	init_parsing_hist(int *backslash, int *i, int *squote)
-{
-	*backslash = 0;
-	*i = 0;
-	*squote = 0;
-}
-
 char		*exp_find_cmd(t_array *history, char *buf)
 {
 	int	idx;
@@ -77,29 +70,45 @@ static int	return_expand(t_shell *shell)
 	return (0);
 }
 
+static int	main_loop(t_shell *shell, char *str, t_pars_hist *flags)
+{
+	char	c;
+
+	c = str[flags->idx];
+	if (c == '\\' && !flags->backslash)
+		flags->backslash = 1;
+	else if (c == '\'' && !flags->squote && !flags->backslash)
+		flags->squote = 1;
+	else if (c == '\'' && flags->squote && !flags->backslash)
+		flags->squote = 0;
+	else if (ft_strnequ(str + flags->idx, "$((", 3)
+			&& !flags->squote && !flags->backslash)
+		flags->arit = 1;
+	else if (ft_strnequ(str + flags->idx, "))", 2) && flags->arit)
+		flags->arit = 0;
+	else if (c == '"' && !flags->backslash)
+		flags->dquote = flags->dquote ? 0 : 1;
+	else if (c == '!' && !flags->squote && !flags->backslash)
+	{
+		if ((flags->idx = replace_exclamation_mark(shell, flags)) == -1)
+			return (1);
+	}
+	else if (flags->backslash)
+		flags->backslash = 0;
+	return (0);
+}
+
 int			expand_history(t_shell *shell)
 {
-	int	i;
-	int	backslash;
-	int	squote;
+	t_pars_hist flags;
+	char		c;
 
-	init_parsing_hist(&backslash, &i, &squote);
-	while (shell->line.data[i])
+	ft_bzero(&flags, sizeof(flags));
+	while ((c = shell->line.data[flags.idx]))
 	{
-		if (shell->line.data[i] == '\\' && !backslash)
-			backslash = 1;
-		else if (shell->line.data[i] == '\'' && !squote && !backslash)
-			squote = 1;
-		else if (shell->line.data[i] == '\'' && squote && !backslash)
-			squote = 0;
-		else if (shell->line.data[i] == '!' && !squote && !backslash)
-		{
-			if ((i = replace_exclamation_mark(shell, i)) == -1)
-				return (1);
-		}
-		else if (backslash)
-			backslash = 0;
-		i++;
+		if (main_loop(shell, shell->line.data, &flags))
+			return (1);
+		flags.idx++;
 	}
 	return (return_expand(shell));
 }

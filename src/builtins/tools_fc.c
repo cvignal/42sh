@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 11:34:34 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/19 15:37:10 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/10 15:51:27 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,36 @@
 #include "libft.h"
 #include "fill_line.h"
 
-void	fc_exec_ast(t_shell *shell, t_token *tokens)
+int		fc_exec_ast(t_shell *shell, t_token *tokens, int flag)
 {
+	int		ret;
 	t_ast	*ast;
 
+	ret = 1;
 	if (parse(shell, tokens) == PARSER_COMPLETE)
 	{
+		reset_terminal_mode(shell);
 		ast = shell->parser.ret;
-		ast->exec(shell, ast);
+		exec_job(shell, ast, NULL);
+		ret = ast->ret;
 		close_everything(shell);
-		wait_loop(shell, ast);
 		ast->del(ast);
 		shell->parser.ret = NULL;
 	}
-	add_to_history(shell->line.data, shell, 0);
+	if (!flag)
+		add_to_history(shell->line.data, shell, 0);
 	reset_terminal_mode(shell);
 	raw_terminal_mode(shell);
+	return (ret);
 }
 
-void	fc_free_shell(t_shell *shell)
+void	fc_free_shell(t_shell *shell, t_shell *new_shell)
 {
 	t_fd	*fd;
 	t_fd	*next_fd;
 
+	new_shell->jobs = shell->jobs;
+	disable_signal(new_shell);
 	free_line(&shell->line);
 	lss_pop(&shell->lexer);
 	pss_pop(&shell->parser);
@@ -80,6 +87,8 @@ int		fc_init_shell(t_shell *shell, t_shell *old_shell)
 	shell->fc_rec = 1;
 	shell->rst_term = old_shell->rst_term;
 	shell->raw_term = old_shell->raw_term;
+	shell->jobs = old_shell->jobs;
+	disable_signal(shell);
 	return (0);
 }
 

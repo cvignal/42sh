@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/22 14:26:00 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/11 11:28:01 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 12:37:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,26 @@ static void	fill_table(t_shell *shell, int *table, t_list *list)
 		table[3] = nb / table[0] + (nb % table[0] != 0);
 }
 
+static void	display_choice(int nb, char *str)
+{
+	int	i;
+
+	if (!ft_strchr(str, '\t') && !ft_strchr(str, '\r')
+			&& !ft_strchr(str, '\n'))
+		ft_dprintf(g_fd_output, "%-*s", nb, str);
+	else
+	{
+		i = 0;
+		while (str[i])
+		{
+			if (str[i] == '\n' || str[i] == '\r' || str[i] == '\t')
+				str[i] = '?';
+			i++;
+		}
+		ft_dprintf(g_fd_output, "%-*s", nb, str);
+	}
+}
+
 static void	display_table(char **array, int table[4])
 {
 	int	i;
@@ -60,7 +80,7 @@ static void	display_table(char **array, int table[4])
 		j = i;
 		while (j < table[2])
 		{
-			ft_dprintf(g_fd_output, "%-*s", table[1] + 1, array[j]);
+			display_choice(table[1] + 1, array[j]);
 			j += table[3];
 		}
 		if (i + 1 < table[3])

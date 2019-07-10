@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:59:25 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/19 11:52:18 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/10 14:49:18 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,17 @@
 unsigned long long	ft_djbtwo_hash(const char *str)
 {
 	unsigned long long	hash;
-	int					c;
+	int					i;
+	char				*cpy;
 
+	cpy = (char *)str;
 	hash = 5381;
-	while ((c = *str++))
-		hash = ((hash << 5) + hash) + c;
+	i = 0;
+	while (cpy[i])
+	{
+		hash = ((hash << 5) + hash) + cpy[i];
+		i++;
+	}
 	return (hash);
 }
 
@@ -38,9 +44,10 @@ char				*fc_generate_hash(t_fc *cmd, t_array *history)
 	i = cmd->i_first;
 	while (i < history->length && i <= cmd->i_last)
 		hash += ft_djbtwo_hash(history->data[i++]);
+	hash += getpid();
 	if (!(ret = ft_ultoa_base(hash, 16)))
 		return (NULL);
-	if (!(ret = ft_strjoin_free("/tmp/folder_fc_builtin/", ret, 2)))
+	if (!(ret = ft_strjoin_free("/tmp/", ret, 2)))
 		return (NULL);
 	return (ret);
 }
@@ -48,10 +55,7 @@ char				*fc_generate_hash(t_fc *cmd, t_array *history)
 int					fc_open_file(t_fc *cmd, t_shell *shell, t_tmpfile *file)
 {
 	int			i;
-	struct stat	st;
 
-	if (stat("/tmp/folder_fc_builtin", &st) == -1)
-		mkdir("/tmp/folder_fc_builtin", 0755);
 	if (!(file->name = fc_generate_hash(cmd, shell->history)))
 		return (1);
 	if ((file->fd = open(file->name, O_RDWR | O_CREAT | O_EXCL, 0644)) == -1)
@@ -76,18 +80,17 @@ int					fc_find_editor(t_fc *cmd, char **args, t_shell *shell)
 		if (!(args[0] = ft_strdup(cmd->editor)))
 			return (1);
 	}
-	else if ((editor = (char *)get_var_value(get_var(shell->vars, "FCEDIT"))))
+	else if ((editor = (char *)get_var_value(get_var(shell->vars, "FCEDIT")))
+			|| (editor = (char *)get_var_value(get_var(shell->vars, "EDITOR"))))
 	{
 		if (!(args[0] = ft_strdup(editor)))
 			return (1);
 		if (!(cmd->editor = ft_strdup(editor)))
 			return (1);
 	}
-	else if ((editor = (char *)get_var_value(get_var(shell->vars, "EDITOR"))))
+	else
 	{
-		if (!(args[0] = ft_strdup(editor)))
-			return (1);
-		if (!(cmd->editor = ft_strdup(editor)))
+		if (!(args[0] = ft_strdup("ed")))
 			return (1);
 	}
 	return (0);
@@ -95,26 +98,16 @@ int					fc_find_editor(t_fc *cmd, char **args, t_shell *shell)
 
 int					fc_open_editor(t_fc *cmd, t_tmpfile *file, t_shell *shell)
 {
-	char	**args;
-	int		ret;
+	char	*editor;
+	char	*str;
 
 	if (ft_strchr(cmd->flags, 'e') && !cmd->editor)
 		return (usage_fc(1, 'e'));
-	if (!(args = (char**)malloc(sizeof(char*) * 3)))
+	if (fc_find_editor(cmd, &editor, shell))
 		return (1);
-	ft_bzero(args, sizeof(*args) * 3);
-	if (fc_find_editor(cmd, args, shell))
-	{
-		ft_deltab(&args);
+	if (!(str = ft_strjoin_free(editor, " ", 1)))
 		return (1);
-	}
-	if (!(args[1] = ft_strdup(file->name)))
-	{
-		ft_deltab(&args);
+	if (!(str = ft_strjoin_free(str, file->name, 1)))
 		return (1);
-	}
-	args[2] = NULL;
-	ret = do_exec(shell, args);
-	ft_deltab(&args);
-	return (ret);
+	return (fc_exec_line(str, shell, 1));
 }

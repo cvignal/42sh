@@ -28,6 +28,7 @@ callgraph.ps
 test/
 log/
 tmp
+*test*
 
 ### Build ###
 # Prerequisites

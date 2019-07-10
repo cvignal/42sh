@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:01:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/06 12:17:03 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/10 15:54:00 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,16 @@ int			read_heredoc(t_heredoc *heredoc, t_redir *redir, t_shell *shell)
 {
 	t_shell	tmp_shell;
 	int		ret;
+	char	*target;
+	int		error;
 
 	ret = init_heredoc(shell, &tmp_shell);
-	while (!g_functions[ret].f(&tmp_shell))
+	if (!(target = expand_no_split(shell, redir->target, &error,
+			EXP_LEXER_MASK_BACKSLASH | EXP_LEXER_MASK_QUOTE)))
+		return (1);
+	while (target && !g_functions[ret].f(&tmp_shell))
 	{
-		if (tmp_shell.end_heredoc || (redir->target_value
-				&& ft_strequ(redir->target_value, tmp_shell.line.data))
-				|| ft_strequ(redir->target, tmp_shell.line.data))
+		if (tmp_shell.end_heredoc || !ft_strcmp(target, tmp_shell.line.data))
 		{
 			free_line(&tmp_shell.line);
 			if (tmp_shell.end_heredoc == 2)
@@ -97,6 +100,7 @@ int			read_heredoc(t_heredoc *heredoc, t_redir *redir, t_shell *shell)
 		print_prompt(&tmp_shell, 1);
 		free_line(&tmp_shell.line);
 	}
+	free(target);
 	return (tmp_shell.end_heredoc == 2 ? 2 : 0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/05 15:22:17 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/10 04:24:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define EXP_LEXER_MASK_TILDE (1 << 6)
 # define EXP_LEXER_MASK_NO_MULTI_TILDE (1 << 7)
 # define EXP_LEXER_MASK_PROC_SUB (1 << 8)
+# define EXP_LEXER_MASK_BACKSLASH (1 << 9)
 
 typedef enum			e_exp_state
 {
@@ -97,6 +98,15 @@ typedef struct			s_special_param
 	char	*name;
 	int		(*f)(struct s_shell *, char);
 }						t_special_param;
+
+typedef struct			s_pars_hist
+{
+	int	backslash;
+	int	squote;
+	int	arit;
+	int	idx;
+	int	dquote;
+}						t_pars_hist;
 
 /*
 ** expansion/init.c
@@ -203,7 +213,8 @@ int						exp_lexer_push_hist(struct s_shell *shell, char c
 		, int mask);
 int						add_arg_to_array(t_exp_lexer *lexer, char c);
 
-int						replace_exclamation_mark(struct s_shell *shell, int i);
+int						replace_exclamation_mark(struct s_shell *shell
+		, t_pars_hist *flags);
 int						exp_replace_history(struct s_shell *shell, char *buf
 		, int i);
 char					*exp_find_cmd(struct s_array *history, char *buf);

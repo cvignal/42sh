@@ -6,7 +6,7 @@
 /*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 09:56:58 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/06 15:59:16 by marin            ###   ########.fr       */
+/*   Updated: 2019/07/09 17:00:14 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,7 +271,6 @@ char				*ft_strcjoin_free(char *s1, const char c
 ** exec.c
 */
 int					exec(t_shell *shell, t_ast *instr);
-pid_t				do_exec(t_shell *shell, char **argv);
 int					exec_job(t_shell *shell, t_ast *node, struct s_job *job);
 int					wait_loop(t_shell *shell, t_ast *ast);
 
@@ -345,20 +344,15 @@ void				free_fc(t_fc *cmd);
 int					fc_cut_pattern(t_fc *cmd, char *str);
 int					fc_open_file(t_fc *cmd, t_shell *shell, t_tmpfile *file);
 int					fc_open_editor(t_fc *cmd, t_tmpfile *file, t_shell *shell);
-int					fc_exec_line(char *str, t_shell *shell);
+int					fc_exec_line(char *str, t_shell *shell, int flag);
 int					fc_exec_file(char *name, t_shell *shell);
-void				fc_exec_ast(t_shell *shell, t_token *tokens);
-void				fc_free_shell(t_shell *shell);
+int					fc_exec_ast(t_shell *shell, t_token *tokens, int flag);
+void				fc_free_shell(t_shell *shell, t_shell *new_shell);
 int					fc_init_shell(t_shell *shell, t_shell *old_shell);
 int					fc_find_cmd(char *str, t_array *history);
 int					fc_display(t_fc *cmd, t_shell *shell);
 int					fc_display_reverse(t_fc *cmd, t_shell *shell);
 int					fc_display_multi(char *str);
-
-/*
-** signal.c
-*/
-t_shell				*save_shell(t_shell *shell);
 
 /*
 ** exec

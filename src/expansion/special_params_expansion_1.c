@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 15:08:57 by cvignal           #+#    #+#             */
-/*   Updated: 2019/07/05 15:25:15 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/10 15:52:02 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static int	cond_fail(t_shell *shell, int *i)
 {
 	return (add_string_to_exp_buff(&shell->exp_lexer
-				, shell->arg_file->argv[*i++])
+				, shell->arg_file->argv[(*i)++])
 			|| add_string_to_exp_buff(&shell->exp_lexer, shell->exp_lexer.ifs));
 }
 

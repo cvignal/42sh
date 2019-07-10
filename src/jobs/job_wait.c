@@ -6,12 +6,14 @@
 /*   By: agrouard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:52:57 by agrouard          #+#    #+#             */
-/*   Updated: 2019/07/06 16:56:22 by agrouard         ###   ########.fr       */
+/*   Updated: 2019/07/09 11:02:10 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "jobs.h"
 #include "shell.h"
+#include "fill_line.h"
+
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -45,6 +47,7 @@ static void		update_proc(t_shell *shell, pid_t pid, int status)
 	if (!(p = find_proc(shell, pid, &j)))
 		return ;
 	j->notified = 0;
+	p->status = status;
 	if (WIFEXITED(status))
 	{
 		p->done = 1;
@@ -82,7 +85,11 @@ int				wait_job(t_shell *shell, t_job *job)
 		update_proc(shell, pid, status);
 	status = job->async ? 0 : job->last->ret;
 	if (job_is_done(job))
+	{
+		if (WIFSIGNALED(job->last->status))
+			report_job(shell, job, 4, STDERR_FILENO);
 		free_job(shell, job);
+	}
 	return (status);
 }
 
@@ -90,11 +97,13 @@ void			job_notify(t_shell *shell)
 {
 	t_job *job;
 
+	if (check_validity(shell))
+		return ;
 	job = shell->jobs;
 	while (job)
 	{
 		if (!job->notified)
-			job = report_job(shell, job, 1 | 4 | 8);
+			job = report_job(shell, job, 1 | 4 | 8, STDERR_FILENO);
 		else
 			job = job->next;
 	}

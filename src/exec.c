@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 09:03:28 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/05 12:20:00 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/06 15:53:42 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,6 @@ static void	exec_internal(t_shell *shell, t_ast *instr,
 	exit(execve(path, args, build_env(shell->exec_vars)));
 }
 
-pid_t		do_exec(t_shell *shell, char **argv)
-{
-	int			status;
-	pid_t		pid;
-	char		*bin_path;
-
-	if (!(bin_path = find_command(shell->vars, argv[0])))
-		return (do_error_handling(argv[0]));
-	if ((pid = fork()) == -1)
-		return (-1);
-	if (pid == 0)
-		exit(execve(bin_path, argv, build_env(shell->exec_vars)));
-	free(bin_path);
-	wait(&status);
-	if (WIFEXITED(status) || WIFSIGNALED(status))
-		return (0);
-	return (WEXITSTATUS(status));
-}
-
 int			exec(t_shell *shell, t_ast *instr)
 {
 	char		*prgm;
@@ -77,7 +58,8 @@ int			exec(t_shell *shell, t_ast *instr)
 
 	prgm = ((t_command *)instr->data)->args_value[0];
 	builtin = is_builtin(prgm);
-	hbt_command(shell, prgm);
+	if (!builtin)
+		hbt_command(shell, prgm);
 	if (builtin && !(instr->flags & CMD_FORK) && !instr->job->async)
 		instr->ret = exec_builtin(shell, builtin, instr);
 	else if ((instr->pid = fork()) == -1)

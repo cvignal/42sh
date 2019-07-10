@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wait.c                                             :+:      :+:    :+:   */
+/*   z.c                                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchainet <gchainet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/05 15:49:17 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/21 12:01:41 by cvignal          ###   ########.fr       */
+/*   Created: 2019/07/07 01:42:12 by gchainet          #+#    #+#             */
+/*   Updated: 2019/07/07 01:42:30 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-#include "libft.h"
 
-int			wait_loop(t_shell *shell, t_ast *ast)
+int	expr_z(t_shell *shell, char **args)
 {
 	(void)shell;
-	(void)ast;
-	return (0);
+	if (ft_strlen(args[1]) == 0)
+		return (0);
+	return (1);
 }

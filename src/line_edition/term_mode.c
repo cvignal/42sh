@@ -6,7 +6,7 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 14:01:19 by cvignal           #+#    #+#             */
-/*   Updated: 2019/07/06 11:57:36 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 16:25:07 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		check_validity(t_shell *shell)
 		return (2);
 	if (!isatty(0))
 		return (1);
-	if (!(name = getenv("TERM")) || ft_strnequ(name, "dumb", 4))
+	if (!(name = getenv("TERM")) || !ft_strequ(name, "xterm-256color"))
 	{
 		default_term[0] = "TERM";
 		default_term[1] = "xterm-256color";
@@ -64,7 +64,7 @@ int		raw_terminal_mode(t_shell *shell)
 {
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &shell->raw_term) == -1)
 		return (1);
-	tgetent(NULL, getenv("TERM"));
+	tgetent(NULL, "xterm-256color");
 	return (0);
 }
 

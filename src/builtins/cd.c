@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 11:51:49 by gchainet          #+#    #+#             */
-/*   Updated: 2019/06/13 17:39:35 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/09 12:26:57 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int			change_dir(t_shell *shell, char *curpath,
 	char	*pwd;
 
 	(void)dir;
-	if (!(pwd = ft_strdup(get_var_value(get_var(shell->exec_vars, "PWD")))))
+	if (!(pwd = (char *)get_var_value(get_var(shell->exec_vars, "PWD")))
+			|| !(pwd = ft_strdup(pwd)))
 		pwd = getcwd(NULL, MAX_PATH);
 	if (chdir(curpath))
 	{
@@ -85,7 +86,8 @@ static int	cd_find_path(t_shell *shell, const char *dir, int option)
 		return (change_dir(shell, curpath, dir, option));
 	else if (*curpath != '/')
 	{
-		if (!(pwd = ft_strdup(get_var_value(get_var(shell->exec_vars, "PWD")))))
+		if (!(pwd = (char *)get_var_value(get_var(shell->exec_vars, "PWD")))
+				|| !(pwd = ft_strdup(pwd)))
 			pwd = getcwd(NULL, MAX_PATH);
 		if (pwd[ft_strlen(pwd) - 1] != '/')
 			pwd = ft_strjoin_free(pwd, "/", 1);
