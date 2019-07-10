@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 13:01:47 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/10 04:41:03 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/10 15:54:00 by cvignal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,8 @@ int			read_heredoc(t_heredoc *heredoc, t_redir *redir, t_shell *shell)
 	int		error;
 
 	ret = init_heredoc(shell, &tmp_shell);
-	target = expand_no_split(shell, redir->target, &error,
-			EXP_LEXER_MASK_BACKSLASH | EXP_LEXER_MASK_QUOTE);
-	if (!target)
+	if (!(target = expand_no_split(shell, redir->target, &error,
+			EXP_LEXER_MASK_BACKSLASH | EXP_LEXER_MASK_QUOTE)))
 		return (1);
 	while (target && !g_functions[ret].f(&tmp_shell))
 	{
