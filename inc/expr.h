@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 12:37:43 by gchainet          #+#    #+#             */
-/*   Updated: 2019/02/18 14:08:40 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/07 01:43:17 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ int					expr_lt(struct s_shell *shell, char **args);
 int					expr_le(struct s_shell *shell, char **args);
 int					expr_gt(struct s_shell *shell, char **args);
 int					expr_ge(struct s_shell *shell, char **args);
+int					expr_z(struct s_shell *shell, char **args);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: cvignal <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 16:39:44 by cvignal           #+#    #+#              #
-#    Updated: 2019/07/06 17:51:11 by cvignal          ###   ########.fr        #
+#    Updated: 2019/07/07 01:42:51 by gchainet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ SRC	+=	$(addprefix expr/,						\
 		expression.c f.c g.c g_cap.c ge.c gt.c h.c k.c			\
 		l_cap.c le.c lower.c lt.c n.c n_cap.c ne.c not_equal.c		\
 		nt.c o_cap.c ot.c p.c r.c s.c s_cap.c sup.c t.c			\
-		u.c v.c w.c x.c							\
+		u.c v.c w.c x.c z.c							\
 		)
 
 SRC	+=	$(addprefix history_research/,				\
