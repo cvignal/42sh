@@ -6,14 +6,14 @@
 /*   By: cvignal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 13:41:36 by cvignal           #+#    #+#             */
-/*   Updated: 2019/06/24 17:30:04 by gchainet         ###   ########.fr       */
+/*   Updated: 2019/07/09 21:20:04 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# define BUFF_SIZE 2048
+# define BUFF_SIZE 1
 # define ARRAY_ALLOC_SIZE 128
 
 # include <stdarg.h>
