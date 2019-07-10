@@ -6,7 +6,7 @@
 /*   By: gchainet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:56:50 by gchainet          #+#    #+#             */
-/*   Updated: 2019/07/09 11:04:11 by cvignal          ###   ########.fr       */
+/*   Updated: 2019/07/10 04:24:31 by gchainet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define EXP_LEXER_MASK_TILDE (1 << 6)
 # define EXP_LEXER_MASK_NO_MULTI_TILDE (1 << 7)
 # define EXP_LEXER_MASK_PROC_SUB (1 << 8)
+# define EXP_LEXER_MASK_BACKSLASH (1 << 9)
 
 typedef enum			e_exp_state
 {
